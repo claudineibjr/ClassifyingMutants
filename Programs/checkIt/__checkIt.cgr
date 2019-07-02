@@ -1,0 +1,8 @@
+
+@checkIt
+     printf
+
+
+@main
+     checkIt             atoi
+

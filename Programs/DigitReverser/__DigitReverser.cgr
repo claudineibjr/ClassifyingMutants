@@ -1,0 +1,8 @@
+
+@digit_reverser
+     printf
+
+
+@main
+     atoi                digit_reverser
+

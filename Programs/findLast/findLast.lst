@@ -1,0 +1,175 @@
+
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+[]
+[]                  PROGRAM TESTE: findLast
+[]----------------------------------------------------------
+[]   SOURCE FILE: findLast
+[]
+[]   TOTAL MUTANTS: 198
+[]
+[]   ANOMALOUS MUTANTS: 0
+[]
+[]   ACTIVE MUTANTS: 198
+[]
+[]   ALIVE MUTANTS: 0
+[]
+[]   EQUIVALENT MUTANTS: 8
+[]
+[]   MUTATION SCORE: 1.000000
+[]
+[]   OPERATORS:
+[]   u-Cccr              3    u-CCDL              2    u-Ccsr             12    
+[]   u-CRCR             30    u-OAAN              4    u-OABN              3    
+[]   u-OALN              2    u-OARN              6    u-OASN              2    
+[]   u-OCNG              2    u-OEAA              5    u-OEBA              3    
+[]   u-OESA              2    u-Oido              1    u-OODL              7    
+[]   u-ORAN             10    u-ORBN              6    u-ORLN              4    
+[]   u-ORRN             10    u-ORSN              4    u-SMTC              1    
+[]   u-SMTT              1    u-SRSR             11    u-SSDL              7    
+[]   u-STRI              2    u-STRP              7    u-VDTR             18    
+[]   u-VLSR             17    u-VTWD             12    u-VVDL              4    
+[]
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+
+Teste Case # 1
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 123
+	Number of Mutants Dead by Stdout: 36
+	Number of Mutants Dead by Retcode : 18
+	Number of Mutants Dead by Timeout: 1
+	Number of Mutants Dead by Trap: 12
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 67
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 45
+	Parameters: 1 0 
+	Input:
+
+	Output:
+The index of the last element equals 1 is -1
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 2
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 81
+	Number of Mutants Dead by Stdout: 79
+	Number of Mutants Dead by Retcode : 17
+	Number of Mutants Dead by Timeout: 0
+	Number of Mutants Dead by Trap: 13
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 109
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 44
+	Parameters: 1 1 
+	Input:
+
+	Output:
+The index of the last element equals 1 is 0
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 3
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 56
+	Number of Mutants Dead by Stdout: 98
+	Number of Mutants Dead by Retcode : 18
+	Number of Mutants Dead by Timeout: 2
+	Number of Mutants Dead by Trap: 16
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 134
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 45
+	Parameters: -1 0 -1 1 
+	Input:
+
+	Output:
+The index of the last element equals -1 is 1
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 4
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 73
+	Number of Mutants Dead by Stdout: 87
+	Number of Mutants Dead by Retcode : 17
+	Number of Mutants Dead by Timeout: 0
+	Number of Mutants Dead by Trap: 13
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 117
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 11
+	Retorn Code: 44
+	Parameters: 1 0 1 1 
+	Input:
+
+	Output:
+The index of the last element equals 1 is 2
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 5
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 57
+	Number of Mutants Dead by Stdout: 97
+	Number of Mutants Dead by Retcode : 17
+	Number of Mutants Dead by Timeout: 1
+	Number of Mutants Dead by Trap: 18
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 133
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 44
+	Parameters: 1 1 0 0 0 0 0 0 
+	Input:
+
+	Output:
+The index of the last element equals 1 is 0
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 6
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 111
+	Number of Mutants Dead by Stdout: 43
+	Number of Mutants Dead by Retcode : 19
+	Number of Mutants Dead by Timeout: 2
+	Number of Mutants Dead by Trap: 15
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 79
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 11
+	Retorn Code: 45
+	Parameters: 0 1 1 1 
+	Input:
+
+	Output:
+The index of the last element equals 0 is -1
+
+	Stderr:
+
+_________________________________________________

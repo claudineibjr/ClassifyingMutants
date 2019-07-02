@@ -1,0 +1,371 @@
+
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+[]
+[]                  PROGRAM TESTE: testPad
+[]----------------------------------------------------------
+[]   SOURCE FILE: testPad
+[]
+[]   TOTAL MUTANTS: 629
+[]
+[]   ANOMALOUS MUTANTS: 0
+[]
+[]   ACTIVE MUTANTS: 629
+[]
+[]   ALIVE MUTANTS: 0
+[]
+[]   EQUIVALENT MUTANTS: 57
+[]
+[]   MUTATION SCORE: 1.000000
+[]
+[]   OPERATORS:
+[]   u-Cccr              7    u-CCDL              2    u-Ccsr             32    
+[]   u-CRCR             80    u-OAAN             12    u-OABN              9    
+[]   u-OALN              6    u-OARN             18    u-OASN              6    
+[]   u-OCNG              4    u-OEAA             25    u-OEBA             15    
+[]   u-OESA             10    u-Oido              2    u-OLAN              5    
+[]   u-OLBN              3    u-OLLN              1    u-OLNG              3    
+[]   u-OLRN              6    u-OLSN              2    u-OODL             19    
+[]   u-ORAN             25    u-ORBN             15    u-ORLN             10    
+[]   u-ORRN             25    u-ORSN             10    u-SBRC              1    
+[]   u-SBRn              1    u-SMTC              2    u-SMTT              2    
+[]   u-SMVB              1    u-SRSR             14    u-SSDL             16    
+[]   u-STRI              4    u-STRP             16    u-SWDD              1    
+[]   u-VDTR             48    u-VGAR              4    u-VLAR              4    
+[]   u-VLSR            119    u-VTWD             32    u-VVDL             12    
+[]
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+
+Teste Case # 1
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 307
+	Number of Mutants Dead by Stdout: 199
+	Number of Mutants Dead by Retcode : 30
+	Number of Mutants Dead by Timeout: 8
+	Number of Mutants Dead by Trap: 28
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 265
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: abc 
+	Input:
+
+	Output:
+Pattern string begins at the character 3
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 2
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 358
+	Number of Mutants Dead by Stdout: 183
+	Number of Mutants Dead by Retcode : 7
+	Number of Mutants Dead by Timeout: 1
+	Number of Mutants Dead by Trap: 23
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 214
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: abc a 
+	Input:
+
+	Output:
+Pattern string begins at the character 0
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 3
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 220
+	Number of Mutants Dead by Stdout: 292
+	Number of Mutants Dead by Retcode : 15
+	Number of Mutants Dead by Timeout: 10
+	Number of Mutants Dead by Trap: 35
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 352
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: abc bc 
+	Input:
+
+	Output:
+Pattern string begins at the character 1
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 4
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 234
+	Number of Mutants Dead by Stdout: 285
+	Number of Mutants Dead by Retcode : 16
+	Number of Mutants Dead by Timeout: 5
+	Number of Mutants Dead by Trap: 32
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 338
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: abc abc 
+	Input:
+
+	Output:
+Pattern string begins at the character 0
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 5
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 457
+	Number of Mutants Dead by Stdout: 83
+	Number of Mutants Dead by Retcode : 7
+	Number of Mutants Dead by Timeout: 7
+	Number of Mutants Dead by Trap: 18
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 115
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: abc d 
+	Input:
+
+	Output:
+Pattern string is not a substring of the subject string
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 6
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 186
+	Number of Mutants Dead by Stdout: 325
+	Number of Mutants Dead by Retcode : 12
+	Number of Mutants Dead by Timeout: 13
+	Number of Mutants Dead by Trap: 36
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 386
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: abcdefghcdeabcdefgh cde 
+	Input:
+
+	Output:
+Pattern string begins at the character 2
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 7
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 393
+	Number of Mutants Dead by Stdout: 116
+	Number of Mutants Dead by Retcode : 15
+	Number of Mutants Dead by Timeout: 10
+	Number of Mutants Dead by Trap: 38
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 179
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: abcdefgh cxy 
+	Input:
+
+	Output:
+Pattern string is not a substring of the subject string
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 8
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 143
+	Number of Mutants Dead by Stdout: 360
+	Number of Mutants Dead by Retcode : 14
+	Number of Mutants Dead by Timeout: 14
+	Number of Mutants Dead by Trap: 41
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 429
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 11
+	Retorn Code: 0
+	Parameters: abcdefghcxyz cxy 
+	Input:
+
+	Output:
+Pattern string begins at the character 8
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 9
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 493
+	Number of Mutants Dead by Stdout: 64
+	Number of Mutants Dead by Retcode : 7
+	Number of Mutants Dead by Timeout: 0
+	Number of Mutants Dead by Trap: 8
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 79
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 11
+	Retorn Code: 0
+	Parameters: abcdef abcdefghijklcxy 
+	Input:
+
+	Output:
+Pattern string is not a substring of the subject string
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 10
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 385
+	Number of Mutants Dead by Stdout: 118
+	Number of Mutants Dead by Retcode : 15
+	Number of Mutants Dead by Timeout: 14
+	Number of Mutants Dead by Trap: 40
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 187
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: abcdefghxyzabcdefgh cdyx 
+	Input:
+
+	Output:
+Pattern string is not a substring of the subject string
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 11
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 381
+	Number of Mutants Dead by Stdout: 122
+	Number of Mutants Dead by Retcode : 15
+	Number of Mutants Dead by Timeout: 14
+	Number of Mutants Dead by Trap: 40
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 191
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: abcdefghcxyz cdxy 
+	Input:
+
+	Output:
+Pattern string is not a substring of the subject string
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 12
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 377
+	Number of Mutants Dead by Stdout: 126
+	Number of Mutants Dead by Retcode : 15
+	Number of Mutants Dead by Timeout: 14
+	Number of Mutants Dead by Trap: 40
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 195
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: abcdedfgicgxy cdxy 
+	Input:
+
+	Output:
+Pattern string is not a substring of the subject string
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 13
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 379
+	Number of Mutants Dead by Stdout: 127
+	Number of Mutants Dead by Retcode : 17
+	Number of Mutants Dead by Timeout: 10
+	Number of Mutants Dead by Trap: 39
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 193
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: BBBBB B!! 
+	Input:
+
+	Output:
+Pattern string is not a substring of the subject string
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 14
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 362
+	Number of Mutants Dead by Stdout: 137
+	Number of Mutants Dead by Retcode : 17
+	Number of Mutants Dead by Timeout: 14
+	Number of Mutants Dead by Trap: 42
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 210
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: a1234bcdefghijklma023456 a12345 
+	Input:
+
+	Output:
+Pattern string is not a substring of the subject string
+
+	Stderr:
+
+_________________________________________________

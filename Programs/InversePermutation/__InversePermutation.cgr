@@ -1,0 +1,8 @@
+
+@invert
+     printf
+
+
+@main
+     atoi                invert
+

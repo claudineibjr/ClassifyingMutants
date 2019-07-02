@@ -1,0 +1,8 @@
+
+@isPalindrome
+     strlen
+
+
+@main
+     isPalindrome        printf
+

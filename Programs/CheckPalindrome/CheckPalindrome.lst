@@ -1,0 +1,213 @@
+
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+[]
+[]                  PROGRAM TESTE: CheckPalindrome
+[]----------------------------------------------------------
+[]   SOURCE FILE: CheckPalindrome
+[]
+[]   TOTAL MUTANTS: 166
+[]
+[]   ANOMALOUS MUTANTS: 0
+[]
+[]   ACTIVE MUTANTS: 166
+[]
+[]   ALIVE MUTANTS: 0
+[]
+[]   EQUIVALENT MUTANTS: 20
+[]
+[]   MUTATION SCORE: 1.000000
+[]
+[]   OPERATORS:
+[]   u-Cccr              2    u-Ccsr             12    u-CRCR             30    
+[]   u-OCNG              2    u-Oido              2    u-OODL              4    
+[]   u-ORAN             10    u-ORBN              6    u-ORLN              4    
+[]   u-ORRN             10    u-ORSN              4    u-SMTC              1    
+[]   u-SMTT              1    u-SMVB              1    u-SRSR             14    
+[]   u-SSDL              8    u-STRI              2    u-STRP              8    
+[]   u-SWDD              1    u-VDTR             18    u-VLSR             10    
+[]   u-VTWD             12    u-VVDL              4    
+[]
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+
+Teste Case # 1
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 130
+	Number of Mutants Dead by Stdout: 9
+	Number of Mutants Dead by Retcode : 2
+	Number of Mutants Dead by Timeout: 0
+	Number of Mutants Dead by Trap: 5
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 16
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 17
+	Parameters: a 
+	Input:
+
+	Output:
+a is a palindrome
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 2
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 62
+	Number of Mutants Dead by Stdout: 61
+	Number of Mutants Dead by Retcode : 4
+	Number of Mutants Dead by Timeout: 3
+	Number of Mutants Dead by Trap: 16
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 84
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 18
+	Parameters: aa 
+	Input:
+
+	Output:
+aa is a palindrome
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 3
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 80
+	Number of Mutants Dead by Stdout: 49
+	Number of Mutants Dead by Retcode : 4
+	Number of Mutants Dead by Timeout: 1
+	Number of Mutants Dead by Trap: 12
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 66
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 22
+	Parameters: ab 
+	Input:
+
+	Output:
+ab is not a palindrome
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 4
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 57
+	Number of Mutants Dead by Stdout: 67
+	Number of Mutants Dead by Retcode : 4
+	Number of Mutants Dead by Timeout: 3
+	Number of Mutants Dead by Trap: 15
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 89
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 11
+	Retorn Code: 19
+	Parameters: aba 
+	Input:
+
+	Output:
+aba is a palindrome
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 5
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 82
+	Number of Mutants Dead by Stdout: 39
+	Number of Mutants Dead by Retcode : 4
+	Number of Mutants Dead by Timeout: 3
+	Number of Mutants Dead by Trap: 18
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 64
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 11
+	Retorn Code: 24
+	Parameters: abca 
+	Input:
+
+	Output:
+abca is not a palindrome
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 6
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 48
+	Number of Mutants Dead by Stdout: 74
+	Number of Mutants Dead by Retcode : 4
+	Number of Mutants Dead by Timeout: 3
+	Number of Mutants Dead by Trap: 17
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 98
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 20
+	Parameters: abba 
+	Input:
+
+	Output:
+abba is a palindrome
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 7
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 87
+	Number of Mutants Dead by Stdout: 42
+	Number of Mutants Dead by Retcode : 4
+	Number of Mutants Dead by Timeout: 1
+	Number of Mutants Dead by Trap: 12
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 59
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 25
+	Parameters: BBa!! 
+	Input:
+
+	Output:
+BBa!! is not a palindrome
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 8
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 50
+	Number of Mutants Dead by Stdout: 71
+	Number of Mutants Dead by Retcode : 4
+	Number of Mutants Dead by Timeout: 4
+	Number of Mutants Dead by Trap: 17
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 96
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 29
+	Parameters: abcdyyyyydcba 
+	Input:
+
+	Output:
+abcdyyyyydcba is a palindrome
+	Stderr:
+
+_________________________________________________

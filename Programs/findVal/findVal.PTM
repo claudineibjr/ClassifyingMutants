@@ -1,0 +1,10 @@
+PROTEUM - PROGRAM TEST FILE
+Jun-12-19
+V 2.1 - IM
+              
+findVal
+findVal
+gcc findVal.c -o findVal -lm -w
+Research
+<N O  A N O M A L I E S>
+<A L L   F U N C T I O N S>
