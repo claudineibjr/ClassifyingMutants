@@ -1,0 +1,14 @@
+_iNTargets = 0
+_iNSources = 1
+_iNDistancesBegin = 2
+_iNDistancesBegin_min = 3
+_iNDistancesBegin_max = 4
+_iNDistancesBegin_avg = 5
+_iNDistancesEnd = 6
+_iNDistancesEnd_min = 7
+_iNDistancesEnd_max = 8
+_iNDistancesEnd_avg = 9
+_iNPrimitiveNodeSource = 10
+_iNPrimitiveNodeTarget = 11
+_iNSourcesIsPrimitive = 12
+_iNTargetIsPrimitive = 13
