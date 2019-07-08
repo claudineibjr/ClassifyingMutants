@@ -37,6 +37,11 @@ def decisionTreeMain(fileName, maxK, minimalOrMutant, showComparisonBetweenNeigh
     dataGrouped = dataFrame.groupby(targetColumn)
     dataFrame = pandas.DataFrame(dataGrouped.apply(lambda x: x.sample(dataGrouped.size().min()).reset_index(drop=True)))    
 
+    # Encode _IM_Operator column
+    one_hot = pandas.get_dummies(dataFrame['_IM_OPERATOR'])
+    dataFrame = dataFrame.drop('_IM_OPERATOR', axis = 1)
+    dataFrame = dataFrame.join(one_hot)
+
     columnValues = dataFrame[targetColumn].values
     dataFrame = dataFrame.drop(['_IM_MINIMAL','_IM_EQUIVALENT'], axis=1)
     dataFrameValues = dataFrame.values
@@ -94,12 +99,12 @@ def computeFullMutants():
     maxK = 40
 
     print('Calculando para identificar mutantes minimais')
-    fileName = 'ML/Mutants/Minimal/1Full Mutants wOperator.csv'
-    decisionTreeMain(fileName, maxK, 0, True, 'DT_Minimal.png')
+    fileName = 'ML/Mutants/Minimal/With ColumnNames With Operator/1Full Mutants.csv'
+    decisionTreeMain(fileName, maxK, 0, True, 'ML/DT_Minimal.png')
     
     print('Calculando para identificar mutantes equivalentes')
-    fileName = 'ML/Mutants/Equivalent/1Full Mutants wOperator.csv'
-    decisionTreeMain(fileName, maxK, 1, True, 'DT_Equivalente.png')
+    fileName = 'ML/Mutants/Equivalent/With ColumnNames With Operator/1Full Mutants.csv'
+    decisionTreeMain(fileName, maxK, 1, True, 'ML/DT_Equivalente.png')
 
 if __name__ == '__main__':
     computeFullMutants()

@@ -11,6 +11,7 @@ from collections import defaultdict
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
 # Pandas
 import pandas
@@ -37,8 +38,16 @@ def knnMain(fileName, maxK, minimalOrMutant, showComparisonBetweenNeighbors = Fa
     dataGrouped = dataFrame.groupby(targetColumn)
     dataFrame = pandas.DataFrame(dataGrouped.apply(lambda x: x.sample(dataGrouped.size().min()).reset_index(drop=True)))    
 
+    # Get ColumnValues and drop minimal and equivalent columns
     columnValues = dataFrame[targetColumn].values
     dataFrame = dataFrame.drop(['_IM_MINIMAL','_IM_EQUIVALENT'], axis=1)
+
+    # Encode _IM_Operator column
+    one_hot = pandas.get_dummies(dataFrame['_IM_OPERATOR'])
+    dataFrame = dataFrame.drop('_IM_OPERATOR', axis = 1)
+    dataFrame = dataFrame.join(one_hot)
+
+    # Get DataFrameValues
     dataFrameValues = dataFrame.values
 
     # Classifying and calculating scores by each number of neighbors between 1 and k
@@ -61,7 +70,7 @@ def knnMain(fileName, maxK, minimalOrMutant, showComparisonBetweenNeighbors = Fa
         scores = cross_val_score(estimator, dataFrameValues, columnValues, scoring='f1',cv=5)
         f1.append(numpy.mean(scores) * 100)
         
-        print("{:2d} Vizinhos |  Acurácia {:.2f}%\tPrecisão: {:.2f}%\tRecall: {:.2f}%\tF1: {:.2f}%".format(kCount, accuracy[len(accuracy) - 1], precision[len(precision) - 1], recall[len(recall) - 1], f1[len(f1) - 1]))
+        print("{:2d} Vizinhos | Acurácia {:.2f}%\tPrecisão: {:.2f}%\tRecall: {:.2f}%\tF1: {:.2f}%".format(kCount, accuracy[len(accuracy) - 1], precision[len(precision) - 1], recall[len(recall) - 1], f1[len(f1) - 1]))
 
     if showComparisonBetweenNeighbors:
         plotInfoRateByKValue(maxK, accuracy, precision, recall, f1, graphFileName)
@@ -87,11 +96,11 @@ def computeFullMutants():
     maxK = 40
 
     print('Calculando para identificar mutantes minimais')
-    fileName = 'ML/Mutants/Minimal/1Full Mutants wOperator.csv'
+    fileName = 'ML/Mutants/Minimal/With ColumnNames With Operator/1Full Mutants.csv'
     knnMain(fileName, maxK, 0, True, 'KNN_Minimal.png')
     
     print('Calculando para identificar mutantes equivalentes')
-    fileName = 'ML/Mutants/Equivalent/1Full Mutants wOperator.csv'
+    fileName = 'ML/Mutants/Equivalent/With ColumnNames With Operator/1Full Mutants.csv'
     knnMain(fileName, maxK, 1, True, 'KNN_Equivalente.png')
 
 if __name__ == '__main__':
