@@ -1,0 +1,7 @@
+;Acurácia;;;;Recall;;;
+;DT;;kNN;;DT;;kNN;
+;Minimal;Equivalente;Minimal;Equivalente;Minimal;Equivalente;Minimal;Equivalente
+Mínimo;72,08;72,11;66,16;57,11;74,96;72,92;53,73;53,72
+Máximo;76,22;73,92;73,51;70,77;82,43;78,78;75,44;76,73
+Média;74,75;73,61;70,17;61,77;78,66;75,89;67,29;59,85
+Mediana;75,25;73,59;70,54;59,75;78,93;75,50;67,17;58,34
