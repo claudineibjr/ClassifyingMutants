@@ -18,6 +18,14 @@ import pandas
 # matplotlib
 import matplotlib.pyplot as pyplot
 
+import os,sys,inspect
+current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir) 
+
+# Utilities
+import util
+
 def decisionTreeMain(fileName, maxK, minimalOrMutant, showComparisonBetweenNeighbors = False, graphFileName = None):
     if showComparisonBetweenNeighbors == True and graphFileName == None:
         exit()
@@ -43,9 +51,9 @@ def decisionTreeMain(fileName, maxK, minimalOrMutant, showComparisonBetweenNeigh
     dataFrame = dataFrame.join(one_hot)
 
     columnValues = dataFrame[targetColumn].values
-    dataFrame = dataFrame.drop(['_IM_MINIMAL','_IM_EQUIVALENT'], axis=1)
+    dataFrame = dataFrame.drop(['_IM_MINIMAL', '_IM_EQUIVALENT'], axis=1)
     dataFrameValues = dataFrame.values
-    print(len(dataFrameValues), len(columnValues))
+    #print(len(dataFrameValues), len(columnValues))
 
     # Classifying and calculating scores by each number of neighbors between 1 and k
     accuracy = []
@@ -55,6 +63,8 @@ def decisionTreeMain(fileName, maxK, minimalOrMutant, showComparisonBetweenNeigh
 
     x = []
     y = []
+
+    data = []
 
     for nCount in range(5, 100 + 1, 10):
         x.append(nCount)
@@ -73,7 +83,23 @@ def decisionTreeMain(fileName, maxK, minimalOrMutant, showComparisonBetweenNeigh
         scores = cross_val_score(dtClassifier, dataFrameValues, columnValues, scoring='f1',cv=5)
         f1.append(numpy.mean(scores) * 100)
         
-        print("min_sample_split: {:2d} | Acurácia {:.2f}%\tPrecisão: {:.2f}%\tRecall: {:.2f}%\tF1: {:.2f}%".format(nCount, accuracy[len(accuracy) - 1], precision[len(precision) - 1], recall[len(recall) - 1], f1[len(f1) - 1]))
+        subData = []
+        subData.append(nCount)
+        subData.append(accuracy[len(accuracy) - 1])
+        subData.append(precision[len(precision) - 1])
+        subData.append(recall[len(recall) - 1])
+        subData.append(f1[len(f1) - 1])
+
+        data.append(subData)        
+        #print("min_sample_split: {:2d} | Acurácia {:.2f}%\tPrecisão: {:.2f}%\tRecall: {:.2f}%\tF1: {:.2f}%".format(nCount, accuracy[len(accuracy) - 1], precision[len(precision) - 1], recall[len(recall) - 1], f1[len(f1) - 1]))
+
+    header = []
+    header.append('min_sample_split')
+    header.append('accuracy')
+    header.append('precision')
+    header.append('recall')
+    header.append('f1')
+    util.writeInCsvFile('ML/Results/DT_{targetColumn}.csv'.format(targetColumn = targetColumn), data, header=header)
 
     if showComparisonBetweenNeighbors:
         plotInfoRateByKValue(maxK, accuracy, precision, recall, f1, graphFileName)
@@ -100,11 +126,11 @@ def computeFullMutants():
 
     print('Calculando para identificar mutantes minimais')
     fileName = 'ML/Mutants/Minimal/With ColumnNames With Operator/1Full Mutants.csv'
-    decisionTreeMain(fileName, maxK, 0, True, 'ML/DT_Minimal.png')
+    decisionTreeMain(fileName, maxK, 0)
     
     print('Calculando para identificar mutantes equivalentes')
     fileName = 'ML/Mutants/Equivalent/With ColumnNames With Operator/1Full Mutants.csv'
-    decisionTreeMain(fileName, maxK, 1, True, 'ML/DT_Equivalente.png')
+    decisionTreeMain(fileName, maxK, 1)
 
 if __name__ == '__main__':
     computeFullMutants()

@@ -19,6 +19,14 @@ import pandas
 # matplotlib
 import matplotlib.pyplot as pyplot
 
+import os,sys,inspect
+current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir) 
+
+# Utilities
+import util
+
 def knnMain(fileName, maxK, minimalOrMutant, showComparisonBetweenNeighbors = False, graphFileName = None):
     if showComparisonBetweenNeighbors == True and graphFileName == None:
         exit()
@@ -40,7 +48,7 @@ def knnMain(fileName, maxK, minimalOrMutant, showComparisonBetweenNeighbors = Fa
 
     # Get ColumnValues and drop minimal and equivalent columns
     columnValues = dataFrame[targetColumn].values
-    dataFrame = dataFrame.drop(['_IM_MINIMAL','_IM_EQUIVALENT'], axis=1)
+    dataFrame = dataFrame.drop(['_IM_MINIMAL', '_IM_EQUIVALENT'], axis=1)
 
     # Encode _IM_Operator column
     one_hot = pandas.get_dummies(dataFrame['_IM_OPERATOR'])
@@ -55,6 +63,9 @@ def knnMain(fileName, maxK, minimalOrMutant, showComparisonBetweenNeighbors = Fa
     precision = []
     recall = []
     f1 = []
+
+    data = []
+
     for kCount in range(1, maxK + 1):
         estimator = KNeighborsClassifier(n_neighbors = kCount)
         
@@ -70,7 +81,23 @@ def knnMain(fileName, maxK, minimalOrMutant, showComparisonBetweenNeighbors = Fa
         scores = cross_val_score(estimator, dataFrameValues, columnValues, scoring='f1',cv=5)
         f1.append(numpy.mean(scores) * 100)
         
-        print("{:2d} Vizinhos | Acurácia {:.2f}%\tPrecisão: {:.2f}%\tRecall: {:.2f}%\tF1: {:.2f}%".format(kCount, accuracy[len(accuracy) - 1], precision[len(precision) - 1], recall[len(recall) - 1], f1[len(f1) - 1]))
+        subData = []
+        subData.append(kCount)
+        subData.append(accuracy[len(accuracy) - 1])
+        subData.append(precision[len(precision) - 1])
+        subData.append(recall[len(recall) - 1])
+        subData.append(f1[len(f1) - 1])
+
+        data.append(subData)
+        #print("{:2d} Vizinhos | Acurácia {:.2f}%\tPrecisão: {:.2f}%\tRecall: {:.2f}%\tF1: {:.2f}%".format(kCount, accuracy[len(accuracy) - 1], precision[len(precision) - 1], recall[len(recall) - 1], f1[len(f1) - 1]))
+
+    header = []
+    header.append('neighbors')
+    header.append('accuracy')
+    header.append('precision')
+    header.append('recall')
+    header.append('f1')
+    util.writeInCsvFile('ML/Results/kNN_{targetColumn}.csv'.format(targetColumn = targetColumn), data, header=header)
 
     if showComparisonBetweenNeighbors:
         plotInfoRateByKValue(maxK, accuracy, precision, recall, f1, graphFileName)
@@ -97,11 +124,11 @@ def computeFullMutants():
 
     print('Calculando para identificar mutantes minimais')
     fileName = 'ML/Mutants/Minimal/With ColumnNames With Operator/1Full Mutants.csv'
-    knnMain(fileName, maxK, 0, True, 'KNN_Minimal.png')
+    knnMain(fileName, maxK, 0)
     
     print('Calculando para identificar mutantes equivalentes')
     fileName = 'ML/Mutants/Equivalent/With ColumnNames With Operator/1Full Mutants.csv'
-    knnMain(fileName, maxK, 1, True, 'KNN_Equivalente.png')
+    knnMain(fileName, maxK, 1)
 
 if __name__ == '__main__':
     computeFullMutants()
