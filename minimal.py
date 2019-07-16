@@ -437,8 +437,8 @@ def computeEssencialInfo(mutantsInfo, minimal_Equivalent):
                 mutantRowInfo = mutantRow[jCount]
                 essentialRow.append(mutantRowInfo)
 
-        #_IM_OPERATOR, _IM_PROGRAM_GRAPH_NODE, _IM_PRIMITIVE_ARC, _IM_SOURCE_PRIMITIVE_ARC, _IM_TARGET_PRIMITIVE_ARC, _IM_DISTANCE_BEGIN_MIN, _IM_DISTANCE_BEGIN_MAX, _IM_DISTANCE_BEGIN_AVG, _IM_DISTANCE_END_MIN, _IM_DISTANCE_END_MAX, _IM_DISTANCE_END_AVG, _IM_EQUIVALENT, _IM_MINIMAL
-        #_IM_OPERATOR, _IM_PROGRAM_GRAPH_NODE, _IM_PRIMITIVE_ARC, _IM_SOURCE_PRIMITIVE_ARC, _IM_TARGET_PRIMITIVE_ARC, _IM_DISTANCE_BEGIN_MIN, _IM_DISTANCE_BEGIN_MAX, _IM_DISTANCE_BEGIN_AVG, _IM_DISTANCE_END_MIN, _IM_DISTANCE_END_MAX, _IM_DISTANCE_END_AVG, _IM_MINIMAL, _IM_EQUIVALENT
+        #_IM_OPERATOR, _IM_PROGRAM_GRAPH_NODE, _IM_PRIMITIVE_ARC, _IM_SOURCE_PRIMITIVE_ARC, _IM_TARGET_PRIMITIVE_ARC, _IM_DISTANCE_BEGIN_MIN, _IM_DISTANCE_BEGIN_MAX, _IM_DISTANCE_BEGIN_AVG, _IM_DISTANCE_END_MIN, _IM_DISTANCE_END_MAX, _IM_DISTANCE_END_AVG, _IM_COMPLEXITY, _IM_EQUIVALENT, _IM_MINIMAL
+        #_IM_OPERATOR, _IM_PROGRAM_GRAPH_NODE, _IM_PRIMITIVE_ARC, _IM_SOURCE_PRIMITIVE_ARC, _IM_TARGET_PRIMITIVE_ARC, _IM_DISTANCE_BEGIN_MIN, _IM_DISTANCE_BEGIN_MAX, _IM_DISTANCE_BEGIN_AVG, _IM_DISTANCE_END_MIN, _IM_DISTANCE_END_MAX, _IM_DISTANCE_END_AVG, _IM_COMPLEXITY, _IM_MINIMAL, _IM_EQUIVALENT
 
         #Joga a coluna minimal ou equivalente para o final
         if minimal_Equivalent == 0:
@@ -548,8 +548,15 @@ def main(_baseExperimentFolder, _baseFolder, executionMode):
             ###########################################################
             # Write mutants info to compute machine learning algorithms
             ###########################################################
+            ### --- Minimals --- ###
+            essentialInfo = computeEssencialInfo(mutantsInfo, minimal_Equivalent=0)
+            essentialFileName = "{}/mutants_minimals.csv".format(baseExperimentFolder)                   # Gera apenas um arquivo com todos os mutantes
+            #essentialFileName = "{}/{}_mutants.csv".format(baseExperimentFolder, sessionName)  # Gera um arquivo para cada programa com todos os seus mutantes
+            util.writeInCsvFile(essentialFileName, essentialInfo, mode="a+")
+
+            ### --- Equivalents --- ###
             essentialInfo = computeEssencialInfo(mutantsInfo, minimal_Equivalent=1)
-            essentialFileName = "{}/mutants.csv".format(baseExperimentFolder)                   # Gera apenas um arquivo com todos os mutantes
+            essentialFileName = "{}/mutants_equivalents.csv".format(baseExperimentFolder)                   # Gera apenas um arquivo com todos os mutantes
             #essentialFileName = "{}/{}_mutants.csv".format(baseExperimentFolder, sessionName)  # Gera um arquivo para cada programa com todos os seus mutantes
             util.writeInCsvFile(essentialFileName, essentialInfo, mode="a+")
 
