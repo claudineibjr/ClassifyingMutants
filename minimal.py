@@ -18,8 +18,8 @@
 
 import sys
 
-from Pedro.ComputeMinimalMuta import computeMinimal
-from Pedro.prot2poke import prot2PokeMain
+from Others.ComputeMinimalMuta import computeMinimal
+from Others.prot2poke import prot2PokeMain
 
 import proteum
 import util
