@@ -36,6 +36,36 @@ def getGfc(fileName, arcPrimFile, showOutput):
 
     return gfc, numNodes
 
+'''
+    Função responsável por calcular (incrementar ou adicionar) o número de mutantes em dado nó do GFC
+'''
+def getMutantsOnNode(mutantsOnNodes, programGraphNode):
+    isOnList = False
+
+    if len(mutantsOnNodes) > 1:
+        for nodeNumber, valueNode in mutantsOnNodes:
+            if programGraphNode == nodeNumber:
+                isOnList = True
+                indexNode = mutantsOnNodes.index([nodeNumber, valueNode])
+                
+                valueNode = valueNode + 1
+                mutantsOnNodes[indexNode] = [nodeNumber, valueNode]
+    
+    if isOnList == False:
+        mutantsOnNodes.append([programGraphNode, 1])
+
+    return mutantsOnNodes
+
+'''
+    Função responsável por obter o número de mutantes em dado nó do GFC
+'''
+def getNumMutantsOnNode(mutantsOnNodes, programGraphNode):
+    for node, value in mutantsOnNodes:
+        if programGraphNode == node:
+            return value
+
+    return -1
+
 def getInfoNode(gfc, node, numNodes):
     if int(node) > int(numNodes):
         return -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
@@ -58,7 +88,7 @@ def getInfoNode(gfc, node, numNodes):
 
     sourcesNodeIsPrimitive = gfc[node][constants._iNSourcesIsPrimitive]
     targetsNodeIsPrimitive = gfc[node][constants._iNTargetIsPrimitive]
-    
+
     return source, target, \
         distanceFromBegin, distanceFromBegin_min, distanceFromBegin_max, distanceFromBegin_avg, \
         distanceFromEnd, distanceFromEnd_min, distanceFromEnd_max, distanceFromEnd_avg, \

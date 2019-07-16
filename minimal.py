@@ -25,6 +25,7 @@ import proteum
 import util
 import gfcUtils
 
+#_IM_ = Information Mutants
 _IM_NUMBER = 0  # Número do mutante
 _IM_RESULT = 1  # Resultado (morto, vivo, equivalente)
 _IM_STATUS = 2  # Status do mutante (ativo, inativo)
@@ -47,7 +48,9 @@ _IM_SOURCE_NODE = 18 # Nós origem
 _IM_TARGET_NODE = 19 # Nós destino
 _IM_SOURCE_NODE_PRIMITIVE = 20 # Algum dos nós de origem é origem ou destino do arco primitivo?
 _IM_TARGET_NODE_PRIMITIVE = 21 # Algum dos nós de destino é origem ou destino do arco primitivo?
+_IM_COMPLEXITY = 22 # Representa a complexidade do nó de mutação - Quantos mutantes foram gerados naquele nó de mutação
 
+#_IMA_ = Information mutants average
 _IMA_MUTANTS = 0    #Representa o número total de mutantes
 _IMA_MINIMALS = 1   # Representa o número total de mutantes minimais
 _IMA_EQUIVALENTS = 2    # Representa o número total de mutantes equivalentes
@@ -171,16 +174,17 @@ def getMutantsInfo(baseFolder, minimalMutants, sessionName, unitName):
     arrHeaderMutants = []
     
     mutantsInfoFileName = "{baseFolder}/log/mutants.txt".format(baseFolder = baseFolder)
-    #mutantsInfoFileName = "{baseFolder}/arc_prim/mutants.txt".format(baseFolder = baseFolder) #Analisa as informações dos mutantes que o Pedro forneceu
     if (not util.pathExists(mutantsInfoFileName)):
         proteum.showMutants(sessionName, baseFolder, "")
 
     mutantsInfoFile = util.getContentFromFile(mutantsInfoFileName)
 
-    #gfcFileName = "{baseFolder}/{unitName}.gfc".format(baseFolder = baseFolder, unitName = unitName)
     gfcFileName = "{baseFolder}/arc_prim/{unitName}.gfc".format(baseFolder = baseFolder, unitName = unitName) #Utiliza as informações passadas pelo Pedro
     arcPrimFileName = "{baseFolder}/arc_prim/{unitName}.tes".format(baseFolder = baseFolder, unitName = unitName)
     gfc, numNodes = gfcUtils.gfcMain(gfcFileName, arcPrimFileName)
+
+    # Propriedade responsável por contar o número de mutantes em cada nó do GFC
+    mutantsOnNodes = []
 
     mutants = mutantsInfoFile.split("#")
     for mutant in mutants:
@@ -224,6 +228,9 @@ def getMutantsInfo(baseFolder, minimalMutants, sessionName, unitName):
                     operator = mutantInfo[mutantInfo.find("(") + 1: mutantInfo.find(")")]
                 elif mutantInfo.__contains__("Program graph node"):
                     programGraphNode = mutantInfo[mutantInfo.find(":") + 2:]
+
+                    # Calcula o número de mutantes neste nó
+                    mutantsOnNodes = gfcUtils.getMutantsOnNode(mutantsOnNodes, programGraphNode)
 
                     _source, _target, \
                         _distanceFromBegin, _distanceFromBegin_min, _distanceFromBegin_max, _distanceFromBegin_avg,\
@@ -282,8 +289,13 @@ def getMutantsInfo(baseFolder, minimalMutants, sessionName, unitName):
             arrMutantInfo.append(targetNode)
             arrMutantInfo.append(sourcesNodeIsPrimitive)
             arrMutantInfo.append(targetsNodeIsPrimitive)
+            arrMutantInfo.append('[MutantsOnNode]')
 
             arrMutantsInfo.append(arrMutantInfo)
+
+    # Update info about mutants on node
+    for iCount in range(len(arrMutantsInfo)):
+        arrMutantsInfo[iCount][_IM_COMPLEXITY] = gfcUtils.getNumMutantsOnNode(mutantsOnNodes, arrMutantsInfo[iCount][_IM_PROGRAM_GRAPH_NODE])
 
     arrHeaderMutants.append("#")
     arrHeaderMutants.append("Result")
@@ -307,7 +319,8 @@ def getMutantsInfo(baseFolder, minimalMutants, sessionName, unitName):
     arrHeaderMutants.append("Target Node")
     arrHeaderMutants.append("Sources Nodes are primitive?")
     arrHeaderMutants.append("Targets Nodes are primitive?")
-    
+    arrHeaderMutants.append("Complexity")
+
     return arrHeaderMutants, arrMutantsInfo
 
 def computeAdicionalMutantsInfo(mutantsInfo):

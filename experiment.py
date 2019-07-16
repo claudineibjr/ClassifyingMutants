@@ -21,14 +21,8 @@ import os
 import util
 
 if __name__ == '__main__':
-    print('Hello World')
-    exit()
-
     # Seta o diretório base de onde deverão estar os programas
-    baseExperimentFolder = "/home/claudinei/Experimento/Sources/ClaudineiBJr/Programs"
-
-    #minimal.main(baseExperimentFolder, "/home/claudinei/Experimento/Sources/ClaudineiBJr/Programs/checkIt", 3)
-    #exit()
+    baseExperimentFolder = "{}/Programs".format(os.getcwd())
 
     # Percorre todas as pastas dentro do diretório base
     for (subFolder, dirNames, files) in os.walk(baseExperimentFolder):
