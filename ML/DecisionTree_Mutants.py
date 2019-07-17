@@ -45,10 +45,15 @@ def decisionTreeMain(fileName, maxK, minimalOrMutant, showComparisonBetweenNeigh
     dataGrouped = dataFrame.groupby(targetColumn)
     dataFrame = pandas.DataFrame(dataGrouped.apply(lambda x: x.sample(dataGrouped.size().min()).reset_index(drop=True)))    
 
-    # Encode _IM_Operator column
-    one_hot = pandas.get_dummies(dataFrame['_IM_OPERATOR'])
+    # Encode _IM_OPERATOR column
+    one_hot_Operator = pandas.get_dummies(dataFrame['_IM_OPERATOR'])
     dataFrame = dataFrame.drop('_IM_OPERATOR', axis = 1)
-    dataFrame = dataFrame.join(one_hot)
+    dataFrame = dataFrame.join(one_hot_Operator)
+
+    # Encode _IM_TYPE_STATEMENT column
+    one_hot_TypeStatement = pandas.get_dummies(dataFrame['_IM_TYPE_STATEMENT'])
+    dataFrame = dataFrame.drop('_IM_TYPE_STATEMENT', axis = 1)
+    dataFrame = dataFrame.join(one_hot_TypeStatement)
 
     columnValues = dataFrame[targetColumn].values
     dataFrame = dataFrame.drop(['_IM_MINIMAL', '_IM_EQUIVALENT'], axis=1)

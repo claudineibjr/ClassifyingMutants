@@ -66,6 +66,40 @@ def getNumMutantsOnNode(mutantsOnNodes, programGraphNode):
 
     return -1
 
+def getOffsetFromCode(codeFile, beginOffset, getOut):
+    contentFile = util.getContentFromFile(codeFile)
+    
+    beginLine = contentFile.rfind('\n', 0, beginOffset)
+
+    endOffset = beginOffset + getOut
+    descriptor = (contentFile[beginOffset - 1: endOffset])
+    descriptor_line = (contentFile[beginLine : endOffset])
+
+    return descriptor, descriptor_line
+
+def getTypeStatementFromCode(descriptor, descriptor_line, sessionName):
+    descriptor_line = str(descriptor_line).replace('\n', '', 1).replace('\t', '')
+
+    typeStatement = ''
+    if descriptor_line.__contains__('\n') and descriptor_line.replace('\n', '', 1).__contains__('\n'):
+        typeStatement = 'Block'
+    elif descriptor_line.__contains__('while'):
+        typeStatement = 'While'
+    elif descriptor_line.__contains__('for'):
+        typeStatement = 'For'
+    elif descriptor_line.__contains__('if'):
+        typeStatement = 'If'
+    elif descriptor_line.__contains__('=') or descriptor_line.__contains__('++') or descriptor_line.__contains__('--'):
+        typeStatement = 'Assignment'
+    elif descriptor_line.__contains__('return'):
+        typeStatement = 'Return'
+    elif descriptor_line.__contains__('('):
+        typeStatement = 'Function Call'
+    else:
+        typeStatement = 'Declaration'
+
+    return typeStatement
+
 def getInfoNode(gfc, node, numNodes):
     if int(node) > int(numNodes):
         return -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1

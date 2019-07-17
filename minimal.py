@@ -49,6 +49,7 @@ _IM_TARGET_NODE = 19 # Nós destino
 _IM_SOURCE_NODE_PRIMITIVE = 20 # Algum dos nós de origem é origem ou destino do arco primitivo?
 _IM_TARGET_NODE_PRIMITIVE = 21 # Algum dos nós de destino é origem ou destino do arco primitivo?
 _IM_COMPLEXITY = 22 # Representa a complexidade do nó de mutação - Quantos mutantes foram gerados naquele nó de mutação
+_IM_TYPE_STATEMENT = 23 # Representa o tipo da declaração da linha
 
 #_IMA_ = Information mutants average
 _IMA_MUTANTS = 0    #Representa o número total de mutantes
@@ -256,6 +257,15 @@ def getMutantsInfo(baseFolder, minimalMutants, sessionName, unitName):
                     sourcesNodeIsPrimitive = _sourcesNodeIsPrimitive
                     targetsNodeIsPrimitive = _targetsNodeIsPrimitive
 
+                elif mutantInfo.__contains__("Offset"):
+                    getOut = int(mutantInfo[mutantInfo.find('get out ') + len('get out ') : ].replace(' characters', ''))
+                    offset = int(mutantInfo[8: mutantInfo.find(',')])
+
+                    codeFile = '{baseFolder}/__{sessionName}.c'.format(baseFolder = baseFolder, sessionName = sessionName)
+                    descriptor, descriptor_line = gfcUtils.getOffsetFromCode(codeFile, offset, getOut)
+
+                    typeStatement = gfcUtils.getTypeStatementFromCode(descriptor, descriptor_line, sessionName)
+
                 else:
                     if mutantInfo.isnumeric():
                         mutantNumber = mutantInfo
@@ -290,6 +300,7 @@ def getMutantsInfo(baseFolder, minimalMutants, sessionName, unitName):
             arrMutantInfo.append(sourcesNodeIsPrimitive)
             arrMutantInfo.append(targetsNodeIsPrimitive)
             arrMutantInfo.append('[MutantsOnNode]')
+            arrMutantInfo.append(typeStatement)
 
             arrMutantsInfo.append(arrMutantInfo)
 
@@ -320,6 +331,7 @@ def getMutantsInfo(baseFolder, minimalMutants, sessionName, unitName):
     arrHeaderMutants.append("Sources Nodes are primitive?")
     arrHeaderMutants.append("Targets Nodes are primitive?")
     arrHeaderMutants.append("Complexity")
+    arrHeaderMutants.append("Type Statement")
 
     return arrHeaderMutants, arrMutantsInfo
 
