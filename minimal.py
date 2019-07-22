@@ -75,7 +75,7 @@ _IMA_EQUIVALENTS_TARGETS_ARE_PRIMITIVE_ARC = 19 # Representa os equivalentes com
 
 def getMinimalMutants(baseFolder, sourceFile):
     fileName = "{}/log/minimal.txt".format(baseFolder)
-    #fileName = "{}/arc_prim/minimal.txt".format(baseFolder) #Utilizar as informações dos minimais que o Pedro já passou
+    #fileName = "{}/arc_prim/minimal.txt".format(baseFolder) #Utilizar as informações dos minimais já passadas
 
     if (not util.pathExists(fileName)):
         computeMinimal("{baseFolder}/{sourceFile}".format(
@@ -98,7 +98,7 @@ def getMinimalMutants(baseFolder, sourceFile):
 '''
     Função principal que executa todo o passo a passo na Proteum para geração dos mutantes
 '''
-def executeProteum(baseFolder, sourceFile, sessionName, executableFile, executionType, directory, unitName):
+def executeProteum(baseFolder, sourceFile, sessionName, executableFile, executionType, directory, units):
     if not util.pathExists("{}/log".format(baseFolder)):
         util.createFolder("{}/log".format(baseFolder))
     
@@ -132,7 +132,8 @@ def executeProteum(baseFolder, sourceFile, sessionName, executableFile, executio
     ##################
     print ('\n##### \tGerando mutantes ' + util.formatNow() + '\t#####'            )
     proteum.createEmptySetMutants(sessionName, directory)
-    proteum.generateMutants(sessionName, directory, unitName)
+    for unitName in str(units).splitlines():
+        proteum.generateMutants(sessionName, directory, unitName)
 
     #################
     # Execute mutants
@@ -170,7 +171,7 @@ def executeProteum(baseFolder, sourceFile, sessionName, executableFile, executio
     print ('\n##### \tExibe mutantes ' + util.formatNow() + '\t#####'         )
     proteum.generateReport(sessionName, directory)
 
-def getMutantsInfo(baseFolder, minimalMutants, sessionName, unitName):
+def getMutantsInfo(baseFolder, minimalMutants, sessionName, units):
     arrMutantsInfo = []
     arrHeaderMutants = []
     
@@ -180,133 +181,140 @@ def getMutantsInfo(baseFolder, minimalMutants, sessionName, unitName):
 
     mutantsInfoFile = util.getContentFromFile(mutantsInfoFileName)
 
-    gfcFileName = "{baseFolder}/arc_prim/{unitName}.gfc".format(baseFolder = baseFolder, unitName = unitName) #Utiliza as informações passadas pelo Pedro
-    arcPrimFileName = "{baseFolder}/arc_prim/{unitName}.tes".format(baseFolder = baseFolder, unitName = unitName)
-    gfc, numNodes = gfcUtils.gfcMain(gfcFileName, arcPrimFileName)
+    # Coleta as informações para cada uma das funções executadas
+    for unitName in units.splitlines():
+        gfcFileName = "{baseFolder}/arc_prim/{unitName}.gfc".format(baseFolder = baseFolder, unitName = unitName) #Utiliza as informações já passadas
+        arcPrimFileName = "{baseFolder}/arc_prim/{unitName}.tes".format(baseFolder = baseFolder, unitName = unitName)
+        gfc, numNodes = gfcUtils.gfcMain(gfcFileName, arcPrimFileName)
 
-    # Propriedade responsável por contar o número de mutantes em cada nó do GFC
-    mutantsOnNodes = []
+        # Propriedade responsável por contar o número de mutantes em cada nó do GFC
+        mutantsOnNodes = []
 
-    mutants = mutantsInfoFile.split("#")
-    for mutant in mutants:
-        mutantInfos = mutant.splitlines()
+        # Divide o arquivo de mutantes pelo caracter # (cada um representa um mutante)
+        mutants = mutantsInfoFile.split("#")
+        for mutant in mutants:
+            mutantInfos = mutant.splitlines()
 
-        result = ""
-        status = ""
-        operator = ""
-        programGraphNode = ""
-        mutantNumber = ""
-        minimal = False
-        primitiveArc = False
-        sourcePrimitiveArc = False
-        targetPrimitiveArc = False
-        equivalent = False
-        distanceBegin = ""
-        distanceBegin_min = ""
-        distanceBegin_max = ""
-        distanceBegin_avg = ""
-        distanceEnd = ""
-        distanceEnd_min = ""
-        distanceEnd_max = ""
-        distanceEnd_avg = ""
-        sourceNode = ""
-        targetNode = ""
-        sourcesNodeIsPrimitive = ""
-        targetsNodeIsPrimitive = ""
+            result = ""
+            status = ""
+            operator = ""
+            programGraphNode = ""
+            mutantNumber = ""
+            minimal = False
+            primitiveArc = False
+            sourcePrimitiveArc = False
+            targetPrimitiveArc = False
+            equivalent = False
+            distanceBegin = ""
+            distanceBegin_min = ""
+            distanceBegin_max = ""
+            distanceBegin_avg = ""
+            distanceEnd = ""
+            distanceEnd_min = ""
+            distanceEnd_max = ""
+            distanceEnd_avg = ""
+            sourceNode = ""
+            targetNode = ""
+            sourcesNodeIsPrimitive = ""
+            targetsNodeIsPrimitive = ""
+            
+            lastICount = 0
 
-        for mutantInfo in mutantInfos:
-            mutantInfo = mutantInfo.strip()
+            # Analisa linha a linha dos mutantes
+            for mutantInfo in mutantInfos:
+                mutantInfo = mutantInfo.strip()
 
-            if len(mutantInfo) > 0:
-                if mutantInfo.__contains__("Status"):
-                    result = mutantInfo[7:]
-                    result = result[0: result.find(" ")]
-                    status = mutantInfo[mutantInfo.find(" ", 8) + 1: ]
+                if len(mutantInfo) > 0:
+                    if mutantInfo.__contains__("Status"):
+                        result = mutantInfo[7:]
+                        result = result[0: result.find(" ")]
+                        status = mutantInfo[mutantInfo.find(" ", 8) + 1: ]
 
-                    equivalent = result.__contains__("Equivalent")
+                        equivalent = result.__contains__("Equivalent")
 
-                elif mutantInfo.__contains__("Operator"):
-                    operator = mutantInfo[mutantInfo.find("(") + 1: mutantInfo.find(")")]
-                elif mutantInfo.__contains__("Program graph node"):
-                    programGraphNode = mutantInfo[mutantInfo.find(":") + 2:]
+                    elif mutantInfo.__contains__("Operator"):
+                        operator = mutantInfo[mutantInfo.find("(") + 1: mutantInfo.find(")")]
+                    elif mutantInfo.__contains__("Program graph node"):
+                        programGraphNode = mutantInfo[mutantInfo.find(":") + 2:]
 
-                    # Calcula o número de mutantes neste nó
-                    mutantsOnNodes = gfcUtils.getMutantsOnNode(mutantsOnNodes, programGraphNode)
+                        # Calcula o número de mutantes neste nó
+                        mutantsOnNodes = gfcUtils.getMutantsOnNode(mutantsOnNodes, programGraphNode)
 
-                    _source, _target, \
-                        _distanceFromBegin, _distanceFromBegin_min, _distanceFromBegin_max, _distanceFromBegin_avg,\
-                            _distanceFromEnd, _distanceFromEnd_min, _distanceFromEnd_max, _distanceFromEnd_avg,\
-                                 _arcPrimSource, _arcPrimTarget, _sourcesNodeIsPrimitive, _targetsNodeIsPrimitive = gfcUtils.getInfoNode(gfc, programGraphNode, numNodes)
-                    
-                    distanceBegin = _distanceFromBegin
-                    distanceBegin_min = _distanceFromBegin_min
-                    distanceBegin_max = _distanceFromBegin_max
-                    distanceBegin_avg = _distanceFromBegin_avg
-                    
-                    distanceEnd = _distanceFromEnd
-                    distanceEnd_min = _distanceFromEnd_min
-                    distanceEnd_max = _distanceFromEnd_max
-                    distanceEnd_avg = _distanceFromEnd_avg
-
-                    sourceNode = _source
-                    targetNode = _target
-                    sourcePrimitiveArc = _arcPrimSource
-                    targetPrimitiveArc = _arcPrimTarget
-                    primitiveArc = sourcePrimitiveArc or targetPrimitiveArc
-
-                    sourcesNodeIsPrimitive = _sourcesNodeIsPrimitive
-                    targetsNodeIsPrimitive = _targetsNodeIsPrimitive
-
-                elif mutantInfo.__contains__("Offset"):
-                    getOut = int(mutantInfo[mutantInfo.find('get out ') + len('get out ') : ].replace(' characters', ''))
-                    offset = int(mutantInfo[8: mutantInfo.find(',')])
-
-                    codeFile = '{baseFolder}/__{sessionName}.c'.format(baseFolder = baseFolder, sessionName = sessionName)
-                    descriptor, descriptor_line = gfcUtils.getOffsetFromCode(codeFile, offset, getOut)
-
-                    typeStatement = gfcUtils.getTypeStatementFromCode(descriptor, descriptor_line, sessionName)
-
-                else:
-                    if mutantInfo.isnumeric():
-                        mutantNumber = mutantInfo
+                        _source, _target, \
+                            _distanceFromBegin, _distanceFromBegin_min, _distanceFromBegin_max, _distanceFromBegin_avg,\
+                                _distanceFromEnd, _distanceFromEnd_min, _distanceFromEnd_max, _distanceFromEnd_avg,\
+                                    _arcPrimSource, _arcPrimTarget, _sourcesNodeIsPrimitive, _targetsNodeIsPrimitive = gfcUtils.getInfoNode(gfc, programGraphNode, numNodes)
                         
-                        if mutantNumber in minimalMutants:
-                            minimal = True
-                        else:
-                            minimal = False
-        
-        if len(mutantNumber.strip()) > 0:            
-            arrMutantInfo = []
-            arrMutantInfo.append(mutantNumber)
-            arrMutantInfo.append(result)
-            arrMutantInfo.append(status)
-            arrMutantInfo.append(operator)
-            arrMutantInfo.append(programGraphNode)
-            arrMutantInfo.append("1" if minimal else "0")
-            arrMutantInfo.append("1" if primitiveArc else "0")
-            arrMutantInfo.append("1" if sourcePrimitiveArc else "0")
-            arrMutantInfo.append("1" if targetPrimitiveArc else "0")
-            arrMutantInfo.append("1" if equivalent else "0")
-            arrMutantInfo.append(distanceBegin)
-            arrMutantInfo.append(distanceBegin_min)
-            arrMutantInfo.append(distanceBegin_max)
-            arrMutantInfo.append(distanceBegin_avg)
-            arrMutantInfo.append(distanceEnd)
-            arrMutantInfo.append(distanceEnd_min)
-            arrMutantInfo.append(distanceEnd_max)
-            arrMutantInfo.append(distanceEnd_avg)
-            arrMutantInfo.append(sourceNode)
-            arrMutantInfo.append(targetNode)
-            arrMutantInfo.append(sourcesNodeIsPrimitive)
-            arrMutantInfo.append(targetsNodeIsPrimitive)
-            arrMutantInfo.append('[MutantsOnNode]')
-            arrMutantInfo.append(typeStatement)
+                        distanceBegin = _distanceFromBegin
+                        distanceBegin_min = _distanceFromBegin_min
+                        distanceBegin_max = _distanceFromBegin_max
+                        distanceBegin_avg = _distanceFromBegin_avg
+                        
+                        distanceEnd = _distanceFromEnd
+                        distanceEnd_min = _distanceFromEnd_min
+                        distanceEnd_max = _distanceFromEnd_max
+                        distanceEnd_avg = _distanceFromEnd_avg
 
-            arrMutantsInfo.append(arrMutantInfo)
+                        sourceNode = _source
+                        targetNode = _target
+                        sourcePrimitiveArc = _arcPrimSource
+                        targetPrimitiveArc = _arcPrimTarget
+                        primitiveArc = sourcePrimitiveArc or targetPrimitiveArc
 
-    # Update info about mutants on node
-    for iCount in range(len(arrMutantsInfo)):
-        arrMutantsInfo[iCount][_IM_COMPLEXITY] = gfcUtils.getNumMutantsOnNode(mutantsOnNodes, arrMutantsInfo[iCount][_IM_PROGRAM_GRAPH_NODE])
+                        sourcesNodeIsPrimitive = _sourcesNodeIsPrimitive
+                        targetsNodeIsPrimitive = _targetsNodeIsPrimitive
+
+                    elif mutantInfo.__contains__("Offset"):
+                        getOut = int(mutantInfo[mutantInfo.find('get out ') + len('get out ') : ].replace(' characters', ''))
+                        offset = int(mutantInfo[8: mutantInfo.find(',')])
+
+                        codeFile = '{baseFolder}/__{sessionName}.c'.format(baseFolder = baseFolder, sessionName = sessionName)
+                        descriptor, descriptor_line = gfcUtils.getOffsetFromCode(codeFile, offset, getOut)
+
+                        typeStatement = gfcUtils.getTypeStatementFromCode(descriptor, descriptor_line, sessionName)
+
+                    else:
+                        if mutantInfo.isnumeric():
+                            mutantNumber = mutantInfo
+                            
+                            if mutantNumber in minimalMutants:
+                                minimal = True
+                            else:
+                                minimal = False
+            
+            if len(mutantNumber.strip()) > 0:
+                arrMutantInfo = []
+                arrMutantInfo.append(mutantNumber)
+                arrMutantInfo.append(result)
+                arrMutantInfo.append(status)
+                arrMutantInfo.append(operator)
+                arrMutantInfo.append(programGraphNode)
+                arrMutantInfo.append("1" if minimal else "0")
+                arrMutantInfo.append("1" if primitiveArc else "0")
+                arrMutantInfo.append("1" if sourcePrimitiveArc else "0")
+                arrMutantInfo.append("1" if targetPrimitiveArc else "0")
+                arrMutantInfo.append("1" if equivalent else "0")
+                arrMutantInfo.append(distanceBegin)
+                arrMutantInfo.append(distanceBegin_min)
+                arrMutantInfo.append(distanceBegin_max)
+                arrMutantInfo.append(distanceBegin_avg)
+                arrMutantInfo.append(distanceEnd)
+                arrMutantInfo.append(distanceEnd_min)
+                arrMutantInfo.append(distanceEnd_max)
+                arrMutantInfo.append(distanceEnd_avg)
+                arrMutantInfo.append(sourceNode)
+                arrMutantInfo.append(targetNode)
+                arrMutantInfo.append(sourcesNodeIsPrimitive)
+                arrMutantInfo.append(targetsNodeIsPrimitive)
+                arrMutantInfo.append('[MutantsOnNode]')
+                arrMutantInfo.append(typeStatement)
+
+                arrMutantsInfo.append(arrMutantInfo)
+
+        # Atualiza as informações sobre os nós dos mutantes
+        for iCount in range(lastICount, len(arrMutantsInfo), 1):
+            arrMutantsInfo[iCount][_IM_COMPLEXITY] = gfcUtils.getNumMutantsOnNode(mutantsOnNodes, arrMutantsInfo[iCount][_IM_PROGRAM_GRAPH_NODE])
+            lastICount = iCount
 
     arrHeaderMutants.append("#")
     arrHeaderMutants.append("Result")
@@ -512,13 +520,14 @@ def main(_baseExperimentFolder, _baseFolder, executionMode):
         executableFile = sessionName
         executionType = "research"
         directory = baseFolder
-        unitName = util.getContentFromFile("{baseFolder}/unit.txt".format(baseFolder = baseFolder))
+        #unitName = util.getContentFromFile("{baseFolder}/unit.txt".format(baseFolder = baseFolder))
+        units = util.getContentFromFile("{baseFolder}/unit.txt".format(baseFolder = baseFolder))
 
         if int(executionMode) == 1 or int(executionMode) == 2:
             #################
             # Execute proteum
             #################
-            executeProteum(baseFolder, sourceFile, sessionName, executableFile, executionType, directory, unitName)
+            executeProteum(baseFolder, sourceFile, sessionName, executableFile, executionType, directory, units)
         
         if int(executionMode) == 1 or int(executionMode) == 3:
             #####################
@@ -530,7 +539,7 @@ def main(_baseExperimentFolder, _baseFolder, executionMode):
             ######################
             # Simplifying GFC file
             ######################
-            # Desabilitado pois estou utilizando GFC do Pedro
+            # Desabilitado pois estou utilizando GFC já passados
             #print ('\n##### \tSimplificando arquivo GFC ' + util.formatNow() + '\t#####'         )
             #prot2PokeMain("{baseFolder}/__{sourceFile}.gfc".format(
                 #baseFolder = baseFolder, sourceFile = sourceFile))
@@ -539,22 +548,22 @@ def main(_baseExperimentFolder, _baseFolder, executionMode):
             # Get basic mutants informations
             ################################
             print ('\n##### \tBuscando e calculando informações dos mutantes ' + util.formatNow() + '\t#####')
-            mutantsHeader, mutantsInfo = getMutantsInfo(baseFolder, minimalMutants, sessionName, unitName)
+            mutantsHeader, mutantsInfo = getMutantsInfo(baseFolder, minimalMutants, sessionName, units)
 
             ################################################
             # Write csv File with basic mutants informations
             ################################################
             print ('\n##### \tGerando arquivo com informações dos mutantes ' + util.formatNow() + '\t#####')
-            fileNameResults = "{baseFolder}/log/{unitName}_result.csv".format(
-                unitName = unitName, baseFolder = baseFolder)
+            fileNameResults = "{baseFolder}/log/{sessionName}_result.csv".format(
+                sessionName = sessionName, baseFolder = baseFolder)
             util.writeInCsvFile(fileNameResults, mutantsInfo, mutantsHeader)
 
             #####################################
             # Get additional mutants informations
             #####################################
             addMutantsInfo = computeAdicionalMutantsInfo(mutantsInfo)
-            fileNameSummaryResults = "{baseFolder}/log/{unitName}_summary_results.csv".format(
-                unitName = unitName, baseFolder = baseFolder)
+            fileNameSummaryResults = "{baseFolder}/log/{sessionName}_summary_results.csv".format(
+                sessionName = sessionName, baseFolder = baseFolder)
             util.write(fileNameSummaryResults, formatSummaryResults(addMutantsInfo))
 
             ###########################################################
@@ -562,13 +571,13 @@ def main(_baseExperimentFolder, _baseFolder, executionMode):
             ###########################################################
             ### --- Minimals --- ###
             essentialInfo = computeEssencialInfo(mutantsInfo, minimal_Equivalent=0)
-            essentialFileName = "{}/mutants_minimals.csv".format(baseExperimentFolder)                   # Gera apenas um arquivo com todos os mutantes
+            essentialFileName = "{}/mutants_minimals.csv".format(baseExperimentFolder)          # Gera apenas um arquivo com todos os mutantes
             #essentialFileName = "{}/{}_mutants.csv".format(baseExperimentFolder, sessionName)  # Gera um arquivo para cada programa com todos os seus mutantes
             util.writeInCsvFile(essentialFileName, essentialInfo, mode="a+")
 
             ### --- Equivalents --- ###
             essentialInfo = computeEssencialInfo(mutantsInfo, minimal_Equivalent=1)
-            essentialFileName = "{}/mutants_equivalents.csv".format(baseExperimentFolder)                   # Gera apenas um arquivo com todos os mutantes
+            essentialFileName = "{}/mutants_equivalents.csv".format(baseExperimentFolder)       # Gera apenas um arquivo com todos os mutantes
             #essentialFileName = "{}/{}_mutants.csv".format(baseExperimentFolder, sessionName)  # Gera um arquivo para cada programa com todos os seus mutantes
             util.writeInCsvFile(essentialFileName, essentialInfo, mode="a+")
 
