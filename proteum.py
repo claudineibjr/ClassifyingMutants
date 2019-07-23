@@ -21,10 +21,10 @@ import subprocess
 '''
     Esta função irá criar a sessão de teste com base nos parâmetros enviados
 '''
-def createSession(baseFolder, sessionName, executionType, sourceFile, executableFile, directory):
+def createSession(baseFolder, sessionName, executionType, sourceFile, executableFile, directory, driver):
 
-    compilationCommand = "gcc {sourceFile}.c -o {executableFile} -lm -w".format(
-        sourceFile = sourceFile, executableFile = executableFile)
+    compilationCommand = "gcc {sourceFile}.c {driver} -o {executableFile} -lm -w".format(
+        sourceFile = sourceFile, executableFile = executableFile, driver = driver)
     command = "cd {baseFolder}; {compilationCommand}".format(baseFolder = baseFolder, compilationCommand = compilationCommand)
     
     subprocess.call(command, shell=True)
