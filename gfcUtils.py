@@ -100,6 +100,9 @@ def getTypeStatementFromCode(descriptor, descriptor_line, sessionName):
 
     return typeStatement
 
+'''
+    Função responsável por retornar todas as informações de um dado nó (passado por parâmetro)
+'''
 def getInfoNode(gfc, node, numNodes):
     if int(node) > int(numNodes):
         return -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
@@ -232,6 +235,9 @@ def calcDistanceFromBegin(gfc):
 
     return gfc
 
+'''
+    Função responsável por retornar os nós de origem de um dado nó (passado por parâmetro)
+'''
 def getSource(gfc, node):
     source = []
 
@@ -247,6 +253,9 @@ def getSource(gfc, node):
     
     return source   
 
+'''
+    Função responsável por retornar os nós destino de um dado nó (passado por parâmetro)
+'''
 def getTarget(gfc, node):
     target = []
     
@@ -328,7 +337,7 @@ def prepareGFC(gfc, primitiveNodes):
 
     return newGFC, numNodes
 
-def calcMinMaxAvgDistances(newGFC, infoGFC, distance):
+def calcMinMaxAvgDistances(newGFC, infoGFC, typeDistance):
     minDistance = None
     maxDistance = None
     average = None
@@ -336,7 +345,7 @@ def calcMinMaxAvgDistances(newGFC, infoGFC, distance):
     totalDistance = 0
     count = 0
     
-    for distanceBegin in newGFC[infoGFC][distance]:
+    for distanceBegin in newGFC[infoGFC][typeDistance]:
         count += 1
         
         intDistanceBegin = int(distanceBegin)
