@@ -137,6 +137,9 @@ def computeFullMutants():
     fileName = 'ML/Mutants/Equivalent/With ColumnNames With Operator/1Full Mutants.csv'
     decisionTreeMain(fileName, maxK, 1)
 
-if __name__ == '__main__':
+def main():
     computeFullMutants()
     #computeMutatsForEachProgram()
+
+if __name__ == '__main__':
+    main()

@@ -1,21 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-####################################################################################################
-#										   prot2poke                                               #
-####################################################################################################
-# Descricao: Este script transforma um arquivo GFC gerado pela ProteumIM em um arquivo GFC no      #
-#	 		 do gerador de arcos primitivos                                                        #
-#																			   					   #
-# Autor: Claudinei Brito Junior (claudineibjr | @hotmail.com, @gmail.com, @usp.br)                 #
-#																			   					   #
-# prot2poke <file-name>							      			   			                       #
-# - prog-name: nome do arquivo GFC 							   				   	                   #
-#	Exemplo: prot2poke cal.gfc											   			               #
-#																				      			   #
-# Ultima modificação: 23/11/2018 												       			   #
-####################################################################################################
-
 import subprocess
 
 '''
