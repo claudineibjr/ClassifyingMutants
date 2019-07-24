@@ -1,0 +1,10 @@
+PROTEUM - PROGRAM TEST FILE
+Jul-23-19
+V 2.1 - IM
+              
+jday-jdate
+jday-jdate
+gcc jday-jdate.c driver.c -o jday-jdate -lm -w
+Research
+<N O  A N O M A L I E S>
+<A L L   F U N C T I O N S>

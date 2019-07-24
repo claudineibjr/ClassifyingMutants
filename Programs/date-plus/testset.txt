@@ -1,0 +1,49 @@
+1781872 02 sec %T %S 
+1781872 02 sec %T %S %y %Z %M 
+1781872 02 min %T %S 
+1781872 02 hour 3 min %T %S 
+1781872 02 week 3 mon %T %S 
+1781872 02 year 3 mon %T %S 
+1781872 .2 hour +3 min %T %S 
+1781872 .2 hour -3 min %T %S 
+1781872 /2 hour /3 min %T %S 
+1781872 .2 hour 3 min 
+1781872 .2 hour -3 
+1781872 .2 hour -3 a 
+1781872 2 mon 
+1781872 2 mon %m 
+1781872 2 year %y 
+1781872 .2 hour : min %T %S 
+1781872 .2 hour -3 max %T %S 
+1781872 .2 hou -3 min %T %S 
+1781872 .2 hour -3 weeks %T %S 
+1781872 2 weeks %T %S %w %d 
+1781872 2 mon 2 mon %T %S %m 
+1781872 2 year 2 year %T %S %m 
+1781872 2 year 2 year %T %S %y 
+181872 2 mon 2 mon %T %S %m 
+1781872888 2 mon 14 mon %T %S %m 
+1781872 2 mon %T %S %m %y 
+1781872 9 mon %T %S %m 
+1781872 2 mon 2 mon 3 mon 5 mon 1 mon %T %S %m 
+1781872 0 mon -2 mon %T %S %m 
+1781872 -2 year 0 year %T %S %y 
+1781872 12 year 2 mon %T %S %m %y 
+1781872 2 mon 2 mon %T %S % 
+1781872 2 mon 2 mon %T %n %m 
+1781872 2 mon 2 mon %T %t %m 
+1781872888 2 mon 14 mon %D %S %m 
+1781872888 2 mon 14 mon %T %S %a 
+1781872888 2 mon 14 mon %T %S %j 
+1781872888 2 mon 14 mon %T %S %x 
+1781872 +8 sec %S 
+0 +0 sec %Z 
+1781872 +3 min %M 
+1781872 +15 hour %H 
+1781872 +15 hour %T 
+1781872 +10 sec %T 
+1781872 +8 sec %T 
+0 + 0 sec %y 
+0 0 sec %y 
+1781872 +11 day %w 
+1781872 +11 day %a 

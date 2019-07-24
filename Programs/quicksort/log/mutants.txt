@@ -10543,7 +10543,7 @@ MUTANT # 693
 
 MUTANT # 694
 	Status Dead Active
-	Causa Mortis: Return-Code - Test Case 12
+	Causa Mortis: Stdout - Test Case 12
 	Descriptor size.: 40
 	Calling function starts at: 10256
 	Called function starts at: -1
