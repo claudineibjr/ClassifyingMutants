@@ -91,7 +91,7 @@ def getMinimalMutants(baseFolder, sourceFile):
     for line in linesFile:
         line = line.replace("\n", "")
         if len(line) > 0:
-            minimalMutants.append(line)
+            minimalMutants.append(int(line.strip()))
 
     return minimalMutants     
 
@@ -206,7 +206,7 @@ def getMutantInfosFromText(mutant):
     mutantNumber = int(str(mutant[0 : end_Number ]).strip())
     status = str(mutant[start_Status : end_Status ]).strip()
     operator = str(mutant[start_Operator : end_Operator ]).strip()
-    programGraphNode = int(str(mutant[start_ProgramGraphNode : end_ProgramGraphNode ]).strip())
+    programGraphNode = str(mutant[start_ProgramGraphNode : end_ProgramGraphNode ]).strip()
     offSet = int(str(mutant[start_OffSet : end_Offset ]).strip())
     getOut = int(str(mutant[start_GetOut : end_GetOut ]).strip())
     descriptorSize = int(str(mutant[start_DescriptorSize : end_DescriptorSize ]).strip())
@@ -250,7 +250,7 @@ def getMutantsInfo(baseFolder, minimalMutants, sessionName, units):
 
             # Caso a função onde ocorreu a mutação for diferente da função analisada, ignora este mutante pois ele será analisado em outro momento          
             functionName = str(gfcUtils.getOffsetFromCode(codeFile, callingFunction, descriptorSize))
-            functionName = functionName[2: functionName.find('(', 2)]
+            functionName = functionName[2: functionName.find('(', 2)].strip()
             if functionName != unitName:
                 continue
 
