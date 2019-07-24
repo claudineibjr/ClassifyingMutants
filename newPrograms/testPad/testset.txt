@@ -1,0 +1,14 @@
+abc 
+abc a 
+abc bc 
+abc abc 
+abc d 
+abcdefghcdeabcdefgh cde 
+abcdefgh cxy 
+abcdefghcxyz cxy 
+abcdef abcdefghijklcxy 
+abcdefghxyzabcdefgh cdyx 
+abcdefghcxyz cdxy 
+abcdedfgicgxy cdxy 
+BBBBB B!! 
+a1234bcdefghijklma023456 a12345 
