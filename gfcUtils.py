@@ -272,19 +272,22 @@ def prepareGFC(gfc, primitiveNodes):
         #           2 - Distância início | _iNDistancesBegin
         #           3 - Distância fim | _iNDistancesEnd
 
-
     gfc = str(gfc).splitlines()
     
     numNodes = int(gfc[0])
 
-    gfc = gfc[2:]
+    gfc = gfc[2: ]
 
     newGFC = {}
+    
+    # Variável utilizada para identificar o nome do último nó verificado (é atualizado quase toda vez)
     last = ""
     for infoGFC in gfc:
+        # Verifica se a corrente linha é referente ao número do nó
         if not infoGFC.__contains__(' ') and not infoGFC == '0':
             last = infoGFC
         else:
+            # A corrente linha é referente aos nós de destino do corrente nó (variável last)
             if int(last) <= numNodes:
                 infonode = []
                 infonode.append(list(infoGFC.split(' ')))                       #_iNTargets
@@ -344,7 +347,7 @@ def calcMinMaxAvgDistances(newGFC, infoGFC, typeDistance):
 
     totalDistance = 0
     count = 0
-    
+
     for distanceBegin in newGFC[infoGFC][typeDistance]:
         count += 1
         
@@ -359,7 +362,9 @@ def calcMinMaxAvgDistances(newGFC, infoGFC, typeDistance):
             if intDistanceBegin > maxDistance:
                 maxDistance = intDistanceBegin
 
-    average = totalDistance / count
+    # Caso a variável count seja 0, significa que é um nó inalcançável
+    if count > 0:
+        average = totalDistance / count
 
     return minDistance, maxDistance, average
 
