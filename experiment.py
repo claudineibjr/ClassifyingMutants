@@ -33,7 +33,7 @@ if __name__ == '__main__':
     #                   3 - Analyze
 
     # Seta o diretório base de onde deverão estar os programas
-    baseExperimentFolder = "{}/Programs_".format(os.getcwd())
+    baseExperimentFolder = "{}/Programs".format(os.getcwd())
 
     # Percorre todas as pastas dentro do diretório base
     for (subFolder, dirNames, files) in os.walk(baseExperimentFolder):

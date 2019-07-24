@@ -25,53 +25,7 @@ import proteum
 import util
 import gfcUtils
 
-#_IM_ = Information Mutants
-_IM_NUMBER = 0  # Número do mutante
-_IM_RESULT = 1  # Resultado (morto, vivo, equivalente)
-_IM_STATUS = 2  # Status do mutante (ativo, inativo)
-_IM_OPERATOR = 3 # Operador
-_IM_PROGRAM_GRAPH_NODE = 4 # Nó da mutação
-_IM_MINIMAL = 5 # É minimal?
-_IM_PRIMITIVE_ARC = 6 # É origem ou destino de arco primitivo?
-_IM_SOURCE_PRIMITIVE_ARC = 7 # É origem de arco primitivo?
-_IM_TARGET_PRIMITIVE_ARC = 8 # É destino de arco primitivo?
-_IM_EQUIVALENT = 9 # É equivalente?
-_IM_DISTANCE_BEGIN = 10 # Distâncias do nó inicial
-_IM_DISTANCE_BEGIN_MIN = 11 # Distância mínima do nó inicial
-_IM_DISTANCE_BEGIN_MAX = 12 # Distância máxima do nó inicial
-_IM_DISTANCE_BEGIN_AVG = 13 # Distância média do nó inicial
-_IM_DISTANCE_END = 14 # Distâncias do nó final
-_IM_DISTANCE_END_MIN = 15 # Distância mínima do nó final
-_IM_DISTANCE_END_MAX = 16 # Distância máxima do nó final
-_IM_DISTANCE_END_AVG = 17 # Distância média do nó final
-_IM_SOURCE_NODE = 18 # Nós origem
-_IM_TARGET_NODE = 19 # Nós destino
-_IM_SOURCE_NODE_PRIMITIVE = 20 # Algum dos nós de origem é origem ou destino do arco primitivo?
-_IM_TARGET_NODE_PRIMITIVE = 21 # Algum dos nós de destino é origem ou destino do arco primitivo?
-_IM_COMPLEXITY = 22 # Representa a complexidade do nó de mutação - Quantos mutantes foram gerados naquele nó de mutação
-_IM_TYPE_STATEMENT = 23 # Representa o tipo da declaração da linha
-
-#_IMA_ = Information mutants average - addMutantsInfo
-_IMA_MUTANTS = 0    #Representa o número total de mutantes
-_IMA_MINIMALS = 1   # Representa o número total de mutantes minimais
-_IMA_EQUIVALENTS = 2    # Representa o número total de mutantes equivalentes
-_IMA_PRIMITIVE_ARC = 3  # Representa o número total de arcos primitivos
-_IMA_SOURCE_PRIMITIVE_ARC = 4   # Representa as origens dos arcos primitivos
-_IMA_TARGET_PRIMITIVE_ARC = 5   # Representa os destinos dos arcos primitivos
-_IMA_MINIMALS_PRIMITIVE_ARC = 6 # Representa os minimais nos arcos primitivos
-_IMA_MINIMALS_SOURCE_PRIMITIVE_ARC = 7  # Representa os minimais na origem dos arcos primitivos
-_IMA_MINIMALS_TARGET_PRIMITIVE_ARC = 8  # Representa os minimais no destino dos arcos primitivos
-#_IMA_MINIMALS_NODE_SOURCE_OR_TARGET_PRIMITIVE = 9 # Representa os minimais nos arcos primitivos ou minimais com origens ou destinos pertencentes aos arcos primitivos
-#_IMA_NON_MINIMALS_NODE_SOURCE_OR_TARGET_PRIMITIVE = 10 # Representa os minimais nos arcos primitivos ou minimais com origens ou destinos pertencentes aos arcos primitivos
-_IMA_EQUIVALENTS_PRIMITIVE_ARC = 9 #11 # Representa os equivalentes nos arcos primitivos
-_IMA_EQUIVALENTS_SOURCE_PRIMITIVE_ARC = 10 #12  # Representa os equivalentes na origem dos arcos primitivos
-_IMA_EQUIVALENTS_TARGET_PRIMITIVE_ARC = 11 #13  # Representa os equivalentes no destino dos arcos primitivos
-#_IMA_EQUIVALENTS_NODE_SOURCE_OR_TARGET_PRIMITIVE = 14   # Representa os equivalentes nos arcos primitivos ou equivalentes com origens ou destinos pertencentes aos arcos primitivos
-#_IMA_NON_EQUIVALENTS_NODE_SOURCE_OR_TARGET_PRIMITIVE = 15   # Representa os equivalentes nos arcos primitivos ou equivalentes com origens ou destinos pertencentes aos arcos primitivos
-#_IMA_MINIMALS_SOURCES_ARE_PRIMITIVE_ARC = 16    # Representa os minimais com nós origens pertencentes aos arcos primitivos
-#_IMA_MINIMALS_TARGETS_ARE_PRIMITIVE_ARC = 17    # Representa os minimais com nós destinos pertencentes aos arcos primitivos
-#_IMA_EQUIVALENTS_SOURCES_ARE_PRIMITIVE_ARC = 18 # Representa os equivalentes com nós origens pertencentes aos arcos primitivos
-#_IMA_EQUIVALENTS_TARGETS_ARE_PRIMITIVE_ARC = 19 # Representa os equivalentes com nós destinos pertencentes aos arcos primitivos
+import constants
 
 def getMinimalMutants(baseFolder, sourceFile):
     fileName = "{}/log/minimal.txt".format(baseFolder)
@@ -311,7 +265,7 @@ def getMutantsInfo(baseFolder, minimalMutants, sessionName, units):
 
         # Atualiza as informações sobre os nós dos mutantes
         for iCount in range(lastICount, len(arrMutantsInfo), 1):
-            arrMutantsInfo[iCount][_IM_COMPLEXITY] = gfcUtils.getNumMutantsOnNode(mutantsOnNodes, arrMutantsInfo[iCount][_IM_PROGRAM_GRAPH_NODE])
+            arrMutantsInfo[iCount][constants._IM_COMPLEXITY] = gfcUtils.getNumMutantsOnNode(mutantsOnNodes, arrMutantsInfo[iCount][constants._IM_PROGRAM_GRAPH_NODE])
             lastICount = iCount
 
     arrHeaderMutants.append("#")
@@ -346,13 +300,13 @@ def computeAdicionalMutantsInfo(mutantsInfo):
     addMutantsInfo = []
 
     #Basic Info
-    totalMinimal = list(filter(lambda info: info[_IM_MINIMAL] == '1', mutantsInfo))
+    totalMinimal = list(filter(lambda info: info[constants._IM_MINIMAL] == '1', mutantsInfo))
     #totalNonMinimal = list(filter(lambda info: info[_IM_MINIMAL] == '0', mutantsInfo))
-    totalEquivalents = list(filter(lambda info: info[_IM_EQUIVALENT] == '1', mutantsInfo))
+    totalEquivalents = list(filter(lambda info: info[constants._IM_EQUIVALENT] == '1', mutantsInfo))
     #totalNonEquivalents = list(filter(lambda info: info[_IM_EQUIVALENT] == '0', mutantsInfo))
-    totalPrimitiveArc = list(filter(lambda info: info[_IM_PRIMITIVE_ARC] == '1', mutantsInfo))
-    totalSourcePrimitiveArc = list(filter(lambda info: info[_IM_SOURCE_PRIMITIVE_ARC] == '1', mutantsInfo))
-    totalTargetPrimitiveArc = list(filter(lambda info: info[_IM_TARGET_PRIMITIVE_ARC] == '1', mutantsInfo))
+    totalPrimitiveArc = list(filter(lambda info: info[constants._IM_PRIMITIVE_ARC] == '1', mutantsInfo))
+    totalSourcePrimitiveArc = list(filter(lambda info: info[constants._IM_SOURCE_PRIMITIVE_ARC] == '1', mutantsInfo))
+    totalTargetPrimitiveArc = list(filter(lambda info: info[constants._IM_TARGET_PRIMITIVE_ARC] == '1', mutantsInfo))
 
     numTotalMutants = len(mutantsInfo)
     numTotalMinimal = len(totalMinimal)
@@ -369,12 +323,12 @@ def computeAdicionalMutantsInfo(mutantsInfo):
     addMutantsInfo.append(numTotalTargetPrimitiveArc)   #_IMA_TARGET_PRIMITIVE_ARC
 
     #Additional info
-    minimalInPrimitiveArc = list(filter(lambda info: info[_IM_PRIMITIVE_ARC] == '1', totalMinimal))
-    minimalInSourcePrimitiveArc = list(filter(lambda info: info[_IM_SOURCE_PRIMITIVE_ARC] == '1', totalMinimal))
-    minimalInTargetPrimitiveArc = list(filter(lambda info: info[_IM_TARGET_PRIMITIVE_ARC] == '1', totalMinimal))
-    equivalentInPrimitiveArc = list(filter(lambda info: info[_IM_PRIMITIVE_ARC] == '1', totalEquivalents))
-    equivalentInSourcePrimitiveArc = list(filter(lambda info: info[_IM_SOURCE_PRIMITIVE_ARC] == '1', totalEquivalents))
-    equivalentInTargetPrimitiveArc = list(filter(lambda info: info[_IM_TARGET_PRIMITIVE_ARC] == '1', totalEquivalents))
+    minimalInPrimitiveArc = list(filter(lambda info: info[constants._IM_PRIMITIVE_ARC] == '1', totalMinimal))
+    minimalInSourcePrimitiveArc = list(filter(lambda info: info[constants._IM_SOURCE_PRIMITIVE_ARC] == '1', totalMinimal))
+    minimalInTargetPrimitiveArc = list(filter(lambda info: info[constants._IM_TARGET_PRIMITIVE_ARC] == '1', totalMinimal))
+    equivalentInPrimitiveArc = list(filter(lambda info: info[constants._IM_PRIMITIVE_ARC] == '1', totalEquivalents))
+    equivalentInSourcePrimitiveArc = list(filter(lambda info: info[constants._IM_SOURCE_PRIMITIVE_ARC] == '1', totalEquivalents))
+    equivalentInTargetPrimitiveArc = list(filter(lambda info: info[constants._IM_TARGET_PRIMITIVE_ARC] == '1', totalEquivalents))
     
     #minimalInPrimitiveArcOrWithSourceOrTargetInPrimitive = list(filter(lambda info:
     #    info[_IM_PRIMITIVE_ARC] == '1' or
@@ -447,11 +401,11 @@ def computeEssencialInfo(mutantsInfo, minimal_Equivalent):
         mutantRow = mutantsInfo[iCount]
         for jCount in range(len(mutantRow)):
             # Ignora algumas colunas que não são relevantes para ML e joga a coluna minimal ou equivalente para o final
-            if jCount != _IM_NUMBER and jCount != _IM_RESULT and jCount != _IM_STATUS \
-                and jCount != _IM_DISTANCE_BEGIN and jCount != _IM_DISTANCE_END \
-                and jCount != _IM_SOURCE_NODE and jCount != _IM_TARGET_NODE \
-                and jCount != _IM_SOURCE_NODE_PRIMITIVE and jCount != _IM_TARGET_NODE_PRIMITIVE \
-                and jCount != _IM_MINIMAL and jCount != _IM_EQUIVALENT:
+            if jCount != constants._IM_NUMBER and jCount != constants._IM_RESULT and jCount != constants._IM_STATUS \
+                and jCount != constants._IM_DISTANCE_BEGIN and jCount !=constants. _IM_DISTANCE_END \
+                and jCount != constants._IM_SOURCE_NODE and jCount != constants._IM_TARGET_NODE \
+                and jCount != constants._IM_SOURCE_NODE_PRIMITIVE and jCount != constants._IM_TARGET_NODE_PRIMITIVE \
+                and jCount != constants._IM_MINIMAL and jCount != constants._IM_EQUIVALENT:
                 mutantRowInfo = mutantRow[jCount]
                 essentialRow.append(mutantRowInfo)
 
@@ -460,35 +414,35 @@ def computeEssencialInfo(mutantsInfo, minimal_Equivalent):
 
         #Joga a coluna minimal ou equivalente para o final
         if minimal_Equivalent == 0:
-            essentialRow.append(mutantRow[_IM_EQUIVALENT])
-            essentialRow.append(mutantRow[_IM_MINIMAL])
+            essentialRow.append(mutantRow[constants._IM_EQUIVALENT])
+            essentialRow.append(mutantRow[constants._IM_MINIMAL])
         elif minimal_Equivalent == 1:
-            essentialRow.append(mutantRow[_IM_MINIMAL])
-            essentialRow.append(mutantRow[_IM_EQUIVALENT])
+            essentialRow.append(mutantRow[constants._IM_MINIMAL])
+            essentialRow.append(mutantRow[constants._IM_EQUIVALENT])
         essential.append(essentialRow)
 
     return essential
 
 def formatSummaryResults(addMutantsInfo):   
     content = "Informação;Número;Total;Percentual"
-    content = "{}\nMutantes minimais;{};{};{:.2f}".format(content,                          addMutantsInfo[_IMA_MINIMALS],              addMutantsInfo[_IMA_MUTANTS], addMutantsInfo[_IMA_MINIMALS] / addMutantsInfo[_IMA_MUTANTS] * 100)
-    content = "{}\nMutantes equivalentes;{};{};{:.2f}".format(content,                      addMutantsInfo[_IMA_EQUIVALENTS],           addMutantsInfo[_IMA_MUTANTS], addMutantsInfo[_IMA_EQUIVALENTS] / addMutantsInfo[_IMA_MUTANTS] * 100)
-    content = "{}\nMutantes nos arcos primitivos;{};{};{:.2f}".format(content,              addMutantsInfo[_IMA_PRIMITIVE_ARC],         addMutantsInfo[_IMA_MUTANTS], addMutantsInfo[_IMA_PRIMITIVE_ARC] / addMutantsInfo[_IMA_MUTANTS] * 100)
-    content = "{}\nMutantes na origem dos arcos primitivos;{};{};{:.2f}".format(content,    addMutantsInfo[_IMA_SOURCE_PRIMITIVE_ARC],  addMutantsInfo[_IMA_MUTANTS], addMutantsInfo[_IMA_SOURCE_PRIMITIVE_ARC] / addMutantsInfo[_IMA_MUTANTS] * 100)
-    content = "{}\nMutantes no destino dos arcos primitivos;{};{};{:.2f}".format(content,   addMutantsInfo[_IMA_TARGET_PRIMITIVE_ARC],  addMutantsInfo[_IMA_MUTANTS], addMutantsInfo[_IMA_TARGET_PRIMITIVE_ARC] / addMutantsInfo[_IMA_MUTANTS] * 100)
+    content = "{}\nMutantes minimais;{};{};{:.2f}".format(content,                          addMutantsInfo[constants._IMA_MINIMALS],              addMutantsInfo[constants._IMA_MUTANTS], addMutantsInfo[constants._IMA_MINIMALS] / addMutantsInfo[constants._IMA_MUTANTS] * 100)
+    content = "{}\nMutantes equivalentes;{};{};{:.2f}".format(content,                      addMutantsInfo[constants._IMA_EQUIVALENTS],           addMutantsInfo[constants._IMA_MUTANTS], addMutantsInfo[constants._IMA_EQUIVALENTS] / addMutantsInfo[constants._IMA_MUTANTS] * 100)
+    content = "{}\nMutantes nos arcos primitivos;{};{};{:.2f}".format(content,              addMutantsInfo[constants._IMA_PRIMITIVE_ARC],         addMutantsInfo[constants._IMA_MUTANTS], addMutantsInfo[constants._IMA_PRIMITIVE_ARC] / addMutantsInfo[constants._IMA_MUTANTS] * 100)
+    content = "{}\nMutantes na origem dos arcos primitivos;{};{};{:.2f}".format(content,    addMutantsInfo[constants._IMA_SOURCE_PRIMITIVE_ARC],  addMutantsInfo[constants._IMA_MUTANTS], addMutantsInfo[constants._IMA_SOURCE_PRIMITIVE_ARC] / addMutantsInfo[constants._IMA_MUTANTS] * 100)
+    content = "{}\nMutantes no destino dos arcos primitivos;{};{};{:.2f}".format(content,   addMutantsInfo[constants._IMA_TARGET_PRIMITIVE_ARC],  addMutantsInfo[constants._IMA_MUTANTS], addMutantsInfo[constants._IMA_TARGET_PRIMITIVE_ARC] / addMutantsInfo[constants._IMA_MUTANTS] * 100)
 
-    content = "{}\n\nMinimais em arcos primitivos;{};{};{:.2f}".format(content,                 addMutantsInfo[_IMA_MINIMALS_PRIMITIVE_ARC],            addMutantsInfo[_IMA_MINIMALS],      addMutantsInfo[_IMA_MINIMALS_PRIMITIVE_ARC] / addMutantsInfo[_IMA_MINIMALS] * 100)
-    content = "{}\nMinimais na origem dos arcos primitivos;{};{};{:.2f}".format(content,        addMutantsInfo[_IMA_MINIMALS_SOURCE_PRIMITIVE_ARC],     addMutantsInfo[_IMA_MINIMALS],      addMutantsInfo[_IMA_MINIMALS_SOURCE_PRIMITIVE_ARC] / addMutantsInfo[_IMA_MINIMALS] * 100)
-    content = "{}\nMinimais no destino dos arcos primitivos;{};{};{:.2f}".format(content,       addMutantsInfo[_IMA_MINIMALS_TARGET_PRIMITIVE_ARC],     addMutantsInfo[_IMA_MINIMALS],      addMutantsInfo[_IMA_MINIMALS_TARGET_PRIMITIVE_ARC] / addMutantsInfo[_IMA_MINIMALS] * 100)
+    content = "{}\n\nMinimais em arcos primitivos;{};{};{:.2f}".format(content,                 addMutantsInfo[constants._IMA_MINIMALS_PRIMITIVE_ARC],            addMutantsInfo[constants._IMA_MINIMALS],      addMutantsInfo[constants._IMA_MINIMALS_PRIMITIVE_ARC] / addMutantsInfo[constants._IMA_MINIMALS] * 100)
+    content = "{}\nMinimais na origem dos arcos primitivos;{};{};{:.2f}".format(content,        addMutantsInfo[constants._IMA_MINIMALS_SOURCE_PRIMITIVE_ARC],     addMutantsInfo[constants._IMA_MINIMALS],      addMutantsInfo[constants._IMA_MINIMALS_SOURCE_PRIMITIVE_ARC] / addMutantsInfo[constants._IMA_MINIMALS] * 100)
+    content = "{}\nMinimais no destino dos arcos primitivos;{};{};{:.2f}".format(content,       addMutantsInfo[constants._IMA_MINIMALS_TARGET_PRIMITIVE_ARC],     addMutantsInfo[constants._IMA_MINIMALS],      addMutantsInfo[constants._IMA_MINIMALS_TARGET_PRIMITIVE_ARC] / addMutantsInfo[constants._IMA_MINIMALS] * 100)
     #content = "{}\nMinimais em primitivos ou com origem/destino em primitivos;{};{};{:.2f}".format(content,       addMutantsInfo[_IMA_MINIMALS_NODE_SOURCE_OR_TARGET_PRIMITIVE],     addMutantsInfo[_IMA_MINIMALS],      addMutantsInfo[_IMA_MINIMALS_NODE_SOURCE_OR_TARGET_PRIMITIVE] / addMutantsInfo[_IMA_MINIMALS] * 100)
     #content = "{}\nNão Minimais em primitivos ou com origem/destino em primitivos;{};{};{:.2f}".format(content,       addMutantsInfo[_IMA_NON_MINIMALS_NODE_SOURCE_OR_TARGET_PRIMITIVE],     addMutantsInfo[_IMA_MUTANTS] - addMutantsInfo[_IMA_MINIMALS],      addMutantsInfo[_IMA_NON_MINIMALS_NODE_SOURCE_OR_TARGET_PRIMITIVE] / (addMutantsInfo[_IMA_MUTANTS] - addMutantsInfo[_IMA_MINIMALS]) * 100)
     
     #content = "{}\nMinimais com nó origem em arcos primitivos;{};{};{:.2f}".format(content,       addMutantsInfo[_IMA_MINIMALS_SOURCES_ARE_PRIMITIVE_ARC],     addMutantsInfo[_IMA_MINIMALS],      addMutantsInfo[_IMA_MINIMALS_SOURCES_ARE_PRIMITIVE_ARC] / addMutantsInfo[_IMA_MINIMALS] * 100)
     #content = "{}\nMinimais com nó destino em arcos primitivos;{};{};{:.2f}".format(content,       addMutantsInfo[_IMA_MINIMALS_TARGETS_ARE_PRIMITIVE_ARC],     addMutantsInfo[_IMA_MINIMALS],      addMutantsInfo[_IMA_MINIMALS_TARGETS_ARE_PRIMITIVE_ARC] / addMutantsInfo[_IMA_MINIMALS] * 100)
     
-    content = "{}\nEquivalentes em arcos primitivos;{};{};{:.2f}".format(content,               addMutantsInfo[_IMA_EQUIVALENTS_PRIMITIVE_ARC],         addMutantsInfo[_IMA_EQUIVALENTS],   addMutantsInfo[_IMA_EQUIVALENTS_PRIMITIVE_ARC] / addMutantsInfo[_IMA_EQUIVALENTS] * 100)
-    content = "{}\nEquivalentes na origem dos arcos primitivos;{};{};{:.2f}".format(content,    addMutantsInfo[_IMA_EQUIVALENTS_SOURCE_PRIMITIVE_ARC],  addMutantsInfo[_IMA_EQUIVALENTS],   addMutantsInfo[_IMA_EQUIVALENTS_SOURCE_PRIMITIVE_ARC] / addMutantsInfo[_IMA_EQUIVALENTS] * 100)
-    content = "{}\nEquivalentes no destino dos arcos primitivos;{};{};{:.2f}".format(content,   addMutantsInfo[_IMA_EQUIVALENTS_TARGET_PRIMITIVE_ARC],  addMutantsInfo[_IMA_EQUIVALENTS],   addMutantsInfo[_IMA_EQUIVALENTS_TARGET_PRIMITIVE_ARC] / addMutantsInfo[_IMA_EQUIVALENTS] * 100)
+    content = "{}\nEquivalentes em arcos primitivos;{};{};{:.2f}".format(content,               addMutantsInfo[constants._IMA_EQUIVALENTS_PRIMITIVE_ARC],         addMutantsInfo[constants._IMA_EQUIVALENTS],   addMutantsInfo[constants._IMA_EQUIVALENTS_PRIMITIVE_ARC] / addMutantsInfo[constants._IMA_EQUIVALENTS] * 100)
+    content = "{}\nEquivalentes na origem dos arcos primitivos;{};{};{:.2f}".format(content,    addMutantsInfo[constants._IMA_EQUIVALENTS_SOURCE_PRIMITIVE_ARC],  addMutantsInfo[constants._IMA_EQUIVALENTS],   addMutantsInfo[constants._IMA_EQUIVALENTS_SOURCE_PRIMITIVE_ARC] / addMutantsInfo[constants._IMA_EQUIVALENTS] * 100)
+    content = "{}\nEquivalentes no destino dos arcos primitivos;{};{};{:.2f}".format(content,   addMutantsInfo[constants._IMA_EQUIVALENTS_TARGET_PRIMITIVE_ARC],  addMutantsInfo[constants._IMA_EQUIVALENTS],   addMutantsInfo[constants._IMA_EQUIVALENTS_TARGET_PRIMITIVE_ARC] / addMutantsInfo[constants._IMA_EQUIVALENTS] * 100)
     #content = "{}\nEquivalentes em primitivos ou com origem/destino em primitivos;{};{};{:.2f}".format(content,   addMutantsInfo[_IMA_EQUIVALENTS_NODE_SOURCE_OR_TARGET_PRIMITIVE],  addMutantsInfo[_IMA_EQUIVALENTS],   addMutantsInfo[_IMA_EQUIVALENTS_NODE_SOURCE_OR_TARGET_PRIMITIVE] / addMutantsInfo[_IMA_EQUIVALENTS] * 100)
     #content = "{}\nNão equivalentes em primitivos ou com origem/destino em primitivos;{};{};{:.2f}".format(content,   addMutantsInfo[_IMA_NON_EQUIVALENTS_NODE_SOURCE_OR_TARGET_PRIMITIVE],  addMutantsInfo[_IMA_MUTANTS] - addMutantsInfo[_IMA_EQUIVALENTS],   addMutantsInfo[_IMA_NON_EQUIVALENTS_NODE_SOURCE_OR_TARGET_PRIMITIVE] / (addMutantsInfo[_IMA_MUTANTS] - addMutantsInfo[_IMA_EQUIVALENTS]) * 100)
     
