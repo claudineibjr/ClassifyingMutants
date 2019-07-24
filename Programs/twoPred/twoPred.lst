@@ -91,7 +91,7 @@ Teste Case # 3
 	Number of Dead Mutants: 128
 	Enabled
 	CPU Execution Time (1/100 sec.): 10
-	Total Execution Time (1/100 sec.): 11
+	Total Execution Time (1/100 sec.): 10
 	Retorn Code: 0
 	Parameters: 4 6 
 	Input:
@@ -163,7 +163,7 @@ Teste Case # 6
 	Number of Dead Mutants: 83
 	Enabled
 	CPU Execution Time (1/100 sec.): 10
-	Total Execution Time (1/100 sec.): 11
+	Total Execution Time (1/100 sec.): 10
 	Retorn Code: 0
 	Parameters: 6 4 
 	Input:
@@ -211,7 +211,7 @@ Teste Case # 8
 	Number of Dead Mutants: 82
 	Enabled
 	CPU Execution Time (1/100 sec.): 10
-	Total Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 11
 	Retorn Code: 0
 	Parameters: 5 5 
 	Input:

@@ -632,7 +632,7 @@ MUTANT # 41
 
 MUTANT # 42
 	Status Dead Active
-	Causa Mortis: Stdout - Test Case 4
+	Causa Mortis: Return-Code - Test Case 4
 	Descriptor size.: 32
 	Calling function starts at: 9953
 	Called function starts at: -1
@@ -647,7 +647,7 @@ MUTANT # 42
 
 MUTANT # 43
 	Status Dead Active
-	Causa Mortis: Return-Code - Test Case 4
+	Causa Mortis: Stdout - Test Case 4
 	Descriptor size.: 32
 	Calling function starts at: 9953
 	Called function starts at: -1
@@ -767,7 +767,7 @@ MUTANT # 50
 
 MUTANT # 51
 	Status Dead Active
-	Causa Mortis: Stdout - Test Case 4
+	Causa Mortis: Return-Code - Test Case 4
 	Descriptor size.: 32
 	Calling function starts at: 9953
 	Called function starts at: -1
@@ -827,7 +827,7 @@ MUTANT # 54
 
 MUTANT # 55
 	Status Dead Active
-	Causa Mortis: Return-Code - Test Case 4
+	Causa Mortis: Stdout - Test Case 4
 	Descriptor size.: 32
 	Calling function starts at: 9953
 	Called function starts at: -1
@@ -842,7 +842,7 @@ MUTANT # 55
 
 MUTANT # 56
 	Status Dead Active
-	Causa Mortis: Return-Code - Test Case 4
+	Causa Mortis: Stdout - Test Case 4
 	Descriptor size.: 32
 	Calling function starts at: 9953
 	Called function starts at: -1
@@ -2119,7 +2119,7 @@ MUTANT # 138
 
 MUTANT # 139
 	Status Dead Active
-	Causa Mortis: Return-Code - Test Case 4
+	Causa Mortis: Stdout - Test Case 4
 	Descriptor size.: 36
 	Calling function starts at: 9953
 	Called function starts at: -1
@@ -2134,7 +2134,7 @@ MUTANT # 139
 
 MUTANT # 140
 	Status Dead Active
-	Causa Mortis: Return-Code - Test Case 4
+	Causa Mortis: Stdout - Test Case 4
 	Descriptor size.: 36
 	Calling function starts at: 9953
 	Called function starts at: -1

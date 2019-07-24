@@ -1,0 +1,369 @@
+
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+[]
+[]                  PROGRAM TESTE: Calculation
+[]----------------------------------------------------------
+[]   SOURCE FILE: Calculation
+[]
+[]   TOTAL MUTANTS: 928
+[]
+[]   ANOMALOUS MUTANTS: 0
+[]
+[]   ACTIVE MUTANTS: 928
+[]
+[]   ALIVE MUTANTS: 0
+[]
+[]   EQUIVALENT MUTANTS: 86
+[]
+[]   MUTATION SCORE: 1.000000
+[]
+[]   OPERATORS:
+[]   u-Cccr              9    u-CCDL              6    u-Ccsr             45    
+[]   u-CRCR            150    u-OAAA             16    u-OABA             12    
+[]   u-OAEA              4    u-OASA              8    u-OCNG              9    
+[]   u-OEAA             30    u-OEBA             18    u-OESA             12    
+[]   u-Oido              2    u-OODL             24    u-ORAN             45    
+[]   u-ORBN             27    u-ORLN             18    u-ORRN             45    
+[]   u-ORSN             18    u-SMTC              3    u-SMTT              3    
+[]   u-SMVB              3    u-SRSR             54    u-SSDL             36    
+[]   u-STRI             12    u-STRP             36    u-SWDD              1    
+[]   u-VDTR             90    u-VLSR            124    u-VTWD             60    
+[]   u-VVDL              8    
+[]
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+
+Teste Case # 1
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 733
+	Number of Mutants Dead by Stdout: 56
+	Number of Mutants Dead by Retcode : 2
+	Number of Mutants Dead by Timeout: 34
+	Number of Mutants Dead by Trap: 17
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 109
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 11
+	Retorn Code: 0
+	Parameters: 1 
+	Input:
+
+	Output:
+0
+5
+-5
+5
+-5
+-10
+0
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 2
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 445
+	Number of Mutants Dead by Stdout: 217
+	Number of Mutants Dead by Retcode : 54
+	Number of Mutants Dead by Timeout: 60
+	Number of Mutants Dead by Trap: 66
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 397
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: 2 
+	Input:
+
+	Output:
+0
+0
+0
+0
+0
+-25
+25
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 3
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 400
+	Number of Mutants Dead by Stdout: 190
+	Number of Mutants Dead by Retcode : 10
+	Number of Mutants Dead by Timeout: 176
+	Number of Mutants Dead by Trap: 66
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 442
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: 3 
+	Input:
+
+	Output:
+ERROR: Divide by zero.0
+ERROR: Divide by zero.0
+ERROR: Divide by zero.0
+0
+0
+-1
+1
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 4
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 466
+	Number of Mutants Dead by Stdout: 217
+	Number of Mutants Dead by Retcode : 41
+	Number of Mutants Dead by Timeout: 55
+	Number of Mutants Dead by Trap: 63
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 376
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: 4 
+	Input:
+
+	Output:
+1
+1
+1
+0
+0
+1
+1
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 5
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 420
+	Number of Mutants Dead by Stdout: 227
+	Number of Mutants Dead by Retcode : 6
+	Number of Mutants Dead by Timeout: 138
+	Number of Mutants Dead by Trap: 51
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 422
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: 5 
+	Input:
+
+	Output:
+-5
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 6
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 466
+	Number of Mutants Dead by Stdout: 178
+	Number of Mutants Dead by Retcode : 6
+	Number of Mutants Dead by Timeout: 143
+	Number of Mutants Dead by Trap: 49
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 376
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: 6 
+	Input:
+
+	Output:
+-1
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 7
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 467
+	Number of Mutants Dead by Stdout: 193
+	Number of Mutants Dead by Retcode : 6
+	Number of Mutants Dead by Timeout: 128
+	Number of Mutants Dead by Trap: 48
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 375
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: 7 
+	Input:
+
+	Output:
+2
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 8
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 492
+	Number of Mutants Dead by Stdout: 154
+	Number of Mutants Dead by Retcode : 6
+	Number of Mutants Dead by Timeout: 141
+	Number of Mutants Dead by Trap: 49
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 350
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: 8 
+	Input:
+
+	Output:
+-1
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 9
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 487
+	Number of Mutants Dead by Stdout: 230
+	Number of Mutants Dead by Retcode : 39
+	Number of Mutants Dead by Timeout: 44
+	Number of Mutants Dead by Trap: 42
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 355
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: 10 
+	Input:
+
+	Output:
+20
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 10
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 619
+	Number of Mutants Dead by Stdout: 144
+	Number of Mutants Dead by Retcode : 35
+	Number of Mutants Dead by Timeout: 16
+	Number of Mutants Dead by Trap: 28
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 223
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: 11 
+	Input:
+
+	Output:
+20
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 11
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 520
+	Number of Mutants Dead by Stdout: 198
+	Number of Mutants Dead by Retcode : 33
+	Number of Mutants Dead by Timeout: 50
+	Number of Mutants Dead by Trap: 41
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 322
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 11
+	Retorn Code: 0
+	Parameters: 12 
+	Input:
+
+	Output:
+-5
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 12
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 639
+	Number of Mutants Dead by Stdout: 118
+	Number of Mutants Dead by Retcode : 39
+	Number of Mutants Dead by Timeout: 16
+	Number of Mutants Dead by Trap: 30
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 203
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: 13 
+	Input:
+
+	Output:
+1
+1
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 13
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 700
+	Number of Mutants Dead by Stdout: 72
+	Number of Mutants Dead by Retcode : 23
+	Number of Mutants Dead by Timeout: 14
+	Number of Mutants Dead by Trap: 33
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 142
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: 14 
+	Input:
+
+	Output:
+0
+
+	Stderr:
+
+_________________________________________________

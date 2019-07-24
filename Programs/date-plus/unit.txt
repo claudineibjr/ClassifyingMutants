@@ -1,0 +1,2 @@
+incrdate
+printdate

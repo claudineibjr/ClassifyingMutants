@@ -3047,7 +3047,7 @@ MUTANT # 202
 
 MUTANT # 203
 	Status Dead Active
-	Causa Mortis: Stdout - Test Case 6
+	Causa Mortis: Stdout - Test Case 7
 	Descriptor size.: 40
 	Calling function starts at: 21699
 	Called function starts at: -1

@@ -1,0 +1,6 @@
+less01
+less02
+sink
+sort
+isSorted
+show

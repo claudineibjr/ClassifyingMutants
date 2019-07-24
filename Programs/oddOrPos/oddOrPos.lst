@@ -1,0 +1,201 @@
+
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+[]
+[]                  PROGRAM TESTE: oddOrPos
+[]----------------------------------------------------------
+[]   SOURCE FILE: oddOrPos
+[]
+[]   TOTAL MUTANTS: 361
+[]
+[]   ANOMALOUS MUTANTS: 0
+[]
+[]   ACTIVE MUTANTS: 361
+[]
+[]   ALIVE MUTANTS: 0
+[]
+[]   EQUIVALENT MUTANTS: 70
+[]
+[]   MUTATION SCORE: 1.000000
+[]
+[]   OPERATORS:
+[]   u-Cccr             12    u-CCDL              4    u-Ccsr             27    
+[]   u-CRCR             45    u-OAAN              8    u-OABN              6    
+[]   u-OALN              4    u-OARN             12    u-OASN              4    
+[]   u-OCNG              2    u-OEAA              5    u-OEBA              3    
+[]   u-OESA              2    u-Oido              2    u-OLAN             10    
+[]   u-OLBN              6    u-OLLN              2    u-OLNG              6    
+[]   u-OLRN             12    u-OLSN              4    u-OODL             17    
+[]   u-ORAN             20    u-ORBN             12    u-ORLN              8    
+[]   u-ORRN             20    u-ORSN              8    u-SMTC              1    
+[]   u-SMTT              1    u-SRSR              5    u-SSDL              7    
+[]   u-STRI              2    u-STRP              7    u-VDTR             27    
+[]   u-VLSR             27    u-VTWD             18    u-VVDL              5    
+[]
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+
+Teste Case # 1
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 267
+	Number of Mutants Dead by Stdout: 9
+	Number of Mutants Dead by Retcode : 9
+	Number of Mutants Dead by Timeout: 0
+	Number of Mutants Dead by Trap: 6
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 24
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: 
+	Input:
+
+	Output:
+Number of elements that are either odd or positive is: 0
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 2
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 146
+	Number of Mutants Dead by Stdout: 95
+	Number of Mutants Dead by Retcode : 28
+	Number of Mutants Dead by Timeout: 2
+	Number of Mutants Dead by Trap: 20
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 145
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: 1 2 3 4 
+	Input:
+
+	Output:
+Number of elements that are either odd or positive is: 4
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 3
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 80
+	Number of Mutants Dead by Stdout: 156
+	Number of Mutants Dead by Retcode : 30
+	Number of Mutants Dead by Timeout: 2
+	Number of Mutants Dead by Trap: 23
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 211
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: -1 2 3 4 
+	Input:
+
+	Output:
+Number of elements that are either odd or positive is: 4
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 4
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 74
+	Number of Mutants Dead by Stdout: 160
+	Number of Mutants Dead by Retcode : 31
+	Number of Mutants Dead by Timeout: 2
+	Number of Mutants Dead by Trap: 24
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 217
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: 1 -2 3 4 
+	Input:
+
+	Output:
+Number of elements that are either odd or positive is: 3
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 5
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 41
+	Number of Mutants Dead by Stdout: 189
+	Number of Mutants Dead by Retcode : 31
+	Number of Mutants Dead by Timeout: 2
+	Number of Mutants Dead by Trap: 28
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 250
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: 0 1 2 -3 4 
+	Input:
+
+	Output:
+Number of elements that are either odd or positive is: 4
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 6
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 64
+	Number of Mutants Dead by Stdout: 165
+	Number of Mutants Dead by Retcode : 31
+	Number of Mutants Dead by Timeout: 2
+	Number of Mutants Dead by Trap: 29
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 227
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: 0 1 2 3 -4 
+	Input:
+
+	Output:
+Number of elements that are either odd or positive is: 3
+
+	Stderr:
+
+_________________________________________________
+
+
+Teste Case # 7
+	Number of Not Executed Mutants: 0
+	Number of Alive Mutants: 67
+	Number of Mutants Dead by Stdout: 168
+	Number of Mutants Dead by Retcode : 31
+	Number of Mutants Dead by Timeout: 2
+	Number of Mutants Dead by Trap: 23
+	Number of Mutants Avoided: 0
+	Number of Dead Mutants: 224
+	Enabled
+	CPU Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 10
+	Retorn Code: 0
+	Parameters: -2 -4 -5 -6 -7 -8 -9 -1 
+	Input:
+
+	Output:
+Number of elements that are either odd or positive is: 4
+
+	Stderr:
+
+_________________________________________________

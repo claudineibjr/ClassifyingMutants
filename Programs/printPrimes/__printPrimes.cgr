@@ -1,0 +1,12 @@
+
+@isDivisible
+
+
+
+@printPrimes
+     isDivisible         printf
+
+
+@main
+     atoi                printPrimes
+

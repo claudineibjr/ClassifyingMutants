@@ -190,7 +190,7 @@ Teste Case # 7
 	Number of Dead Mutants: 179
 	Enabled
 	CPU Execution Time (1/100 sec.): 10
-	Total Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 11
 	Retorn Code: 0
 	Parameters: abcdefgh cxy 
 	Input:
@@ -214,7 +214,7 @@ Teste Case # 8
 	Number of Dead Mutants: 429
 	Enabled
 	CPU Execution Time (1/100 sec.): 10
-	Total Execution Time (1/100 sec.): 11
+	Total Execution Time (1/100 sec.): 10
 	Retorn Code: 0
 	Parameters: abcdefghcxyz cxy 
 	Input:
@@ -238,7 +238,7 @@ Teste Case # 9
 	Number of Dead Mutants: 79
 	Enabled
 	CPU Execution Time (1/100 sec.): 10
-	Total Execution Time (1/100 sec.): 11
+	Total Execution Time (1/100 sec.): 10
 	Retorn Code: 0
 	Parameters: abcdef abcdefghijklcxy 
 	Input:
@@ -334,7 +334,7 @@ Teste Case # 13
 	Number of Dead Mutants: 193
 	Enabled
 	CPU Execution Time (1/100 sec.): 10
-	Total Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 11
 	Retorn Code: 0
 	Parameters: BBBBB B!! 
 	Input:
@@ -358,7 +358,7 @@ Teste Case # 14
 	Number of Dead Mutants: 210
 	Enabled
 	CPU Execution Time (1/100 sec.): 10
-	Total Execution Time (1/100 sec.): 10
+	Total Execution Time (1/100 sec.): 11
 	Retorn Code: 0
 	Parameters: a1234bcdefghijklma023456 a12345 
 	Input:
