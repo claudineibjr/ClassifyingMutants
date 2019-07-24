@@ -174,6 +174,46 @@ def executeProteum(baseFolder, sourceFile, sessionName, executableFile, executio
     print ('\n##### \tExibe mutantes ' + util.formatNow() + '\t#####'         )
     proteum.generateReport(sessionName, directory)
 
+def getMutantInfosFromText(mutant):
+    mutant = mutant.strip()
+    start = mutant.find('\n')
+
+    if start == -1:
+        return None, None, None, None, None, None, None, None
+
+    # Define o índice inicial de cada informação
+    start_Number = start
+    start_Status = mutant.find('Status ') + len('Status ')
+    start_Operator = mutant.find('Operator: ') + len('Operator: ')
+    start_Operator = mutant.find('(', start_Operator) + 1
+    start_ProgramGraphNode = mutant.find('Program graph node: ') + len('Program graph node: ')
+    start_OffSet = mutant.find('Offset: ') + len('Offset: ')
+    start_GetOut = mutant.find('get out ', start_OffSet) + len('get out ')
+    start_DescriptorSize = mutant.find('Descriptor size.: ') + len('Descriptor size.: ')
+    start_CallingFunction = mutant.find('Calling function starts at: ') + len('Calling function starts at: ')
+
+    # Define o índice final de cada informação
+    end_Number = mutant.find('\n', start_Number)
+    end_Status = mutant.find('\n', start_Status)
+    end_Operator = mutant.find(')', start_Operator)
+    end_ProgramGraphNode = mutant.find('\n', start_ProgramGraphNode)
+    end_Offset = mutant.find(',', start_OffSet)
+    end_GetOut = mutant.find(' characters', start_GetOut)
+    end_DescriptorSize = mutant.find('\n', start_DescriptorSize)
+    end_CallingFunction = mutant.find('\n', start_CallingFunction)
+
+    # Encontra as informaçõões entre os índices inicial e final
+    mutantNumber = int(str(mutant[0 : end_Number ]).strip())
+    status = str(mutant[start_Status : end_Status ]).strip()
+    operator = str(mutant[start_Operator : end_Operator ]).strip()
+    programGraphNode = int(str(mutant[start_ProgramGraphNode : end_ProgramGraphNode ]).strip())
+    offSet = int(str(mutant[start_OffSet : end_Offset ]).strip())
+    getOut = int(str(mutant[start_GetOut : end_GetOut ]).strip())
+    descriptorSize = int(str(mutant[start_DescriptorSize : end_DescriptorSize ]).strip())
+    callingFunction = int(str(mutant[start_CallingFunction : end_CallingFunction ]).strip())
+
+    return mutantNumber, status, operator, programGraphNode, offSet, getOut, descriptorSize, callingFunction
+
 def getMutantsInfo(baseFolder, minimalMutants, sessionName, units):
     arrMutantsInfo = []
     arrHeaderMutants = []
@@ -199,139 +239,75 @@ def getMutantsInfo(baseFolder, minimalMutants, sessionName, units):
         # Divide o arquivo de mutantes pelo caracter # (cada um representa um mutante)
         mutants = mutantsInfoFile.split("#")
         for mutant in mutants:
-            mutantInfos = mutant.splitlines()
-
-            if len(mutantInfos) < 4:
-                continue
-
+            
             # Variável utilizada para identificar o último mutante analisado
             lastICount = 0
 
-            # Caso a função onde ocorreu a mutação for diferente da função analisada, ignora
-            functionName = ""
-            descriptorSize = -1
-            callingFunctionStarts = -1
-            descriptorSize = int(str(mutantInfos[3]).strip()[18: ])
-            callingFunctionStarts = int(str(mutantInfos[4]).strip()[28: ])
-            
-            functionName = str(gfcUtils.getOffsetFromCode(codeFile, callingFunctionStarts, descriptorSize))
+            # Busca todas as informações relevantes do mutante que estão no arquivo
+            mutantNumber, status, operator, programGraphNode, offSet, getOut, descriptorSize, callingFunction = getMutantInfosFromText(mutant)
+            if mutantNumber == None:
+                continue
+
+            # Caso a função onde ocorreu a mutação for diferente da função analisada, ignora este mutante pois ele será analisado em outro momento          
+            functionName = str(gfcUtils.getOffsetFromCode(codeFile, callingFunction, descriptorSize))
             functionName = functionName[2: functionName.find('(', 2)]
             if functionName != unitName:
                 continue
 
-            # Informações do mutante
-            result = ""
-            status = ""
-            operator = ""
-            programGraphNode = ""
-            mutantNumber = ""
-            minimal = False
-            primitiveArc = False
-            sourcePrimitiveArc = False
-            targetPrimitiveArc = False
-            equivalent = False
-            distanceBegin = ""
-            distanceBegin_min = ""
-            distanceBegin_max = ""
-            distanceBegin_avg = ""
-            distanceEnd = ""
-            distanceEnd_min = ""
-            distanceEnd_max = ""
-            distanceEnd_avg = ""
-            sourceNode = ""
-            targetNode = ""
-            sourcesNodeIsPrimitive = ""
-            targetsNodeIsPrimitive = ""
+            # Define se o mutante é minimal ou não
+            minimal = mutantNumber in minimalMutants
 
-            # Analisa linha a linha dos mutantes
-            for mutantInfo in mutantInfos:
-                mutantInfo = mutantInfo.strip()
+            # Define se o mutante é equivalente ou não
+            equivalent = status.__contains__("Equivalent")
 
-                if len(mutantInfo) > 0:
-                    if mutantInfo.__contains__("Status"):
-                        result = mutantInfo[7:]
-                        result = result[0: result.find(" ")]
-                        status = mutantInfo[mutantInfo.find(" ", 8) + 1: ]
+            # Verifica o tipo de declaração que houve mutação
+            descriptor, descriptor_line = gfcUtils.getOffsetFromCode(codeFile, offSet, getOut)
+            typeStatement = gfcUtils.getTypeStatementFromCode(descriptor, descriptor_line, sessionName)
 
-                        equivalent = result.__contains__("Equivalent")
+            # Calcula o número de mutantes no nó da mutação
+            mutantsOnNodes = gfcUtils.getMutantsOnNode(mutantsOnNodes, programGraphNode)
 
-                    elif mutantInfo.__contains__("Operator"):
-                        operator = mutantInfo[mutantInfo.find("(") + 1: mutantInfo.find(")")]
-                    elif mutantInfo.__contains__("Program graph node"):
-                        programGraphNode = mutantInfo[mutantInfo.find(":") + 2:]
+            # Busca os nós origens e destinos
+                # Calcula as informações de distância do nó da mutação até os nós inicias \
+                    # Calcula as informações de distância do nó da mutação até os nós finais \
+                        # Calcula as informações de pertencimento ou não aos arcos primitivos
+            sourceNode, targetNode, \
+                distanceBegin, distanceBegin_min, distanceBegin_max, distanceBegin_avg,\
+                    distanceEnd, distanceEnd_min, distanceEnd_max, distanceEnd_avg,\
+                        sourcePrimitiveArc, targetPrimitiveArc, sourcesNodeIsPrimitive, targetsNodeIsPrimitive = gfcUtils.getInfoNode(gfc, programGraphNode, numNodes)
 
-                        # Calcula o número de mutantes neste nó
-                        mutantsOnNodes = gfcUtils.getMutantsOnNode(mutantsOnNodes, programGraphNode)
+            # Define se o mutante pertence aos arcos primitivos ou não
+            primitiveArc = sourcePrimitiveArc or targetPrimitiveArc
 
-                        _source, _target, \
-                            _distanceFromBegin, _distanceFromBegin_min, _distanceFromBegin_max, _distanceFromBegin_avg,\
-                                _distanceFromEnd, _distanceFromEnd_min, _distanceFromEnd_max, _distanceFromEnd_avg,\
-                                    _arcPrimSource, _arcPrimTarget, _sourcesNodeIsPrimitive, _targetsNodeIsPrimitive = gfcUtils.getInfoNode(gfc, programGraphNode, numNodes)
-                        
-                        distanceBegin = _distanceFromBegin
-                        distanceBegin_min = _distanceFromBegin_min
-                        distanceBegin_max = _distanceFromBegin_max
-                        distanceBegin_avg = _distanceFromBegin_avg
-                        
-                        distanceEnd = _distanceFromEnd
-                        distanceEnd_min = _distanceFromEnd_min
-                        distanceEnd_max = _distanceFromEnd_max
-                        distanceEnd_avg = _distanceFromEnd_avg
+            # Reune todas as informações dos mutantes num array
+            arrMutantInfo = []
+            arrMutantInfo.append(mutantNumber)
+            arrMutantInfo.append(status) # Temporariamente a coluna _IM_RESULT vai conter o status
+            arrMutantInfo.append(status)
+            arrMutantInfo.append(operator)
+            arrMutantInfo.append(programGraphNode)
+            arrMutantInfo.append("1" if minimal else "0")
+            arrMutantInfo.append("1" if primitiveArc else "0")
+            arrMutantInfo.append("1" if sourcePrimitiveArc else "0")
+            arrMutantInfo.append("1" if targetPrimitiveArc else "0")
+            arrMutantInfo.append("1" if equivalent else "0")
+            arrMutantInfo.append(distanceBegin)
+            arrMutantInfo.append(distanceBegin_min)
+            arrMutantInfo.append(distanceBegin_max)
+            arrMutantInfo.append(distanceBegin_avg)
+            arrMutantInfo.append(distanceEnd)
+            arrMutantInfo.append(distanceEnd_min)
+            arrMutantInfo.append(distanceEnd_max)
+            arrMutantInfo.append(distanceEnd_avg)
+            arrMutantInfo.append(sourceNode)
+            arrMutantInfo.append(targetNode)
+            arrMutantInfo.append(sourcesNodeIsPrimitive)
+            arrMutantInfo.append(targetsNodeIsPrimitive)
+            arrMutantInfo.append('[MutantsOnNode]')
+            arrMutantInfo.append(typeStatement)
 
-                        sourceNode = _source
-                        targetNode = _target
-                        sourcePrimitiveArc = _arcPrimSource
-                        targetPrimitiveArc = _arcPrimTarget
-                        primitiveArc = sourcePrimitiveArc or targetPrimitiveArc
-
-                        sourcesNodeIsPrimitive = _sourcesNodeIsPrimitive
-                        targetsNodeIsPrimitive = _targetsNodeIsPrimitive
-
-                    elif mutantInfo.__contains__("Offset"):
-                        getOut = int(mutantInfo[mutantInfo.find('get out ') + len('get out ') : ].replace(' characters', ''))
-                        offset = int(mutantInfo[8: mutantInfo.find(',')])
-
-                        descriptor, descriptor_line = gfcUtils.getOffsetFromCode(codeFile, offset, getOut)
-
-                        typeStatement = gfcUtils.getTypeStatementFromCode(descriptor, descriptor_line, sessionName)
-
-                    else:
-                        if mutantInfo.isnumeric():
-                            mutantNumber = mutantInfo
-                            
-                            if mutantNumber in minimalMutants:
-                                minimal = True
-                            else:
-                                minimal = False
-            
-            if len(mutantNumber.strip()) > 0:
-                arrMutantInfo = []
-                arrMutantInfo.append(mutantNumber)
-                arrMutantInfo.append(result)
-                arrMutantInfo.append(status)
-                arrMutantInfo.append(operator)
-                arrMutantInfo.append(programGraphNode)
-                arrMutantInfo.append("1" if minimal else "0")
-                arrMutantInfo.append("1" if primitiveArc else "0")
-                arrMutantInfo.append("1" if sourcePrimitiveArc else "0")
-                arrMutantInfo.append("1" if targetPrimitiveArc else "0")
-                arrMutantInfo.append("1" if equivalent else "0")
-                arrMutantInfo.append(distanceBegin)
-                arrMutantInfo.append(distanceBegin_min)
-                arrMutantInfo.append(distanceBegin_max)
-                arrMutantInfo.append(distanceBegin_avg)
-                arrMutantInfo.append(distanceEnd)
-                arrMutantInfo.append(distanceEnd_min)
-                arrMutantInfo.append(distanceEnd_max)
-                arrMutantInfo.append(distanceEnd_avg)
-                arrMutantInfo.append(sourceNode)
-                arrMutantInfo.append(targetNode)
-                arrMutantInfo.append(sourcesNodeIsPrimitive)
-                arrMutantInfo.append(targetsNodeIsPrimitive)
-                arrMutantInfo.append('[MutantsOnNode]')
-                arrMutantInfo.append(typeStatement)
-
-                arrMutantsInfo.append(arrMutantInfo)
+            # Adiciona as informações do mutante num outro array que contém todas as informações de todos os mutantes
+            arrMutantsInfo.append(arrMutantInfo)
 
         # Atualiza as informações sobre os nós dos mutantes
         for iCount in range(lastICount, len(arrMutantsInfo), 1):
