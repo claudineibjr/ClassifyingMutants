@@ -128,11 +128,11 @@ def computeFullMutants():
     maxK = 40
 
     print('Calculando para identificar mutantes minimais')
-    fileName = 'ML/Mutants/Minimal/With ColumnNames With Operator/1Full Mutants.csv'
+    fileName = 'ML/Mutants/Minimal/With ColumnNames/1Full Mutants.csv'
     knnMain(fileName, maxK, 0)
     
     print('Calculando para identificar mutantes equivalentes')
-    fileName = 'ML/Mutants/Equivalent/With ColumnNames With Operator/1Full Mutants.csv'
+    fileName = 'ML/Mutants/Equivalent/With ColumnNames/1Full Mutants.csv'
     knnMain(fileName, maxK, 1)
 
 def main():
