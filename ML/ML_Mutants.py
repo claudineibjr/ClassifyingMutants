@@ -87,13 +87,27 @@ def preProcessing(dataSetFrame, numProperties, testSetSize, columnNames, targetC
 
     return X_train, X_test, y_train, y_test
 
-def trainingAndPredictions(numberNeighbors, X_train, y_train, X_test):
+def knn_trainingAndPredictions(numberNeighbors, X_train, y_train, X_test):
     ##################################
     # --- Training and Predictions ---
     ##################################
     
     #   It is extremely straight forward to train the KNN algorithm and make predictions with it, especially when using Scikit-Learn.
     classifier = KNeighborsClassifier(n_neighbors=numberNeighbors)
+    classifier.fit(X_train, y_train)
+
+    #   The final step is to make predictions on our test data. To do so, execute the following script:
+    y_pred = classifier.predict(X_test)
+
+    return y_pred
+
+def dt_trainingAndPredictions(minSamplesSplit, X_train, y_train, X_test):
+    ##################################
+    # --- Training and Predictions ---
+    ##################################
+    
+    #   It is extremely straight forward to train the KNN algorithm and make predictions with it, especially when using Scikit-Learn.
+    classifier = DecisionTreeClassifier(min_samples_split = minSamplesSplit)
     classifier.fit(X_train, y_train)
 
     #   The final step is to make predictions on our test data. To do so, execute the following script:
@@ -175,11 +189,65 @@ def comparingErrorRateWithKValue(maxK, X_train, y_train, X_test, y_test):
     plt.ylabel('Mean Error')
     plt.show()
 
-def knnMain(fileName, columnNames, numProperties, testSetSize, maxK, targetColumn, resultsFileName, showComparisonBetweenNeighbors = False):
-    dataSet = importDataSet(fileName, columnNames)
+def dtMain(maxSampleSplit, resultsFileName, X_train, X_test, y_train, y_test, showComparisonBetweenNeighbors = False):
+    # Array com todas as métricas coletadas ao aplicar o algoritmo de ML
+    data = []
+    arrAccuracy = []
+    arrPrecision = []
+    arrRecall = []
+    arrF1 = []
+    arrTPR = []
+    arrFPR = []
 
-    X_train, X_test, y_train, y_test = preProcessing(dataSet, numProperties, testSetSize, columnNames, targetColumn)
-    
+    for minSamplesSplit in range(5, maxSampleSplit + 1, 10):
+        y_pred = dt_trainingAndPredictions(minSamplesSplit, X_train, y_train, X_test)
+
+        accuracy, precision, recall, f1, TPR, FPR = evaluatingAlgorithm(y_test, y_pred)
+        accuracy *= 100
+        precision *= 100
+        recall *= 100
+        f1 *= 100
+        TPR *= 100
+        FPR *= 100
+
+        arrAccuracy.append(accuracy)
+        arrPrecision.append(precision)
+        arrRecall.append(recall)
+        arrF1.append(f1)
+        arrTPR.append(TPR)
+        arrFPR.append(FPR)
+
+        subData = []
+        subData.append(minSamplesSplit)
+        subData.append(accuracy)
+        subData.append(precision)
+        subData.append(recall)
+        subData.append(f1)
+        subData.append(TPR)
+        subData.append(FPR)
+
+        data.append(subData)
+
+        #print("{:2d} Vizinhos | Acurácia {:.6f}%\tPrecisão: {:.6f}%\tRecall: {:.6f}%\tF1: {:.6f}%\tTPR: {:.6f}%\tFPR: {:.6f}%".format(
+        #    kNeighbors, arrAccuracy[len(arrAccuracy) - 1], arrPrecision[len(arrPrecision) - 1], arrRecall[len(arrRecall) - 1], arrF1[len(arrF1) - 1], arrTPR[len(arrTPR) - 1], arrFPR[len(arrFPR) - 1]))
+
+    header = []
+    header.append('SampleSplit')
+    header.append('Accuracy')
+    header.append('Precision')
+    header.append('Recall')
+    header.append('F1')
+    header.append('TPR')
+    header.append('FPR')
+    computeData(resultsFileName, header, data, arrAccuracy, arrPrecision, arrRecall, arrF1)
+
+    if showComparisonBetweenNeighbors:
+        ######################
+        # ----- Step 5 ----- #
+        ######################
+        comparingErrorRateWithKValue(maxSampleSplit, X_train, y_train, X_test, y_test)
+
+def knnMain(maxK, resultsFileName, X_train, X_test, y_train, y_test, showComparisonBetweenNeighbors = False):   
     # Array com todas as métricas coletadas ao aplicar o algoritmo de ML
     data = []
     arrAccuracy = []
@@ -190,7 +258,7 @@ def knnMain(fileName, columnNames, numProperties, testSetSize, maxK, targetColum
     arrFPR = []
 
     for kNeighbors in range(1, maxK + 1, 1):
-        y_pred = trainingAndPredictions(kNeighbors, X_train, y_train, X_test)
+        y_pred = knn_trainingAndPredictions(kNeighbors, X_train, y_train, X_test)
 
         accuracy, precision, recall, f1, TPR, FPR = evaluatingAlgorithm(y_test, y_pred)
         accuracy *= 100
@@ -221,7 +289,15 @@ def knnMain(fileName, columnNames, numProperties, testSetSize, maxK, targetColum
         #print("{:2d} Vizinhos | Acurácia {:.6f}%\tPrecisão: {:.6f}%\tRecall: {:.6f}%\tF1: {:.6f}%\tTPR: {:.6f}%\tFPR: {:.6f}%".format(
         #    kNeighbors, arrAccuracy[len(arrAccuracy) - 1], arrPrecision[len(arrPrecision) - 1], arrRecall[len(arrRecall) - 1], arrF1[len(arrF1) - 1], arrTPR[len(arrTPR) - 1], arrFPR[len(arrFPR) - 1]))
 
-    computeData(resultsFileName, data, arrAccuracy, arrPrecision, arrRecall, arrF1)
+    header = []
+    header.append('Neighbors')
+    header.append('Accuracy')
+    header.append('Precision')
+    header.append('Recall')
+    header.append('F1')
+    header.append('TPR')
+    header.append('FPR')
+    computeData(resultsFileName, header, data, arrAccuracy, arrPrecision, arrRecall, arrF1)
 
     if showComparisonBetweenNeighbors:
         ######################
@@ -229,7 +305,7 @@ def knnMain(fileName, columnNames, numProperties, testSetSize, maxK, targetColum
         ######################
         comparingErrorRateWithKValue(maxK, X_train, y_train, X_test, y_test)
 
-def computeData(resultsFileName, data, accuracy, precision, recall, f1):
+def computeData(resultsFileName, header, data, accuracy, precision, recall, f1):
     # Minímo
     subData = []
     subData.append('Min')
@@ -268,24 +344,13 @@ def computeData(resultsFileName, data, accuracy, precision, recall, f1):
     data.append(subData)
 
     # Print
-    header = []
-    header.append('Neighbors')
-    header.append('Accuracy')
-    header.append('Precision')
-    header.append('Recall')
-    header.append('F1')
-    header.append('TPR')
-    header.append('FPR')
     util.writeInCsvFile(resultsFileName, data, header=header)    
-
-def avg(lst):
-    return sum(lst) / len(lst) 
 
 def computeMutants():
     ######################
     # --- Setting datasets
-    minimalDataSet = 'ML/Mutants/Minimal/Without ColumnNames/1Full Mutants.csv'
-    equivalentsDataSet = 'ML/Mutants/Equivalent/Without ColumnNames/1Full Mutants.csv'
+    fileNameMinimalDataSet = 'ML/Mutants/Minimal/Without ColumnNames/1Full Mutants.csv'
+    fileNameEquivalentsDataSet = 'ML/Mutants/Equivalent/Without ColumnNames/1Full Mutants.csv'
     
     #####################
     # --- Setting columns
@@ -302,23 +367,48 @@ def computeMutants():
     testSetSize = 0.25
 
     maxNeighbors = 40
+    maxSamplesSplit = 100
 
     ###################
-    # --- Executing kNN
+    # --- PreProcessing
     #   Minimals
-    print('#####################################################')
-    print(' ----- Calculando para identificar mutantes minimais')
     targetColumn = '_IM_MINIMAL'
-    resultsFileName = 'ML/newResults/kNN_{targetColumn}.csv'.format(targetColumn = targetColumn)
-    knnMain(minimalDataSet, minimalColumnNames, numProperties, testSetSize, maxNeighbors, targetColumn, resultsFileName)
+    minimalDataSet = importDataSet(fileNameMinimalDataSet, minimalColumnNames)
+    X_train_minimal, X_test_minimal, y_train_minimal, y_test_minimal = preProcessing(minimalDataSet, numProperties, testSetSize, minimalColumnNames, targetColumn)    
+    
+    #   Equivalents
+    targetColumn = '_IM_EQUIVALENT'
+    equivalentDataSet = importDataSet(fileNameEquivalentsDataSet, equivalentColumnNames)
+    X_train_equivalents, X_test_equivalents, y_train_equivalents, y_test_equivalents = preProcessing(equivalentDataSet, numProperties, testSetSize, equivalentColumnNames, targetColumn)        
+    
+    #####################################
+    # --- Executing kNN and Decision Tree
+    #   Minimals
+    print('##########################################################')
+    print(' ----- KNN - Calculando para identificar mutantes minimais')
+
+    targetColumn = '_IM_MINIMAL'
+    resultsFileName = 'ML/Results/kNN_{targetColumn}.csv'.format(targetColumn = targetColumn)
+    knnMain(maxNeighbors, resultsFileName, X_train_minimal, X_test_minimal, y_train_minimal, y_test_minimal)
+    
+    print(' ------ DT - Calculando para identificar mutantes minimais')
+    
+    resultsFileName = 'ML/Results/DT_{targetColumn}.csv'.format(targetColumn = targetColumn)
+    dtMain(maxSamplesSplit, resultsFileName, X_train_minimal, X_test_minimal, y_train_minimal, y_test_minimal)
 
     #   Equivalents
-    print('\n\n')
-    print('#########################################################')
-    print(' ----- Calculando para identificar mutantes equivalentes')
+    print('\n')
+    print('##############################################################')
+    print(' ----- KNN - Calculando para identificar mutantes equivalentes')
+
     targetColumn = '_IM_EQUIVALENT'
-    resultsFileName = 'ML/newResults/kNN_{targetColumn}.csv'.format(targetColumn = targetColumn)
-    knnMain(equivalentsDataSet, equivalentColumnNames, numProperties, testSetSize, maxNeighbors, targetColumn, resultsFileName)
+    resultsFileName = 'ML/Results/kNN_{targetColumn}.csv'.format(targetColumn = targetColumn)
+    knnMain(maxNeighbors, resultsFileName, X_train_equivalents, X_test_equivalents, y_train_equivalents, y_test_equivalents)
+    
+    print(' ------ DT - Calculando para identificar mutantes equivalentes')
+    
+    resultsFileName = 'ML/Results/DT_{targetColumn}.csv'.format(targetColumn = targetColumn)
+    dtMain(maxSamplesSplit, resultsFileName, X_train_equivalents, X_test_equivalents, y_train_equivalents, y_test_equivalents)    
 
 if __name__ == '__main__':
     computeMutants()
