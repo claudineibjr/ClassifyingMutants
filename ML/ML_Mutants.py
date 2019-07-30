@@ -161,7 +161,7 @@ def evaluatingAlgorithm(y_test, y_pred):
     #   In practice, often a combination of precision and recall is used, the so-called F1-score.
     f1 = 2 * ((precision * recall) / (precision + recall))
 
-    return accuracy, precision, recall, f1, TPR, FPR
+    return accuracy, precision, recall, f1, TPR, FPR, TP, FN, FP, TN
 
 def comparingErrorRateWithKValue(maxK, X_train, y_train, X_test, y_test):
     ###############################################
@@ -202,7 +202,7 @@ def dtMain(maxSampleSplit, resultsFileName, X_train, X_test, y_train, y_test, sh
     for minSamplesSplit in range(5, maxSampleSplit + 1, 10):
         y_pred = dt_trainingAndPredictions(minSamplesSplit, X_train, y_train, X_test)
 
-        accuracy, precision, recall, f1, TPR, FPR = evaluatingAlgorithm(y_test, y_pred)
+        accuracy, precision, recall, f1, TPR, FPR, TP, FN, FP, TN = evaluatingAlgorithm(y_test, y_pred)
         accuracy *= 100
         precision *= 100
         recall *= 100
@@ -225,6 +225,10 @@ def dtMain(maxSampleSplit, resultsFileName, X_train, X_test, y_train, y_test, sh
         subData.append(f1)
         subData.append(TPR)
         subData.append(FPR)
+        subData.append(TP)
+        subData.append(FN)
+        subData.append(FP)
+        subData.append(TN)
 
         data.append(subData)
 
@@ -239,6 +243,10 @@ def dtMain(maxSampleSplit, resultsFileName, X_train, X_test, y_train, y_test, sh
     header.append('F1')
     header.append('TPR')
     header.append('FPR')
+    header.append('TP')
+    header.append('FN')
+    header.append('FP')
+    header.append('TN')
     computeData(resultsFileName, header, data, arrAccuracy, arrPrecision, arrRecall, arrF1)
 
     if showComparisonBetweenNeighbors:
@@ -260,7 +268,7 @@ def knnMain(maxK, resultsFileName, X_train, X_test, y_train, y_test, showCompari
     for kNeighbors in range(1, maxK + 1, 1):
         y_pred = knn_trainingAndPredictions(kNeighbors, X_train, y_train, X_test)
 
-        accuracy, precision, recall, f1, TPR, FPR = evaluatingAlgorithm(y_test, y_pred)
+        accuracy, precision, recall, f1, TPR, FPR, TP, FN, FP, TN = evaluatingAlgorithm(y_test, y_pred)
         accuracy *= 100
         precision *= 100
         recall *= 100
@@ -283,6 +291,10 @@ def knnMain(maxK, resultsFileName, X_train, X_test, y_train, y_test, showCompari
         subData.append(f1)
         subData.append(TPR)
         subData.append(FPR)
+        subData.append(TP)
+        subData.append(FN)
+        subData.append(FP)
+        subData.append(TN)
 
         data.append(subData)
 
@@ -297,6 +309,10 @@ def knnMain(maxK, resultsFileName, X_train, X_test, y_train, y_test, showCompari
     header.append('F1')
     header.append('TPR')
     header.append('FPR')
+    header.append('TP')
+    header.append('FN')
+    header.append('FP')
+    header.append('TN')
     computeData(resultsFileName, header, data, arrAccuracy, arrPrecision, arrRecall, arrF1)
 
     if showComparisonBetweenNeighbors:
@@ -408,7 +424,7 @@ def computeMutants():
     print(' ------ DT - Calculando para identificar mutantes equivalentes')
     
     resultsFileName = 'ML/Results/DT_{targetColumn}.csv'.format(targetColumn = targetColumn)
-    dtMain(maxSamplesSplit, resultsFileName, X_train_equivalents, X_test_equivalents, y_train_equivalents, y_test_equivalents)    
+    dtMain(maxSamplesSplit, resultsFileName, X_train_equivalents, X_test_equivalents, y_train_equivalents, y_test_equivalents)
 
 if __name__ == '__main__':
     computeMutants()
