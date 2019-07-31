@@ -1,0 +1,13 @@
+Informação;Número;Total;Percentual
+Mutantes minimais;94;599;15.69
+Mutantes equivalentes;27;599;4.51
+Mutantes nos arcos primitivos;423;599;70.62
+Mutantes na origem dos arcos primitivos;149;599;24.87
+Mutantes no destino dos arcos primitivos;274;599;45.74
+
+Minimais em arcos primitivos;78;94;82.98
+Minimais na origem dos arcos primitivos;21;94;22.34
+Minimais no destino dos arcos primitivos;57;94;60.64
+Equivalentes em arcos primitivos;9;27;33.33
+Equivalentes na origem dos arcos primitivos;1;27;3.70
+Equivalentes no destino dos arcos primitivos;8;27;29.63
