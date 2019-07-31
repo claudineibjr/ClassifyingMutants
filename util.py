@@ -91,13 +91,8 @@ def deleteResults(baseFolder, fileToDelete):
                         os.remove(fileNameToDelete)
                         
 
+def normalize(data):
+    maxValue = max(data)
+    minValue = min(data)
 
-if __name__ == "__main__":
-    #deleteResults("/home/claudinei/Experimento/Sources/ClaudineiBJr/Programs", "log/minimal.txt")
-    #deleteResults("/home/claudinei/Experimento/Sources/ClaudineiBJr/Programs", "log/minimal-sizes.txt")
-    #deleteResults("/home/claudinei/Experimento/Sources/ClaudineiBJr/Programs", "log/minimal-subsume-sizes.txt")
-    
-    extractResults("/home/claudinei/Experimento/Sources/ClaudineiBJr/Programs", "/home/claudinei/Experimento/Sources/ClaudineiBJr/Programs results/Results", "log/_result.csv")
-    extractResults("/home/claudinei/Experimento/Sources/ClaudineiBJr/Programs", "/home/claudinei/Experimento/Sources/ClaudineiBJr/Programs results/Summary", "log/_summary_results.csv")
-    
-    print('Bye')
+    return [ (_data - minValue) / (maxValue - minValue) for _data in data]

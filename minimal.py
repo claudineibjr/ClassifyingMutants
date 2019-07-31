@@ -172,6 +172,9 @@ def getMutantsInfo(baseFolder, minimalMutants, sessionName, units):
         arcPrimFileName = "{baseFolder}/arc_prim/{unitName}.tes".format(baseFolder = baseFolder, unitName = unitName)
         gfc, numNodes = gfcUtils.gfcMain(gfcFileName, arcPrimFileName)
 
+        # Array que conterá todas as complexidades dos mutantes
+        complexities = []
+
         # Propriedade responsável por contar o número de mutantes em cada nó do GFC
         mutantsOnNodes = []
 
@@ -251,7 +254,13 @@ def getMutantsInfo(baseFolder, minimalMutants, sessionName, units):
         # Atualiza as informações sobre os nós dos mutantes
         for iCount in range(lastICount, len(arrMutantsInfo), 1):
             arrMutantsInfo[iCount][constants._IM_COMPLEXITY] = gfcUtils.getNumMutantsOnNode(mutantsOnNodes, arrMutantsInfo[iCount][constants._IM_PROGRAM_GRAPH_NODE])
+            complexities.append(arrMutantsInfo[iCount][constants._IM_COMPLEXITY])
             lastICount = iCount
+
+        # Normaliza os dados de complexidade dos mutantes
+        complexities = util.normalize(complexities)
+        for iCount in range(len(complexities)):
+            arrMutantsInfo[iCount][constants._IM_COMPLEXITY] = complexities[iCount]
 
     arrHeaderMutants.append("#")
     arrHeaderMutants.append("Result")
