@@ -163,32 +163,6 @@ def evaluatingAlgorithm(y_test, y_pred):
 
     return accuracy, precision, recall, f1, TPR, FPR, TP, FN, FP, TN
 
-def comparingErrorRateWithKValue(maxK, X_train, y_train, X_test, y_test):
-    ###############################################
-    # --- Comparing Error Rate with the K Value ---
-    ###############################################
-    # In the training and prediction section we said that there is no way to know beforehand which value of K that yields the best results in the first go. We randomly chose 5 as the K value and it just happen to result in 100% accuracy.
-    # One way to help you find the best value of K is to plot the graph of K value and the corresponding error rate for the dataSet.
-    # In this section, we will plot the mean error for the predicted values of test set for all the K values between 1 and 40.
-    # To do so, let's first calculate the mean of error for all the predicted values where K ranges from 1 and 40. Execute the following script:
-    error = []
-
-    # Calculating error for K values between 1 and 40
-    for i in range(1, maxK):  
-        knn = KNeighborsClassifier(n_neighbors=i)
-        knn.fit(X_train, y_train)
-        pred_i = knn.predict(X_test)
-        error.append(np.mean(pred_i != y_test))
-
-    # The next step is to plot the error values against K values. Execute the following script to create the plot:
-    plt.figure(figsize=(12, 6))
-    plt.plot(range(1, maxK), error, color='red', linestyle='dashed', marker='o',  
-            markerfacecolor='blue', markersize=10)
-    plt.title('Error Rate K Value')
-    plt.xlabel('K Value')  
-    plt.ylabel('Mean Error')
-    plt.show()
-
 def dtMain(maxSampleSplit, resultsFileName, X_train, X_test, y_train, y_test, showComparisonBetweenNeighbors = False):
     # Array com todas as métricas coletadas ao aplicar o algoritmo de ML
     data = []
@@ -209,6 +183,9 @@ def dtMain(maxSampleSplit, resultsFileName, X_train, X_test, y_train, y_test, sh
         f1 *= 100
         TPR *= 100
         FPR *= 100
+
+        #print("{:2d} Amostras | Acurácia {:.6f}%\tPrecisão: {:.6f}%\tRecall: {:.6f}%\tF1: {:.6f}%".format(
+            #minSamplesSplit, accuracy, precision, recall, f1))
 
         arrAccuracy.append(accuracy)
         arrPrecision.append(precision)
@@ -232,9 +209,6 @@ def dtMain(maxSampleSplit, resultsFileName, X_train, X_test, y_train, y_test, sh
 
         data.append(subData)
 
-        #print("{:2d} Vizinhos | Acurácia {:.6f}%\tPrecisão: {:.6f}%\tRecall: {:.6f}%\tF1: {:.6f}%\tTPR: {:.6f}%\tFPR: {:.6f}%".format(
-        #    kNeighbors, arrAccuracy[len(arrAccuracy) - 1], arrPrecision[len(arrPrecision) - 1], arrRecall[len(arrRecall) - 1], arrF1[len(arrF1) - 1], arrTPR[len(arrTPR) - 1], arrFPR[len(arrFPR) - 1]))
-
     header = []
     header.append('SampleSplit')
     header.append('Accuracy')
@@ -248,12 +222,6 @@ def dtMain(maxSampleSplit, resultsFileName, X_train, X_test, y_train, y_test, sh
     header.append('FP')
     header.append('TN')
     computeData(resultsFileName, header, data, arrAccuracy, arrPrecision, arrRecall, arrF1)
-
-    if showComparisonBetweenNeighbors:
-        ######################
-        # ----- Step 5 ----- #
-        ######################
-        comparingErrorRateWithKValue(maxSampleSplit, X_train, y_train, X_test, y_test)
 
 def knnMain(maxK, resultsFileName, X_train, X_test, y_train, y_test, showComparisonBetweenNeighbors = False):   
     # Array com todas as métricas coletadas ao aplicar o algoritmo de ML
@@ -275,6 +243,9 @@ def knnMain(maxK, resultsFileName, X_train, X_test, y_train, y_test, showCompari
         f1 *= 100
         TPR *= 100
         FPR *= 100
+
+        #print("{:2d} Vizinhos | Acurácia {:.6f}%\tPrecisão: {:.6f}%\tRecall: {:.6f}%\tF1: {:.6f}%".format(
+            #kNeighbors, accuracy, precision, recall, f1))
 
         arrAccuracy.append(accuracy)
         arrPrecision.append(precision)
@@ -298,9 +269,6 @@ def knnMain(maxK, resultsFileName, X_train, X_test, y_train, y_test, showCompari
 
         data.append(subData)
 
-        #print("{:2d} Vizinhos | Acurácia {:.6f}%\tPrecisão: {:.6f}%\tRecall: {:.6f}%\tF1: {:.6f}%\tTPR: {:.6f}%\tFPR: {:.6f}%".format(
-        #    kNeighbors, arrAccuracy[len(arrAccuracy) - 1], arrPrecision[len(arrPrecision) - 1], arrRecall[len(arrRecall) - 1], arrF1[len(arrF1) - 1], arrTPR[len(arrTPR) - 1], arrFPR[len(arrFPR) - 1]))
-
     header = []
     header.append('Neighbors')
     header.append('Accuracy')
@@ -315,11 +283,6 @@ def knnMain(maxK, resultsFileName, X_train, X_test, y_train, y_test, showCompari
     header.append('TN')
     computeData(resultsFileName, header, data, arrAccuracy, arrPrecision, arrRecall, arrF1)
 
-    if showComparisonBetweenNeighbors:
-        ######################
-        # ----- Step 5 ----- #
-        ######################
-        comparingErrorRateWithKValue(maxK, X_train, y_train, X_test, y_test)
 
 def computeData(resultsFileName, header, data, accuracy, precision, recall, f1):
     # Minímo
@@ -408,7 +371,7 @@ def computeMutants():
     knnMain(maxNeighbors, resultsFileName, X_train_minimal, X_test_minimal, y_train_minimal, y_test_minimal)
     
     print(' ------ DT - Calculando para identificar mutantes minimais')
-    
+
     resultsFileName = 'ML/Results/DT_{targetColumn}.csv'.format(targetColumn = targetColumn)
     dtMain(maxSamplesSplit, resultsFileName, X_train_minimal, X_test_minimal, y_train_minimal, y_test_minimal)
 
