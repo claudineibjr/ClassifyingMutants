@@ -45,23 +45,35 @@ def importDataSet(fileName, columnNames, showHeadDataSet=False):
 
     return dataSet
 
-def preProcessing(dataSetFrame, numProperties, testSetSize, columnNames, targetColumn):
+def preProcessing(dataSetFrame, testSetSize, targetColumn, columnsToDrop):
     ####################
     # --- Preprocessing
+
+    dataSetFrame.drop(columnsToDrop, axis = 1)
+    numProperties = len(dataSetFrame.columns) - 1
 
     # Grouping data frame by target column
     dataGrouped = dataSetFrame.groupby(targetColumn)
     dataSetFrame = pd.DataFrame(dataGrouped.apply(lambda x: x.sample(dataGrouped.size().min()).reset_index(drop=True)))
 
+    # Número de 
+    numColumnsToDelete = 0
+
     # Encode _IM_OPERATOR column
-    one_hot_Operator = pd.get_dummies(dataSetFrame['_IM_OPERATOR'])
-    dataSetFrame = dataSetFrame.drop('_IM_OPERATOR', axis = 1)
-    dataSetFrame = dataSetFrame.join(one_hot_Operator)
+    if dataSetFrame.columns.__contains__('_IM_OPERATOR'):# and 1 == 2:
+        one_hot_Operator = pd.get_dummies(dataSetFrame['_IM_OPERATOR'])
+        dataSetFrame = dataSetFrame.drop('_IM_OPERATOR', axis = 1)
+        dataSetFrame = dataSetFrame.join(one_hot_Operator)
+
+        numColumnsToDelete = numColumnsToDelete - 1 + len(one_hot_Operator.columns)
 
     # Encode _IM_TYPE_STATEMENT column
-    one_hot_TypeStatement = pd.get_dummies(dataSetFrame['_IM_TYPE_STATEMENT'])
-    dataSetFrame = dataSetFrame.drop('_IM_TYPE_STATEMENT', axis = 1)
-    dataSetFrame = dataSetFrame.join(one_hot_TypeStatement)
+    if dataSetFrame.columns.__contains__('_IM_TYPE_STATEMENT'):# and 1 == 2:
+        one_hot_TypeStatement = pd.get_dummies(dataSetFrame['_IM_TYPE_STATEMENT'])
+        dataSetFrame = dataSetFrame.drop('_IM_TYPE_STATEMENT', axis = 1)
+        dataSetFrame = dataSetFrame.join(one_hot_TypeStatement)
+        
+        numColumnsToDelete = numColumnsToDelete - 1 + len(one_hot_TypeStatement.columns)
 
     # Remove a coluna e reinsere-a no final
     targetColumnValues = dataSetFrame[targetColumn]
@@ -72,7 +84,7 @@ def preProcessing(dataSetFrame, numProperties, testSetSize, columnNames, targetC
     #   To avoid over-fitting, we will divide our dataSet into training and test splits, which gives us a better idea as to how our algorithm performed during the testing phase. This way our algorithm is tested on un-seen data, as it would be in a production application.
     #   To create training and test splits, execute the following script:
     X = dataSetFrame.iloc[:, :-1].values
-    y = dataSetFrame.iloc[:, numProperties - 2 + len(one_hot_Operator.columns) + len(one_hot_TypeStatement.columns)].values
+    y = dataSetFrame.iloc[:, numProperties + numColumnsToDelete].values
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=testSetSize)
 
     # --- Feature Scaling ---
@@ -163,7 +175,7 @@ def evaluatingAlgorithm(y_test, y_pred):
 
     return accuracy, precision, recall, f1, TPR, FPR, TP, FN, FP, TN
 
-def dtMain(maxSampleSplit, resultsFileName, X_train, X_test, y_train, y_test, showComparisonBetweenNeighbors = False):
+def dtMain(maxSampleSplit, resultsFileName, X_train, X_test, y_train, y_test, showResults = False):
     # Array com todas as métricas coletadas ao aplicar o algoritmo de ML
     data = []
     arrAccuracy = []
@@ -184,8 +196,8 @@ def dtMain(maxSampleSplit, resultsFileName, X_train, X_test, y_train, y_test, sh
         TPR *= 100
         FPR *= 100
 
-        #print("{:2d} Amostras | Acurácia {:.6f}%\tPrecisão: {:.6f}%\tRecall: {:.6f}%\tF1: {:.6f}%".format(
-            #minSamplesSplit, accuracy, precision, recall, f1))
+        print("{:2d} Amostras | Acurácia {:.6f}%\tPrecisão: {:.6f}%\tRecall: {:.6f}%\tF1: {:.6f}%".format(
+            minSamplesSplit, accuracy, precision, recall, f1))
 
         arrAccuracy.append(accuracy)
         arrPrecision.append(precision)
@@ -223,7 +235,7 @@ def dtMain(maxSampleSplit, resultsFileName, X_train, X_test, y_train, y_test, sh
     header.append('TN')
     computeData(resultsFileName, header, data, arrAccuracy, arrPrecision, arrRecall, arrF1)
 
-def knnMain(maxK, resultsFileName, X_train, X_test, y_train, y_test, showComparisonBetweenNeighbors = False):   
+def knnMain(maxK, resultsFileName, X_train, X_test, y_train, y_test, showResults = False):
     # Array com todas as métricas coletadas ao aplicar o algoritmo de ML
     data = []
     arrAccuracy = []
@@ -244,8 +256,8 @@ def knnMain(maxK, resultsFileName, X_train, X_test, y_train, y_test, showCompari
         TPR *= 100
         FPR *= 100
 
-        #print("{:2d} Vizinhos | Acurácia {:.6f}%\tPrecisão: {:.6f}%\tRecall: {:.6f}%\tF1: {:.6f}%".format(
-            #kNeighbors, accuracy, precision, recall, f1))
+        print("{:2d} Vizinhos | Acurácia {:.6f}%\tPrecisão: {:.6f}%\tRecall: {:.6f}%\tF1: {:.6f}%".format(
+            kNeighbors, accuracy, precision, recall, f1))
 
         arrAccuracy.append(accuracy)
         arrPrecision.append(precision)
@@ -325,7 +337,7 @@ def computeData(resultsFileName, header, data, accuracy, precision, recall, f1):
     # Print
     util.writeInCsvFile(resultsFileName, data, header=header)    
 
-def computeMutants():
+def computeMutants(columnsToDrop = [], printResults = False):
     ######################
     # --- Setting datasets
     fileNameMinimalDataSet = 'ML/Mutants/Minimal/Without ColumnNames/1Full Mutants.csv'
@@ -341,8 +353,6 @@ def computeMutants():
     
     ###############################
     # --- Setting others properties
-    numProperties = len(minimalColumnNames) - 1
-
     testSetSize = 0.25
 
     maxNeighbors = 40
@@ -353,12 +363,12 @@ def computeMutants():
     #   Minimals
     targetColumn = '_IM_MINIMAL'
     minimalDataSet = importDataSet(fileNameMinimalDataSet, minimalColumnNames)
-    X_train_minimal, X_test_minimal, y_train_minimal, y_test_minimal = preProcessing(minimalDataSet, numProperties, testSetSize, minimalColumnNames, targetColumn)    
+    X_train_minimal, X_test_minimal, y_train_minimal, y_test_minimal = preProcessing(minimalDataSet, testSetSize, targetColumn, columnsToDrop)
     
     #   Equivalents
     targetColumn = '_IM_EQUIVALENT'
     equivalentDataSet = importDataSet(fileNameEquivalentsDataSet, equivalentColumnNames)
-    X_train_equivalents, X_test_equivalents, y_train_equivalents, y_test_equivalents = preProcessing(equivalentDataSet, numProperties, testSetSize, equivalentColumnNames, targetColumn)        
+    X_train_equivalents, X_test_equivalents, y_train_equivalents, y_test_equivalents = preProcessing(equivalentDataSet, testSetSize, targetColumn, columnsToDrop)
     
     #####################################
     # --- Executing kNN and Decision Tree
@@ -368,12 +378,16 @@ def computeMutants():
 
     targetColumn = '_IM_MINIMAL'
     resultsFileName = 'ML/Results/kNN_{targetColumn}.csv'.format(targetColumn = targetColumn)
-    knnMain(maxNeighbors, resultsFileName, X_train_minimal, X_test_minimal, y_train_minimal, y_test_minimal)
+    if len(columnsToDrop) > 0:
+        resultsFileName = 'ML/Results/new/kNN_{targetColumn} - {columns}.csv'.format(targetColumn = targetColumn, columns=columnsToDrop)
+    knnMain(maxNeighbors, resultsFileName, X_train_minimal, X_test_minimal, y_train_minimal, y_test_minimal, printResults)
     
     print(' ------ DT - Calculando para identificar mutantes minimais')
 
     resultsFileName = 'ML/Results/DT_{targetColumn}.csv'.format(targetColumn = targetColumn)
-    dtMain(maxSamplesSplit, resultsFileName, X_train_minimal, X_test_minimal, y_train_minimal, y_test_minimal)
+    if len(columnsToDrop) > 0:
+        resultsFileName = 'ML/Results/new/DT_{targetColumn} - {columns}.csv'.format(targetColumn = targetColumn, columns=columnsToDrop)
+    dtMain(maxSamplesSplit, resultsFileName, X_train_minimal, X_test_minimal, y_train_minimal, y_test_minimal, printResults)
 
     #   Equivalents
     print('\n')
@@ -382,12 +396,19 @@ def computeMutants():
 
     targetColumn = '_IM_EQUIVALENT'
     resultsFileName = 'ML/Results/kNN_{targetColumn}.csv'.format(targetColumn = targetColumn)
-    knnMain(maxNeighbors, resultsFileName, X_train_equivalents, X_test_equivalents, y_train_equivalents, y_test_equivalents)
+    if len(columnsToDrop) > 0:
+        resultsFileName = 'ML/Results/new/kNN_{targetColumn} - {columns}.csv'.format(targetColumn = targetColumn, columns=columnsToDrop)
+    knnMain(maxNeighbors, resultsFileName, X_train_equivalents, X_test_equivalents, y_train_equivalents, y_test_equivalents, printResults)
     
     print(' ------ DT - Calculando para identificar mutantes equivalentes')
     
     resultsFileName = 'ML/Results/DT_{targetColumn}.csv'.format(targetColumn = targetColumn)
-    dtMain(maxSamplesSplit, resultsFileName, X_train_equivalents, X_test_equivalents, y_train_equivalents, y_test_equivalents)
+    if len(columnsToDrop) > 0:
+        resultsFileName = 'ML/Results/new/DT_{targetColumn} - {columns}.csv'.format(targetColumn = targetColumn, columns=columnsToDrop)    
+    dtMain(maxSamplesSplit, resultsFileName, X_train_equivalents, X_test_equivalents, y_train_equivalents, y_test_equivalents, printResults)
 
 if __name__ == '__main__':
-    computeMutants()
+    if len(sys.argv) > 1:
+        computeMutants(printResults = sys.argv[1])
+    else:
+        computeMutants()
