@@ -16,9 +16,11 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.metrics import classification_report, confusion_matrix
+
+# SkLearn - Classifiers
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import classification_report, confusion_matrix
 
 # Statistics
 from statistics import mean
@@ -52,15 +54,19 @@ def preProcessing(dataSetFrame, testSetSize, targetColumn, columnsToDrop):
     dataSetFrame.drop(columnsToDrop, axis = 1)
     numProperties = len(dataSetFrame.columns) - 1
 
+    # Removing duplicates
+    #dataSetFrame.drop_duplicates(subset = ['_IM_OPERATOR', '_IM_TYPE_STATEMENT', '_IM_COMPLEXITY'], 
+                     #keep = 'first', inplace = True)
+
     # Grouping data frame by target column
     dataGrouped = dataSetFrame.groupby(targetColumn)
     dataSetFrame = pd.DataFrame(dataGrouped.apply(lambda x: x.sample(dataGrouped.size().min()).reset_index(drop=True)))
 
-    # Número de 
+    # Número de colunas a serem deletadas
     numColumnsToDelete = 0
 
     # Encode _IM_OPERATOR column
-    if dataSetFrame.columns.__contains__('_IM_OPERATOR'):# and 1 == 2:
+    if dataSetFrame.columns.__contains__('_IM_OPERATOR'):
         one_hot_Operator = pd.get_dummies(dataSetFrame['_IM_OPERATOR'])
         dataSetFrame = dataSetFrame.drop('_IM_OPERATOR', axis = 1)
         dataSetFrame = dataSetFrame.join(one_hot_Operator)
@@ -68,7 +74,7 @@ def preProcessing(dataSetFrame, testSetSize, targetColumn, columnsToDrop):
         numColumnsToDelete = numColumnsToDelete - 1 + len(one_hot_Operator.columns)
 
     # Encode _IM_TYPE_STATEMENT column
-    if dataSetFrame.columns.__contains__('_IM_TYPE_STATEMENT'):# and 1 == 2:
+    if dataSetFrame.columns.__contains__('_IM_TYPE_STATEMENT'):
         one_hot_TypeStatement = pd.get_dummies(dataSetFrame['_IM_TYPE_STATEMENT'])
         dataSetFrame = dataSetFrame.drop('_IM_TYPE_STATEMENT', axis = 1)
         dataSetFrame = dataSetFrame.join(one_hot_TypeStatement)
@@ -175,7 +181,7 @@ def evaluatingAlgorithm(y_test, y_pred):
 
     return accuracy, precision, recall, f1, TPR, FPR, TP, FN, FP, TN
 
-def dtMain(maxSampleSplit, resultsFileName, X_train, X_test, y_train, y_test, showResults = False):
+def classifierMain(classifier, maxIterations, resultsFileName, X_train, X_test, y_train, y_test, showResults = False):
     # Array com todas as métricas coletadas ao aplicar o algoritmo de ML
     data = []
     arrAccuracy = []
@@ -185,9 +191,18 @@ def dtMain(maxSampleSplit, resultsFileName, X_train, X_test, y_train, y_test, sh
     arrTPR = []
     arrFPR = []
 
-    for minSamplesSplit in range(5, maxSampleSplit + 1, 10):
-        y_pred = dt_trainingAndPredictions(minSamplesSplit, X_train, y_train, X_test)
+    arr_y_pred_iter = []
 
+    if classifier == 'KNN':
+        for kNeighbors in range(1, maxIterations + 1, 1):
+            arr_y_pred_iter.append((knn_trainingAndPredictions(kNeighbors, X_train, y_train, X_test), kNeighbors))
+    elif classifier == 'DT':
+        for minSamplesSplit in range(5, maxIterations + 1, 10):
+            arr_y_pred_iter.append((dt_trainingAndPredictions(minSamplesSplit, X_train, y_train, X_test), minSamplesSplit))
+    else:
+        return None
+
+    for y_pred, iteration in arr_y_pred_iter:
         accuracy, precision, recall, f1, TPR, FPR, TP, FN, FP, TN = evaluatingAlgorithm(y_test, y_pred)
         accuracy *= 100
         precision *= 100
@@ -196,8 +211,9 @@ def dtMain(maxSampleSplit, resultsFileName, X_train, X_test, y_train, y_test, sh
         TPR *= 100
         FPR *= 100
 
-        print("{:2d} Amostras | Acurácia {:.6f}%\tPrecisão: {:.6f}%\tRecall: {:.6f}%\tF1: {:.6f}%".format(
-            minSamplesSplit, accuracy, precision, recall, f1))
+        if showResults:
+            print("{:2d} Amostras | Acurácia {:.6f}%\tPrecisão: {:.6f}%\tRecall: {:.6f}%\tF1: {:.6f}%".format(
+                iteration, accuracy, precision, recall, f1))
 
         arrAccuracy.append(accuracy)
         arrPrecision.append(precision)
@@ -207,7 +223,7 @@ def dtMain(maxSampleSplit, resultsFileName, X_train, X_test, y_train, y_test, sh
         arrFPR.append(FPR)
 
         subData = []
-        subData.append(minSamplesSplit)
+        subData.append(iteration)
         subData.append(accuracy)
         subData.append(precision)
         subData.append(recall)
@@ -223,66 +239,6 @@ def dtMain(maxSampleSplit, resultsFileName, X_train, X_test, y_train, y_test, sh
 
     header = []
     header.append('SampleSplit')
-    header.append('Accuracy')
-    header.append('Precision')
-    header.append('Recall')
-    header.append('F1')
-    header.append('TPR')
-    header.append('FPR')
-    header.append('TP')
-    header.append('FN')
-    header.append('FP')
-    header.append('TN')
-    computeData(resultsFileName, header, data, arrAccuracy, arrPrecision, arrRecall, arrF1)
-
-def knnMain(maxK, resultsFileName, X_train, X_test, y_train, y_test, showResults = False):
-    # Array com todas as métricas coletadas ao aplicar o algoritmo de ML
-    data = []
-    arrAccuracy = []
-    arrPrecision = []
-    arrRecall = []
-    arrF1 = []
-    arrTPR = []
-    arrFPR = []
-
-    for kNeighbors in range(1, maxK + 1, 1):
-        y_pred = knn_trainingAndPredictions(kNeighbors, X_train, y_train, X_test)
-
-        accuracy, precision, recall, f1, TPR, FPR, TP, FN, FP, TN = evaluatingAlgorithm(y_test, y_pred)
-        accuracy *= 100
-        precision *= 100
-        recall *= 100
-        f1 *= 100
-        TPR *= 100
-        FPR *= 100
-
-        print("{:2d} Vizinhos | Acurácia {:.6f}%\tPrecisão: {:.6f}%\tRecall: {:.6f}%\tF1: {:.6f}%".format(
-            kNeighbors, accuracy, precision, recall, f1))
-
-        arrAccuracy.append(accuracy)
-        arrPrecision.append(precision)
-        arrRecall.append(recall)
-        arrF1.append(f1)
-        arrTPR.append(TPR)
-        arrFPR.append(FPR)
-
-        subData = []
-        subData.append(kNeighbors)
-        subData.append(accuracy)
-        subData.append(precision)
-        subData.append(recall)
-        subData.append(f1)
-        subData.append(TPR)
-        subData.append(FPR)
-        subData.append(TP)
-        subData.append(FN)
-        subData.append(FP)
-        subData.append(TN)
-
-        data.append(subData)
-
-    header = []
-    header.append('Neighbors')
     header.append('Accuracy')
     header.append('Precision')
     header.append('Recall')
@@ -340,16 +296,16 @@ def computeData(resultsFileName, header, data, accuracy, precision, recall, f1):
 def computeMutants(columnsToDrop = [], printResults = False):
     ######################
     # --- Setting datasets
-    fileNameMinimalDataSet = 'ML/Mutants/Minimal/Without ColumnNames/1Full Mutants.csv'
-    fileNameEquivalentsDataSet = 'ML/Mutants/Equivalent/Without ColumnNames/1Full Mutants.csv'
+    fileNameMinimalDataSet = 'ML/Mutants/Minimal/Without ColumnNames/mutants_minimals.csv'
+    fileNameEquivalentsDataSet = 'ML/Mutants/Equivalent/Without ColumnNames/mutants_equivalents.csv'
     
     #####################
     # --- Setting columns
     # For minimals
-    minimalColumnNames = ['_IM_OPERATOR', '_IM_PROGRAM_GRAPH_NODE', '_IM_PRIMITIVE_ARC', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_EQUIVALENT', '_IM_MINIMAL']
+    minimalColumnNames = ['_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_EQUIVALENT', '_IM_MINIMAL']
     
     # For equivalents
-    equivalentColumnNames = ['_IM_OPERATOR', '_IM_PROGRAM_GRAPH_NODE', '_IM_PRIMITIVE_ARC', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT']
+    equivalentColumnNames = ['_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT']
     
     ###############################
     # --- Setting others properties
@@ -380,14 +336,14 @@ def computeMutants(columnsToDrop = [], printResults = False):
     resultsFileName = 'ML/Results/kNN_{targetColumn}.csv'.format(targetColumn = targetColumn)
     if len(columnsToDrop) > 0:
         resultsFileName = 'ML/Results/new/kNN_{targetColumn} - {columns}.csv'.format(targetColumn = targetColumn, columns=columnsToDrop)
-    knnMain(maxNeighbors, resultsFileName, X_train_minimal, X_test_minimal, y_train_minimal, y_test_minimal, printResults)
+    classifierMain('KNN', maxNeighbors, resultsFileName, X_train_minimal, X_test_minimal, y_train_minimal, y_test_minimal, printResults)
     
     print(' ------ DT - Calculando para identificar mutantes minimais')
 
     resultsFileName = 'ML/Results/DT_{targetColumn}.csv'.format(targetColumn = targetColumn)
     if len(columnsToDrop) > 0:
         resultsFileName = 'ML/Results/new/DT_{targetColumn} - {columns}.csv'.format(targetColumn = targetColumn, columns=columnsToDrop)
-    dtMain(maxSamplesSplit, resultsFileName, X_train_minimal, X_test_minimal, y_train_minimal, y_test_minimal, printResults)
+    classifierMain('DT', maxSamplesSplit, resultsFileName, X_train_minimal, X_test_minimal, y_train_minimal, y_test_minimal, printResults)
 
     #   Equivalents
     print('\n')
@@ -398,14 +354,14 @@ def computeMutants(columnsToDrop = [], printResults = False):
     resultsFileName = 'ML/Results/kNN_{targetColumn}.csv'.format(targetColumn = targetColumn)
     if len(columnsToDrop) > 0:
         resultsFileName = 'ML/Results/new/kNN_{targetColumn} - {columns}.csv'.format(targetColumn = targetColumn, columns=columnsToDrop)
-    knnMain(maxNeighbors, resultsFileName, X_train_equivalents, X_test_equivalents, y_train_equivalents, y_test_equivalents, printResults)
+    classifierMain('KNN', maxNeighbors, resultsFileName, X_train_equivalents, X_test_equivalents, y_train_equivalents, y_test_equivalents, printResults)
     
     print(' ------ DT - Calculando para identificar mutantes equivalentes')
     
     resultsFileName = 'ML/Results/DT_{targetColumn}.csv'.format(targetColumn = targetColumn)
     if len(columnsToDrop) > 0:
         resultsFileName = 'ML/Results/new/DT_{targetColumn} - {columns}.csv'.format(targetColumn = targetColumn, columns=columnsToDrop)    
-    dtMain(maxSamplesSplit, resultsFileName, X_train_equivalents, X_test_equivalents, y_train_equivalents, y_test_equivalents, printResults)
+    classifierMain('DT', maxSamplesSplit, resultsFileName, X_train_equivalents, X_test_equivalents, y_train_equivalents, y_test_equivalents, printResults)
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
