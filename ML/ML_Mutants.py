@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # SkLearn
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.metrics import classification_report, confusion_matrix
@@ -251,6 +251,84 @@ def classifierMain(classifier, maxIterations, resultsFileName, X_train, X_test, 
     header.append('TN')
     computeData(resultsFileName, header, data, arrAccuracy, arrPrecision, arrRecall, arrF1)
 
+def crossValidation_main(dataSetFrame, targetColumn, classifier, maxIterations, resultsFileName, columnsToDrop, showResults = False):
+    
+    dataSetFrame.drop(columnsToDrop, axis = 1)
+
+    # Grouping data frame by target column
+    dataGrouped = dataSetFrame.groupby(targetColumn)
+    dataSetFrame = pd.DataFrame(dataGrouped.apply(lambda x: x.sample(dataGrouped.size().min()).reset_index(drop=True)))    
+    
+    # Get ColumnValues and drop minimal and equivalent columns
+    columnValues = dataSetFrame[targetColumn].values
+    dataSetFrame = dataSetFrame.drop(['_IM_MINIMAL', '_IM_EQUIVALENT'], axis=1)
+
+    # Encode _IM_OPERATOR column
+    if dataSetFrame.columns.__contains__('_IM_OPERATOR'):
+        one_hot_Operator = pd.get_dummies(dataSetFrame['_IM_OPERATOR'])
+        dataSetFrame = dataSetFrame.drop('_IM_OPERATOR', axis = 1)
+        dataSetFrame = dataSetFrame.join(one_hot_Operator)
+
+    # Encode _IM_TYPE_STATEMENT column
+    if dataSetFrame.columns.__contains__('_IM_TYPE_STATEMENT'):
+        one_hot_TypeStatement = pd.get_dummies(dataSetFrame['_IM_TYPE_STATEMENT'])
+        dataSetFrame = dataSetFrame.drop('_IM_TYPE_STATEMENT', axis = 1)
+        dataSetFrame = dataSetFrame.join(one_hot_TypeStatement)
+
+    # Get DataFrameValues
+    dataFrameValues = dataSetFrame.values
+
+    # Array com todas as métricas coletadas ao aplicar o algoritmo de ML
+    data = []
+    arrAccuracy = []
+    arrPrecision = []
+    arrRecall = []
+    arrF1 = []
+
+    arr_estimators_iter = []
+
+    if classifier == 'KNN':
+        for kNeighbors in range(1, maxIterations + 1, 1):
+            arr_estimators_iter.append((KNeighborsClassifier(n_neighbors = kNeighbors), kNeighbors))
+    elif classifier == 'DT':
+        for minSamplesSplit in range(5, maxIterations + 1, 10):
+            arr_estimators_iter.append((DecisionTreeClassifier(min_samples_split = minSamplesSplit), minSamplesSplit))
+    else:
+        return None
+
+    for classifier, iteration in arr_estimators_iter:
+        scores = cross_val_score(classifier, dataFrameValues, columnValues, scoring='accuracy',cv=10)
+        arrAccuracy.append(np.mean(scores) * 100)
+        
+        scores = cross_val_score(classifier, dataFrameValues, columnValues, scoring='precision',cv=10)
+        arrPrecision.append(np.mean(scores) * 100)
+        
+        scores = cross_val_score(classifier, dataFrameValues, columnValues, scoring='recall',cv=10)
+        arrRecall.append(np.mean(scores) * 100)
+        
+        scores = cross_val_score(classifier, dataFrameValues, columnValues, scoring='f1',cv=10)
+        arrF1.append(np.mean(scores) * 100)
+        
+        if showResults:
+            print("{:2d} Amostras | Acurácia {:.6f}%\tPrecisão: {:.6f}%\tRecall: {:.6f}%\tF1: {:.6f}%".format(
+                iteration, arrAccuracy[len(arrAccuracy) - 1], arrPrecision[len(arrPrecision) - 1], arrRecall[len(arrRecall) - 1], arrF1[len(arrF1) - 1]))
+
+        subData = []
+        subData.append(iteration)
+        subData.append(arrAccuracy[len(arrAccuracy) - 1])
+        subData.append(arrPrecision[len(arrPrecision) - 1])
+        subData.append(arrRecall[len(arrRecall) - 1])
+        subData.append(arrF1[len(arrF1) - 1])
+
+        data.append(subData)
+
+    header = []
+    header.append('SampleSplit')
+    header.append('Accuracy')
+    header.append('Precision')
+    header.append('Recall')
+    header.append('F1')
+    computeData(resultsFileName, header, data, arrAccuracy, arrPrecision, arrRecall, arrF1)
 
 def computeData(resultsFileName, header, data, accuracy, precision, recall, f1):
     # Minímo
@@ -293,78 +371,131 @@ def computeData(resultsFileName, header, data, accuracy, precision, recall, f1):
     # Print
     util.writeInCsvFile(resultsFileName, data, header=header)    
 
-def computeMutants(columnsToDrop = [], printResults = False):
-    ######################
-    # --- Setting datasets
-    fileNameMinimalDataSet = 'ML/Mutants/Minimal/Without ColumnNames/mutants_minimals.csv'
-    fileNameEquivalentsDataSet = 'ML/Mutants/Equivalent/Without ColumnNames/mutants_equivalents.csv'
+def crossValidation(targetColumn, columnsToDrop = [], printResults = False):
+    ####################################
+    # --- Setting independent properties
+    maxNeighbors = 40
+    maxSamplesSplit = 100
+
+    if targetColumn == '_IM_MINIMAL':
+        ######################
+        # --- Setting dataset
+        dataSetFileName = 'ML/Mutants/Minimal/Without ColumnNames/mutants_minimals.csv'
+
+        #####################
+        # --- Setting columns
+        columnNames = ['_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_EQUIVALENT', '_IM_MINIMAL']
+
+        ###################
+        # --- PreProcessing
+        dataSet = importDataSet(dataSetFileName, columnNames)
+
+        print('####################################################')
+        print(' ----- Calculando para identificar mutantes minimais')
     
-    #####################
-    # --- Setting columns
-    # For minimals
-    minimalColumnNames = ['_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_EQUIVALENT', '_IM_MINIMAL']
+    elif targetColumn == '_IM_EQUIVALENT':
+        ######################
+        # --- Setting datasets
+        dataSetFileName = 'ML/Mutants/Equivalent/Without ColumnNames/mutants_equivalents.csv'
+
+        #####################
+        # --- Setting columns
+        columnNames = ['_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT']
+
+        ###################
+        # --- PreProcessing
+        dataSet = importDataSet(dataSetFileName, columnNames)
+
+        print('########################################################')
+        print(' ----- Calculando para identificar mutantes equivalentes')
+    else:
+        exit()
+
+    ###################
+    # --- Executing kNN
+    print(' ----- KNN')
+    resultsFileName = 'ML/Results{targetColumn}/kNN.csv'.format(targetColumn = targetColumn)
+    if len(columnsToDrop) > 0:
+        resultsFileName = 'ML/Results{targetColumn}/greedyBackwardSelection/kNN - {columns}.csv'.format(targetColumn = targetColumn, columns = columnsToDrop)
+    crossValidation_main(dataSet, targetColumn, 'KNN', maxNeighbors, resultsFileName, columnsToDrop)
     
-    # For equivalents
-    equivalentColumnNames = ['_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT']
-    
-    ###############################
-    # --- Setting others properties
+    #############################
+    # --- Executing Decision Tree
+    print(' ------ DT')
+    resultsFileName = 'ML/Results{targetColumn}/DT.csv'.format(targetColumn = targetColumn)
+    if len(columnsToDrop) > 0:
+        resultsFileName = 'ML/Results{targetColumn}/greedyBackwardSelection/DT - {columns}.csv'.format(targetColumn = targetColumn, columns = columnsToDrop)
+    crossValidation_main(dataSet, targetColumn, 'DT', maxSamplesSplit, resultsFileName, columnsToDrop)
+
+def computeMutants(targetColumn, columnsToDrop = [], printResults = False):
+    ####################################
+    # --- Setting independent properties
     testSetSize = 0.25
 
     maxNeighbors = 40
     maxSamplesSplit = 100
 
+    X_train = None
+    X_test = None
+    y_train = None
+    y_test = None
+
+    if targetColumn == '_IM_MINIMAL':
+        ######################
+        # --- Setting dataset
+        dataSetFileName = 'ML/Mutants/Minimal/Without ColumnNames/mutants_minimals.csv'
+
+        #####################
+        # --- Setting columns
+        columnNames = ['_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_EQUIVALENT', '_IM_MINIMAL']
+
+        ###################
+        # --- PreProcessing
+        dataSet = importDataSet(dataSetFileName, columnNames)
+        X_train, X_test, y_train, y_test = preProcessing(dataSet, testSetSize, targetColumn, columnsToDrop)
+
+        print('####################################################')
+        print(' ----- Calculando para identificar mutantes minimais')
+    
+    elif targetColumn == '_IM_EQUIVALENT':
+        ######################
+        # --- Setting datasets
+        dataSetFileName = 'ML/Mutants/Equivalent/Without ColumnNames/mutants_equivalents.csv'
+
+        #####################
+        # --- Setting columns
+        columnNames = ['_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT']
+
+        ###################
+        # --- PreProcessing
+        dataSet = importDataSet(dataSetFileName, columnNames)
+        X_train, X_test, y_train, y_test = preProcessing(dataSet, testSetSize, targetColumn, columnsToDrop)
+
+        print('########################################################')
+        print(' ----- Calculando para identificar mutantes equivalentes')
+    else:
+        exit()
+
     ###################
-    # --- PreProcessing
-    #   Minimals
-    targetColumn = '_IM_MINIMAL'
-    minimalDataSet = importDataSet(fileNameMinimalDataSet, minimalColumnNames)
-    X_train_minimal, X_test_minimal, y_train_minimal, y_test_minimal = preProcessing(minimalDataSet, testSetSize, targetColumn, columnsToDrop)
-    
-    #   Equivalents
-    targetColumn = '_IM_EQUIVALENT'
-    equivalentDataSet = importDataSet(fileNameEquivalentsDataSet, equivalentColumnNames)
-    X_train_equivalents, X_test_equivalents, y_train_equivalents, y_test_equivalents = preProcessing(equivalentDataSet, testSetSize, targetColumn, columnsToDrop)
-    
-    #####################################
-    # --- Executing kNN and Decision Tree
-    #   Minimals
-    print('##########################################################')
-    print(' ----- KNN - Calculando para identificar mutantes minimais')
-
-    targetColumn = '_IM_MINIMAL'
-    resultsFileName = 'ML/Results/kNN_{targetColumn}.csv'.format(targetColumn = targetColumn)
+    # --- Executing kNN
+    print(' ----- KNN')
+    resultsFileName = 'ML/Results{targetColumn}/kNN.csv'.format(targetColumn = targetColumn)
     if len(columnsToDrop) > 0:
-        resultsFileName = 'ML/Results/new/kNN_{targetColumn} - {columns}.csv'.format(targetColumn = targetColumn, columns=columnsToDrop)
-    classifierMain('KNN', maxNeighbors, resultsFileName, X_train_minimal, X_test_minimal, y_train_minimal, y_test_minimal, printResults)
+        resultsFileName = 'ML/Results{targetColumn}/kNN - {columns}.csv'.format(targetColumn = targetColumn, columns = columnsToDrop)
+    classifierMain('KNN', maxNeighbors, resultsFileName, X_train, X_test, y_train, y_test, printResults)
     
-    print(' ------ DT - Calculando para identificar mutantes minimais')
-
-    resultsFileName = 'ML/Results/DT_{targetColumn}.csv'.format(targetColumn = targetColumn)
+    #############################
+    # --- Executing Decision Tree
+    print(' ------ DT')
+    resultsFileName = 'ML/Results{targetColumn}/DT.csv'.format(targetColumn = targetColumn)
     if len(columnsToDrop) > 0:
-        resultsFileName = 'ML/Results/new/DT_{targetColumn} - {columns}.csv'.format(targetColumn = targetColumn, columns=columnsToDrop)
-    classifierMain('DT', maxSamplesSplit, resultsFileName, X_train_minimal, X_test_minimal, y_train_minimal, y_test_minimal, printResults)
-
-    #   Equivalents
-    print('\n')
-    print('##############################################################')
-    print(' ----- KNN - Calculando para identificar mutantes equivalentes')
-
-    targetColumn = '_IM_EQUIVALENT'
-    resultsFileName = 'ML/Results/kNN_{targetColumn}.csv'.format(targetColumn = targetColumn)
-    if len(columnsToDrop) > 0:
-        resultsFileName = 'ML/Results/new/kNN_{targetColumn} - {columns}.csv'.format(targetColumn = targetColumn, columns=columnsToDrop)
-    classifierMain('KNN', maxNeighbors, resultsFileName, X_train_equivalents, X_test_equivalents, y_train_equivalents, y_test_equivalents, printResults)
-    
-    print(' ------ DT - Calculando para identificar mutantes equivalentes')
-    
-    resultsFileName = 'ML/Results/DT_{targetColumn}.csv'.format(targetColumn = targetColumn)
-    if len(columnsToDrop) > 0:
-        resultsFileName = 'ML/Results/new/DT_{targetColumn} - {columns}.csv'.format(targetColumn = targetColumn, columns=columnsToDrop)    
-    classifierMain('DT', maxSamplesSplit, resultsFileName, X_train_equivalents, X_test_equivalents, y_train_equivalents, y_test_equivalents, printResults)
+        resultsFileName = 'ML/Results{targetColumn}/DT - {columns}.csv'.format(targetColumn = targetColumn, columns = columnsToDrop)
+    classifierMain('DT', maxSamplesSplit, resultsFileName, X_train, X_test, y_train, y_test, printResults)
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
-        computeMutants(printResults = sys.argv[1])
+        crossValidation('_IM_MINIMAL', printResults = sys.argv[1])
+        crossValidation('_IM_EQUIVALENT', printResults = sys.argv[1])
     else:
-        computeMutants()
+        crossValidation('_IM_MINIMAL')
+        crossValidation('_IM_EQUIVALENT')
