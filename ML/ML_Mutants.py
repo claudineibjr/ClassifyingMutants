@@ -19,9 +19,16 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.feature_selection import VarianceThreshold
 
-# SkLearn - Classifiers
+# ------------------------
+# --- SkLearn - Classifiers
+#https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html
 from sklearn.neighbors import KNeighborsClassifier
+
+#https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html
 from sklearn.tree import DecisionTreeClassifier
+
+#https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
+from sklearn.ensemble import RandomForestClassifier
 
 # Statistics
 from statistics import mean
@@ -337,6 +344,8 @@ def crossValidation_main(dataSetFrame, targetColumn, classifier, maxIterations, 
     computeData(resultsFileName, header, data, arrAccuracy, arrPrecision, arrRecall, arrF1)
 
 def computeData(resultsFileName, header, data, accuracy, precision, recall, f1):
+    newData = []
+    
     # Minímo
     subData = []
     subData.append('Min')
@@ -344,8 +353,7 @@ def computeData(resultsFileName, header, data, accuracy, precision, recall, f1):
     subData.append(min(precision))  # Precision
     subData.append(min(recall))     # Recall
     subData.append(min(f1))         # F1
-    data.append('')
-    data.append(subData)
+    newData.append(subData)
 
     # Máximo
     subData = []
@@ -354,7 +362,7 @@ def computeData(resultsFileName, header, data, accuracy, precision, recall, f1):
     subData.append(max(precision))  # Precision
     subData.append(max(recall))     # Recall
     subData.append(max(f1))         # F1
-    data.append(subData)
+    newData.append(subData)
 
     # Average
     subData = []
@@ -363,7 +371,7 @@ def computeData(resultsFileName, header, data, accuracy, precision, recall, f1):
     subData.append(mean(precision))  # Precision
     subData.append(mean(recall))     # Recall
     subData.append(mean(f1))         # F1
-    data.append(subData)
+    newData.append(subData)
 
     # Median
     subData = []
@@ -372,10 +380,16 @@ def computeData(resultsFileName, header, data, accuracy, precision, recall, f1):
     subData.append(median(precision))  # Precision
     subData.append(median(recall))     # Recall
     subData.append(median(f1))         # F1
-    data.append(subData)
+    newData.append(subData)
+
+    # Include each data in the file
+    newData.append('')
+    newData.append(header)
+    for _data in data:
+        newData.append(_data)
 
     # Print
-    util.writeInCsvFile(resultsFileName, data, header=header)    
+    util.writeInCsvFile(resultsFileName, newData)
 
 def crossValidation(targetColumn, columnsToDrop = [], columnsToAdd = [], printResults = False):
     ####################################
