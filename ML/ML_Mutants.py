@@ -30,6 +30,9 @@ from sklearn.tree import DecisionTreeClassifier
 #https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
 from sklearn.ensemble import RandomForestClassifier
 
+#https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html
+from sklearn.svm import SVC
+
 # Statistics
 from statistics import mean
 from statistics import median
@@ -141,6 +144,20 @@ def dt_trainingAndPredictions(minSamplesSplit, X_train, y_train, X_test):
 
     return y_pred
 
+def rf_trainingAndPredictions(minSamplesSplit, X_train, y_train, X_test):
+    ##################################
+    # --- Training and Predictions ---
+    ##################################
+    
+    #   It is extremely straight forward to train the KNN algorithm and make predictions with it, especially when using Scikit-Learn.
+    classifier = RandomForestClassifier(min_samples_split = minSamplesSplit)
+    classifier.fit(X_train, y_train)
+
+    #   The final step is to make predictions on our test data. To do so, execute the following script:
+    y_pred = classifier.predict(X_test)
+
+    return y_pred
+
 def evaluatingAlgorithm(y_test, y_pred):
     ##################################
     # --- Evaluating the Algorithm ---
@@ -207,6 +224,9 @@ def classifierMain(classifier, maxIterations, resultsFileName, X_train, X_test, 
     elif classifier == 'DT':
         for minSamplesSplit in range(5, maxIterations + 1, 10):
             arr_y_pred_iter.append((dt_trainingAndPredictions(minSamplesSplit, X_train, y_train, X_test), minSamplesSplit))
+    elif classifier == 'RT':
+        for minSamplesSplit in range(5, maxIterations + 1, 10):
+            arr_y_pred_iter.append((rf_trainingAndPredictions(minSamplesSplit, X_train, y_train, X_test), minSamplesSplit))            
     else:
         return None
 
@@ -270,11 +290,11 @@ def crossValidation_main(dataSetFrame, targetColumn, classifier, maxIterations, 
 
     # Grouping data frame by target column
     dataGrouped = dataSetFrame.groupby(targetColumn)
-    dataSetFrame = pd.DataFrame(dataGrouped.apply(lambda x: x.sample(dataGrouped.size().min()).reset_index(drop=True)))    
+    dataSetFrame = pd.DataFrame(dataGrouped.apply(lambda x: x.sample(dataGrouped.size().min()).reset_index(drop = True)))
     
     # Get ColumnValues and drop minimal and equivalent columns
     columnValues = dataSetFrame[targetColumn].values
-    dataSetFrame = dataSetFrame.drop(['_IM_MINIMAL', '_IM_EQUIVALENT'], axis=1)
+    dataSetFrame = dataSetFrame.drop(['_IM_MINIMAL', '_IM_EQUIVALENT'], axis = 1)
 
     # Encode _IM_OPERATOR column
     if dataSetFrame.columns.__contains__('_IM_OPERATOR'):
@@ -306,6 +326,15 @@ def crossValidation_main(dataSetFrame, targetColumn, classifier, maxIterations, 
     elif classifier == 'DT':
         for minSamplesSplit in range(5, maxIterations + 1, 10):
             arr_estimators_iter.append((DecisionTreeClassifier(min_samples_split = minSamplesSplit), minSamplesSplit))
+    elif classifier == 'RF':
+        for minSamplesSplit in range(5, maxIterations + 1, 10):
+            arr_estimators_iter.append((RandomForestClassifier(min_samples_split = minSamplesSplit), minSamplesSplit))
+    elif classifier == 'SVM':
+        averagePenalty = len(dataFrameValues)
+        minPenalty = int(averagePenalty / 5)
+        maxPenalty = int(averagePenalty * 2)
+        for penalty in range(minPenalty, maxPenalty, minPenalty):
+            arr_estimators_iter.append((SVC(C = penalty, max_iter = 100000, kernel = 'linear'), penalty))
     else:
         return None
 
@@ -391,7 +420,11 @@ def computeData(resultsFileName, header, data, accuracy, precision, recall, f1):
     # Print
     util.writeInCsvFile(resultsFileName, newData)
 
-def crossValidation(targetColumn, columnsToDrop = [], columnsToAdd = [], printResults = False):
+def crossValidation(targetColumn, classifier, columnsToDrop = [], columnsToAdd = [], printResults = False):
+    classifiers = ['KNN', 'DT', 'RF', 'SVM']
+    if not classifier in classifiers:
+        return None
+    
     ####################################
     # --- Setting independent properties
     maxNeighbors = 40
@@ -431,29 +464,49 @@ def crossValidation(targetColumn, columnsToDrop = [], columnsToAdd = [], printRe
     else:
         exit()
 
-    ###################
-    # --- Executing kNN
-    print(' ----- KNN')
-    resultsFileName = 'ML/Results{targetColumn}/kNN.csv'.format(targetColumn = targetColumn)
-    if len(columnsToDrop) > 0:
-        #resultsFileName = 'ML/Results{targetColumn}/greedyBackwardSelection/kNN - {columns}.csv'.format(targetColumn = targetColumn, columns = columnsToDrop)
-        resultsFileName = 'ML/Results{targetColumn}/kNN - {columns}.csv'.format(targetColumn = targetColumn, columns = columnsToDrop)
-    elif len(columnsToAdd) > 0:
-        #resultsFileName = 'ML/Results{targetColumn}/greedyForwardSelection/kNN - {columns}.csv'.format(targetColumn = targetColumn, columns = columnsToAdd)
-        resultsFileName = 'ML/Results{targetColumn}/kNN - {columns}.csv'.format(targetColumn = targetColumn, columns = columnsToAdd)
-    crossValidation_main(dataSet, targetColumn, 'KNN', maxNeighbors, resultsFileName, columnNames, columnsToDrop, columnsToAdd)
-    
-    #############################
-    # --- Executing Decision Tree
-    print(' ------ DT')
-    resultsFileName = 'ML/Results{targetColumn}/DT.csv'.format(targetColumn = targetColumn)
-    if len(columnsToDrop) > 0:
-        #resultsFileName = 'ML/Results{targetColumn}/greedyBackwardSelection/DT - {columns}.csv'.format(targetColumn = targetColumn, columns = columnsToDrop)
-        resultsFileName = 'ML/Results{targetColumn}/DT - {columns}.csv'.format(targetColumn = targetColumn, columns = columnsToDrop)
-    elif len(columnsToAdd) > 0:
-        #resultsFileName = 'ML/Results{targetColumn}/greedyForwardSelection/DT - {columns}.csv'.format(targetColumn = targetColumn, columns = columnsToAdd)
-        resultsFileName = 'ML/Results{targetColumn}/DT - {columns}.csv'.format(targetColumn = targetColumn, columns = columnsToAdd)
-    crossValidation_main(dataSet, targetColumn, 'DT', maxSamplesSplit, resultsFileName, columnNames, columnsToDrop, columnsToAdd)
+    if classifier == 'KNN':
+        ###################
+        # --- Executing kNN
+        print(' ----- {}'.format(classifier))
+        resultsFileName = 'ML/Results{targetColumn}/{classifier}.csv'.format(targetColumn = targetColumn, classifier = classifier)
+        if len(columnsToDrop) > 0:
+            resultsFileName = 'ML/Results{targetColumn}/{classifier} - gbs_{columns}.csv'.format(targetColumn = targetColumn, columns = columnsToDrop, classifier = classifier)
+        elif len(columnsToAdd) > 0:
+            resultsFileName = 'ML/Results{targetColumn}/{classifier} - gfs_{columns}.csv'.format(targetColumn = targetColumn, columns = columnsToAdd, classifier = classifier)
+        crossValidation_main(dataSet, targetColumn, classifier, maxNeighbors, resultsFileName, columnNames, columnsToDrop, columnsToAdd)
+   
+    elif classifier == 'DT':
+        #############################
+        # --- Executing Decision Tree
+        print(' ----- {}'.format(classifier))
+        resultsFileName = 'ML/Results{targetColumn}/{classifier}.csv'.format(targetColumn = targetColumn, classifier = classifier)
+        if len(columnsToDrop) > 0:
+            resultsFileName = 'ML/Results{targetColumn}/{classifier} - gbs_{columns}.csv'.format(targetColumn = targetColumn, columns = columnsToDrop, classifier = classifier)
+        elif len(columnsToAdd) > 0:
+            resultsFileName = 'ML/Results{targetColumn}/{classifier} - gfs_{columns}.csv'.format(targetColumn = targetColumn, columns = columnsToAdd, classifier = classifier)
+        crossValidation_main(dataSet, targetColumn, classifier, maxSamplesSplit, resultsFileName, columnNames, columnsToDrop, columnsToAdd)
+
+    elif classifier == 'RF':
+        #############################
+        # --- Executing Random Forest
+        print(' ----- {}'.format(classifier))
+        resultsFileName = 'ML/Results{targetColumn}/{classifier}.csv'.format(targetColumn = targetColumn, classifier = classifier)
+        if len(columnsToDrop) > 0:
+            resultsFileName = 'ML/Results{targetColumn}/{classifier} - gbs_{columns}.csv'.format(targetColumn = targetColumn, columns = columnsToDrop, classifier = classifier)
+        elif len(columnsToAdd) > 0:
+            resultsFileName = 'ML/Results{targetColumn}/{classifier} - gfs_{columns}.csv'.format(targetColumn = targetColumn, columns = columnsToAdd, classifier = classifier)
+        crossValidation_main(dataSet, targetColumn, classifier, maxSamplesSplit, resultsFileName, columnNames, columnsToDrop, columnsToAdd)
+
+    elif classifier == 'SVM':
+        #############################
+        # --- Executing Random Forest
+        print(' ----- {}'.format(classifier))
+        resultsFileName = 'ML/Results{targetColumn}/{classifier}.csv'.format(targetColumn = targetColumn, classifier = classifier)
+        if len(columnsToDrop) > 0:
+            resultsFileName = 'ML/Results{targetColumn}/{classifier} - gbs_{columns}.csv'.format(targetColumn = targetColumn, columns = columnsToDrop, classifier = classifier)
+        elif len(columnsToAdd) > 0:
+            resultsFileName = 'ML/Results{targetColumn}/{classifier} - gfs_{columns}.csv'.format(targetColumn = targetColumn, columns = columnsToAdd, classifier = classifier)
+        crossValidation_main(dataSet, targetColumn, classifier, maxSamplesSplit, resultsFileName, columnNames, columnsToDrop, columnsToAdd)
 
 def computeMutants(targetColumn, columnsToDrop = [], printResults = False):
     ####################################
@@ -530,19 +583,42 @@ def greedyForwardSelection(targetColumn):
     else:
         return None
 
-    crossValidation(targetColumn, columnsToAdd = columnsToAdd)
+    #crossValidation(targetColumn, columnsToAdd = columnsToAdd)
 
 if __name__ == '__main__':
-    greedyForwardSelection('_IM_MINIMAL')
-    crossValidation('_IM_MINIMAL')
+    #greedyForwardSelection('_IM_MINIMAL')
+    #greedyForwardSelection('_IM_EQUIVALENT')
 
-    greedyForwardSelection('_IM_EQUIVALENT')
-    crossValidation('_IM_EQUIVALENT')
-    exit()
+    # Possible parameters
+    possibleTargetColumns = ['_IM_MINIMAL', '_IM_EQUIVALENT']
+    possibleDropOrAddColumns = ['_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT']
 
-    if len(sys.argv) > 1:
-        crossValidation('_IM_MINIMAL', printResults = sys.argv[1])
-        crossValidation('_IM_EQUIVALENT', printResults = sys.argv[1])
-    else:
-        crossValidation('_IM_MINIMAL')
-        crossValidation('_IM_EQUIVALENT')
+    # Parameters
+    targetColumn = None
+    classifier = None
+    columnsToDrop = []# ['_IM_OPERATOR', '_IM_TYPE_STATEMENT']  #columnsToDrop = None
+    columnsToAdd = [] #None
+
+    for iCount in range(1, len(sys.argv) - 1, 1):
+        arg = sys.argv[iCount]
+        if arg == '--column':
+            targetColumn = sys.argv[iCount + 1]
+        elif arg == '--classifier':
+            classifier = sys.argv[iCount + 1]
+
+    if targetColumn is None or not targetColumn in possibleTargetColumns:
+        print('Please specify the target column throught --column {targetColumn}. The {targetColumn} could be \'_IM_MINIMAL\' or \'_IM_EQUIVALENT\'')
+        exit()
+
+    if classifier is None:
+        print('Please specify the classifier throught --classifier {classifier}. The {classifier} could be \'KNN\', \'DT\', \'RF\' or \'SVM\' ')
+        exit()
+    
+    crossValidation(targetColumn, classifier, columnsToDrop)
+    
+    #if len(sys.argv) > 1:
+    #    crossValidation('_IM_MINIMAL', printResults = sys.argv[1])
+    #    crossValidation('_IM_EQUIVALENT', printResults = sys.argv[1])
+    #else:
+    #    crossValidation('_IM_MINIMAL')
+    #    crossValidation('_IM_EQUIVALENT')
