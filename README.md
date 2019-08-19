@@ -30,5 +30,7 @@ How to run
     - Put the ColumnNames (It is on 'ML/Mutants/{Equivalent or Minimal}0Header.txt') on CSV Files
     - On 'ML/Mutants/{Equivalent or Minimal}/With ColumnNames' copy the CSV File with column names
 
-> python3 ML/ML_Mutants.py
+> python3 ML/ML_Mutants.py --column {targetColumn} --classifier {classifier}
  - For each ML algorithm and classification (minimal or equivalent) will be created a CSV File
+ - The {targetColumn} value could be '_IM_MINIMAL' or '_IM_EQUIVALENT'
+ - The {classifier} value could be 'KNN', 'DT', 'RF' or 'SVM'
