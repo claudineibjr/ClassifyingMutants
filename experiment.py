@@ -22,16 +22,11 @@ if __name__ == '__main__':
     baseExperimentFolder = "{}/Programs".format(os.getcwd())
 
     # Percorre todas as pastas dentro do diretório base
-    for (subFolder, dirNames, files) in os.walk(baseExperimentFolder):
+    programsFolder = util.getPrograms(baseExperimentFolder)
+    for subFolder in programsFolder:
+        sourceProgram = '{}.c'.format(util.getFolderName(subFolder))
+        print ('### BEGIN ###')
+        print ('##########\t   Executing ' + sourceProgram + '\t ' + util.formatNow() + '\t   ##########')
 
-        # Pega o nome da pasta e concatenca com ".c" para que identifique o 
-        #   (A sessão de teste, o programa (".c") e a pasta devem ter o mesmo nome)
-        sourceProgram = "{}.c".format(subFolder[str(subFolder).rfind("/") + 1:])
-        
-        # Verifica se dentro da pasta tem um arquivo com a extensão "c" com o mesmo nome da pasta
-        if list(files).__contains__(sourceProgram):
-            print ('### BEGIN ###')
-            print ('##########\t   Executing ' + sourceProgram + '\t ' + util.formatNow() + '\t   ##########')
-
-            # Faz a execução do experimento passando como parâmetro a pasta desejada
-            minimal.main(baseExperimentFolder, subFolder, executionMode)
+        # Faz a execução do experimento passando como parâmetro a pasta desejada
+        minimal.main(baseExperimentFolder, subFolder, executionMode)

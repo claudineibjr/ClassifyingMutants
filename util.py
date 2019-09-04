@@ -89,10 +89,34 @@ def deleteResults(baseFolder, fileToDelete):
                             baseFolder = baseFolder, programName = programName, file = file)
                         
                         os.remove(fileNameToDelete)
-                        
+
+def getPrograms(folder):
+    folders = []
+    
+    # Percorre todas as pastas dentro do diretório base
+    for (subFolder, dirNames, files) in os.walk(folder):
+
+        # Pega o nome da pasta e concatenca com ".c" para que identifique o 
+        #   (A sessão de teste, o programa (".c") e a pasta devem ter o mesmo nome)
+        sourceProgram = "{}.c".format(subFolder[str(subFolder).rfind("/") + 1:])
+        
+        # Verifica se dentro da pasta tem um arquivo com a extensão "c" com o mesmo nome da pasta
+        if list(files).__contains__(sourceProgram):
+            folders.append(subFolder)
+
+    return folders
+
+def getFolderName(fullPath):
+    return str(fullPath)[str(fullPath).rindex('/') + 1 : ]
+
+def getPreviousFolder(fullPath):
+    return str(fullPath)[ 0: str(fullPath).rindex('/')]
 
 def normalize(data):
     maxValue = max(data)
     minValue = min(data)
 
     return [ (_data - minValue) / (maxValue - minValue) for _data in data]
+
+if __name__ == '__main__':
+    print(getPreviousFolder('/home/claudinei/Repositories/RelationshipBetweenMutationAndGFC/Programs'))

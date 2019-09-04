@@ -384,28 +384,30 @@ def main(_baseExperimentFolder, _baseFolder, executionMode):
             ###########################################################
             # Write mutants info to compute machine learning algorithms
             ###########################################################
+            datasetBaseFolder = '{}/ML/Dataset'.format(util.getPreviousFolder(baseExperimentFolder))
+            ########################
             ### --- Minimals --- ###
             essentialInfo = computeEssencialInfo(mutantsInfo, minimal_Equivalent=0)
             
             # Gera apenas um arquivo com todos os mutantes
-            essentialFileName = "{}/0Results/mutants_minimals.csv".format(baseExperimentFolder)
-            util.writeInCsvFile(essentialFileName, essentialInfo, mode="a+")
+            essentialFileName = '{}/Minimal/mutants.csv'.format(datasetBaseFolder)
+            util.writeInCsvFile(essentialFileName, essentialInfo, mode="a+", delimiter=',')
 
             # Gera um arquivo para cada programa com todos os seus mutantes
-            essentialFileName = "{}/0Results/Programs/mutants_minimals_{}.csv".format(baseExperimentFolder, sessionName)
-            util.writeInCsvFile(essentialFileName, essentialInfo, mode="a+")
+            essentialFileName = '{}/Minimal/Programs/{}.csv'.format(datasetBaseFolder, sessionName)
+            util.writeInCsvFile(essentialFileName, essentialInfo, mode="a+", delimiter=',')
 
-
+            ###########################
             ### --- Equivalents --- ###
             essentialInfo = computeEssencialInfo(mutantsInfo, minimal_Equivalent=1)
             
             # Gera apenas um arquivo com todos os mutantes
-            essentialFileName = "{}/0Results/mutants_equivalents.csv".format(baseExperimentFolder)
-            util.writeInCsvFile(essentialFileName, essentialInfo, mode="a+")
+            essentialFileName = '{}/Equivalent/mutants.csv'.format(datasetBaseFolder)
+            util.writeInCsvFile(essentialFileName, essentialInfo, mode="a+", delimiter=',')
 
             # Gera um arquivo para cada programa com todos os seus mutantes
-            essentialFileName = "{}/0Results/Programs/mutants_equivalents_{}.csv".format(baseExperimentFolder, sessionName)
-            util.writeInCsvFile(essentialFileName, essentialInfo, mode="a+")
+            essentialFileName = '{}/Equivalent/Programs/{}.csv'.format(datasetBaseFolder, sessionName)
+            util.writeInCsvFile(essentialFileName, essentialInfo, mode="a+", delimiter=',')
 
 
 if __name__ == '__main__':

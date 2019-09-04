@@ -440,7 +440,7 @@ def crossValidation(targetColumn, classifier, columnsToDrop = [], columnsToAdd =
     if targetColumn == '_IM_MINIMAL':
         ######################
         # --- Setting dataset
-        dataSetFileName = 'ML/Mutants/Minimal/mutants.csv'
+        dataSetFileName = 'ML/Dataset/Minimal/mutants.csv'
 
         #####################
         # --- Setting columns
@@ -456,7 +456,7 @@ def crossValidation(targetColumn, classifier, columnsToDrop = [], columnsToAdd =
     elif targetColumn == '_IM_EQUIVALENT':
         ######################
         # --- Setting datasets
-        dataSetFileName = 'ML/Mutants/Equivalent/mutants.csv'
+        dataSetFileName = 'ML/Dataset/Equivalent/mutants.csv'
 
         #####################
         # --- Setting columns
