@@ -386,14 +386,25 @@ def main(_baseExperimentFolder, _baseFolder, executionMode):
             ###########################################################
             ### --- Minimals --- ###
             essentialInfo = computeEssencialInfo(mutantsInfo, minimal_Equivalent=0)
-            essentialFileName = "{}/mutants_minimals.csv".format(baseExperimentFolder)          # Gera apenas um arquivo com todos os mutantes
-            #essentialFileName = "{}/{}_mutants.csv".format(baseExperimentFolder, sessionName)  # Gera um arquivo para cada programa com todos os seus mutantes
+            
+            # Gera apenas um arquivo com todos os mutantes
+            essentialFileName = "{}/0Results/mutants_minimals.csv".format(baseExperimentFolder)
             util.writeInCsvFile(essentialFileName, essentialInfo, mode="a+")
+
+            # Gera um arquivo para cada programa com todos os seus mutantes
+            essentialFileName = "{}/0Results/Programs/mutants_minimals_{}.csv".format(baseExperimentFolder, sessionName)
+            util.writeInCsvFile(essentialFileName, essentialInfo, mode="a+")
+
 
             ### --- Equivalents --- ###
             essentialInfo = computeEssencialInfo(mutantsInfo, minimal_Equivalent=1)
-            essentialFileName = "{}/mutants_equivalents.csv".format(baseExperimentFolder)       # Gera apenas um arquivo com todos os mutantes
-            #essentialFileName = "{}/{}_mutants.csv".format(baseExperimentFolder, sessionName)  # Gera um arquivo para cada programa com todos os seus mutantes
+            
+            # Gera apenas um arquivo com todos os mutantes
+            essentialFileName = "{}/0Results/mutants_equivalents.csv".format(baseExperimentFolder)
+            util.writeInCsvFile(essentialFileName, essentialInfo, mode="a+")
+
+            # Gera um arquivo para cada programa com todos os seus mutantes
+            essentialFileName = "{}/0Results/Programs/mutants_equivalents_{}.csv".format(baseExperimentFolder, sessionName)
             util.writeInCsvFile(essentialFileName, essentialInfo, mode="a+")
 
 

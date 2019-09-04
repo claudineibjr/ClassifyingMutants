@@ -23,12 +23,12 @@ How to run
                     2   Just run Proteum
                     3   Just analyze
 
- - The CSV files will be on the Programs folder named as 'mutants_equivalents.csv' and 'mutants_minimals.csv'
- - Copy CSV files to folder ML/Mutants
+ - The CSV files will be on the Programs/0Results folder named as 'mutants_equivalents.csv' and 'mutants_minimals.csv'
+ - The CSV files for each program will be on the Programs/0Results/Programs folder named as 'mutants_equivalents_{SessionName}.csv' and 'mutants_minimals_{SessionName}.csv'
+ - Copy CSV files to folder ML/Mutants/
     - Replace ';' for ',' on CSV Files
-    - On 'ML/Mutants/{Equivalent or Minimal}/Without ColumnNames' copy the CSV File
-    - Put the ColumnNames (It is on 'ML/Mutants/{Equivalent or Minimal}0Header.txt') on CSV Files
-    - On 'ML/Mutants/{Equivalent or Minimal}/With ColumnNames' copy the CSV File with column names
+    - On 'ML/Mutants/{Equivalent or Minimal}' copy the CSV File
+    - Remove {'_equivalents' or '_minimals'} from File Names
 
 > python3 ML/ML_Mutants.py --column {targetColumn} --classifier {classifier}
  - For each ML algorithm and classification (minimal or equivalent) will be created a CSV File

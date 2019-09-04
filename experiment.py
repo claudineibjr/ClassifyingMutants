@@ -10,6 +10,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         executionMode = sys.argv[1]
     else:
+        print ('Please specify the execution mode. 1 For run and analyze | 2 For run | 3 For analyze')
         print ('##### Exit #####')
         exit()
     
