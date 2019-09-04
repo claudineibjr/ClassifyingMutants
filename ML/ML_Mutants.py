@@ -37,6 +37,12 @@ from sklearn.svm import SVC
 from statistics import mean
 from statistics import median
 
+# Ignoring FutureWarning
+import warnings
+#warnings.simplefilter(action='ignore', category=FutureWarning)
+#import warnings
+warnings.filterwarnings("ignore")
+
 # Util
 import os,sys,inspect
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -422,7 +428,8 @@ def computeData(resultsFileName, header, data, accuracy, precision, recall, f1):
 
 def crossValidation(targetColumn, classifier, columnsToDrop = [], columnsToAdd = [], printResults = False):
     classifiers = ['KNN', 'DT', 'RF', 'SVM']
-    if not classifier in classifiers:
+    targetColumns = ['_IM_MINIMAL', '_IM_EQUIVALENT']
+    if not classifier in classifiers or not targetColumn in targetColumns:
         return None
     
     ####################################
@@ -573,6 +580,14 @@ def computeMutants(targetColumn, columnsToDrop = [], printResults = False):
         resultsFileName = 'ML/Results/{targetColumn}/DT - {columns}.csv'.format(targetColumn = targetColumn, columns = columnsToDrop)
     classifierMain('DT', maxSamplesSplit, resultsFileName, X_train, X_test, y_train, y_test, printResults)
 
+def executeAll():
+    targetColumns = ['_IM_MINIMAL', '_IM_EQUIVALENT']
+    classifiers = ['KNN', 'DT', 'RF', 'SVM']
+    
+    for column in targetColumns:
+        for classifier in classifiers:
+            crossValidation(column, classifier)
+
 if __name__ == '__main__':
     # Possible parameters
     possibleTargetColumns = ['_IM_MINIMAL', '_IM_EQUIVALENT']
@@ -583,6 +598,11 @@ if __name__ == '__main__':
     classifier = None
     columnsToDrop = []# ['_IM_OPERATOR', '_IM_TYPE_STATEMENT']  #columnsToDrop = None
     columnsToAdd = [] #None
+
+    # Verifica se é para executar tudo (todos os classificadores com todas as classificações)
+    if sys.argv[1] == '--all':
+        executeAll()
+        exit()
 
     # Percorre todos os parâmetros
     for iCount in range(1, len(sys.argv) - 1, 1):
@@ -600,7 +620,7 @@ if __name__ == '__main__':
         print('Please specify the classifier throught --classifier {classifier}. The {classifier} could be \'KNN\', \'DT\', \'RF\' or \'SVM\' ')
         exit()
     
-    crossValidation(targetColumn, classifier, columnsToDrop)
+    crossValidation(targetColumn, classifier, columnsToDrop, columnsToAdd)
     
     #if len(sys.argv) > 1:
     #    crossValidation('_IM_MINIMAL', printResults = sys.argv[1])
