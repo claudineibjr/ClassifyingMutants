@@ -3,9 +3,16 @@
 
 import util
 import sys
+
+from os import listdir
+from os.path import isfile, join
+
 import subprocess
 
 import constants
+
+from Others.ComputeMinimalMuta import computeMinimal
+from Others.prot2poke import prot2PokeMain
 
 def getGfc(fileName, arcPrimFile, showOutput):
 
@@ -116,6 +123,9 @@ def getInfoNode(gfc, node, numNodes):
         distanceFromEnd, distanceFromEnd_min, distanceFromEnd_max, distanceFromEnd_avg, \
         arcPrimSource, arcPrimTarget, sourcesNodeIsPrimitive, targetsNodeIsPrimitive
 
+'''
+    Função responsável por identificar os nós primitivos de acordo com o arquivo de nós primitivos
+'''
 def getPrimitiveNode(primitiveNodes):
     nodes = primitiveNodes[2: ]
     nodes = str(nodes).replace("arco (", "").replace(")", "")
@@ -249,25 +259,63 @@ def getTarget(gfc, node):
 
     return target
 
-def prepareGFC(gfc, primitiveNodes):
+def prepareGFC_basic(gfcContent):
     #GFC
         # Key = Nó
-        # Value =   0 - Destinos | _iNTargets
-        #           1 - Origens | _iNSources
-        #           2 - Distância início | _iNDistancesBegin
-        #           3 - Distância fim | _iNDistancesEnd
+        # Value =   0 - Destinos |			_iNTargets
+        #           1 - Origens |			_iNSources
+        #           2 - Distância início |	_iNDistancesBegin
+        #           3 - Distância fim |		_iNDistancesEnd	
 
-    gfc = str(gfc).splitlines()
+    gfcContent = str(gfcContent).splitlines()
     
-    numNodes = int(gfc[0])
+    numNodes = int(gfcContent[0])
 
-    gfc = gfc[2: ]
+    gfcContent = gfcContent[2: ]
 
     newGFC = {}
     
     # Variável utilizada para identificar o nome do último nó verificado (é atualizado quase toda vez)
     last = ""
-    for infoGFC in gfc:
+    for infoGFC in gfcContent:
+        # Verifica se a corrente linha é referente ao número do nó
+        if not infoGFC.__contains__(' ') and not infoGFC == '0':
+            last = infoGFC
+        else:
+            # A corrente linha é referente aos nós de destino do corrente nó (variável last)
+            if int(last) <= numNodes:
+                infonode = []
+                infonode.append(list(infoGFC.split(' ')))                       #_iNTargets
+                infonode.append([])                                             #_iNSources
+
+                newGFC[last] = infonode
+                newGFC[last][constants._iNTargets].remove('0')
+
+    # Calcula as origens
+    for infoGFC in newGFC:
+        newGFC[infoGFC][constants._iNSources] = getSource(newGFC, infoGFC)
+
+    return newGFC
+
+def prepareGFC(gfcContent, primitiveNodes):
+    #GFC
+        # Key = Nó
+        # Value =   0 - Destinos |			_iNTargets
+        #           1 - Origens |			_iNSources
+        #           2 - Distância início |	_iNDistancesBegin
+        #           3 - Distância fim |		_iNDistancesEnd	
+
+    gfcContent = str(gfcContent).splitlines()
+    
+    numNodes = int(gfcContent[0])
+
+    gfcContent = gfcContent[2: ]
+
+    newGFC = {}
+    
+    # Variável utilizada para identificar o nome do último nó verificado (é atualizado quase toda vez)
+    last = ""
+    for infoGFC in gfcContent:
         # Verifica se a corrente linha é referente ao número do nó
         if not infoGFC.__contains__(' ') and not infoGFC == '0':
             last = infoGFC
@@ -381,13 +429,16 @@ def gfcMain(gfcFile, arcPrimFile, showOutput = False):
 
     return gfc, numNodes
 
+'''
+    Função responsável por transformar um GFC (com nós, arestas, etc) e transformar num arquivo .dot
+'''
 def gfcToDot(gfc, outputDotFile):
     contentDotFile = "Digraph G {\n"
 
     for node in gfc:
         for nodeTarget in gfc[node][constants._iNTargets]:
             contentDotFile = "{contentDotFile}\t{node} -> {nodeTarget};\n".format(
-            contentDotFile = contentDotFile, node = node, nodeTarget = nodeTarget)
+                contentDotFile = contentDotFile, node = node, nodeTarget = nodeTarget)
 
     contentDotFile = "{contentDotFile}}} ".format(contentDotFile = contentDotFile)
     util.write(outputDotFile, contentDotFile)
@@ -397,6 +448,18 @@ def dotToPng(dotFileName, pngFileName):
         pngFileName = pngFileName, dotFileName = dotFileName)
         
     subprocess.call(command, shell=True) 
+
+def gfcUtils_main(baseFolder, gfcFileName):
+	prot2PokeMain(gfcFileName)
+
+	filesInFolder = [f for f in listdir(baseFolder) if isfile(join(baseFolder, f))]
+	for file in filesInFolder:
+		if not str(file).startswith('__') and not file.endswith('main.gfc'):
+			file = '{}/{}'.format(baseFolder, file)
+			gfc = prepareGFC_basic(util.getContentFromFile(file).replace('\t', ''))
+			
+			gfcToDot(gfc, file.replace('.gfc', '.dot'))
+			dotToPng(file.replace('.gfc', '.dot'), file.replace('.gfc', '.png'))
 
 if __name__ == '__main__':
     #   GFC File Name
