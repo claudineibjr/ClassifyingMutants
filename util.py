@@ -106,6 +106,26 @@ def getPrograms(folder):
 
     return folders
 
+def getFoldersInFolder(folder):
+    folders = []
+    
+    # Percorre todas as pastas dentro do diretório base
+    for (subFolder, dirNames, files) in os.walk(folder):
+        if str(folder).count('/') +1 == str(subFolder).count('/'):
+            folders.append(subFolder)
+
+    return folders
+
+def getFilesInFolder(folder):
+    files = []
+
+    for file in os.listdir(folder):
+        fullFilePath = '{}/{}'.format(folder, file)
+        if os.path.isfile(fullFilePath):
+            files.append(fullFilePath)
+
+    return files
+
 def getFolderName(fullPath):
     return str(fullPath)[str(fullPath).rindex('/') + 1 : ]
 
@@ -119,4 +139,4 @@ def normalize(data):
     return [ (_data - minValue) / (maxValue - minValue) for _data in data]
 
 if __name__ == '__main__':
-    print(getPreviousFolder('/home/claudinei/Repositories/RelationshipBetweenMutationAndGFC/Programs'))
+    print([getFolderName(file) for file in getFilesInFolder('/home/claudinei/Repositories/RelationshipBetweenMutationAndGFC/ML/Results/MINIMAL/Programs')])
