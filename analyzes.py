@@ -58,27 +58,31 @@ def analyzeProgramAProgram(targetColumn, possibleTargetColumns, possibleClassifi
 				# Separa o arquivo de resultados em colunas
 				columns = [line.split(';') for line in contentFile.splitlines()]
 				
-				minAccuracy.append(		float(columns[0][1]))
-				minPrecision.append(	float(columns[0][2]))
-				minRecall.append(		float(columns[0][3]))
-				minF1.append(			float(columns[0][4]))
+				minAccuracy.append(		float(columns[0][1]) )
+				minPrecision.append(	float(columns[0][2]) )
+				minRecall.append(		float(columns[0][3]) )
+				minF1.append(			float(columns[0][4]) )
 				
-				maxAccuracy.append(		float(columns[1][1]))
-				maxPrecision.append(	float(columns[1][2]))
-				maxRecall.append(		float(columns[1][3]))
-				maxF1.append(			float(columns[1][4]))
+				maxAccuracy.append(		float(columns[1][1]) )
+				maxPrecision.append(	float(columns[1][2]) )
+				maxRecall.append(		float(columns[1][3]) )
+				maxF1.append(			float(columns[1][4]) )
 				
-				meanAccuracy.append(	float(columns[2][1]))
-				meanPrecision.append(	float(columns[2][2]))
-				meanRecall.append(		float(columns[2][3]))
-				meanF1.append(			float(columns[2][4]))
+				meanAccuracy.append(	float(columns[2][1]) )
+				meanPrecision.append(	float(columns[2][2]) )
+				meanRecall.append(		float(columns[2][3]) )
+				meanF1.append(			float(columns[2][4]) )
 				
-				medianAccuracy.append(	float(columns[3][1]))
-				medianPrecision.append(	float(columns[3][2]))
-				medianRecall.append(	float(columns[3][3]))
-				medianF1.append(		float(columns[3][4]))
+				medianAccuracy.append(	float(columns[3][1]) )
+				medianPrecision.append(	float(columns[3][2]) )
+				medianRecall.append(	float(columns[3][3]) )
+				medianF1.append(		float(columns[3][4]) )
 
-				programData.append([program, float(columns[1][1]), float(columns[1][2]), float(columns[1][3]), float(columns[1][4])])
+				accuracy = float(columns[1][1])
+				precision = float(columns[1][1])
+				recall = float(columns[1][1])
+				f1 = float(columns[1][1])
+				programData.append([program, accuracy, precision, recall, f1])
 
 		fileName = '{}/Programs_{}.csv'.format(baseResultsFolderName, classifier)
 		header = ['FileName', 'Accuracy', 'Precision', 'Recall', 'F1']

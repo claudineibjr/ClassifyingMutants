@@ -64,23 +64,28 @@ def importDataSet(fileName, columnNames, showHeadDataSet=False):
 
     return dataSet
 
-def preProcessing(dataSetFrame, testSetSize, targetColumn, columnsToDrop):
+def preProcessing(dataSetFrame, testSetSize, targetColumn, columnNames, columnsToDrop, columnsToAdd):
     ####################
     # --- Preprocessing
 
-    dataSetFrame.drop(columnsToDrop, axis = 1)
-    numProperties = len(dataSetFrame.columns) - 1
+    # Adiciona ou remove as devidas colunas
+    if len(columnsToDrop) > 0:
+        dataSetFrame.drop(columnsToDrop, axis = 1)
+    elif len(columnsToAdd) > 0:
+        for column in columnNames:
+            if column not in columnsToAdd and len(column) > 1 and column != '_IM_MINIMAL' and column != '_IM_EQUIVALENT':
+                dataSetFrame = dataSetFrame.drop(column, axis = 1)
 
-    # Removing duplicates
-    #dataSetFrame.drop_duplicates(subset = ['_IM_OPERATOR', '_IM_TYPE_STATEMENT', '_IM_COMPLEXITY'], 
-                     #keep = 'first', inplace = True)
+    # TODO
+    numProperties = len(dataSetFrame.columns) - 1
 
     # Grouping data frame by target column
     dataGrouped = dataSetFrame.groupby(targetColumn)
-    dataSetFrame = pd.DataFrame(dataGrouped.apply(lambda x: x.sample(dataGrouped.size().min()).reset_index(drop=True)))
+    dataSetFrame = pd.DataFrame(dataGrouped.apply(lambda x: x.sample(dataGrouped.size().min()).reset_index(drop = True)))
 
-    # Número de colunas a serem deletadas
+    # TODO - Número de colunas a serem deletadas ou adicionada
     numColumnsToDelete = 0
+    numColumnsToAdd = 0
 
     # Encode _IM_OPERATOR column
     if dataSetFrame.columns.__contains__('_IM_OPERATOR'):
@@ -98,7 +103,7 @@ def preProcessing(dataSetFrame, testSetSize, targetColumn, columnsToDrop):
         
         numColumnsToDelete = numColumnsToDelete - 1 + len(one_hot_TypeStatement.columns)
 
-    # Remove a coluna e reinsere-a no final
+    # Remove a coluna objeto e reinsere-a no final
     targetColumnValues = dataSetFrame[targetColumn]
     dataSetFrame = dataSetFrame.drop(targetColumn, axis = 1)
     dataSetFrame = dataSetFrame.join(targetColumnValues)
@@ -232,7 +237,7 @@ def classifierMain(classifier, maxIterations, resultsFileName, X_train, X_test, 
             arr_y_pred_iter.append((dt_trainingAndPredictions(minSamplesSplit, X_train, y_train, X_test), minSamplesSplit))
     elif classifier == 'RT':
         for minSamplesSplit in range(5, maxIterations + 1, 10):
-            arr_y_pred_iter.append((rf_trainingAndPredictions(minSamplesSplit, X_train, y_train, X_test), minSamplesSplit))            
+            arr_y_pred_iter.append((rf_trainingAndPredictions(minSamplesSplit, X_train, y_train, X_test), minSamplesSplit))
     else:
         return None
 
@@ -287,6 +292,7 @@ def classifierMain(classifier, maxIterations, resultsFileName, X_train, X_test, 
 
 def crossValidation_main(dataSetFrame, targetColumn, classifier, maxIterations, resultsFileName, columnNames, columnsToDrop, columnsToAdd, showResults = False):
 
+    # Adiciona ou remove as devidas colunas
     if len(columnsToDrop) > 0:
         dataSetFrame.drop(columnsToDrop, axis = 1)
     elif len(columnsToAdd) > 0:
@@ -491,49 +497,48 @@ def crossValidation(targetColumn, classifier, specifiedProgram = None, columnsTo
     print(' ----- {}'.format(classifier))
     crossValidation_main(dataSet, targetColumn, classifier, maxIterations, resultsFileName, columnNames, columnsToDrop, columnsToAdd)
 
-def computeMutants(targetColumn, columnsToDrop = [], printResults = False):
+def computeMutants(targetColumn, classifier, specifiedProgram = None, columnsToDrop = [], columnsToAdd = [], printResults = False):
+    classifiers = ['KNN', 'DT', 'RF', 'SVM']
+    targetColumns = ['_IM_MINIMAL', '_IM_EQUIVALENT']
+    if not classifier in classifiers or not targetColumn in targetColumns:
+        return None
+    
     ####################################
     # --- Setting independent properties
     testSetSize = 0.25
-
     maxNeighbors = 40
     maxSamplesSplit = 100
+    maxIterations = maxNeighbors if classifier == 'KNN' else maxSamplesSplit
 
+    #######################################
+    # --- Setting trains and test variables
     X_train = None
     X_test = None
     y_train = None
     y_test = None
 
-    if targetColumn == '_IM_MINIMAL':
-        ######################
-        # --- Setting dataset
-        dataSetFileName = 'ML/Mutants/Minimal/mutants.csv'
+    ######################
+    # --- Setting datasets
+    targetColumnName = str(targetColumn).replace('_IM_', '')
+    
+    # Verifica se foi definido um programa específico para ser classificado
+    if not specifiedProgram is None:
+        dataSetFileName = 'ML/Dataset/{}/Programs/{}.csv'.format(targetColumnName, specifiedProgram)
+    else:
+        dataSetFileName = 'ML/Dataset/{}/mutants.csv'.format(targetColumnName)
 
+    if targetColumn == '_IM_MINIMAL':
         #####################
         # --- Setting columns
         columnNames = ['_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_EQUIVALENT', '_IM_MINIMAL']
-
-        ###################
-        # --- PreProcessing
-        dataSet = importDataSet(dataSetFileName, columnNames)
-        X_train, X_test, y_train, y_test = preProcessing(dataSet, testSetSize, targetColumn, columnsToDrop)
 
         print('####################################################')
         print(' ----- Calculando para identificar mutantes minimais')
     
     elif targetColumn == '_IM_EQUIVALENT':
-        ######################
-        # --- Setting datasets
-        dataSetFileName = 'ML/Mutants/Equivalent/mutants.csv'
-
         #####################
         # --- Setting columns
         columnNames = ['_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT']
-
-        ###################
-        # --- PreProcessing
-        dataSet = importDataSet(dataSetFileName, columnNames)
-        X_train, X_test, y_train, y_test = preProcessing(dataSet, testSetSize, targetColumn, columnsToDrop)
 
         print('########################################################')
         print(' ----- Calculando para identificar mutantes equivalentes')
@@ -541,20 +546,25 @@ def computeMutants(targetColumn, columnsToDrop = [], printResults = False):
         exit()
 
     ###################
-    # --- Executing kNN
-    print(' ----- KNN')
-    resultsFileName = 'ML/Results/{targetColumn}/kNN.csv'.format(targetColumn = targetColumn)
-    if len(columnsToDrop) > 0:
-        resultsFileName = 'ML/Results/{targetColumn}/kNN - {columns}.csv'.format(targetColumn = targetColumn, columns = columnsToDrop)
-    classifierMain('KNN', maxNeighbors, resultsFileName, X_train, X_test, y_train, y_test, printResults)
-    
-    #############################
-    # --- Executing Decision Tree
-    print(' ------ DT')
-    resultsFileName = 'ML/Results{targetColumn}/DT.csv'.format(targetColumn = targetColumn)
-    if len(columnsToDrop) > 0:
-        resultsFileName = 'ML/Results/{targetColumn}/DT - {columns}.csv'.format(targetColumn = targetColumn, columns = columnsToDrop)
-    classifierMain('DT', maxSamplesSplit, resultsFileName, X_train, X_test, y_train, y_test, printResults)
+    # --- PreProcessing
+    dataSet = importDataSet(dataSetFileName, columnNames)
+    X_train, X_test, y_train, y_test = preProcessing(dataSet, testSetSize, targetColumn, columnNames, columnsToDrop, columnsToAdd)
+
+    ##############################
+    # --- Setting results filename
+    if specifiedProgram is None:
+        resultsFileName = 'ML/Results/{targetColumnName}/{classifier}.csv'.format(targetColumnName = targetColumnName, classifier = classifier)
+        if len(columnsToDrop) > 0:
+            resultsFileName = 'ML/Results/{targetColumnName}/{classifier} - gbs_{columns}.csv'.format(targetColumnName = targetColumnName, columns = columnsToDrop, classifier = classifier)
+        elif len(columnsToAdd) > 0:
+            resultsFileName = 'ML/Results/{targetColumnName}/{classifier} - gfs_{columns}.csv'.format(targetColumnName = targetColumnName, columns = columnsToAdd, classifier = classifier)
+    else:
+        resultsFileName = 'ML/Results/{targetColumnName}/Programs/{specifiedProgram}_{classifier}.csv'.format(targetColumnName = targetColumnName, specifiedProgram = specifiedProgram, classifier = classifier)
+
+    ###############################################
+    # --- Executing classifier | KNN, DT, RF ou SVM
+    print(' ----- {}'.format(classifier))
+    classifierMain(classifier, maxIterations, resultsFileName, X_train, X_test, y_train, y_test, printResults)
 
 '''
     Função utilizada para executar todos os classificadores em todas as colunas a serem classificadas
