@@ -139,4 +139,4 @@ def normalize(data):
     return [ (_data - minValue) / (maxValue - minValue) for _data in data]
 
 if __name__ == '__main__':
-    print([getFolderName(file) for file in getFilesInFolder('/home/claudinei/Repositories/RelationshipBetweenMutationAndGFC/ML/Results/MINIMAL/Programs')])
+    print()

@@ -4,6 +4,7 @@
 import util
 import sys
 
+from os import getcwd
 from os import listdir
 from os.path import isfile, join
 
@@ -11,10 +12,17 @@ import subprocess
 
 import constants
 
+import subprocess
+
 from Others.ComputeMinimalMuta import computeMinimal
 from Others.prot2poke import prot2PokeMain
 
 def getGfc(fileName, arcPrimFile, showOutput):
+
+    # Verifica se existe ou não a definição de arco primitivo, caso não, a cria
+    if not util.pathExists(arcPrimFile):
+        command = '{}/Others/calp_chusho {}'.format(getcwd(), fileName)
+        subprocess.run(command, shell=True)
 
     # Busca as informações referente aos arcos primitivos daquele programa
     primitiveNodes = util.getContentFromFile(arcPrimFile)
