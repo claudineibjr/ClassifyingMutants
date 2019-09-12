@@ -64,7 +64,7 @@ def importDataSet(fileName, columnNames, showHeadDataSet=False):
 
     return dataSet
 
-def preProcessing(dataSetFrame, testSetSize, targetColumn, columnNames, columnsToDrop, columnsToAdd):
+def preProcessing(dataSetFrame, targetColumn, columnNames, columnsToDrop, columnsToAdd):
     ####################
     # --- Preprocessing
 
@@ -76,16 +76,14 @@ def preProcessing(dataSetFrame, testSetSize, targetColumn, columnNames, columnsT
             if column not in columnsToAdd and len(column) > 1 and column != '_IM_MINIMAL' and column != '_IM_EQUIVALENT':
                 dataSetFrame = dataSetFrame.drop(column, axis = 1)
 
-    # TODO
     numProperties = len(dataSetFrame.columns) - 1
 
     # Grouping data frame by target column
     dataGrouped = dataSetFrame.groupby(targetColumn)
     dataSetFrame = pd.DataFrame(dataGrouped.apply(lambda x: x.sample(dataGrouped.size().min()).reset_index(drop = True)))
 
-    # TODO - Número de colunas a serem deletadas ou adicionada
+    # Número de colunas a serem deletadas
     numColumnsToDelete = 0
-    numColumnsToAdd = 0
 
     # Encode _IM_OPERATOR column
     if dataSetFrame.columns.__contains__('_IM_OPERATOR'):
@@ -108,12 +106,15 @@ def preProcessing(dataSetFrame, testSetSize, targetColumn, columnNames, columnsT
     dataSetFrame = dataSetFrame.drop(targetColumn, axis = 1)
     dataSetFrame = dataSetFrame.join(targetColumnValues)
 
+    return dataSetFrame, numProperties, numColumnsToDelete
+
+def dataSplitting(dataSetFrame, numProperties, numColumnsToDelete, testSetSize):
     # --- Train Test Split ---
     #   To avoid over-fitting, we will divide our dataSet into training and test splits, which gives us a better idea as to how our algorithm performed during the testing phase. This way our algorithm is tested on un-seen data, as it would be in a production application.
     #   To create training and test splits, execute the following script:
     X = dataSetFrame.iloc[:, :-1].values
     y = dataSetFrame.iloc[:, numProperties + numColumnsToDelete].values
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=testSetSize)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = testSetSize)
 
     # --- Feature Scaling ---
     #   Before making any actual predictions, it is always a good practice to scale the features so that all of them can be uniformly evaluated.
@@ -127,43 +128,24 @@ def preProcessing(dataSetFrame, testSetSize, targetColumn, columnNames, columnsT
 
     return X_train, X_test, y_train, y_test
 
-def knn_trainingAndPredictions(numberNeighbors, X_train, y_train, X_test):
+'''
+    Parameter could be the numNeighbors for kNN and minSampleSplit for DecisionTree and RandomForest
+'''
+def trainingAndPredictions(strClassifier, parameter, X_train, y_train, X_test):
     ##################################
     # --- Training and Predictions ---
     ##################################
     
     #   It is extremely straight forward to train the KNN algorithm and make predictions with it, especially when using Scikit-Learn.
-    classifier = KNeighborsClassifier(n_neighbors=numberNeighbors)
+    if strClassifier.upper() == 'KNN':
+        classifier = KNeighborsClassifier(n_neighbors = parameter)
+    elif strClassifier.upper() == 'DT':
+        classifier = DecisionTreeClassifier(min_samples_split = parameter)
+    elif strClassifier.upper() == 'RF':
+        classifier = RandomForestClassifier(min_samples_split = parameter)
+
     classifier.fit(X_train, y_train)
-
-    #   The final step is to make predictions on our test data. To do so, execute the following script:
-    y_pred = classifier.predict(X_test)
-
-    return y_pred
-
-def dt_trainingAndPredictions(minSamplesSplit, X_train, y_train, X_test):
-    ##################################
-    # --- Training and Predictions ---
-    ##################################
     
-    #   It is extremely straight forward to train the KNN algorithm and make predictions with it, especially when using Scikit-Learn.
-    classifier = DecisionTreeClassifier(min_samples_split = minSamplesSplit)
-    classifier.fit(X_train, y_train)
-
-    #   The final step is to make predictions on our test data. To do so, execute the following script:
-    y_pred = classifier.predict(X_test)
-
-    return y_pred
-
-def rf_trainingAndPredictions(minSamplesSplit, X_train, y_train, X_test):
-    ##################################
-    # --- Training and Predictions ---
-    ##################################
-    
-    #   It is extremely straight forward to train the KNN algorithm and make predictions with it, especially when using Scikit-Learn.
-    classifier = RandomForestClassifier(min_samples_split = minSamplesSplit)
-    classifier.fit(X_train, y_train)
-
     #   The final step is to make predictions on our test data. To do so, execute the following script:
     y_pred = classifier.predict(X_test)
 
@@ -231,13 +213,13 @@ def classifierMain(classifier, maxIterations, resultsFileName, X_train, X_test, 
 
     if classifier == 'KNN':
         for kNeighbors in range(1, maxIterations + 1, 1):
-            arr_y_pred_iter.append((knn_trainingAndPredictions(kNeighbors, X_train, y_train, X_test), kNeighbors))
+            arr_y_pred_iter.append((trainingAndPredictions('KNN', kNeighbors, X_train, y_train, X_test), kNeighbors))
     elif classifier == 'DT':
         for minSamplesSplit in range(5, maxIterations + 1, 10):
-            arr_y_pred_iter.append((dt_trainingAndPredictions(minSamplesSplit, X_train, y_train, X_test), minSamplesSplit))
+            arr_y_pred_iter.append((trainingAndPredictions('DT', minSamplesSplit, X_train, y_train, X_test), minSamplesSplit))
     elif classifier == 'RT':
         for minSamplesSplit in range(5, maxIterations + 1, 10):
-            arr_y_pred_iter.append((rf_trainingAndPredictions(minSamplesSplit, X_train, y_train, X_test), minSamplesSplit))
+            arr_y_pred_iter.append((trainingAndPredictions('RF', minSamplesSplit, X_train, y_train, X_test), minSamplesSplit))
     else:
         return None
 
@@ -497,6 +479,8 @@ def crossValidation(targetColumn, classifier, specifiedProgram = None, columnsTo
     print(' ----- {}'.format(classifier))
     crossValidation_main(dataSet, targetColumn, classifier, maxIterations, resultsFileName, columnNames, columnsToDrop, columnsToAdd)
 
+
+
 def computeMutants(targetColumn, classifier, specifiedProgram = None, columnsToDrop = [], columnsToAdd = [], printResults = False):
     classifiers = ['KNN', 'DT', 'RF', 'SVM']
     targetColumns = ['_IM_MINIMAL', '_IM_EQUIVALENT']
@@ -548,7 +532,8 @@ def computeMutants(targetColumn, classifier, specifiedProgram = None, columnsToD
     ###################
     # --- PreProcessing
     dataSet = importDataSet(dataSetFileName, columnNames)
-    X_train, X_test, y_train, y_test = preProcessing(dataSet, testSetSize, targetColumn, columnNames, columnsToDrop, columnsToAdd)
+    dataSetFrame, numProperties, numColumnsToDelete = preProcessing(dataSet, targetColumn, columnNames, columnsToDrop, columnsToAdd)
+    X_train, X_test, y_train, y_test = dataSplitting(dataSetFrame, numProperties, numColumnsToDelete, testSetSize)
 
     ##############################
     # --- Setting results filename
