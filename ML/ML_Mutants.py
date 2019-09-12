@@ -580,7 +580,7 @@ def executeAllEachProgram(targetColumns, classifiers, programs):
     for program in programs:
         executeAll(targetColumns, classifiers, program)
 
-if __name__ == '__main__':
+def debug_main():
     # Possible parameters
     possibleTargetColumns = ['_IM_MINIMAL', '_IM_EQUIVALENT']
     possibleClassifiers = ['KNN', 'DT', 'RF', 'SVM']
@@ -639,3 +639,6 @@ if __name__ == '__main__':
     #else:
     #    crossValidation('_IM_MINIMAL')
     #    crossValidation('_IM_EQUIVALENT')
+
+if __name__ == '__main__':
+    debug_main()

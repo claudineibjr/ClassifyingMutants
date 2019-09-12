@@ -23,14 +23,20 @@ How to run
                     2   Just run Proteum
                     3   Just analyze
 
- - The CSV files will be on the Programs/0Results folder named as 'mutants_equivalents.csv' and 'mutants_minimals.csv'
- - The CSV files for each program will be on the Programs/0Results/Programs folder named as 'mutants_equivalents_{SessionName}.csv' and 'mutants_minimals_{SessionName}.csv'
- - Copy CSV files to folder ML/Mutants/
-    - Replace ';' for ',' on CSV Files
-    - On 'ML/Mutants/{Equivalent or Minimal}' copy the CSV File
-    - Remove {'_equivalents' or '_minimals'} from File Names
+> python3 ML/ML_Mutants.py {parameters} --column {targetColumn} --classifier {classifier}
+ - The parameters for execution are:
+    --all - Execute all programs, all target columns and all classifiers.
+    --allPbp - Execute all target columns, all classifiers and all programs, but with one execution for each one.
+    --column | The targetColumn to be classified. Could be '_IM_MINIMAL' or '_IM_EQUIVALENT'
+    --classifier | The classifier used to classify. Could be 'KNN' for K Nearest Neighbors, 'DT' for Decision Tree, 'RF' for Random Forest or 'SVM' for Support Vector Machine
+    --program | The specified program to classify the target column
+    --pbp | Execute program by program
 
-> python3 ML/ML_Mutants.py --column {targetColumn} --classifier {classifier}
- - For each ML algorithm and classification (minimal or equivalent) will be created a CSV File
- - The {targetColumn} value could be '_IM_MINIMAL' or '_IM_EQUIVALENT'
- - The {classifier} value could be 'KNN', 'DT', 'RF' or 'SVM'
+ - Possible executions
+    --all
+    --allPbp
+    --column {column} --classifier {classifier}
+    --column {column} --classifier {classifier} --program {programName}
+    --column {column} --classifier {classifier} --pbp
+
+ - For each ML algorithm and classification (minimal or equivalent) will be created a result CSV File

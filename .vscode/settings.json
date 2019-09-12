@@ -1,6 +1,15 @@
 {
     "python.pythonPath": "/usr/bin/python3",
     "files.associations": {
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "tokens.h": "c",
+        "stdlib.h": "c",
+        "queue.h": "c",
+        "replace.h": "c",
+        "schedule.h": "c",
+        "schedule2.h": "c",
+        "std.h": "c",
+        "chisq.h": "c",
+        "gamma.h": "c"
     }
 }
