@@ -138,5 +138,11 @@ def normalize(data):
 
     return [ (_data - minValue) / (maxValue - minValue) for _data in data]
 
+def renameFolder(oldName, newName):
+    os.rename(oldName, newName)
+
+def createFolder(folderName):
+    os.mkdir(folderName)
+
 if __name__ == '__main__':
     print()

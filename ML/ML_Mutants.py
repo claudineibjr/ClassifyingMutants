@@ -47,7 +47,7 @@ warnings.filterwarnings("ignore")
 import os,sys,inspect
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
-sys.path.insert(0, parent_dir) 
+sys.path.insert(0, parent_dir)
 import util
 
 def importDataSet(fileName, columnNames, showHeadDataSet=False):
@@ -466,7 +466,7 @@ def crossValidation(targetColumn, classifier, specifiedProgram = None, columnsTo
 		print('########################################################')
 		print(' ----- Calculando para identificar mutantes equivalentes')
 	else:
-		exit()
+		return
 
 	###################
 	# --- PreProcessing
@@ -583,7 +583,7 @@ def computeMutants(targetColumn, classifier, specifiedProgram = None, columnsToD
 		print('########################################################')
 		print(' ----- Calculando para identificar mutantes equivalentes')
 	else:
-		exit()
+		return
 
 	###################
 	# --- PreProcessing
@@ -621,7 +621,7 @@ def executeAllEachProgram(targetColumns, classifiers, programs):
 	for program in programs:
 		executeAll(targetColumns, classifiers, program)
 
-def debug_main():
+def debug_main(arguments):
 	# Possible parameters
 	possibleTargetColumns = ['_IM_MINIMAL', '_IM_EQUIVALENT']
 	possibleClassifiers = ['KNN', 'DT', 'RF', 'SVM']
@@ -636,37 +636,37 @@ def debug_main():
 	program = None
 	programByProgram = False
 
-	if len(sys.argv) > 1:
-		if sys.argv[1] == '--all': # Verify if it is for execute all classifiers with all classifications
+	if len(arguments) > 1:
+		if arguments[1] == '--all': # Verify if it is for execute all classifiers with all classifications
 			executeAll(possibleTargetColumns, possibleClassifiers)
-			exit()
-		elif sys.argv[1] == '--allPbP': #Verify if it is for execute all, but program a program
+			return
+		elif arguments[1] == '--allPbP': #Verify if it is for execute all, but program a program
 			executeAllEachProgram(possibleTargetColumns, possibleClassifiers, possiblePrograms)
-			exit()
+			return
 
 	# Trought into all parameters
-	for iCount in range(1, len(sys.argv), 1):
-		arg = sys.argv[iCount]
+	for iCount in range(1, len(arguments), 1):
+		arg = arguments[iCount]
 		if arg == '--column':
-			targetColumn = sys.argv[iCount + 1]
+			targetColumn = arguments[iCount + 1]
 		elif arg == '--classifier':
-			classifier = sys.argv[iCount + 1]
+			classifier = arguments[iCount + 1]
 		elif arg == '--program':
-			program = sys.argv[iCount + 1]
+			program = arguments[iCount + 1]
 		elif arg == '--pbp':
 			programByProgram = True
 
 	if targetColumn is None or not targetColumn in possibleTargetColumns:
 		print('Please specify the target column throught --column {targetColumn}. The {targetColumn} could be ' + str(possibleTargetColumns))
-		exit()
+		return
 
 	if classifier is None:
 		print('Please specify the classifier throught --classifier {classifier}. The {classifier} could be ' + str(possibleClassifiers))
-		exit()
+		return
 	
 	if not program is None and not program in possiblePrograms:
 		print('Please specify the program correctly. The {program} could be ' + str(possiblePrograms))
-		exit()
+		return
 
 	if not programByProgram:
 		crossValidation(targetColumn, classifier, program, columnsToDrop, columnsToAdd)
@@ -690,4 +690,4 @@ def _classify():
 	classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier, algorithmParameter)
 
 if __name__ == '__main__':
-	_classify()
+	debug_main(sys.argv)

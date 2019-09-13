@@ -1,18 +1,29 @@
-import DecisionTree_Mutants as DecisionTree
-import kNN_Mutants as kNN
+import sys
+import os
 
-import os,sys,inspect
-current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parent_dir = os.path.dirname(current_dir)
-sys.path.insert(0, parent_dir) 
+sys.path.insert(0, '{}/ML'.format(os.getcwd()))
+from ML_Mutants import debug_main
 
-# Utilities
 import util
 
 if __name__ == '__main__':
-    print ('### BEGIN ###')
-    print ('##########\t   Executing Árvore de Decisão\t ' + util.formatNow() + '\t   ##########')
-    DecisionTree.main()
-    
-    print ('##########\t   Executing kNN\t ' + util.formatNow() + '\t   ##########')
-    kNN.main()
+	baseResultsFolder = '{}/ML/Results/\'COLUMN\''.format(os.getcwd())
+	util.renameFolder(baseResultsFolder.replace('\'COLUMN\'', 'MINIMAL'), baseResultsFolder.replace('\'COLUMN\'', 'MINIMAL_old'))
+	util.renameFolder(baseResultsFolder.replace('\'COLUMN\'', 'EQUIVALENT'), baseResultsFolder.replace('\'COLUMN\'', 'EQUIVALENT_old'))
+	
+	arguments = ['', '--all']
+	for iCount in range(30):
+		# Create base results folder
+		util.createFolder(baseResultsFolder.replace('\'COLUMN\'', 'MINIMAL'))
+		util.createFolder(baseResultsFolder.replace('\'COLUMN\'', 'EQUIVALENT'))
+		
+		# Experiment
+		debug_main(arguments)
+
+		# Rename results folder to include iteration number
+		util.renameFolder(baseResultsFolder.replace('\'COLUMN\'', 'MINIMAL'), baseResultsFolder.replace('\'COLUMN\'', 'MINIMAL_{}'.format(iCount + 1)))
+		util.renameFolder(baseResultsFolder.replace('\'COLUMN\'', 'EQUIVALENT'), baseResultsFolder.replace('\'COLUMN\'', 'EQUIVALENT_{}'.format(iCount + 1)))
+
+	# Rename old folder to base folder
+	util.renameFolder(baseResultsFolder.replace('\'COLUMN\'', 'MINIMAL_old'), baseResultsFolder.replace('\'COLUMN\'', 'MINIMAL'))
+	util.renameFolder(baseResultsFolder.replace('\'COLUMN\'', 'EQUIVALENT_old'), baseResultsFolder.replace('\'COLUMN\'', 'EQUIVALENT'))
