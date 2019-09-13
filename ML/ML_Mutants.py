@@ -64,11 +64,11 @@ def importDataSet(fileName, columnNames, showHeadDataSet=False):
 
 	return dataSet
 
-def preProcessing(dataSetFrame, targetColumn, columnNames, columnsToDrop, columnsToAdd):
+def preProcessing(dataSetFrame, targetColumn, columnNames, columnsToDrop, columnsToAdd, allPossibleOperators = None, allPossibleTypeStatement = None, groupByTargetColumn = True):
 	####################
 	# --- Preprocessing
 
-	# Adiciona ou remove as devidas colunas
+	# Add or remove due columns
 	if len(columnsToDrop) > 0:
 		dataSetFrame.drop(columnsToDrop, axis = 1)
 	elif len(columnsToAdd) > 0:
@@ -79,15 +79,20 @@ def preProcessing(dataSetFrame, targetColumn, columnNames, columnsToDrop, column
 	numProperties = len(dataSetFrame.columns) - 1
 
 	# Grouping data frame by target column
-	dataGrouped = dataSetFrame.groupby(targetColumn)
-	dataSetFrame = pd.DataFrame(dataGrouped.apply(lambda x: x.sample(dataGrouped.size().min()).reset_index(drop = True)))
+	if groupByTargetColumn:
+		dataGrouped = dataSetFrame.groupby(targetColumn)
+		dataSetFrame = pd.DataFrame(dataGrouped.apply(lambda x: x.sample(dataGrouped.size().min()).reset_index(drop = True)))
 
-	# Número de colunas a serem deletadas
+	# Columns number to be deleted
 	numColumnsToDelete = 0
 
 	# Encode _IM_OPERATOR column
 	if dataSetFrame.columns.__contains__('_IM_OPERATOR'):
-		one_hot_Operator = pd.get_dummies(dataSetFrame['_IM_OPERATOR'])
+		if allPossibleOperators is not None:
+			one_hot_Operator = pd.get_dummies(allPossibleOperators)
+		else:
+			allPossibleOperators = dataSetFrame['_IM_OPERATOR'].values
+			one_hot_Operator = pd.get_dummies(dataSetFrame['_IM_OPERATOR'])
 		dataSetFrame = dataSetFrame.drop('_IM_OPERATOR', axis = 1)
 		dataSetFrame = dataSetFrame.join(one_hot_Operator)
 
@@ -95,20 +100,24 @@ def preProcessing(dataSetFrame, targetColumn, columnNames, columnsToDrop, column
 
 	# Encode _IM_TYPE_STATEMENT column
 	if dataSetFrame.columns.__contains__('_IM_TYPE_STATEMENT'):
-		one_hot_TypeStatement = pd.get_dummies(dataSetFrame['_IM_TYPE_STATEMENT'])
+		if allPossibleTypeStatement is not None:
+			one_hot_TypeStatement = pd.get_dummies(allPossibleTypeStatement)
+		else:
+			allPossibleTypeStatement = dataSetFrame['_IM_TYPE_STATEMENT'].values
+			one_hot_TypeStatement = pd.get_dummies(dataSetFrame['_IM_TYPE_STATEMENT'])
 		dataSetFrame = dataSetFrame.drop('_IM_TYPE_STATEMENT', axis = 1)
 		dataSetFrame = dataSetFrame.join(one_hot_TypeStatement)
 		
 		numColumnsToDelete = numColumnsToDelete - 1 + len(one_hot_TypeStatement.columns)
 
-	# Remove a coluna objeto e reinsere-a no final
+	# Remove the target column and reinsert it at final
 	targetColumnValues = dataSetFrame[targetColumn]
 	dataSetFrame = dataSetFrame.drop(targetColumn, axis = 1)
 	dataSetFrame = dataSetFrame.join(targetColumnValues)
 
-	return dataSetFrame, numProperties, numColumnsToDelete
+	return dataSetFrame, numProperties, numColumnsToDelete, allPossibleOperators, allPossibleTypeStatement
 
-def dataSplitting(dataSetFrame, numProperties, numColumnsToDelete, testSetSize):
+def dataSplittingIntoTrainAndTest(dataSetFrame, numProperties, numColumnsToDelete, testSetSize):
 	# --- Train Test Split ---
 	#   To avoid over-fitting, we will divide our dataSet into training and test splits, which gives us a better idea as to how our algorithm performed during the testing phase. This way our algorithm is tested on un-seen data, as it would be in a production application.
 	#   To create training and test splits, execute the following script:
@@ -164,7 +173,7 @@ def evaluatingAlgorithm(y_test, y_pred):
 	TN = confusionMatrix[1][1]  # True Negatives
 
 	##############
-	# --- Métricas
+	# --- Metrics
 	#   https://medium.com/as-m%C3%A1quinas-que-pensam/m%C3%A9tricas-comuns-em-machine-learning-como-analisar-a-qualidade-de-chat-bots-inteligentes-m%C3%A9tricas-1ba580d7cc96
 
 	error = (FP + FN) / (FP + FN + TP + TN)
@@ -200,7 +209,7 @@ def evaluatingAlgorithm(y_test, y_pred):
 	return accuracy, precision, recall, f1, TPR, FPR, TP, FN, FP, TN
 
 def classifierMain(classifier, maxIterations, resultsFileName, X_train, X_test, y_train, y_test, showResults = False):
-	# Array com todas as métricas coletadas ao aplicar o algoritmo de ML
+	# Arrays containing all collected metrics on applying Machine Learning algorithm
 	data = []
 	arrAccuracy = []
 	arrPrecision = []
@@ -274,7 +283,7 @@ def classifierMain(classifier, maxIterations, resultsFileName, X_train, X_test, 
 
 def crossValidation_main(dataSetFrame, targetColumn, classifier, maxIterations, resultsFileName, columnNames, columnsToDrop, columnsToAdd, showResults = False):
 
-	# Adiciona ou remove as devidas colunas
+	# Add or remove due columns
 	if len(columnsToDrop) > 0:
 		dataSetFrame.drop(columnsToDrop, axis = 1)
 	elif len(columnsToAdd) > 0:
@@ -305,7 +314,7 @@ def crossValidation_main(dataSetFrame, targetColumn, classifier, maxIterations, 
 	# Get DataFrameValues
 	dataFrameValues = dataSetFrame.values
 
-	# Array com todas as métricas coletadas ao aplicar o algoritmo de ML
+	# Arrays containing all collected metrics on applying Machine Learning algorithm
 	data = []
 	arrAccuracy = []
 	arrPrecision = []
@@ -315,7 +324,7 @@ def crossValidation_main(dataSetFrame, targetColumn, classifier, maxIterations, 
 	arr_estimators_iter = []
 
 	if classifier == 'KNN':
-		# Caso o número de registros for menor que o número de iterações, deve-se iterar apenas 75% o número de registros
+		# If the row number are lower the iterations number, it is necessary to iterate just 75% the row number
 		maxIterations = maxIterations if len(columnValues) > maxIterations else int(len(columnValues) * 0.75)
 		for kNeighbors in range(1, maxIterations + 1, 1):
 			arr_estimators_iter.append((KNeighborsClassifier(n_neighbors = kNeighbors), kNeighbors))
@@ -335,7 +344,7 @@ def crossValidation_main(dataSetFrame, targetColumn, classifier, maxIterations, 
 		return None
 
 	for classifier, iteration in arr_estimators_iter:
-		# Caso o número de registros de cada classe for menor que 10, deve-se atribuir este valor ao KFold
+		# If the row number of each class are lower than 10, it is necessary set this value to KFold
 		n_splits = 10 if len(columnValues) / 2 > 10 else int(len(columnValues) / 2) # Number of folds in a `(Stratified)KFold - :term:` CV splitter
 
 		scores = cross_val_score(classifier, dataFrameValues, columnValues, scoring='accuracy', cv = n_splits)
@@ -374,7 +383,7 @@ def crossValidation_main(dataSetFrame, targetColumn, classifier, maxIterations, 
 def computeData(resultsFileName, header, data, accuracy, precision, recall, f1):
 	newData = []
 	
-	# Minímo
+	# Minimum
 	subData = []
 	subData.append('Min')
 	subData.append(min(accuracy))   # Accuracy
@@ -383,7 +392,7 @@ def computeData(resultsFileName, header, data, accuracy, precision, recall, f1):
 	subData.append(min(f1))         # F1
 	newData.append(subData)
 
-	# Máximo
+	# Maximum
 	subData = []
 	subData.append('Max')
 	subData.append(max(accuracy))   # Accuracy
@@ -435,7 +444,7 @@ def crossValidation(targetColumn, classifier, specifiedProgram = None, columnsTo
 	# --- Setting datasets
 	targetColumnName = str(targetColumn).replace('_IM_', '')
 	
-	# Verifica se foi definido um programa específico para ser classificado
+	# Verify if it setted a specified program to be classified
 	if not specifiedProgram is None:
 		dataSetFileName = 'ML/Dataset/{}/Programs/{}.csv'.format(targetColumnName, specifiedProgram)
 	else:
@@ -479,7 +488,54 @@ def crossValidation(targetColumn, classifier, specifiedProgram = None, columnsTo
 	print(' ----- {}'.format(classifier))
 	crossValidation_main(dataSet, targetColumn, classifier, maxIterations, resultsFileName, columnNames, columnsToDrop, columnsToAdd)
 
+def classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier, algorithmParameter):
+	""" Function responsable to classify a new data set as equivalent or minimal from predictive models are existing
 
+		Args:
+			newDataSetFileName (str): File name containing new mutants to be classified
+			resultDataSetFileName (str): File name to be generated with the classification result. This file contains the same row number than 'newDataSetFileName'.
+			targetColumn (str): Column to be classified. Must be '_IM_MINIMAL' ou '_IM_EQUIVALENT'.
+			classifier (str): The classifier algorithm used to predict the new data inputed. Must be 'KNN', 'DT', 'RF' or 'SVM'.
+			algorithmParameter (int): The parameter to be used on classifier. This parameter Must be K, as the number of neighbors on KNN, or min sample split to Decision Tree and RandomForest.
+	"""
+
+	######################
+	# --- Setting datasets
+	targetColumnName = str(targetColumn).replace('_IM_', '')
+	trainDataSetFileName = 'ML/Dataset/{}/mutants.csv'.format(targetColumnName)
+
+	if targetColumn == '_IM_MINIMAL':
+		#####################
+		# --- Setting columns
+		columnNames = ['_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_EQUIVALENT', '_IM_MINIMAL']
+	
+	elif targetColumn == '_IM_EQUIVALENT':
+		#####################
+		# --- Setting columns
+		columnNames = ['_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT']
+
+	###################
+	# --- PreProcessing
+	trainDataSet = importDataSet(trainDataSetFileName, columnNames)
+	trainDataSetFrame, numProperties, numColumnsToDelete_train, allPossibleOperators, allPossibleTypeStatement = preProcessing(trainDataSet, targetColumn, columnNames, [], [])
+	
+	newDataSetFrame = importDataSet(newDataSetFileName, columnNames)
+	newDataSetFrame, numProperties, numColumnsToDelete_test, _, _ = preProcessing(newDataSetFrame, targetColumn, columnNames, [], [], allPossibleOperators, allPossibleTypeStatement, False)
+
+	# Separate the data into X (values) and y (target value)
+	X_train = trainDataSetFrame.iloc[:, :-1].values
+	X_test = newDataSetFrame.iloc[:, :-1].values
+	y_train = trainDataSetFrame.iloc[:, numProperties + numColumnsToDelete_train].values
+
+	###############
+	# --- Classify
+	y_test = trainingAndPredictions(classifier, algorithmParameter, X_train, y_train, X_test)
+	arrNewY = []
+	for data in y_test:
+		data = str(data)
+		arrNewY.append(data)
+	
+	util.writeInCsvFile(resultDataSetFileName, arrNewY)
 
 def computeMutants(targetColumn, classifier, specifiedProgram = None, columnsToDrop = [], columnsToAdd = [], printResults = False):
 	classifiers = ['KNN', 'DT', 'RF', 'SVM']
@@ -505,7 +561,7 @@ def computeMutants(targetColumn, classifier, specifiedProgram = None, columnsToD
 	# --- Setting datasets
 	targetColumnName = str(targetColumn).replace('_IM_', '')
 	
-	# Verifica se foi definido um programa específico para ser classificado
+	# Verify if it setted a specified program to be classified
 	if not specifiedProgram is None:
 		dataSetFileName = 'ML/Dataset/{}/Programs/{}.csv'.format(targetColumnName, specifiedProgram)
 	else:
@@ -533,7 +589,7 @@ def computeMutants(targetColumn, classifier, specifiedProgram = None, columnsToD
 	# --- PreProcessing
 	dataSet = importDataSet(dataSetFileName, columnNames)
 	dataSetFrame, numProperties, numColumnsToDelete = preProcessing(dataSet, targetColumn, columnNames, columnsToDrop, columnsToAdd)
-	X_train, X_test, y_train, y_test = dataSplitting(dataSetFrame, numProperties, numColumnsToDelete, testSetSize)
+	X_train, X_test, y_train, y_test = dataSplittingIntoTrainAndTest(dataSetFrame, numProperties, numColumnsToDelete, testSetSize)
 
 	##############################
 	# --- Setting results filename
@@ -581,14 +637,14 @@ def debug_main():
 	programByProgram = False
 
 	if len(sys.argv) > 1:
-		if sys.argv[1] == '--all':      # Verifica se é para executar tudo (todos os classificadores com todas as classificações)
+		if sys.argv[1] == '--all': # Verify if it is for execute all classifiers with all classifications
 			executeAll(possibleTargetColumns, possibleClassifiers)
 			exit()
-		elif sys.argv[1] == '--allPbP': # Verifica se é para executar tudo mas programa a programa
+		elif sys.argv[1] == '--allPbP': #Verify if it is for execute all, but program a program
 			executeAllEachProgram(possibleTargetColumns, possibleClassifiers, possiblePrograms)
 			exit()
 
-	# Percorre todos os parâmetros
+	# Trought into all parameters
 	for iCount in range(1, len(sys.argv), 1):
 		arg = sys.argv[iCount]
 		if arg == '--column':
@@ -617,13 +673,21 @@ def debug_main():
 	else:
 		for specifiedProgram in possiblePrograms:
 			crossValidation(targetColumn, classifier, specifiedProgram, columnsToDrop, columnsToAdd)
+
+def _classify():
+	programToClassify = 'cal'
+	targetColumn = '_IM_MINIMAL'
+	newDataSetFileName = '{}/ML/Dataset/{}/Programs/{}.csv'.format(os.getcwd(), str(targetColumn).replace('_IM_', ''), programToClassify)
+	resultDataSetFileName = '{}/ML/Results/{}/Classification/{}.csv'.format(os.getcwd(), str(targetColumn).replace('_IM_', ''), programToClassify)
 	
-	#if len(sys.argv) > 1:
-	#    crossValidation('_IM_MINIMAL', printResults = sys.argv[1])
-	#    crossValidation('_IM_EQUIVALENT', printResults = sys.argv[1])
-	#else:
-	#    crossValidation('_IM_MINIMAL')
-	#    crossValidation('_IM_EQUIVALENT')
+	if targetColumn == '_IM_MINIMAL':
+		classifier = 'RF'
+		algorithmParameter = 5
+	elif targetColumn == '_IM_EQUIVALENT':
+		classifier = 'RF'
+		algorithmParameter = 15
+
+	classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier, algorithmParameter)
 
 if __name__ == '__main__':
-	debug_main()
+	_classify()
