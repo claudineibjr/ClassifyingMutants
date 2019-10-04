@@ -6,7 +6,7 @@ from ML_Mutants import debug_main
 
 import util
 
-if __name__ == '__main__':
+def experiment():
 	baseResultsFolder = '{}/ML/Results/\'COLUMN\''.format(os.getcwd())
 	util.renameFolder(baseResultsFolder.replace('\'COLUMN\'', 'MINIMAL'), baseResultsFolder.replace('\'COLUMN\'', 'MINIMAL_old'))
 	util.renameFolder(baseResultsFolder.replace('\'COLUMN\'', 'EQUIVALENT'), baseResultsFolder.replace('\'COLUMN\'', 'EQUIVALENT_old'))
@@ -27,3 +27,6 @@ if __name__ == '__main__':
 	# Rename old folder to base folder
 	util.renameFolder(baseResultsFolder.replace('\'COLUMN\'', 'MINIMAL_old'), baseResultsFolder.replace('\'COLUMN\'', 'MINIMAL'))
 	util.renameFolder(baseResultsFolder.replace('\'COLUMN\'', 'EQUIVALENT_old'), baseResultsFolder.replace('\'COLUMN\'', 'EQUIVALENT'))
+
+if __name__ == '__main__':
+	experiment()
