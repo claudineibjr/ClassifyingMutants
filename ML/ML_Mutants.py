@@ -495,14 +495,15 @@ def classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier
 		Args:
 			newDataSetFileName (str): File name containing new mutants to be classified
 			resultDataSetFileName (str): File name to be generated with the classification result. This file contains the same row number than 'newDataSetFileName'.
-			targetColumn (str): Column to be classified. Must be '_IM_MINIMAL' ou '_IM_EQUIVALENT'.
+			targetColumn (str): Column to be classified. Must be 'MINIMAL' ou 'EQUIVALENT'.
 			classifier (str): The classifier algorithm used to predict the new data inputed. Must be 'KNN', 'DT' or 'RF'.
 			algorithmParameter (int): The parameter to be used on classifier. This parameter Must be K, as the number of neighbors on KNN, or min sample split to Decision Tree and RandomForest.
 	"""
 
 	######################
 	# --- Setting datasets
-	targetColumnName = str(targetColumn).replace('_IM_', '')
+	targetColumnName = targetColumn
+	targetColumn = '_IM_{}'.format(targetColumn)
 	trainDataSetFileName = 'ML/Dataset/{}/mutants.csv'.format(targetColumnName)
 
 	if targetColumn == '_IM_MINIMAL':
@@ -658,16 +659,21 @@ def debug_main(arguments):
 		elif arg == '--pbp':
 			programByProgram = True
 
+	withoutColumnMessage = 'Please specify the target column throught --column {targetColumn}. The {targetColumn} could be ' + str(possibleTargetColumns)
+	withoutClassifierMessage = 'Please specify the classifier throught --classifier {classifier}. The {classifier} could be ' + str(possibleClassifiers)
+	withoutProgramMessage = 'Please specify the program correctly. The {program} could be ' + str(possiblePrograms)
+	errorMessage = ''
 	if targetColumn is None or not targetColumn in possibleTargetColumns:
-		print('Please specify the target column throught --column {targetColumn}. The {targetColumn} could be ' + str(possibleTargetColumns))
-		return
+		errorMessage = '{}{}\n'.format(errorMessage, withoutColumnMessage)
 
 	if classifier is None:
-		print('Please specify the classifier throught --classifier {classifier}. The {classifier} could be ' + str(possibleClassifiers))
-		return
+		errorMessage = '{}{}\n'.format(errorMessage, withoutClassifierMessage)
 	
 	if not program is None and not program in possiblePrograms:
-		print('Please specify the program correctly. The {program} could be ' + str(possiblePrograms))
+		errorMessage = '{}{}\n'.format(errorMessage, withoutProgramMessage)
+
+	if len(errorMessage) > 0:
+		print(errorMessage)
 		return
 
 	if not programByProgram:
@@ -677,6 +683,9 @@ def debug_main(arguments):
 			crossValidation(targetColumn, classifier, specifiedProgram, columnsToDrop, columnsToAdd)
 
 def _classify():
+	'''
+		Function responsible for receiving a mutant dataset and classifying those mutants as minimal, equivalent or traditional.
+	'''
 	programToClassify = 'cal'
 	targetColumn = 'MINIMAL'
 	newDataSetFileName = '{}/ML/Dataset/{}/Programs/{}.csv'.format(os.getcwd(), str(targetColumn).replace('_IM_', ''), programToClassify)
