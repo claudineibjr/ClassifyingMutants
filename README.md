@@ -31,12 +31,18 @@ How to run
     --classifier | The classifier used to classify. Could be 'KNN' for K Nearest Neighbors, 'DT' for Decision Tree or 'RF' for Random Forest.
     --program | The specified program to classify the target column
     --pbp | Execute program by program
+    --best | Indicating that will be execute the classifiers with the best parameters
 
  - Possible executions
     --all
+    --all --best
     --allPbp
+    --allPbp --best
     --column {column} --classifier {classifier}
+    --column {column} --classifier {classifier} --best
     --column {column} --classifier {classifier} --program {programName}
+    --column {column} --classifier {classifier} --program {programName} --best
     --column {column} --classifier {classifier} --pbp
+    --column {column} --classifier {classifier} --pbp --best
 
  - For each ML algorithm and classification (minimal or equivalent) will be created a result CSV File
