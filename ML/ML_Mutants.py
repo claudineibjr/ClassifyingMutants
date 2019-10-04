@@ -429,8 +429,8 @@ def computeData(resultsFileName, header, data, accuracy, precision, recall, f1):
 	util.writeInCsvFile(resultsFileName, newData)
 
 def crossValidation(targetColumn, classifier, specifiedProgram = None, columnsToDrop = [], columnsToAdd = [], printResults = False):
-	classifiers = ['KNN', 'DT', 'RF', 'SVM']
-	targetColumns = ['_IM_MINIMAL', '_IM_EQUIVALENT']
+	classifiers = ['KNN', 'DT', 'RF']
+	targetColumns = ['MINIMAL', 'EQUIVALENT']
 	if not classifier in classifiers or not targetColumn in targetColumns:
 		return None
 	
@@ -442,7 +442,8 @@ def crossValidation(targetColumn, classifier, specifiedProgram = None, columnsTo
 
 	######################
 	# --- Setting datasets
-	targetColumnName = str(targetColumn).replace('_IM_', '')
+	targetColumnName = targetColumn
+	targetColumn = '_IM_{}'.format(targetColumn)
 	
 	# Verify if it setted a specified program to be classified
 	if not specifiedProgram is None:
@@ -483,8 +484,8 @@ def crossValidation(targetColumn, classifier, specifiedProgram = None, columnsTo
 	else:
 		resultsFileName = 'ML/Results/{targetColumnName}/Programs/{specifiedProgram}_{classifier}.csv'.format(targetColumnName = targetColumnName, specifiedProgram = specifiedProgram, classifier = classifier)
 
-	###############################################
-	# --- Executing classifier | KNN, DT, RF ou SVM
+	##########################################
+	# --- Executing classifier | KNN, DT ou RF
 	print(' ----- {}'.format(classifier))
 	crossValidation_main(dataSet, targetColumn, classifier, maxIterations, resultsFileName, columnNames, columnsToDrop, columnsToAdd)
 
@@ -495,7 +496,7 @@ def classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier
 			newDataSetFileName (str): File name containing new mutants to be classified
 			resultDataSetFileName (str): File name to be generated with the classification result. This file contains the same row number than 'newDataSetFileName'.
 			targetColumn (str): Column to be classified. Must be '_IM_MINIMAL' ou '_IM_EQUIVALENT'.
-			classifier (str): The classifier algorithm used to predict the new data inputed. Must be 'KNN', 'DT', 'RF' or 'SVM'.
+			classifier (str): The classifier algorithm used to predict the new data inputed. Must be 'KNN', 'DT' or 'RF'.
 			algorithmParameter (int): The parameter to be used on classifier. This parameter Must be K, as the number of neighbors on KNN, or min sample split to Decision Tree and RandomForest.
 	"""
 
@@ -538,7 +539,7 @@ def classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier
 	util.writeInCsvFile(resultDataSetFileName, arrNewY)
 
 def computeMutants(targetColumn, classifier, specifiedProgram = None, columnsToDrop = [], columnsToAdd = [], printResults = False):
-	classifiers = ['KNN', 'DT', 'RF', 'SVM']
+	classifiers = ['KNN', 'DT', 'RF']
 	targetColumns = ['_IM_MINIMAL', '_IM_EQUIVALENT']
 	if not classifier in classifiers or not targetColumn in targetColumns:
 		return None
@@ -559,7 +560,8 @@ def computeMutants(targetColumn, classifier, specifiedProgram = None, columnsToD
 
 	######################
 	# --- Setting datasets
-	targetColumnName = str(targetColumn).replace('_IM_', '')
+	targetColumnName = targetColumn
+	targetColumn = '_IM_{}'.format(targetColumn)
 	
 	# Verify if it setted a specified program to be classified
 	if not specifiedProgram is None:
@@ -602,8 +604,8 @@ def computeMutants(targetColumn, classifier, specifiedProgram = None, columnsToD
 	else:
 		resultsFileName = 'ML/Results/{targetColumnName}/Programs/{specifiedProgram}_{classifier}.csv'.format(targetColumnName = targetColumnName, specifiedProgram = specifiedProgram, classifier = classifier)
 
-	###############################################
-	# --- Executing classifier | KNN, DT, RF ou SVM
+	##########################################
+	# --- Executing classifier | KNN, DT ou RF
 	print(' ----- {}'.format(classifier))
 	classifierMain(classifier, maxIterations, resultsFileName, X_train, X_test, y_train, y_test, printResults)
 
@@ -623,8 +625,8 @@ def executeAllEachProgram(targetColumns, classifiers, programs):
 
 def debug_main(arguments):
 	# Possible parameters
-	possibleTargetColumns = ['_IM_MINIMAL', '_IM_EQUIVALENT']
-	possibleClassifiers = ['KNN', 'DT', 'RF', 'SVM']
+	possibleTargetColumns = ['MINIMAL', 'EQUIVALENT']
+	possibleClassifiers = ['KNN', 'DT', 'RF']
 	possibleDropOrAddColumns = ['_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT']
 	possiblePrograms = [util.getFolderName(program) for program in util.getPrograms('{}/Programs'.format(os.getcwd()))]
 
@@ -676,14 +678,14 @@ def debug_main(arguments):
 
 def _classify():
 	programToClassify = 'cal'
-	targetColumn = '_IM_MINIMAL'
+	targetColumn = 'MINIMAL'
 	newDataSetFileName = '{}/ML/Dataset/{}/Programs/{}.csv'.format(os.getcwd(), str(targetColumn).replace('_IM_', ''), programToClassify)
 	resultDataSetFileName = '{}/ML/Results/{}/Classification/{}.csv'.format(os.getcwd(), str(targetColumn).replace('_IM_', ''), programToClassify)
 	
-	if targetColumn == '_IM_MINIMAL':
+	if targetColumn == 'MINIMAL':
 		classifier = 'RF'
 		algorithmParameter = 5
-	elif targetColumn == '_IM_EQUIVALENT':
+	elif targetColumn == 'EQUIVALENT':
 		classifier = 'RF'
 		algorithmParameter = 15
 

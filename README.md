@@ -27,8 +27,8 @@ How to run
  - The parameters for execution are:
     --all - Execute all programs, all target columns and all classifiers.
     --allPbp - Execute all target columns, all classifiers and all programs, but with one execution for each one.
-    --column | The targetColumn to be classified. Could be '_IM_MINIMAL' or '_IM_EQUIVALENT'
-    --classifier | The classifier used to classify. Could be 'KNN' for K Nearest Neighbors, 'DT' for Decision Tree, 'RF' for Random Forest or 'SVM' for Support Vector Machine
+    --column | The targetColumn to be classified. Could be 'MINIMAL' or 'EQUIVALENT'
+    --classifier | The classifier used to classify. Could be 'KNN' for K Nearest Neighbors, 'DT' for Decision Tree or 'RF' for Random Forest.
     --program | The specified program to classify the target column
     --pbp | Execute program by program
 
