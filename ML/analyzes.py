@@ -16,12 +16,26 @@ def getProgramsInfo():
 	programsInfoFileName = '{}/Programs/ProgramsInfo.csv'.format(os.getcwd())
 	programsInfo = util.getContentFromFile(programsInfoFileName)
 
-	return [line.split(',') for line in programsInfo.splitlines()]
+	programsInfo_dict = dict()
+
+	i_header = 1
+	columns = [line.split(',') for line in programsInfo.splitlines() if len(line.split(',')[0]) > 0 and line.split(',')[0] != 'Program']
+	for program in columns:
+		programsInfo_dict[program[0]] = program[1:]
+
+	return programsInfo_dict
+
+def getProgramsHeader():
+	programsInfoFileName = '{}/Programs/ProgramsInfo.csv'.format(os.getcwd())
+	programsInfo = util.getContentFromFile(programsInfoFileName)
+
+	columns = [line.split(',') for line in programsInfo.splitlines()][ : 2]
+	
+	return columns
 
 def getProgramInfo(programsInfo, programName):
-	for program in programsInfo:
-		if program[0] == programName:
-			return program
+	if programName in programsInfo.keys():
+		return programsInfo[programName]
 
 	return None
 
@@ -379,6 +393,55 @@ def writeData(fileName, data, header):
 
 	util.writeInCsvFile(fileName, newData)
 
+def getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, bestParameter = False):
+	fileFilter = '_bestParameter' if bestParameter else ''
+	programs = [util.getFolderName(program) for program in util.getPrograms('{}/Programs'.format(os.getcwd()))]
+
+	i_program_Max = 1
+	#i_program_Accuracy = 1
+	#i_program_Precision = 2
+	#i_program_Recall = 3
+	i_program_F1 = 4
+
+	programsInfo = getProgramsInfo()
+	programsHeader = getProgramsHeader()
+
+	# Column indexes on CSV programs info
+	i_info_minimal_RF_F1 = 9
+	i_info_minimal_DT_F1 = 10
+	i_info_minimal_kNN_F1 = 11
+	i_info_equivalent_RF_F1 = 12
+	i_info_equivalent_DT_F1 = 13
+	i_info_equivalent_kNN_F1 = 14
+
+	for program in programs:
+
+		# Split the file in lines and columns (;)
+		file_Minimal_RF = util.splitFileInColumns('{}/ML/Results/MINIMAL/Programs/{}_RF{}.csv'.format(os.getcwd(), program, fileFilter), ';')
+		file_Minimal_DT = util.splitFileInColumns('{}/ML/Results/MINIMAL/Programs/{}_DT{}.csv'.format(os.getcwd(), program, fileFilter), ';')
+		file_Minimal_kNN = util.splitFileInColumns('{}/ML/Results/MINIMAL/Programs/{}_KNN{}.csv'.format(os.getcwd(), program, fileFilter), ';')
+		file_Equivalent_RF = util.splitFileInColumns('{}/ML/Results/EQUIVALENT/Programs/{}_RF{}.csv'.format(os.getcwd(), program, fileFilter), ';')
+		file_Equivalent_DT = util.splitFileInColumns('{}/ML/Results/EQUIVALENT/Programs/{}_DT{}.csv'.format(os.getcwd(), program, fileFilter), ';')
+		file_Equivalent_kNN = util.splitFileInColumns('{}/ML/Results/EQUIVALENT/Programs/{}_KNN{}.csv'.format(os.getcwd(), program, fileFilter), ';')
+
+		# Update the metrics of programs info
+		programsInfo[program][i_info_minimal_RF_F1] = file_Minimal_RF[i_program_Max][i_program_F1]
+		programsInfo[program][i_info_minimal_DT_F1] = file_Minimal_DT[i_program_Max][i_program_F1]
+		programsInfo[program][i_info_minimal_kNN_F1] = file_Minimal_kNN[i_program_Max][i_program_F1]
+		programsInfo[program][i_info_equivalent_RF_F1] = file_Equivalent_RF[i_program_Max][i_program_F1]
+		programsInfo[program][i_info_equivalent_DT_F1] = file_Equivalent_DT[i_program_Max][i_program_F1]
+		programsInfo[program][i_info_equivalent_kNN_F1] = file_Equivalent_kNN[i_program_Max][i_program_F1]
+
+	# Writting program info
+	programsInfoFileName = '{}/Programs/ProgramsInfo.csv'.format(os.getcwd())
+	data = []
+	for line in programsHeader: data.append(line)
+	for key, value in programsInfo.items():
+		value.insert(0, key)
+		data.append(value)
+	util.writeInCsvFile(programsInfoFileName, data, delimiter = ',')
+
+
 if __name__ == '__main__':
 	programsInfo = getProgramsInfo()
 	
@@ -386,7 +449,9 @@ if __name__ == '__main__':
 	possibleClassifiers = ['KNN', 'DT', 'RF', 'SVM']
 	possibleClassifiers.remove('SVM')
 
-	analyzeRuns(possibleTargetColumns, possibleClassifiers)
+	#analyzeRuns(possibleTargetColumns, possibleClassifiers)
+
+	getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, True)
 
 	#analyzeProgramAProgram('MINIMAL', possibleTargetColumns, possibleClassifiers, programsInfo)
 	#analyzeProgramAProgram('EQUIVALENT', possibleTargetColumns, possibleClassifiers, programsInfo)

@@ -6,6 +6,10 @@ from datetime import datetime
 import csv
 from shutil import copyfile
 
+# Statistics
+from statistics import mean
+from statistics import median
+
 def pathExists(fileName):
     return os.path.exists(fileName)
 
@@ -106,6 +110,10 @@ def getPrograms(folder):
 
     return folders
 
+def splitFileInColumns(fileName, separator = ','):
+    contentFile = getContentFromFile(fileName)
+    return [line.split(separator) for line in contentFile.splitlines()]
+
 def getFoldersInFolder(folder):
     folders = []
     
@@ -141,8 +149,56 @@ def normalize(data):
 def renameFolder(oldName, newName):
     os.rename(oldName, newName)
 
-def createFolder(folderName):
-    os.mkdir(folderName)
+def computeData(resultsFileName, header, data, accuracy, precision, recall, f1):
+	newData = []
+
+	if len(data) < 1:
+		return
+
+	# Minímo
+	subData = []
+	subData.append('Min')
+	subData.append(min(accuracy))   # Accuracy
+	subData.append(min(precision))  # Precision
+	subData.append(min(recall))     # Recall
+	subData.append(min(f1))         # F1
+	newData.append(subData)
+
+	# Máximo
+	subData = []
+	subData.append('Max')
+	subData.append(max(accuracy))   # Accuracy
+	subData.append(max(precision))  # Precision
+	subData.append(max(recall))     # Recall
+	subData.append(max(f1))         # F1
+	newData.append(subData)
+
+	# Average
+	subData = []
+	subData.append('Mean')
+	subData.append(mean(accuracy))   # Accuracy
+	subData.append(mean(precision))  # Precision
+	subData.append(mean(recall))     # Recall
+	subData.append(mean(f1))         # F1
+	newData.append(subData)
+
+	# Median
+	subData = []
+	subData.append('Median')
+	subData.append(median(accuracy))   # Accuracy
+	subData.append(median(precision))  # Precision
+	subData.append(median(recall))     # Recall
+	subData.append(median(f1))         # F1
+	newData.append(subData)
+
+	# Include each data in the file
+	newData.append('')
+	newData.append(header)
+	for _data in data:
+		newData.append(_data)
+
+	# Print
+	util.writeInCsvFile(resultsFileName, newData)
 
 if __name__ == '__main__':
     print()
