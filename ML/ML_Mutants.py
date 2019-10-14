@@ -3,37 +3,59 @@
 #############################
 # --- Importing Libraries ---
 #############################
-# NumPy
+
+# ---------
+# --- NumPy
 import numpy as np
 
-# MatPlotLib
+# --------------
+# --- MatPlotLib
 import matplotlib.pyplot as plt
 
-# Pandas
+# ----------
+# --- Pandas
 import pandas as pd
 
-# SkLearn
+# -----------
+# --- SkLearn
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.feature_selection import VarianceThreshold
 
-# ------------------------
+# -------------------------
 # --- SkLearn - Classifiers
 #https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html
+# KNN - K Nearest Neighbors
 from sklearn.neighbors import KNeighborsClassifier
 
 #https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html
+# DT - Decision Tree
 from sklearn.tree import DecisionTreeClassifier
 
 #https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
+# RF - Random Forest
 from sklearn.ensemble import RandomForestClassifier
 
 #https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html
+# SVM - Support Vector Machine
 from sklearn.svm import SVC
 
-# Statistics
+#https://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html
+# LDA - Linear Discriminant Analysis
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+
+#https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html
+# LR - Logistic Regression
+from sklearn.linear_model import LogisticRegression
+
+#https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.GaussianNB.html
+# GNB - Gaussian Naive Bayes
+from sklearn.naive_bayes import GaussianNB
+
+# --------------
+# --- Statistics
 from statistics import mean
 from statistics import median
 
@@ -43,12 +65,25 @@ import warnings
 #import warnings
 warnings.filterwarnings("ignore")
 
-# Util
+# --------
+# --- Util
 import os,sys,inspect
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 import util
+
+def getPossibleClassifiers():
+	possibleClassifiers = ['KNN', 'DT', 'RF', 'SVM',     'LDA', 'LR', 'GNB']
+	return possibleClassifiers
+
+def getPossibleTargetColumns():
+	possibleTargetColumns = ['MINIMAL', 'EQUIVALENT']
+	return possibleTargetColumns
+
+def getPossiblePrograms():
+	possiblePrograms = [util.getFolderName(program) for program in util.getPrograms('{}/Programs'.format(os.getcwd()))]
+	return possiblePrograms
 
 def importDataSet(fileName, columnNames, showHeadDataSet=False):
 	############################
@@ -152,6 +187,16 @@ def trainingAndPredictions(strClassifier, parameter, X_train, y_train, X_test):
 		classifier = DecisionTreeClassifier(min_samples_split = parameter)
 	elif strClassifier.upper() == 'RF':
 		classifier = RandomForestClassifier(min_samples_split = parameter)
+	elif strClassifier.upper() == 'SVM':
+		classifier = SVC()
+	elif strClassifier.upper() == 'LDA':
+		classifier = LinearDiscriminantAnalysis()
+	elif strClassifier.upper() == 'LR':
+		classifier = LogisticRegression()
+	elif strClassifier.upper() == 'GNB':
+		classifier = GaussianNB()
+	else:
+		return None
 
 	classifier.fit(X_train, y_train)
 	
@@ -232,12 +277,18 @@ def classifierMain(classifier, maxIterations, resultsFileName, X_train, X_test, 
 				arr_y_pred_iter.append((trainingAndPredictions('DT', minSamplesSplit, X_train, y_train, X_test), minSamplesSplit))
 		else:
 			arr_y_pred_iter.append((trainingAndPredictions('DT', minSamplesSplit, X_train, y_train, X_test), parameter))
-	elif classifier == 'RT':
+	elif classifier == 'RF':
 		if parameter is None:
 			for minSamplesSplit in range(5, maxIterations + 1, 10):
 				arr_y_pred_iter.append((trainingAndPredictions('RF', minSamplesSplit, X_train, y_train, X_test), minSamplesSplit))
 		else:
 			arr_y_pred_iter.append((trainingAndPredictions('RF', minSamplesSplit, X_train, y_train, X_test), parameter))
+	elif classifier == 'SVM': #TODO
+		if parameter is None:
+			for minSamplesSplit in range(5, maxIterations + 1, 10):
+				arr_y_pred_iter.append((trainingAndPredictions('SVM', minSamplesSplit, X_train, y_train, X_test), minSamplesSplit))
+		else:
+			arr_y_pred_iter.append((trainingAndPredictions('SVM', minSamplesSplit, X_train, y_train, X_test), parameter))			
 	else:
 		return None
 
@@ -352,12 +403,14 @@ def crossValidation_main(dataSetFrame, targetColumn, classifier, maxIterations, 
 				arr_estimators_iter.append((RandomForestClassifier(min_samples_split = minSamplesSplit), minSamplesSplit))
 		else:
 			arr_estimators_iter.append((RandomForestClassifier(min_samples_split = parameter), parameter))
-	#elif classifier == 'SVM':
-	#	averagePenalty = len(dataFrameValues)
-	#	minPenalty = int(averagePenalty / 5)
-	#	maxPenalty = int(averagePenalty * 2)
-	#	for penalty in range(minPenalty, maxPenalty, minPenalty):
-	#		arr_estimators_iter.append((SVC(C = penalty, max_iter = 100000, kernel = 'linear'), penalty))
+	elif classifier == 'SVM':
+		arr_estimators_iter.append((SVC(), 0))
+	elif classifier == 'LDA':
+		arr_estimators_iter.append((LinearDiscriminantAnalysis(), 0))
+	elif classifier == 'LR':
+		arr_estimators_iter.append((LogisticRegression(), 0))
+	elif classifier == 'GNB':
+		arr_estimators_iter.append((GaussianNB(), 0))
 	else:
 		return None
 
@@ -447,9 +500,7 @@ def computeData(resultsFileName, header, data, accuracy, precision, recall, f1):
 	util.writeInCsvFile(resultsFileName, newData)
 
 def crossValidation(targetColumn, classifier, specifiedProgram = None, columnsToDrop = [], columnsToAdd = [], printResults = False, parameter = None):
-	classifiers = ['KNN', 'DT', 'RF']
-	targetColumns = ['MINIMAL', 'EQUIVALENT']
-	if not classifier in classifiers or not targetColumn in targetColumns:
+	if not classifier in getPossibleClassifiers() or not targetColumn in getPossibleTargetColumns():
 		return None
 	
 	####################################
@@ -513,7 +564,7 @@ def classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier
 			newDataSetFileName (str): File name containing new mutants to be classified
 			resultDataSetFileName (str): File name to be generated with the classification result. This file contains the same row number than 'newDataSetFileName'.
 			targetColumn (str): Column to be classified. Must be 'MINIMAL' ou 'EQUIVALENT'.
-			classifier (str): The classifier algorithm used to predict the new data inputed. Must be 'KNN', 'DT' or 'RF'.
+			classifier (str): The classifier algorithm used to predict the new data inputed. Must be 'KNN', 'DT', 'RF', 'SVM', 'LDA', 'LR' or 'GNB'
 			algorithmParameter (int): The parameter to be used on classifier. This parameter Must be K, as the number of neighbors on KNN, or min sample split to Decision Tree and RandomForest.
 	"""
 
@@ -557,9 +608,7 @@ def classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier
 	util.writeInCsvFile(resultDataSetFileName, arrNewY)
 
 def computeMutants(targetColumn, classifier, specifiedProgram = None, columnsToDrop = [], columnsToAdd = [], printResults = False, parameter = None):
-	classifiers = ['KNN', 'DT', 'RF']
-	targetColumns = ['_IM_MINIMAL', '_IM_EQUIVALENT']
-	if not classifier in classifiers or not targetColumn in targetColumns:
+	if not classifier in getPossibleClassifiers() or not targetColumn in getPossibleTargetColumns():
 		return None
 	
 	####################################
@@ -630,10 +679,8 @@ def executeAll(targetColumns, classifiers, specifiedProgram = None, executeWithB
 	'''
 		Function used to execute all classifiers in all columns to be sorted
 	'''
-	classifiers = ['KNN', 'DT', 'RF']
-	
 	for column in targetColumns:
-		for classifier in classifiers:
+		for classifier in getPossibleClassifiers():
 			parameter = bestParameter(column, classifier) if executeWithBestParameter else None
 			crossValidation(column, classifier, specifiedProgram, parameter=parameter)
 
@@ -662,10 +709,10 @@ def debug_main(arguments):
 		Main function performed at the time of running the experiment
 	'''
 	# Possible parameters
-	possibleTargetColumns = ['MINIMAL', 'EQUIVALENT']
-	possibleClassifiers = ['KNN', 'DT', 'RF']
-	possibleDropOrAddColumns = ['_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT']
+	possibleTargetColumns = getPossibleTargetColumns()
+	possibleClassifiers = getPossibleClassifiers()
 	possiblePrograms = [util.getFolderName(program) for program in util.getPrograms('{}/Programs'.format(os.getcwd()))]
+	possibleDropOrAddColumns = ['_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT']
 
 	# Parameters
 	targetColumn = None
