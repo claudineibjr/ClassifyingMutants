@@ -5,6 +5,9 @@ from statistics import median
 # OS
 import os
 
+# Machine Learning
+from ML_Mutants import getPossibleClassifiers
+
 # Util
 import os,sys,inspect
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -249,43 +252,74 @@ def analyzeRuns(possibleTargetColumns, possibleClassifiers):
 	util.writeInCsvFile(fileName, data, header)
 
 def analyzeExecutions():
-	# Verificar
+	# TODO - Adjust for include new classifiers
 	baseFolder = '{}/ML/Results/\'COLUMN\''.format(os.getcwd())
 	targetColumn = ['MINIMAL', 'EQUIVALENT']
-	classifiers = ['KNN', 'DT', 'RF', 'SVM']
-	classifiers.remove('SVM')
+	classifiers = getPossibleClassifiers()
 
 	equi_KNN_Accuracy = []
 	equi_DT_Accuracy = []
 	equi_RF_Accuracy = []
+	equi_SVM_Accuracy = []
+	equi_LDA_Accuracy = []
+	equi_LR_Accuracy = []
+	equi_GNB_Accuracy = []
 
 	equi_KNN_Precision = []
 	equi_DT_Precision = []
 	equi_RF_Precision = []
+	equi_SVM_Precision = []
+	equi_LDA_Precision = []
+	equi_LR_Precision = []
+	equi_GNB_Precision = []
 
 	equi_KNN_Recall = []
 	equi_DT_Recall = []
 	equi_RF_Recall = []
+	equi_SVM_Recall = []
+	equi_LDA_Recall = []
+	equi_LR_Recall = []
+	equi_GNB_Recall = []
 
 	equi_KNN_F1 = []
 	equi_DT_F1 = []
 	equi_RF_F1 = []
+	equi_SVM_F1 = []
+	equi_LDA_F1 = []
+	equi_LR_F1 = []
+	equi_GNB_F1 = []
 
 	mini_KNN_Accuracy = []
 	mini_DT_Accuracy = []
 	mini_RF_Accuracy = []
+	mini_SVM_Accuracy = []
+	mini_LDA_Accuracy = []
+	mini_LR_Accuracy = []
+	mini_GNB_Accuracy = []
 	
 	mini_KNN_Precision = []
 	mini_DT_Precision = []
 	mini_RF_Precision = []
+	mini_SVM_Precision = []
+	mini_LDA_Precision = []
+	mini_LR_Precision = []
+	mini_GNB_Precision = []
 
 	mini_KNN_Recall = []
 	mini_DT_Recall = []
 	mini_RF_Recall = []
+	mini_SVM_Recall = []
+	mini_LDA_Recall = []
+	mini_LR_Recall = []
+	mini_GNB_Recall = []
 
 	mini_KNN_F1 = []
 	mini_DT_F1 = []
 	mini_RF_F1 = []
+	mini_SVM_F1 = []
+	mini_LDA_F1 = []
+	mini_LR_F1 = []
+	mini_GNB_F1 = []
 
 	for iCount in range(30):
 		for column in targetColumn:
@@ -320,6 +354,30 @@ def analyzeExecutions():
 					mini_RF_Precision.append(	precision)
 					mini_RF_Recall.append(		recall)
 					mini_RF_F1.append(			f1)
+
+				elif column == 'MINIMAL' 	and classifier == 'SVM':
+					mini_SVM_Accuracy.append(	accuracy)
+					mini_SVM_Precision.append(	precision)
+					mini_SVM_Recall.append(		recall)
+					mini_SVM_F1.append(			f1)
+
+				elif column == 'MINIMAL' 	and classifier == 'LDA':
+					mini_LDA_Accuracy.append(	accuracy)
+					mini_LDA_Precision.append(	precision)
+					mini_LDA_Recall.append(		recall)
+					mini_LDA_F1.append(			f1)
+
+				elif column == 'MINIMAL' 	and classifier == 'LR':
+					mini_LR_Accuracy.append(	accuracy)
+					mini_LR_Precision.append(	precision)
+					mini_LR_Recall.append(		recall)
+					mini_LR_F1.append(			f1)
+
+				elif column == 'MINIMAL' 	and classifier == 'GNB':
+					mini_GNB_Accuracy.append(	accuracy)
+					mini_GNB_Precision.append(	precision)
+					mini_GNB_Recall.append(		recall)
+					mini_GNB_F1.append(			f1)
 				
 				elif column == 'EQUIVALENT'	and classifier == 'KNN':
 					equi_KNN_Accuracy.append(	accuracy)
@@ -339,6 +397,30 @@ def analyzeExecutions():
 					equi_RF_Recall.append(		recall)
 					equi_RF_F1.append(			f1)
 
+				elif column == 'EQUIVALENT'	and classifier == 'SVM':
+					equi_SVM_Accuracy.append(	accuracy)
+					equi_SVM_Precision.append(	precision)
+					equi_SVM_Recall.append(		recall)
+					equi_SVM_F1.append(			f1)
+
+				elif column == 'EQUIVALENT'	and classifier == 'LDA':
+					equi_LDA_Accuracy.append(	accuracy)
+					equi_LDA_Precision.append(	precision)
+					equi_LDA_Recall.append(		recall)
+					equi_LDA_F1.append(			f1)
+
+				elif column == 'EQUIVALENT'	and classifier == 'LR':
+					equi_LR_Accuracy.append(	accuracy)
+					equi_LR_Precision.append(	precision)
+					equi_LR_Recall.append(		recall)
+					equi_LR_F1.append(			f1)
+
+				elif column == 'EQUIVALENT'	and classifier == 'GNB':
+					equi_GNB_Accuracy.append(	accuracy)
+					equi_GNB_Precision.append(	precision)
+					equi_GNB_Recall.append(		recall)
+					equi_GNB_F1.append(			f1)
+
 	baseFolder = '{}/ML/Results/Summary'.format(os.getcwd())
 	if not util.pathExists(baseFolder):
 		util.createFolder(baseFolder)
@@ -357,6 +439,22 @@ def analyzeExecutions():
 	data = [equi_RF_Accuracy, equi_RF_Precision, equi_RF_Recall, equi_RF_F1]
 	writeData('{}/EQUIVALENT_RF.csv'.format(baseFolder), data, header)
 
+	# Equivalent - Support Vector Machine
+	data = [equi_SVM_Accuracy, equi_SVM_Precision, equi_SVM_Recall, equi_SVM_F1]
+	writeData('{}/EQUIVALENT_SVM.csv'.format(baseFolder), data, header)
+
+	# Equivalent - Linear Discriminant Analysis
+	data = [equi_LDA_Accuracy, equi_LDA_Precision, equi_LDA_Recall, equi_LDA_F1]
+	writeData('{}/EQUIVALENT_LDA.csv'.format(baseFolder), data, header)
+
+	# Equivalent - Logistic Regression
+	data = [equi_LR_Accuracy, equi_LR_Precision, equi_LR_Recall, equi_LR_F1]
+	writeData('{}/EQUIVALENT_LR.csv'.format(baseFolder), data, header)
+
+	# Equivalent - Gaussian Naive Bayes
+	data = [equi_GNB_Accuracy, equi_GNB_Precision, equi_GNB_Recall, equi_GNB_F1]
+	writeData('{}/EQUIVALENT_GNB.csv'.format(baseFolder), data, header)
+
 	# Minimals - KNN
 	data = [mini_KNN_Accuracy, mini_KNN_Precision, mini_KNN_Recall, mini_KNN_F1]
 	writeData('{}/MINIMAL_KNN.csv'.format(baseFolder), data, header)
@@ -368,6 +466,22 @@ def analyzeExecutions():
 	# Minimals - Random Forest
 	data = [mini_RF_Accuracy, mini_RF_Precision, mini_RF_Recall, mini_RF_F1]
 	writeData('{}/MINIMAL_RF.csv'.format(baseFolder), data, header)
+
+	# Minimals - Support Vector Machine
+	data = [equi_SVM_Accuracy, equi_SVM_Precision, equi_SVM_Recall, equi_SVM_F1]
+	writeData('{}/MINIMAL_SVM.csv'.format(baseFolder), data, header)
+
+	# Minimals - Linear Discriminant Analysis
+	data = [equi_LDA_Accuracy, equi_LDA_Precision, equi_LDA_Recall, equi_LDA_F1]
+	writeData('{}/MINIMAL_LDA.csv'.format(baseFolder), data, header)
+
+	# Minimals - Logistic Regression
+	data = [equi_LR_Accuracy, equi_LR_Precision, equi_LR_Recall, equi_LR_F1]
+	writeData('{}/MINIMAL_LR.csv'.format(baseFolder), data, header)
+
+	# Minimals - Gaussian Naive Bayes
+	data = [equi_GNB_Accuracy, equi_GNB_Precision, equi_GNB_Recall, equi_GNB_F1]
+	writeData('{}/MINIMAL_GNB.csv'.format(baseFolder), data, header)
 
 def writeData(fileName, data, header):
 	# Verificar
@@ -393,6 +507,16 @@ def writeData(fileName, data, header):
 
 	util.writeInCsvFile(fileName, newData)
 
+def bestParameterFileExists(file):
+	fileFilter = '_bestParameter'
+	if file.__contains__(fileFilter):
+		if util.pathExists(file):
+			return file
+		else:
+			return file.replace(fileFilter, '')
+	else:
+		return file
+
 def getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, bestParameter = False):
 	fileFilter = '_bestParameter' if bestParameter else ''
 	programs = [util.getFolderName(program) for program in util.getPrograms('{}/Programs'.format(os.getcwd()))]
@@ -410,27 +534,56 @@ def getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, bestParam
 	i_info_minimal_RF_F1 = 9
 	i_info_minimal_DT_F1 = 10
 	i_info_minimal_kNN_F1 = 11
-	i_info_equivalent_RF_F1 = 12
-	i_info_equivalent_DT_F1 = 13
-	i_info_equivalent_kNN_F1 = 14
+	i_info_minimal_SVM_F1 = 12
+	i_info_minimal_LDA_F1 = 13
+	i_info_minimal_LR_F1 = 14
+	i_info_minimal_GNB_F1 = 15
+	
+	i_info_equivalent_RF_F1 = 16
+	i_info_equivalent_DT_F1 = 17
+	i_info_equivalent_kNN_F1 = 18
+	i_info_equivalent_SVM_F1 = 19
+	i_info_equivalent_LDA_F1 = 20
+	i_info_equivalent_LR_F1 = 21
+	i_info_equivalent_GNB_F1 = 22
 
 	for program in programs:
 
 		# Split the file in lines and columns (;)
-		file_Minimal_RF = util.splitFileInColumns('{}/ML/Results/MINIMAL/Programs/{}_RF{}.csv'.format(os.getcwd(), program, fileFilter), ';')
-		file_Minimal_DT = util.splitFileInColumns('{}/ML/Results/MINIMAL/Programs/{}_DT{}.csv'.format(os.getcwd(), program, fileFilter), ';')
-		file_Minimal_kNN = util.splitFileInColumns('{}/ML/Results/MINIMAL/Programs/{}_KNN{}.csv'.format(os.getcwd(), program, fileFilter), ';')
-		file_Equivalent_RF = util.splitFileInColumns('{}/ML/Results/EQUIVALENT/Programs/{}_RF{}.csv'.format(os.getcwd(), program, fileFilter), ';')
-		file_Equivalent_DT = util.splitFileInColumns('{}/ML/Results/EQUIVALENT/Programs/{}_DT{}.csv'.format(os.getcwd(), program, fileFilter), ';')
-		file_Equivalent_kNN = util.splitFileInColumns('{}/ML/Results/EQUIVALENT/Programs/{}_KNN{}.csv'.format(os.getcwd(), program, fileFilter), ';')
+		fileName = '{}/ML/Results/MINIMAL/Programs/{}_[CLASSIFIER]{}.csv'.format(os.getcwd(), program, fileFilter)
+		file_Minimal_RF = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'RF') ), ';')
+		file_Minimal_DT = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'DT') ), ';')
+		file_Minimal_kNN = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'KNN')), ';')
+		file_Minimal_SVM = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'SVM')), ';')
+		file_Minimal_LDA = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'LDA')), ';')
+		file_Minimal_LR = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'LR') ), ';')
+		file_Minimal_GNB = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'GNB')), ';')
+		
+		fileName = '{}/ML/Results/MINIMAL/Programs/{}_[CLASSIFIER]{}.csv'.format(os.getcwd(), program, fileFilter)
+		file_Equivalent_RF = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'RF') ), ';')
+		file_Equivalent_DT = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'DT') ), ';')
+		file_Equivalent_kNN = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'KNN')), ';')
+		file_Equivalent_SVM = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'SVM')), ';')
+		file_Equivalent_LDA = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'LDA')), ';')
+		file_Equivalent_LR = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'LR') ), ';')
+		file_Equivalent_GNB = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'GNB')), ';')
 
 		# Update the metrics of programs info
 		programsInfo[program][i_info_minimal_RF_F1] = file_Minimal_RF[i_program_Max][i_program_F1]
 		programsInfo[program][i_info_minimal_DT_F1] = file_Minimal_DT[i_program_Max][i_program_F1]
 		programsInfo[program][i_info_minimal_kNN_F1] = file_Minimal_kNN[i_program_Max][i_program_F1]
+		programsInfo[program][i_info_minimal_SVM_F1] = file_Minimal_SVM[i_program_Max][i_program_F1]
+		programsInfo[program][i_info_minimal_LDA_F1] = file_Minimal_LDA[i_program_Max][i_program_F1]
+		programsInfo[program][i_info_minimal_LR_F1] = file_Minimal_LR[i_program_Max][i_program_F1]
+		programsInfo[program][i_info_minimal_GNB_F1] = file_Minimal_GNB[i_program_Max][i_program_F1]
+
 		programsInfo[program][i_info_equivalent_RF_F1] = file_Equivalent_RF[i_program_Max][i_program_F1]
 		programsInfo[program][i_info_equivalent_DT_F1] = file_Equivalent_DT[i_program_Max][i_program_F1]
 		programsInfo[program][i_info_equivalent_kNN_F1] = file_Equivalent_kNN[i_program_Max][i_program_F1]
+		programsInfo[program][i_info_equivalent_SVM_F1] = file_Equivalent_SVM[i_program_Max][i_program_F1]
+		programsInfo[program][i_info_equivalent_LDA_F1] = file_Equivalent_LDA[i_program_Max][i_program_F1]
+		programsInfo[program][i_info_equivalent_LR_F1] = file_Equivalent_LR[i_program_Max][i_program_F1]
+		programsInfo[program][i_info_equivalent_GNB_F1] = file_Equivalent_GNB[i_program_Max][i_program_F1]
 
 	# Writting program info
 	programsInfoFileName = '{}/Programs/ProgramsInfo.csv'.format(os.getcwd())
@@ -446,8 +599,7 @@ if __name__ == '__main__':
 	programsInfo = getProgramsInfo()
 	
 	possibleTargetColumns = ['MINIMAL', 'EQUIVALENT']
-	possibleClassifiers = ['KNN', 'DT', 'RF', 'SVM']
-	possibleClassifiers.remove('SVM')
+	possibleClassifiers = getPossibleClassifiers()
 
 	#analyzeRuns(possibleTargetColumns, possibleClassifiers)
 

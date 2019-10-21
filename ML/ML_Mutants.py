@@ -74,7 +74,7 @@ sys.path.insert(0, parent_dir)
 import util
 
 def getPossibleClassifiers():
-	possibleClassifiers = ['KNN', 'DT', 'RF', 'SVM',     'LDA', 'LR', 'GNB']
+	possibleClassifiers = ['KNN', 'DT', 'RF', 'SVM', 'LDA', 'LR', 'GNB']
 	return possibleClassifiers
 
 def getPossibleTargetColumns():
