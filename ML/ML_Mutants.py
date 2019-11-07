@@ -772,23 +772,71 @@ def debug_main(arguments):
 		for specifiedProgram in possiblePrograms:
 			crossValidation(targetColumn, classifier, specifiedProgram, columnsToDrop, columnsToAdd, parameter=parameter)
 
-#def _classify():
-#	'''
-#		Function responsible for receiving a mutant dataset and classifying those mutants as minimal, equivalent or traditional.
-#	'''
-#	programToClassify = 'cal'
-#	targetColumn = 'MINIMAL'
-#	newDataSetFileName = '{}/ML/Dataset/{}/Programs/{}.csv'.format(os.getcwd(), str(targetColumn).replace('_IM_', ''), programToClassify)
-#	resultDataSetFileName = '{}/ML/Results/{}/Classification/{}.csv'.format(os.getcwd(), str(targetColumn).replace('_IM_', ''), programToClassify)
-#	
-#	if targetColumn == 'MINIMAL':
-#		classifier = 'RF'
-#		algorithmParameter = 5
-#	elif targetColumn == 'EQUIVALENT':
-#		classifier = 'RF'
-#		algorithmParameter = 15
-#
-#	classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier, algorithmParameter)
+def classify_main(arguments):
+	'''
+		Function responsible for receiving a mutant dataset and classifying those mutants as minimal, equivalent or traditional.
+	'''
+	# Possible parameters
+	possibleTargetColumns = getPossibleTargetColumns()
+	possibleClassifiers = getPossibleClassifiers()
+	possiblePrograms = [util.getFolderName(program) for program in util.getPrograms('{}/Programs'.format(os.getcwd()))]
+
+	# Parameters
+	targetColumn = None
+	programToClassify = None
+	classifier = None
+	algorithmParameter = None
+
+	# Trought into all parameters
+	for iCount in range(1, len(arguments), 1):
+		arg = arguments[iCount]
+		if arg == '--column':
+			targetColumn = arguments[iCount + 1]
+		elif arg == '--program':
+			programToClassify = arguments[iCount + 1]
+		elif arg == '--classifier':
+			classifier = arguments[iCount + 1]
+		elif arg == '--parameter':
+			algorithmParameter = int(arguments[iCount + 1])
+
+	withoutProgramMessage = 'Please specify the program correctly. The {program} could be ' + str(possiblePrograms)
+	withoutColumnMessage = 'Please specify the target column throught --column {targetColumn}. The {targetColumn} could be ' + str(possibleTargetColumns)
+	errorMessage = ''
+
+	if targetColumn is None or not targetColumn in possibleTargetColumns:
+		errorMessage = '{}{}\n'.format(errorMessage, withoutColumnMessage)
+
+	if programToClassify is None:
+		errorMessage = '{}{}\n'.format(errorMessage, withoutProgramMessage)
+
+	if len(errorMessage) > 0:
+		print(errorMessage)
+		return
+
+	newDataSetFileName = '{}/ML/Dataset/{}/Programs/{}.csv'.format(os.getcwd(), targetColumn, programToClassify)
+	resultDataSetFileName = '{}/ML/Results/{}/Classification/{}.csv'.format(os.getcwd(), targetColumn, programToClassify)
+	
+	if classifier is None:
+		 classifier = 'RF'
+
+	if algorithmParameter is None:
+		if classifier == 'SVM' or classifier == 'LDA' or classifier == 'LR' or classifier == 'GNB':
+			algorithmParameter = None
+		elif classifier == 'KNN' and targetColumn == 'MINIMAL':
+			algorithmParameter = 5
+		elif classifier == 'KNN' and targetColumn == 'EQUIVALENT':
+			algorithmParameter = 3
+		elif classifier == 'DT' and targetColumn == 'MINIMAL':
+			algorithmParameter = 15
+		elif classifier == 'DT' and targetColumn == 'EQUIVALENT':
+			algorithmParameter = 15
+		elif classifier == 'RF' and targetColumn == 'MINIMAL':
+			algorithmParameter = 5
+		elif classifier == 'RF' and targetColumn == 'EQUIVALENT':
+			algorithmParameter = 5
+
+	classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier, algorithmParameter)
 
 if __name__ == '__main__':
-	debug_main(sys.argv)
+	#debug_main(sys.argv)
+	#classify_main(sys.argv)
