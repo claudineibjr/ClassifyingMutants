@@ -1,19 +1,38 @@
-# Statistics
+# --------------
+# --- Statistics
 from statistics import mean
 from statistics import median
 
-# OS
+# ------
+# --- OS
 import os
 
-# Machine Learning
-from ML_Mutants import getPossibleClassifiers
+# --------------------
+# --- Machine Learning
+from ML_Mutants import getPossibleClassifiers, getFullNamePossibleClassifiers
 
-# Util
+# ----------
+# --- Pandas
+import pandas as pd
+
+# ---------
+# --- NumPy
+import numpy as np
+
+# ---------------
+# --- Matplot Lib
+import matplotlib.pyplot as plt
+
+
+# --------
+# --- Util
 import os,sys,inspect
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 import util
+
+import itertools
 
 def getProgramsInfo():
 	programsInfoFileName = '{}/Programs/ProgramsInfo.csv'.format(os.getcwd())
@@ -21,7 +40,6 @@ def getProgramsInfo():
 
 	programsInfo_dict = dict()
 
-	i_header = 1
 	columns = [line.split(',') for line in programsInfo.splitlines() if len(line.split(',')[0]) > 0 and line.split(',')[0] != 'Program']
 	for program in columns:
 		programsInfo_dict[program[0]] = program[1:]
@@ -32,9 +50,9 @@ def getProgramsHeader():
 	programsInfoFileName = '{}/Programs/ProgramsInfo.csv'.format(os.getcwd())
 	programsInfo = util.getContentFromFile(programsInfoFileName)
 
-	columns = [line.split(',') for line in programsInfo.splitlines()][ : 2]
+	columns = [line.split(',') for line in programsInfo.splitlines()][ : 1]
 	
-	return columns
+	return columns[0]
 
 def getProgramInfo(programsInfo, programName):
 	if programName in programsInfo.keys():
@@ -517,7 +535,7 @@ def bestParameterFileExists(file):
 	else:
 		return file
 
-def getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, bestParameter = False):
+def getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, programsInfo, writeMetrics = False, bestParameter = False):
 	fileFilter = '_bestParameter' if bestParameter else ''
 	programs = [util.getFolderName(program) for program in util.getPrograms('{}/Programs'.format(os.getcwd()))]
 
@@ -527,25 +545,27 @@ def getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, bestParam
 	#i_program_Recall = 3
 	i_program_F1 = 4
 
-	programsInfo = getProgramsInfo()
 	programsHeader = getProgramsHeader()
-
-	# Column indexes on CSV programs info
-	i_info_minimal_RF_F1 = 9
-	i_info_minimal_DT_F1 = 10
-	i_info_minimal_kNN_F1 = 11
-	i_info_minimal_SVM_F1 = 12
-	i_info_minimal_LDA_F1 = 13
-	i_info_minimal_LR_F1 = 14
-	i_info_minimal_GNB_F1 = 15
 	
-	i_info_equivalent_RF_F1 = 16
-	i_info_equivalent_DT_F1 = 17
-	i_info_equivalent_kNN_F1 = 18
-	i_info_equivalent_SVM_F1 = 19
-	i_info_equivalent_LDA_F1 = 20
-	i_info_equivalent_LR_F1 = 21
-	i_info_equivalent_GNB_F1 = 22
+	columnsHeader = programsHeader.copy()
+	columnsHeader.remove('Program')
+	df_programsInfo = pd.DataFrame.from_dict(programsInfo, orient='index', columns=columnsHeader)
+
+	# Column label on CSV programs info
+	# MM_RF_F1
+	# MM_DT_F1
+	# MM_KNN_F1
+	# MM_SVM_F1
+	# MM_LDA_F1
+	# MM_LR_F1
+	# MM_GNB_F1
+	# EM_RF_F1
+	# EM_DT_F1
+	# EM_KNN_F1
+	# EM_SVM_F1
+	# EM_LDA_F1
+	# EM_LR_F1
+	# EM_GNB_F1
 
 	for program in programs:
 
@@ -559,7 +579,7 @@ def getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, bestParam
 		file_Minimal_LR = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'LR') ), ';')
 		file_Minimal_GNB = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'GNB')), ';')
 		
-		fileName = '{}/ML/Results/MINIMAL/Programs/{}_[CLASSIFIER]{}.csv'.format(os.getcwd(), program, fileFilter)
+		fileName = '{}/ML/Results/EQUIVALENT/Programs/{}_[CLASSIFIER]{}.csv'.format(os.getcwd(), program, fileFilter)
 		file_Equivalent_RF = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'RF') ), ';')
 		file_Equivalent_DT = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'DT') ), ';')
 		file_Equivalent_kNN = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'KNN')), ';')
@@ -569,30 +589,34 @@ def getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, bestParam
 		file_Equivalent_GNB = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'GNB')), ';')
 
 		# Update the metrics of programs info
-		programsInfo[program][i_info_minimal_RF_F1] = file_Minimal_RF[i_program_Max][i_program_F1]
-		programsInfo[program][i_info_minimal_DT_F1] = file_Minimal_DT[i_program_Max][i_program_F1]
-		programsInfo[program][i_info_minimal_kNN_F1] = file_Minimal_kNN[i_program_Max][i_program_F1]
-		programsInfo[program][i_info_minimal_SVM_F1] = file_Minimal_SVM[i_program_Max][i_program_F1]
-		programsInfo[program][i_info_minimal_LDA_F1] = file_Minimal_LDA[i_program_Max][i_program_F1]
-		programsInfo[program][i_info_minimal_LR_F1] = file_Minimal_LR[i_program_Max][i_program_F1]
-		programsInfo[program][i_info_minimal_GNB_F1] = file_Minimal_GNB[i_program_Max][i_program_F1]
+		df_programsInfo.loc[program]['MM_RF_F1'] = file_Minimal_RF[i_program_Max][i_program_F1]
+		df_programsInfo.loc[program]['MM_DT_F1'] = file_Minimal_DT[i_program_Max][i_program_F1]
+		df_programsInfo.loc[program]['MM_KNN_F1'] = file_Minimal_kNN[i_program_Max][i_program_F1]
+		df_programsInfo.loc[program]['MM_SVM_F1'] = file_Minimal_SVM[i_program_Max][i_program_F1]
+		df_programsInfo.loc[program]['MM_LDA_F1'] = file_Minimal_LDA[i_program_Max][i_program_F1]
+		df_programsInfo.loc[program]['MM_LR_F1'] = file_Minimal_LR[i_program_Max][i_program_F1]
+		df_programsInfo.loc[program]['MM_GNB_F1'] = file_Minimal_GNB[i_program_Max][i_program_F1]
 
-		programsInfo[program][i_info_equivalent_RF_F1] = file_Equivalent_RF[i_program_Max][i_program_F1]
-		programsInfo[program][i_info_equivalent_DT_F1] = file_Equivalent_DT[i_program_Max][i_program_F1]
-		programsInfo[program][i_info_equivalent_kNN_F1] = file_Equivalent_kNN[i_program_Max][i_program_F1]
-		programsInfo[program][i_info_equivalent_SVM_F1] = file_Equivalent_SVM[i_program_Max][i_program_F1]
-		programsInfo[program][i_info_equivalent_LDA_F1] = file_Equivalent_LDA[i_program_Max][i_program_F1]
-		programsInfo[program][i_info_equivalent_LR_F1] = file_Equivalent_LR[i_program_Max][i_program_F1]
-		programsInfo[program][i_info_equivalent_GNB_F1] = file_Equivalent_GNB[i_program_Max][i_program_F1]
+		df_programsInfo.loc[program]['EM_RF_F1'] = file_Equivalent_RF[i_program_Max][i_program_F1]
+		df_programsInfo.loc[program]['EM_DT_F1'] = file_Equivalent_DT[i_program_Max][i_program_F1]
+		df_programsInfo.loc[program]['EM_KNN_F1'] = file_Equivalent_kNN[i_program_Max][i_program_F1]
+		df_programsInfo.loc[program]['EM_SVM_F1'] = file_Equivalent_SVM[i_program_Max][i_program_F1]
+		df_programsInfo.loc[program]['EM_LDA_F1'] = file_Equivalent_LDA[i_program_Max][i_program_F1]
+		df_programsInfo.loc[program]['EM_LR_F1'] = file_Equivalent_LR[i_program_Max][i_program_F1]
+		df_programsInfo.loc[program]['EM_GNB_F1'] = file_Equivalent_GNB[i_program_Max][i_program_F1]
+	
+	if (writeMetrics):
+		# Writting program info
+		programsInfoFileName = '{}/Programs/ProgramsInfo.csv'.format(os.getcwd())
+		data = []
+		data.append(programsHeader)
+		for index, values in df_programsInfo.iterrows():
+			values = list(values.values)
+			values.insert(0, index)
+			data.append(values)
+		util.writeInCsvFile(programsInfoFileName, data, delimiter = ',')
 
-	# Writting program info
-	programsInfoFileName = '{}/Programs/ProgramsInfo.csv'.format(os.getcwd())
-	data = []
-	for line in programsHeader: data.append(line)
-	for key, value in programsInfo.items():
-		value.insert(0, key)
-		data.append(value)
-	util.writeInCsvFile(programsInfoFileName, data, delimiter = ',')
+	return df_programsInfo
 
 
 if __name__ == '__main__':
@@ -601,9 +625,18 @@ if __name__ == '__main__':
 	possibleTargetColumns = ['MINIMAL', 'EQUIVALENT']
 	possibleClassifiers = getPossibleClassifiers()
 
+	# --- Analyze the 30 runs and calc statistics informations, like minimum, maximum, median and average
 	#analyzeRuns(possibleTargetColumns, possibleClassifiers)
 
-	getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, True)
+	# ------------------------------------------------------
+	# --- Get informations and write ML metrics for programs
+	#metrics = getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, programsInfo, bestParameter=True)
+	#programsBestMetrics = analyzeMetricsFromProgram(metrics)
+	#plotProgramsBestMetrics(programsBestMetrics)
 
+	#analyzeClassifiers(metrics, possibleClassifiers, plot=True)
+
+	# -------------------------------------------
+	# --- Analyze the executions for each program
 	#analyzeProgramAProgram('MINIMAL', possibleTargetColumns, possibleClassifiers, programsInfo)
 	#analyzeProgramAProgram('EQUIVALENT', possibleTargetColumns, possibleClassifiers, programsInfo)
