@@ -618,6 +618,29 @@ def getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, programsI
 
 	return df_programsInfo
 
+def analyzeMetricsFromProgram(metricsFromProgram):
+	'''
+		Function responsible to verify the programs and identify result of the best classifier
+	'''
+
+	# Remove useless columns
+	metricsFromProgram = metricsFromProgram.drop(['', 'Functions', 'Line of Code', 'Mutants', 'Minimals', '%', 'Equivalents', 'Test Cases'], axis=1)
+
+
+	minimalMetrics = metricsFromProgram.drop(['EM_RF_F1', 'EM_DT_F1', 'EM_KNN_F1', 'EM_SVM_F1', 'EM_LDA_F1', 'EM_LR_F1', 'EM_GNB_F1'], axis = 1)
+	equivalentMetrics = metricsFromProgram.drop(['MM_RF_F1', 'MM_DT_F1', 'MM_KNN_F1', 'MM_SVM_F1', 'MM_LDA_F1', 'MM_LR_F1', 'MM_GNB_F1'], axis = 1)
+
+	# Iter trough Dataframes and add the max value for each program in the dictionary
+	programsBestMetrics = dict()
+	for program, values in minimalMetrics.iterrows():
+		programsBestMetrics[program] = [max(values), 0]
+	for program, values in equivalentMetrics.iterrows():
+		programsBestMetrics[program] = [programsBestMetrics[program][0], max(values)]
+
+	# Create a dataframe, where the index is the program and has two columns, max F1 for minimals and max f1 for equivalent
+	programsBestMetrics = pd.DataFrame.from_dict(programsBestMetrics, orient='index', columns=['MINIMAL', 'EQUIVALENT'])
+
+	return programsBestMetrics
 
 if __name__ == '__main__':
 	programsInfo = getProgramsInfo()
@@ -632,7 +655,6 @@ if __name__ == '__main__':
 	# --- Get informations and write ML metrics for programs
 	#metrics = getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, programsInfo, bestParameter=True)
 	#programsBestMetrics = analyzeMetricsFromProgram(metrics)
-	#plotProgramsBestMetrics(programsBestMetrics)
 
 	#analyzeClassifiers(metrics, possibleClassifiers, plot=True)
 
