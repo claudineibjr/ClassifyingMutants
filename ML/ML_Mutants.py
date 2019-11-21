@@ -90,6 +90,15 @@ def getFullNamePossibleClassifiers():
 
 	return fullNameClassifiers
 
+def getColumnNames():
+	return ['_IM_PROGRAM', '_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT']
+
+def getColumnNames_lastMinimal():
+	return ['_IM_PROGRAM', '_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_EQUIVALENT', '_IM_MINIMAL']
+
+def getColumnNames_lastEquivalent():
+	return ['_IM_PROGRAM', '_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT']
+
 def getPossibleTargetColumns():
 	possibleTargetColumns = ['MINIMAL', 'EQUIVALENT']
 	return possibleTargetColumns
@@ -103,11 +112,11 @@ def importDataSet(fileName, columnNames, showHeadDataSet=False):
 	# --- Importing the dataSet
 	url = fileName
 
-	# --- Read dataSet to pandas dataframe ---
-	dataSet = pd.read_csv(url, names=columnNames)
+	# --- Read dataSet to pandas dataframe
+	dataSet = pd.read_csv(url, names=columnNames, header=0)
 
 	if showHeadDataSet:
-		# --- To see what the dataSet actually looks like, execute the following command: ---
+		# --- To see what the dataSet actually looks like, execute the following command
 		print(dataSet.head())
 
 	return dataSet
@@ -116,6 +125,10 @@ def preProcessing(dataSetFrame, targetColumn, columnNames, columnsToDrop, column
 	####################
 	# --- Preprocessing
 
+	# Remove the program name
+	if dataSetFrame.columns.__contains__('_IM_PROGRAM'):
+		dataSetFrame = dataSetFrame.drop('_IM_PROGRAM', axis = 1)
+	
 	# Add or remove due columns
 	if len(columnsToDrop) > 0:
 		dataSetFrame.drop(columnsToDrop, axis = 1)
@@ -356,6 +369,10 @@ def classifierMain(classifier, maxIterations, resultsFileName, X_train, X_test, 
 
 def crossValidation_main(dataSetFrame, targetColumn, classifier, maxIterations, resultsFileName, columnNames, columnsToDrop, columnsToAdd, showResults = False, parameter = None):
 
+	# Remove the program name
+	if dataSetFrame.columns.__contains__('_IM_PROGRAM'):
+		dataSetFrame = dataSetFrame.drop('_IM_PROGRAM', axis = 1)
+
 	# Add or remove due columns
 	if len(columnsToDrop) > 0:
 		dataSetFrame.drop(columnsToDrop, axis = 1)
@@ -536,7 +553,7 @@ def crossValidation(targetColumn, classifier, specifiedProgram = None, columnsTo
 	if targetColumn == '_IM_MINIMAL':
 		#####################
 		# --- Setting columns
-		columnNames = ['_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_EQUIVALENT', '_IM_MINIMAL']
+		columnNames = getColumnNames_lastMinimal()
 
 		print('####################################################')
 		print(' ----- Calculando para identificar mutantes minimais')
@@ -544,7 +561,7 @@ def crossValidation(targetColumn, classifier, specifiedProgram = None, columnsTo
 	elif targetColumn == '_IM_EQUIVALENT':
 		#####################
 		# --- Setting columns
-		columnNames = ['_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT']
+		columnNames = getColumnNames_lastEquivalent()
 
 		print('########################################################')
 		print(' ----- Calculando para identificar mutantes equivalentes')
@@ -590,12 +607,12 @@ def classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier
 	if targetColumn == '_IM_MINIMAL':
 		#####################
 		# --- Setting columns
-		columnNames = ['_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_EQUIVALENT', '_IM_MINIMAL']
+		columnNames = getColumnNames_lastMinimal()
 	
 	elif targetColumn == '_IM_EQUIVALENT':
 		#####################
 		# --- Setting columns
-		columnNames = ['_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT']
+		 columnNames = getColumnNames_lastEquivalent()
 
 	###################
 	# --- PreProcessing
@@ -652,7 +669,7 @@ def computeMutants(targetColumn, classifier, specifiedProgram = None, columnsToD
 	if targetColumn == '_IM_MINIMAL':
 		#####################
 		# --- Setting columns
-		columnNames = ['_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_EQUIVALENT', '_IM_MINIMAL']
+		columnNames = getColumnNames_lastMinimal()
 
 		print('####################################################')
 		print(' ----- Calculando para identificar mutantes minimais')
@@ -660,7 +677,7 @@ def computeMutants(targetColumn, classifier, specifiedProgram = None, columnsToD
 	elif targetColumn == '_IM_EQUIVALENT':
 		#####################
 		# --- Setting columns
-		columnNames = ['_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT']
+		columnNames = getColumnNames_lastEquivalent()
 
 		print('########################################################')
 		print(' ----- Calculando para identificar mutantes equivalentes')
@@ -725,7 +742,6 @@ def debug_main(arguments):
 	possibleTargetColumns = getPossibleTargetColumns()
 	possibleClassifiers = getPossibleClassifiers()
 	possiblePrograms = [util.getFolderName(program) for program in util.getPrograms('{}/Programs'.format(os.getcwd()))]
-	possibleDropOrAddColumns = ['_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT']
 
 	# Parameters
 	targetColumn = None

@@ -223,6 +223,7 @@ def getMutantsInfo(baseFolder, minimalMutants, sessionName, units):
 
             # Reune todas as informações dos mutantes num array
             arrMutantInfo = []
+            arrMutantInfo.append(sessionName)
             arrMutantInfo.append(mutantNumber)
             arrMutantInfo.append(status) # Temporariamente a coluna _IM_RESULT vai conter o status
             arrMutantInfo.append(status)
@@ -262,6 +263,7 @@ def getMutantsInfo(baseFolder, minimalMutants, sessionName, units):
         for iCount in range(len(complexities)):
             arrMutantsInfo[iCount][constants._IM_COMPLEXITY] = complexities[iCount]
 
+    arrHeaderMutants.append("Program Name")
     arrHeaderMutants.append("#")
     arrHeaderMutants.append("Result")
     arrHeaderMutants.append("Status")

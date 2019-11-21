@@ -1,167 +1,167 @@
-#;Result;Status;Operator;Program Graph Node;Minimal?;Primitive Arc?;Source Primitive Arc?;Target Primitive Arc?;Equivalent?;Distance Begin;Distance Begin (min);Distance Begin (max);Distance Begin (avg);Distance End;Distance End (min);Distance End (max);Distance End (avg);Source Node;Target Node;Sources Nodes are primitive?;Targets Nodes are primitive?;Complexity;Type Statement
-0;Dead Active;Dead Active;u-Cccr;4;0;1;0;1;0;[3, 6];3;6;4.5;[1];1;1;1.0;[3];[7];[1];[0];0.0;Return
-1;Dead Active;Dead Active;u-Cccr;6;0;1;0;1;0;[2, 5];2;5;3.5;[1];1;1;1.0;[2];[7];[1];[0];0.0;Return
-2;Equivalent Active;Equivalent Active;u-Ccsr;2;0;1;1;0;1;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-3;Dead Active;Dead Active;u-Ccsr;2;1;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-4;Dead Active;Dead Active;u-Ccsr;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-5;Dead Active;Dead Active;u-Ccsr;2;1;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-6;Dead Active;Dead Active;u-Ccsr;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-7;Dead Active;Dead Active;u-Ccsr;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-8;Dead Active;Dead Active;u-Ccsr;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-9;Dead Active;Dead Active;u-Ccsr;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-10;Dead Active;Dead Active;u-Ccsr;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-11;Dead Active;Dead Active;u-Ccsr;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-12;Dead Active;Dead Active;u-Ccsr;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-13;Dead Active;Dead Active;u-Ccsr;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-14;Equivalent Active;Equivalent Active;u-CRCR;2;0;1;1;0;1;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-15;Dead Active;Dead Active;u-CRCR;2;1;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-16;Equivalent Active;Equivalent Active;u-CRCR;2;0;1;1;0;1;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-17;Dead Active;Dead Active;u-CRCR;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-18;Dead Active;Dead Active;u-CRCR;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-19;Dead Active;Dead Active;u-CRCR;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-20;Dead Active;Dead Active;u-CRCR;2;1;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-21;Dead Active;Dead Active;u-CRCR;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-22;Dead Active;Dead Active;u-CRCR;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-23;Dead Active;Dead Active;u-CRCR;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-24;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-25;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-26;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-27;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-28;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-29;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-30;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-31;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-32;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-33;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-34;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-35;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-36;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-37;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-38;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-39;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-40;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-41;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-42;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-43;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-44;Dead Active;Dead Active;u-OCNG;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-45;Dead Active;Dead Active;u-OCNG;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-46;Dead Active;Dead Active;u-Oido;5;0;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Assignment
-47;Dead Active;Dead Active;u-Oido;5;0;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Assignment
-48;Dead Active;Dead Active;u-OODL;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-49;Equivalent Active;Equivalent Active;u-OODL;2;0;1;1;0;1;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-50;Dead Active;Dead Active;u-OODL;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-51;Dead Active;Dead Active;u-OODL;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-52;Dead Active;Dead Active;u-ORAN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-53;Dead Active;Dead Active;u-ORAN;2;1;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-54;Dead Active;Dead Active;u-ORAN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-55;Dead Active;Dead Active;u-ORAN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-56;Dead Active;Dead Active;u-ORAN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-57;Dead Active;Dead Active;u-ORAN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-58;Equivalent Active;Equivalent Active;u-ORAN;3;0;1;1;0;1;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-59;Dead Active;Dead Active;u-ORAN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-60;Dead Active;Dead Active;u-ORAN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-61;Dead Active;Dead Active;u-ORAN;3;1;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-62;Dead Active;Dead Active;u-ORBN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-63;Dead Active;Dead Active;u-ORBN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-64;Dead Active;Dead Active;u-ORBN;2;1;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-65;Dead Active;Dead Active;u-ORBN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-66;Dead Active;Dead Active;u-ORBN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-67;Equivalent Active;Equivalent Active;u-ORBN;3;0;1;1;0;1;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-68;Dead Active;Dead Active;u-ORLN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-69;Dead Active;Dead Active;u-ORLN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-70;Dead Active;Dead Active;u-ORLN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-71;Dead Active;Dead Active;u-ORLN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-72;Dead Active;Dead Active;u-ORRN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-73;Equivalent Active;Equivalent Active;u-ORRN;2;0;1;1;0;1;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-74;Dead Active;Dead Active;u-ORRN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-75;Dead Active;Dead Active;u-ORRN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-76;Dead Active;Dead Active;u-ORRN;2;1;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-77;Dead Active;Dead Active;u-ORRN;3;1;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-78;Dead Active;Dead Active;u-ORRN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-79;Dead Active;Dead Active;u-ORRN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-80;Dead Active;Dead Active;u-ORRN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-81;Dead Active;Dead Active;u-ORRN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-82;Dead Active;Dead Active;u-ORSN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-83;Dead Active;Dead Active;u-ORSN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-84;Dead Active;Dead Active;u-ORSN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-85;Dead Active;Dead Active;u-ORSN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-86;Dead Active;Dead Active;u-SMTC;1;1;0;0;0;0;[0];0;0;0.0;[4, 7, 6, 3];3;7;5.0;[];[2];[];[1];0.08536585365853659;Declaration
-87;Dead Active;Dead Active;u-SMTT;1;0;0;0;0;0;[0];0;0;0.0;[4, 7, 6, 3];3;7;5.0;[];[2];[];[1];0.08536585365853659;Declaration
-88;Dead Active;Dead Active;u-SMVB;5;0;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Declaration
-89;Dead Active;Dead Active;u-SRSR;4;0;1;0;1;0;[3, 6];3;6;4.5;[1];1;1;1.0;[3];[7];[1];[0];0.0;Return
-90;Dead Active;Dead Active;u-SRSR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;Block
-91;Dead Active;Dead Active;u-SRSR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;Block
-92;Dead Active;Dead Active;u-SRSR;5;0;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Assignment
-93;Dead Active;Dead Active;u-SRSR;5;1;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Assignment
-94;Dead Active;Dead Active;u-SRSR;5;0;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Assignment
-95;Dead Active;Dead Active;u-SRSR;5;1;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Assignment
-96;Dead Active;Dead Active;u-SRSR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;Block
-97;Dead Active;Dead Active;u-SRSR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;Block
-98;Dead Active;Dead Active;u-SRSR;1;0;0;0;0;0;[0];0;0;0.0;[4, 7, 6, 3];3;7;5.0;[];[2];[];[1];0.08536585365853659;Block
-99;Dead Active;Dead Active;u-SRSR;1;0;0;0;0;0;[0];0;0;0.0;[4, 7, 6, 3];3;7;5.0;[];[2];[];[1];0.08536585365853659;Block
-100;Dead Active;Dead Active;u-SRSR;6;0;1;0;1;0;[2, 5];2;5;3.5;[1];1;1;1.0;[2];[7];[1];[0];0.0;Return
-101;Dead Active;Dead Active;u-SRSR;1;0;0;0;0;0;[0];0;0;0.0;[4, 7, 6, 3];3;7;5.0;[];[2];[];[1];0.08536585365853659;Block
-102;Dead Active;Dead Active;u-SRSR;1;0;0;0;0;0;[0];0;0;0.0;[4, 7, 6, 3];3;7;5.0;[];[2];[];[1];0.08536585365853659;Block
-103;Dead Active;Dead Active;u-SSDL;4;0;1;0;1;0;[3, 6];3;6;4.5;[1];1;1;1.0;[3];[7];[1];[0];0.0;Return
-104;Dead Active;Dead Active;u-SSDL;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;Block
-105;Dead Active;Dead Active;u-SSDL;5;0;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Assignment
-106;Dead Active;Dead Active;u-SSDL;5;0;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Assignment
-107;Dead Active;Dead Active;u-SSDL;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;Block
-108;Dead Active;Dead Active;u-SSDL;1;0;0;0;0;0;[0];0;0;0.0;[4, 7, 6, 3];3;7;5.0;[];[2];[];[1];0.08536585365853659;Block
-109;Dead Active;Dead Active;u-SSDL;6;1;1;0;1;0;[2, 5];2;5;3.5;[1];1;1;1.0;[2];[7];[1];[0];0.0;Return
-110;Dead Active;Dead Active;u-SSDL;1;0;0;0;0;0;[0];0;0;0.0;[4, 7, 6, 3];3;7;5.0;[];[2];[];[1];0.08536585365853659;Block
-111;Dead Active;Dead Active;u-STRI;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-112;Dead Active;Dead Active;u-STRI;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-113;Dead Active;Dead Active;u-STRP;4;0;1;0;1;0;[3, 6];3;6;4.5;[1];1;1;1.0;[3];[7];[1];[0];0.0;Return
-114;Dead Active;Dead Active;u-STRP;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;Block
-115;Dead Active;Dead Active;u-STRP;5;0;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Assignment
-116;Dead Active;Dead Active;u-STRP;5;0;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Assignment
-117;Dead Active;Dead Active;u-STRP;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;Block
-118;Dead Active;Dead Active;u-STRP;1;0;0;0;0;0;[0];0;0;0.0;[4, 7, 6, 3];3;7;5.0;[];[2];[];[1];0.08536585365853659;Block
-119;Dead Active;Dead Active;u-STRP;6;0;1;0;1;0;[2, 5];2;5;3.5;[1];1;1;1.0;[2];[7];[1];[0];0.0;Return
-120;Dead Active;Dead Active;u-STRP;1;0;0;0;0;0;[0];0;0;0.0;[4, 7, 6, 3];3;7;5.0;[];[2];[];[1];0.08536585365853659;Block
-121;Equivalent Active;Equivalent Active;u-SWDD;1;0;0;0;0;1;[0];0;0;0.0;[4, 7, 6, 3];3;7;5.0;[];[2];[];[1];0.08536585365853659;While
-122;Dead Active;Dead Active;u-VDTR;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-123;Equivalent Active;Equivalent Active;u-VDTR;2;0;1;1;0;1;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-124;Dead Active;Dead Active;u-VDTR;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-125;Dead Active;Dead Active;u-VDTR;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-126;Equivalent Active;Equivalent Active;u-VDTR;2;0;1;1;0;1;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-127;Dead Active;Dead Active;u-VDTR;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-128;Dead Active;Dead Active;u-VDTR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-129;Equivalent Active;Equivalent Active;u-VDTR;3;0;1;1;0;1;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-130;Dead Active;Dead Active;u-VDTR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-131;Dead Active;Dead Active;u-VDTR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-132;Equivalent Active;Equivalent Active;u-VDTR;3;0;1;1;0;1;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-133;Equivalent Active;Equivalent Active;u-VDTR;3;0;1;1;0;1;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-134;Dead Active;Dead Active;u-VDTR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-135;Equivalent Active;Equivalent Active;u-VDTR;3;0;1;1;0;1;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-136;Equivalent Active;Equivalent Active;u-VDTR;3;0;1;1;0;1;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-137;Dead Active;Dead Active;u-VDTR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-138;Equivalent Active;Equivalent Active;u-VDTR;3;0;1;1;0;1;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-139;Equivalent Active;Equivalent Active;u-VDTR;3;0;1;1;0;1;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-140;Dead Active;Dead Active;u-VLSR;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-141;Dead Active;Dead Active;u-VLSR;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-142;Dead Active;Dead Active;u-VLSR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-143;Dead Active;Dead Active;u-VLSR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-144;Dead Active;Dead Active;u-VLSR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-145;Dead Active;Dead Active;u-VLSR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-146;Dead Active;Dead Active;u-VLSR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-147;Dead Active;Dead Active;u-VLSR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-148;Dead Active;Dead Active;u-VLSR;5;0;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Assignment
-149;Dead Active;Dead Active;u-VLSR;5;0;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Assignment
-150;Equivalent Active;Equivalent Active;u-VTWD;2;0;1;1;0;1;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-151;Dead Active;Dead Active;u-VTWD;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-152;Dead Active;Dead Active;u-VTWD;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-153;Equivalent Active;Equivalent Active;u-VTWD;2;0;1;1;0;1;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-154;Dead Active;Dead Active;u-VTWD;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-155;Dead Active;Dead Active;u-VTWD;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-156;Dead Active;Dead Active;u-VTWD;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-157;Dead Active;Dead Active;u-VTWD;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-158;Dead Active;Dead Active;u-VTWD;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-159;Dead Active;Dead Active;u-VTWD;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-160;Dead Active;Dead Active;u-VTWD;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-161;Dead Active;Dead Active;u-VTWD;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-162;Dead Active;Dead Active;u-VVDL;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-163;Equivalent Active;Equivalent Active;u-VVDL;2;0;1;1;0;1;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
-164;Dead Active;Dead Active;u-VVDL;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
-165;Dead Active;Dead Active;u-VVDL;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+Program Name;#;Result;Status;Operator;Program Graph Node;Minimal?;Primitive Arc?;Source Primitive Arc?;Target Primitive Arc?;Equivalent?;Distance Begin;Distance Begin (min);Distance Begin (max);Distance Begin (avg);Distance End;Distance End (min);Distance End (max);Distance End (avg);Source Node;Target Node;Sources Nodes are primitive?;Targets Nodes are primitive?;Complexity;Type Statement
+CheckPalindrome;0;Dead Active;Dead Active;u-Cccr;4;0;1;0;1;0;[3, 6];3;6;4.5;[1];1;1;1.0;[3];[7];[1];[0];0.0;Return
+CheckPalindrome;1;Dead Active;Dead Active;u-Cccr;6;0;1;0;1;0;[2, 5];2;5;3.5;[1];1;1;1.0;[2];[7];[1];[0];0.0;Return
+CheckPalindrome;2;Equivalent Active;Equivalent Active;u-Ccsr;2;0;1;1;0;1;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;3;Dead Active;Dead Active;u-Ccsr;2;1;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;4;Dead Active;Dead Active;u-Ccsr;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;5;Dead Active;Dead Active;u-Ccsr;2;1;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;6;Dead Active;Dead Active;u-Ccsr;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;7;Dead Active;Dead Active;u-Ccsr;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;8;Dead Active;Dead Active;u-Ccsr;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;9;Dead Active;Dead Active;u-Ccsr;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;10;Dead Active;Dead Active;u-Ccsr;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;11;Dead Active;Dead Active;u-Ccsr;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;12;Dead Active;Dead Active;u-Ccsr;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;13;Dead Active;Dead Active;u-Ccsr;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;14;Equivalent Active;Equivalent Active;u-CRCR;2;0;1;1;0;1;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;15;Dead Active;Dead Active;u-CRCR;2;1;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;16;Equivalent Active;Equivalent Active;u-CRCR;2;0;1;1;0;1;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;17;Dead Active;Dead Active;u-CRCR;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;18;Dead Active;Dead Active;u-CRCR;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;19;Dead Active;Dead Active;u-CRCR;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;20;Dead Active;Dead Active;u-CRCR;2;1;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;21;Dead Active;Dead Active;u-CRCR;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;22;Dead Active;Dead Active;u-CRCR;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;23;Dead Active;Dead Active;u-CRCR;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;24;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;25;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;26;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;27;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;28;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;29;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;30;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;31;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;32;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;33;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;34;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;35;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;36;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;37;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;38;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;39;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;40;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;41;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;42;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;43;Dead Active;Dead Active;u-CRCR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;44;Dead Active;Dead Active;u-OCNG;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;45;Dead Active;Dead Active;u-OCNG;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;46;Dead Active;Dead Active;u-Oido;5;0;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Assignment
+CheckPalindrome;47;Dead Active;Dead Active;u-Oido;5;0;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Assignment
+CheckPalindrome;48;Dead Active;Dead Active;u-OODL;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;49;Equivalent Active;Equivalent Active;u-OODL;2;0;1;1;0;1;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;50;Dead Active;Dead Active;u-OODL;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;51;Dead Active;Dead Active;u-OODL;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;52;Dead Active;Dead Active;u-ORAN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;53;Dead Active;Dead Active;u-ORAN;2;1;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;54;Dead Active;Dead Active;u-ORAN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;55;Dead Active;Dead Active;u-ORAN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;56;Dead Active;Dead Active;u-ORAN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;57;Dead Active;Dead Active;u-ORAN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;58;Equivalent Active;Equivalent Active;u-ORAN;3;0;1;1;0;1;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;59;Dead Active;Dead Active;u-ORAN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;60;Dead Active;Dead Active;u-ORAN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;61;Dead Active;Dead Active;u-ORAN;3;1;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;62;Dead Active;Dead Active;u-ORBN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;63;Dead Active;Dead Active;u-ORBN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;64;Dead Active;Dead Active;u-ORBN;2;1;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;65;Dead Active;Dead Active;u-ORBN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;66;Dead Active;Dead Active;u-ORBN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;67;Equivalent Active;Equivalent Active;u-ORBN;3;0;1;1;0;1;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;68;Dead Active;Dead Active;u-ORLN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;69;Dead Active;Dead Active;u-ORLN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;70;Dead Active;Dead Active;u-ORLN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;71;Dead Active;Dead Active;u-ORLN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;72;Dead Active;Dead Active;u-ORRN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;73;Equivalent Active;Equivalent Active;u-ORRN;2;0;1;1;0;1;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;74;Dead Active;Dead Active;u-ORRN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;75;Dead Active;Dead Active;u-ORRN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;76;Dead Active;Dead Active;u-ORRN;2;1;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;77;Dead Active;Dead Active;u-ORRN;3;1;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;78;Dead Active;Dead Active;u-ORRN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;79;Dead Active;Dead Active;u-ORRN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;80;Dead Active;Dead Active;u-ORRN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;81;Dead Active;Dead Active;u-ORRN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;82;Dead Active;Dead Active;u-ORSN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;83;Dead Active;Dead Active;u-ORSN;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;84;Dead Active;Dead Active;u-ORSN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;85;Dead Active;Dead Active;u-ORSN;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;86;Dead Active;Dead Active;u-SMTC;1;1;0;0;0;0;[0];0;0;0.0;[4, 7, 6, 3];3;7;5.0;[];[2];[];[1];0.08536585365853659;Declaration
+CheckPalindrome;87;Dead Active;Dead Active;u-SMTT;1;0;0;0;0;0;[0];0;0;0.0;[4, 7, 6, 3];3;7;5.0;[];[2];[];[1];0.08536585365853659;Declaration
+CheckPalindrome;88;Dead Active;Dead Active;u-SMVB;5;0;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Declaration
+CheckPalindrome;89;Dead Active;Dead Active;u-SRSR;4;0;1;0;1;0;[3, 6];3;6;4.5;[1];1;1;1.0;[3];[7];[1];[0];0.0;Return
+CheckPalindrome;90;Dead Active;Dead Active;u-SRSR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;Block
+CheckPalindrome;91;Dead Active;Dead Active;u-SRSR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;Block
+CheckPalindrome;92;Dead Active;Dead Active;u-SRSR;5;0;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Assignment
+CheckPalindrome;93;Dead Active;Dead Active;u-SRSR;5;1;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Assignment
+CheckPalindrome;94;Dead Active;Dead Active;u-SRSR;5;0;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Assignment
+CheckPalindrome;95;Dead Active;Dead Active;u-SRSR;5;1;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Assignment
+CheckPalindrome;96;Dead Active;Dead Active;u-SRSR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;Block
+CheckPalindrome;97;Dead Active;Dead Active;u-SRSR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;Block
+CheckPalindrome;98;Dead Active;Dead Active;u-SRSR;1;0;0;0;0;0;[0];0;0;0.0;[4, 7, 6, 3];3;7;5.0;[];[2];[];[1];0.08536585365853659;Block
+CheckPalindrome;99;Dead Active;Dead Active;u-SRSR;1;0;0;0;0;0;[0];0;0;0.0;[4, 7, 6, 3];3;7;5.0;[];[2];[];[1];0.08536585365853659;Block
+CheckPalindrome;100;Dead Active;Dead Active;u-SRSR;6;0;1;0;1;0;[2, 5];2;5;3.5;[1];1;1;1.0;[2];[7];[1];[0];0.0;Return
+CheckPalindrome;101;Dead Active;Dead Active;u-SRSR;1;0;0;0;0;0;[0];0;0;0.0;[4, 7, 6, 3];3;7;5.0;[];[2];[];[1];0.08536585365853659;Block
+CheckPalindrome;102;Dead Active;Dead Active;u-SRSR;1;0;0;0;0;0;[0];0;0;0.0;[4, 7, 6, 3];3;7;5.0;[];[2];[];[1];0.08536585365853659;Block
+CheckPalindrome;103;Dead Active;Dead Active;u-SSDL;4;0;1;0;1;0;[3, 6];3;6;4.5;[1];1;1;1.0;[3];[7];[1];[0];0.0;Return
+CheckPalindrome;104;Dead Active;Dead Active;u-SSDL;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;Block
+CheckPalindrome;105;Dead Active;Dead Active;u-SSDL;5;0;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Assignment
+CheckPalindrome;106;Dead Active;Dead Active;u-SSDL;5;0;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Assignment
+CheckPalindrome;107;Dead Active;Dead Active;u-SSDL;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;Block
+CheckPalindrome;108;Dead Active;Dead Active;u-SSDL;1;0;0;0;0;0;[0];0;0;0.0;[4, 7, 6, 3];3;7;5.0;[];[2];[];[1];0.08536585365853659;Block
+CheckPalindrome;109;Dead Active;Dead Active;u-SSDL;6;1;1;0;1;0;[2, 5];2;5;3.5;[1];1;1;1.0;[2];[7];[1];[0];0.0;Return
+CheckPalindrome;110;Dead Active;Dead Active;u-SSDL;1;0;0;0;0;0;[0];0;0;0.0;[4, 7, 6, 3];3;7;5.0;[];[2];[];[1];0.08536585365853659;Block
+CheckPalindrome;111;Dead Active;Dead Active;u-STRI;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;112;Dead Active;Dead Active;u-STRI;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;113;Dead Active;Dead Active;u-STRP;4;0;1;0;1;0;[3, 6];3;6;4.5;[1];1;1;1.0;[3];[7];[1];[0];0.0;Return
+CheckPalindrome;114;Dead Active;Dead Active;u-STRP;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;Block
+CheckPalindrome;115;Dead Active;Dead Active;u-STRP;5;0;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Assignment
+CheckPalindrome;116;Dead Active;Dead Active;u-STRP;5;0;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Assignment
+CheckPalindrome;117;Dead Active;Dead Active;u-STRP;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;Block
+CheckPalindrome;118;Dead Active;Dead Active;u-STRP;1;0;0;0;0;0;[0];0;0;0.0;[4, 7, 6, 3];3;7;5.0;[];[2];[];[1];0.08536585365853659;Block
+CheckPalindrome;119;Dead Active;Dead Active;u-STRP;6;0;1;0;1;0;[2, 5];2;5;3.5;[1];1;1;1.0;[2];[7];[1];[0];0.0;Return
+CheckPalindrome;120;Dead Active;Dead Active;u-STRP;1;0;0;0;0;0;[0];0;0;0.0;[4, 7, 6, 3];3;7;5.0;[];[2];[];[1];0.08536585365853659;Block
+CheckPalindrome;121;Equivalent Active;Equivalent Active;u-SWDD;1;0;0;0;0;1;[0];0;0;0.0;[4, 7, 6, 3];3;7;5.0;[];[2];[];[1];0.08536585365853659;While
+CheckPalindrome;122;Dead Active;Dead Active;u-VDTR;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;123;Equivalent Active;Equivalent Active;u-VDTR;2;0;1;1;0;1;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;124;Dead Active;Dead Active;u-VDTR;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;125;Dead Active;Dead Active;u-VDTR;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;126;Equivalent Active;Equivalent Active;u-VDTR;2;0;1;1;0;1;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;127;Dead Active;Dead Active;u-VDTR;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;128;Dead Active;Dead Active;u-VDTR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;129;Equivalent Active;Equivalent Active;u-VDTR;3;0;1;1;0;1;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;130;Dead Active;Dead Active;u-VDTR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;131;Dead Active;Dead Active;u-VDTR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;132;Equivalent Active;Equivalent Active;u-VDTR;3;0;1;1;0;1;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;133;Equivalent Active;Equivalent Active;u-VDTR;3;0;1;1;0;1;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;134;Dead Active;Dead Active;u-VDTR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;135;Equivalent Active;Equivalent Active;u-VDTR;3;0;1;1;0;1;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;136;Equivalent Active;Equivalent Active;u-VDTR;3;0;1;1;0;1;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;137;Dead Active;Dead Active;u-VDTR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;138;Equivalent Active;Equivalent Active;u-VDTR;3;0;1;1;0;1;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;139;Equivalent Active;Equivalent Active;u-VDTR;3;0;1;1;0;1;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;140;Dead Active;Dead Active;u-VLSR;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;141;Dead Active;Dead Active;u-VLSR;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;142;Dead Active;Dead Active;u-VLSR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;143;Dead Active;Dead Active;u-VLSR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;144;Dead Active;Dead Active;u-VLSR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;145;Dead Active;Dead Active;u-VLSR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;146;Dead Active;Dead Active;u-VLSR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;147;Dead Active;Dead Active;u-VLSR;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;148;Dead Active;Dead Active;u-VLSR;5;0;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Assignment
+CheckPalindrome;149;Dead Active;Dead Active;u-VLSR;5;0;1;0;1;0;[3, 6];3;6;4.5;[4, 3];3;4;3.5;[3];[2];[1];[1];0.10975609756097561;Assignment
+CheckPalindrome;150;Equivalent Active;Equivalent Active;u-VTWD;2;0;1;1;0;1;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;151;Dead Active;Dead Active;u-VTWD;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;152;Dead Active;Dead Active;u-VTWD;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;153;Equivalent Active;Equivalent Active;u-VTWD;2;0;1;1;0;1;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;154;Dead Active;Dead Active;u-VTWD;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;155;Dead Active;Dead Active;u-VTWD;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;156;Dead Active;Dead Active;u-VTWD;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;157;Dead Active;Dead Active;u-VTWD;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;158;Dead Active;Dead Active;u-VTWD;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;159;Dead Active;Dead Active;u-VTWD;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;160;Dead Active;Dead Active;u-VTWD;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;161;Dead Active;Dead Active;u-VTWD;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;162;Dead Active;Dead Active;u-VVDL;2;0;1;1;0;0;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;163;Equivalent Active;Equivalent Active;u-VVDL;2;0;1;1;0;1;[1, 4];1;4;2.5;[3, 6, 5, 2];2;6;4.0;[1, 5];[3, 6];[0, 1];[1, 1];0.5365853658536586;While
+CheckPalindrome;164;Dead Active;Dead Active;u-VVDL;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
+CheckPalindrome;165;Dead Active;Dead Active;u-VVDL;3;0;1;1;0;0;[2, 5];2;5;3.5;[2, 5, 4];2;5;3.6666666666666665;[2];[4, 5];[1];[1, 1];1.0;If
