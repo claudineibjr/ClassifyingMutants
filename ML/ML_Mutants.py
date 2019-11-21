@@ -587,7 +587,7 @@ def crossValidation(targetColumn, classifier, specifiedProgram = None, columnsTo
 	print(' ----- {}'.format(classifier))
 	crossValidation_main(dataSet, targetColumn, classifier, maxIterations, resultsFileName, columnNames, columnsToDrop, columnsToAdd, parameter=parameter)
 
-def classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier, algorithmParameter):
+def classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier, algorithmParameter, programToClassify):
 	""" Function responsable to classify a new data set as equivalent or minimal from predictive models are existing
 
 		Args:
@@ -596,6 +596,7 @@ def classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier
 			targetColumn (str): Column to be classified. Must be 'MINIMAL' ou 'EQUIVALENT'.
 			classifier (str): The classifier algorithm used to predict the new data inputed. Must be 'KNN', 'DT', 'RF', 'SVM', 'LDA', 'LR' or 'GNB'
 			algorithmParameter (int): The parameter to be used on classifier. This parameter Must be K, as the number of neighbors on KNN, or min sample split to Decision Tree and RandomForest.
+			programToClassify(str): ---
 	"""
 
 	######################
@@ -617,6 +618,7 @@ def classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier
 	###################
 	# --- PreProcessing
 	trainDataSet = importDataSet(trainDataSetFileName, columnNames)
+	trainDataSet = trainDataSet.query('_IM_PROGRAM != \'{}\''.format(programToClassify))
 	trainDataSetFrame, numProperties, numColumnsToDelete_train, allPossibleOperators, allPossibleTypeStatement = preProcessing(trainDataSet, targetColumn, columnNames, [], [])
 	
 	newDataSetFrame = importDataSet(newDataSetFileName, columnNames)
@@ -636,74 +638,6 @@ def classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier
 		arrNewY.append(data)
 	
 	util.writeInCsvFile(resultDataSetFileName, arrNewY)
-
-def computeMutants(targetColumn, classifier, specifiedProgram = None, columnsToDrop = [], columnsToAdd = [], printResults = False, parameter = None):
-	if not classifier in getPossibleClassifiers() or not targetColumn in getPossibleTargetColumns():
-		return None
-	
-	####################################
-	# --- Setting independent properties
-	testSetSize = 0.25
-	maxNeighbors = 40
-	maxSamplesSplit = 100
-	maxIterations = maxNeighbors if classifier == 'KNN' else maxSamplesSplit
-
-	#######################################
-	# --- Setting trains and test variables
-	X_train = None
-	X_test = None
-	y_train = None
-	y_test = None
-
-	######################
-	# --- Setting datasets
-	targetColumnName = targetColumn
-	targetColumn = '_IM_{}'.format(targetColumn)
-	
-	# Verify if it setted a specified program to be classified
-	if not specifiedProgram is None:
-		dataSetFileName = 'ML/Dataset/{}/Programs/{}.csv'.format(targetColumnName, specifiedProgram)
-	else:
-		dataSetFileName = 'ML/Dataset/{}/mutants.csv'.format(targetColumnName)
-
-	if targetColumn == '_IM_MINIMAL':
-		#####################
-		# --- Setting columns
-		columnNames = getColumnNames_lastMinimal()
-
-		print('####################################################')
-		print(' ----- Calculando para identificar mutantes minimais')
-	
-	elif targetColumn == '_IM_EQUIVALENT':
-		#####################
-		# --- Setting columns
-		columnNames = getColumnNames_lastEquivalent()
-
-		print('########################################################')
-		print(' ----- Calculando para identificar mutantes equivalentes')
-	else:
-		return
-
-	###################
-	# --- PreProcessing
-	dataSet = importDataSet(dataSetFileName, columnNames)
-	dataSetFrame, numProperties, numColumnsToDelete = preProcessing(dataSet, targetColumn, columnNames, columnsToDrop, columnsToAdd)
-	X_train, X_test, y_train, y_test = dataSplittingIntoTrainAndTest(dataSetFrame, numProperties, numColumnsToDelete, testSetSize)
-
-	##############################
-	# --- Setting results filename
-	bestParameter = '_bestParameter' if not parameter is None else ''
-	gbs = ' - gbs_{columns}' if len(columnsToDrop) > 0 else ''
-	gfs = ' - gfs_{columns}' if len(columnsToAdd) > 0 else ''
-	if specifiedProgram is None:
-		resultsFileName = 'ML/Results/{targetColumnName}/{classifier}{bestParameter}{gbs}{gfs}.csv'.format(targetColumnName = targetColumnName, classifier = classifier, gbs = gbs, gfs = gfs, bestParameter = bestParameter)
-	else:
-		resultsFileName = 'ML/Results/{targetColumnName}/Programs/{specifiedProgram}_{classifier}{bestParameter}.csv'.format(targetColumnName = targetColumnName, specifiedProgram = specifiedProgram, classifier = classifier, bestParameter = bestParameter)
-
-	##########################################
-	# --- Executing classifier | KNN, DT ou RF
-	print(' ----- {}'.format(classifier))
-	classifierMain(classifier, maxIterations, resultsFileName, X_train, X_test, y_train, y_test, printResults)
 
 def executeAll(targetColumns, classifiers, specifiedProgram = None, executeWithBestParameter = False):
 	'''
@@ -864,7 +798,7 @@ def classify_main(arguments):
 		elif classifier == 'RF' and targetColumn == 'EQUIVALENT':
 			algorithmParameter = 5
 
-	classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier, algorithmParameter)
+	classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier, algorithmParameter, programToClassify)
 
 if __name__ == '__main__':
 	#debug_main(sys.argv)
