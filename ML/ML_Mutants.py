@@ -125,10 +125,6 @@ def preProcessing(dataSetFrame, targetColumn, columnNames, columnsToDrop, column
 	####################
 	# --- Preprocessing
 
-	# Remove the program name
-	if dataSetFrame.columns.__contains__('_IM_PROGRAM'):
-		dataSetFrame = dataSetFrame.drop('_IM_PROGRAM', axis = 1)
-	
 	# Add or remove due columns
 	if len(columnsToDrop) > 0:
 		dataSetFrame.drop(columnsToDrop, axis = 1)
@@ -143,6 +139,13 @@ def preProcessing(dataSetFrame, targetColumn, columnNames, columnsToDrop, column
 	if groupByTargetColumn:
 		dataGrouped = dataSetFrame.groupby(targetColumn)
 		dataSetFrame = pd.DataFrame(dataGrouped.apply(lambda x: x.sample(dataGrouped.size().min()).reset_index(drop = True)))
+
+	groupedDataSetFrame = dataSetFrame.copy()
+
+	# Remove the program name
+	if dataSetFrame.columns.__contains__('_IM_PROGRAM'):
+		dataSetFrame = dataSetFrame.drop('_IM_PROGRAM', axis = 1)
+		numProperties -= 1
 
 	# Columns number to be deleted
 	numColumnsToDelete = 0
@@ -176,7 +179,7 @@ def preProcessing(dataSetFrame, targetColumn, columnNames, columnsToDrop, column
 	dataSetFrame = dataSetFrame.drop(targetColumn, axis = 1)
 	dataSetFrame = dataSetFrame.join(targetColumnValues)
 
-	return dataSetFrame, numProperties, numColumnsToDelete, allPossibleOperators, allPossibleTypeStatement
+	return dataSetFrame, numProperties, numColumnsToDelete, allPossibleOperators, allPossibleTypeStatement, groupedDataSetFrame
 
 def dataSplittingIntoTrainAndTest(dataSetFrame, numProperties, numColumnsToDelete, testSetSize):
 	# --- Train Test Split ---
@@ -369,10 +372,6 @@ def classifierMain(classifier, maxIterations, resultsFileName, X_train, X_test, 
 
 def crossValidation_main(dataSetFrame, targetColumn, classifier, maxIterations, resultsFileName, columnNames, columnsToDrop, columnsToAdd, showResults = False, parameter = None):
 
-	# Remove the program name
-	if dataSetFrame.columns.__contains__('_IM_PROGRAM'):
-		dataSetFrame = dataSetFrame.drop('_IM_PROGRAM', axis = 1)
-
 	# Add or remove due columns
 	if len(columnsToDrop) > 0:
 		dataSetFrame.drop(columnsToDrop, axis = 1)
@@ -384,7 +383,11 @@ def crossValidation_main(dataSetFrame, targetColumn, classifier, maxIterations, 
 	# Grouping data frame by target column
 	dataGrouped = dataSetFrame.groupby(targetColumn)
 	dataSetFrame = pd.DataFrame(dataGrouped.apply(lambda x: x.sample(dataGrouped.size().min()).reset_index(drop = True)))
-	
+
+	# Remove the program name
+	if dataSetFrame.columns.__contains__('_IM_PROGRAM'):
+		dataSetFrame = dataSetFrame.drop('_IM_PROGRAM', axis = 1)
+
 	# Get ColumnValues and drop minimal and equivalent columns
 	columnValues = dataSetFrame[targetColumn].values
 	dataSetFrame = dataSetFrame.drop(['_IM_MINIMAL', '_IM_EQUIVALENT'], axis = 1)
@@ -619,25 +622,37 @@ def classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier
 	# --- PreProcessing
 	trainDataSet = importDataSet(trainDataSetFileName, columnNames)
 	trainDataSet = trainDataSet.query('_IM_PROGRAM != \'{}\''.format(programToClassify))
-	trainDataSetFrame, numProperties, numColumnsToDelete_train, allPossibleOperators, allPossibleTypeStatement = preProcessing(trainDataSet, targetColumn, columnNames, [], [])
+	trainDataSetFrame, numProperties, numColumnsToDelete_train, allPossibleOperators, allPossibleTypeStatement, groupedDataSetFrame = preProcessing(trainDataSet, targetColumn, columnNames, [], [])
 	
 	newDataSetFrame = importDataSet(newDataSetFileName, columnNames)
-	newDataSetFrame, numProperties, numColumnsToDelete_test, _, _ = preProcessing(newDataSetFrame, targetColumn, columnNames, [], [], allPossibleOperators, allPossibleTypeStatement, False)
+	newDataSetFrame, numProperties, numColumnsToDelete_test, _, _, groupedDataSetFrame = preProcessing(newDataSetFrame, targetColumn, columnNames, [], [], allPossibleOperators, allPossibleTypeStatement, False)
 
 	# Separate the data into X (values) and y (target value)
 	X_train = trainDataSetFrame.iloc[:, :-1].values
 	X_test = newDataSetFrame.iloc[:, :-1].values
 	y_train = trainDataSetFrame.iloc[:, numProperties + numColumnsToDelete_train].values
 
-	###############
-	# --- Classify
+	##############################################################################
+	# --- Classify and write new CSV with informations about the prediction result
 	y_test = trainingAndPredictions(classifier, algorithmParameter, X_train, y_train, X_test)
-	arrNewY = []
-	for data in y_test:
-		data = str(data)
-		arrNewY.append(data)
 	
-	util.writeInCsvFile(resultDataSetFileName, arrNewY)
+	# Create an array with the results of prediction | 1 for correct, 0 for incorrect
+	result = [1 if predicted == groupedDataSetFrame[targetColumn][iCount] else 0 for iCount, predicted in zip(range(len(y_test)), y_test)]
+	
+	##############################
+	# --- Metrics about prediction
+	#total = len(result)
+	#correct = result.count(1)
+	#perc = correct * 100 / total
+	#print('Total: {} | Correto: {} | Perc: {}'.format(total, correct, perc))
+
+	predictedDF = pd.DataFrame(groupedDataSetFrame)
+	predictedDF['PREDICTED'] = y_test
+	predictedDF['RESULT'] = result
+
+	onlyResultDataSetFileName = str(resultDataSetFileName).replace('.csv', '_result.csv')
+	util.writeInCsvFile(onlyResultDataSetFileName, [str(value) for value in y_test])
+	util.writeDataFrameInCsvFile(resultDataSetFileName, predictedDF)
 
 def executeAll(targetColumns, classifiers, specifiedProgram = None, executeWithBestParameter = False):
 	'''
@@ -802,5 +817,5 @@ def classify_main(arguments):
 
 if __name__ == '__main__':
 	#debug_main(sys.argv)
-	#classify_main(sys.argv)
+	classify_main(sys.argv)
 	sys.exit()

@@ -6,7 +6,12 @@ from datetime import datetime
 import csv
 from shutil import copyfile
 
-# Statistics
+############
+# --- Pandas
+import pandas as pd
+
+################
+# --- Statistics
 from statistics import mean
 from statistics import median
 
@@ -26,6 +31,9 @@ def getContentFromFile(fileName):
 def formatNow():
     now = datetime.now()
     return now.strftime('%d/%m/%Y %H:%M:%S')      
+
+def writeDataFrameInCsvFile(fileName, dataFrame, sep = ','):
+    pd.DataFrame(dataFrame).to_csv(fileName, sep=sep)
 
 def writeInCsvFile(fileName, content, header = None, delimiter = ';', mode='w'):
     if header == None:
