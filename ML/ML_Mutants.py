@@ -121,19 +121,21 @@ def importDataSet(fileName, columnNames, showHeadDataSet=False):
 
 	return dataSet
 
-def preProcessing(dataSetFrame, targetColumn, columnNames, columnsToDrop, columnsToAdd, allPossibleOperators = None, allPossibleTypeStatement = None, groupByTargetColumn = True):
+def preProcessing(dataSetFrame, targetColumn, columnNames, columnsToDrop, columnsToAdd, allOperators = None, allTypeStatement = None, groupByTargetColumn = True):
 	####################
 	# --- Preprocessing
 
 	# Add or remove due columns
 	if len(columnsToDrop) > 0:
-		dataSetFrame.drop(columnsToDrop, axis = 1)
+		dataSetFrame = dataSetFrame.drop(columnsToDrop, axis = 1)
 	elif len(columnsToAdd) > 0:
 		for column in columnNames:
 			if column not in columnsToAdd and len(column) > 1 and column != '_IM_MINIMAL' and column != '_IM_EQUIVALENT':
 				dataSetFrame = dataSetFrame.drop(column, axis = 1)
 
 	numProperties = len(dataSetFrame.columns) - 1
+
+	#Preprocessing columns that will be 
 
 	# Grouping data frame by target column
 	if groupByTargetColumn:
@@ -152,11 +154,14 @@ def preProcessing(dataSetFrame, targetColumn, columnNames, columnsToDrop, column
 
 	# Encode _IM_OPERATOR column
 	if dataSetFrame.columns.__contains__('_IM_OPERATOR'):
-		if allPossibleOperators is not None:
-			one_hot_Operator = pd.get_dummies(allPossibleOperators)
-		else:
-			allPossibleOperators = dataSetFrame['_IM_OPERATOR'].values
-			one_hot_Operator = pd.get_dummies(dataSetFrame['_IM_OPERATOR'])
+		allPossibleOperators = dataSetFrame['_IM_OPERATOR'].values
+		one_hot_Operator = pd.get_dummies(dataSetFrame['_IM_OPERATOR'])
+
+		if allOperators is not None:
+			operatorsNotInDataSet = list(set(allOperators) - set(allPossibleOperators))
+			for operator in operatorsNotInDataSet:
+				one_hot_Operator.insert(len(one_hot_Operator.columns) - 1, operator, 0)
+			
 		dataSetFrame = dataSetFrame.drop('_IM_OPERATOR', axis = 1)
 		dataSetFrame = dataSetFrame.join(one_hot_Operator)
 
@@ -164,14 +169,17 @@ def preProcessing(dataSetFrame, targetColumn, columnNames, columnsToDrop, column
 
 	# Encode _IM_TYPE_STATEMENT column
 	if dataSetFrame.columns.__contains__('_IM_TYPE_STATEMENT'):
-		if allPossibleTypeStatement is not None:
-			one_hot_TypeStatement = pd.get_dummies(allPossibleTypeStatement)
-		else:
-			allPossibleTypeStatement = dataSetFrame['_IM_TYPE_STATEMENT'].values
-			one_hot_TypeStatement = pd.get_dummies(dataSetFrame['_IM_TYPE_STATEMENT'])
+		allPossibleTypeStatement = dataSetFrame['_IM_TYPE_STATEMENT'].values
+		one_hot_TypeStatement = pd.get_dummies(dataSetFrame['_IM_TYPE_STATEMENT'])
+
+		if allTypeStatement is not None:
+			typeStatementNotInDataSet = list(set(allTypeStatement) - set(allPossibleTypeStatement))
+			for typeStatement in typeStatementNotInDataSet:
+				one_hot_TypeStatement.insert(len(one_hot_TypeStatement.columns) - 1, typeStatement, 0)
+
 		dataSetFrame = dataSetFrame.drop('_IM_TYPE_STATEMENT', axis = 1)
 		dataSetFrame = dataSetFrame.join(one_hot_TypeStatement)
-		
+
 		numColumnsToDelete = numColumnsToDelete - 1 + len(one_hot_TypeStatement.columns)
 
 	# Remove the target column and reinsert it at final
@@ -620,12 +628,23 @@ def classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier
 
 	###################
 	# --- PreProcessing
+
+	# --- Import
 	trainDataSet = importDataSet(trainDataSetFileName, columnNames)
 	trainDataSet = trainDataSet.query('_IM_PROGRAM != \'{}\''.format(programToClassify))
-	trainDataSetFrame, numProperties, numColumnsToDelete_train, allPossibleOperators, allPossibleTypeStatement, groupedDataSetFrame = preProcessing(trainDataSet, targetColumn, columnNames, [], [])
-	
 	newDataSetFrame = importDataSet(newDataSetFileName, columnNames)
-	newDataSetFrame, numProperties, numColumnsToDelete_test, _, _, groupedDataSetFrame = preProcessing(newDataSetFrame, targetColumn, columnNames, [], [], allPossibleOperators, allPossibleTypeStatement, False)
+
+	# --- PreProccess
+	operatorsToTrain = list(set(trainDataSet['_IM_OPERATOR'].values))
+	typeStatementsToTrain = list(set(trainDataSet['_IM_TYPE_STATEMENT'].values))
+	operatorsToTest = list(set(newDataSetFrame['_IM_OPERATOR'].values))
+	typeStatementsToTest = list(set(newDataSetFrame['_IM_TYPE_STATEMENT'].values))
+
+	allOperators = list(set(operatorsToTrain + operatorsToTest))
+	allTypeStatement = list(set(typeStatementsToTrain + typeStatementsToTest))
+
+	trainDataSetFrame, numProperties, numColumnsToDelete_train, _, _, groupedDataSetFrame = preProcessing(trainDataSet, targetColumn, columnNames, [], [], allOperators, allTypeStatement)
+	newDataSetFrame, numProperties, numColumnsToDelete_test, _, _, groupedDataSetFrame = preProcessing(newDataSetFrame, targetColumn, columnNames, [], [], allOperators, allTypeStatement, False)
 
 	# Separate the data into X (values) and y (target value)
 	X_train = trainDataSetFrame.iloc[:, :-1].values
@@ -764,6 +783,7 @@ def classify_main(arguments):
 	programToClassify = None
 	classifier = None
 	algorithmParameter = None
+	executeAllPrograms = False
 
 	# Trought into all parameters
 	for iCount in range(1, len(arguments), 1):
@@ -776,6 +796,8 @@ def classify_main(arguments):
 			classifier = arguments[iCount + 1]
 		elif arg == '--parameter':
 			algorithmParameter = int(arguments[iCount + 1])
+		elif arg == '--allPrograms':
+			executeAllPrograms = True
 
 	withoutProgramMessage = 'Please specify the program correctly. The {program} could be ' + str(possiblePrograms)
 	withoutColumnMessage = 'Please specify the target column throught --column {targetColumn}. The {targetColumn} could be ' + str(possibleTargetColumns)
@@ -784,18 +806,20 @@ def classify_main(arguments):
 	if targetColumn is None or not targetColumn in possibleTargetColumns:
 		errorMessage = '{}{}\n'.format(errorMessage, withoutColumnMessage)
 
-	if programToClassify is None:
+	if programToClassify is None and executeAllPrograms == False:
 		errorMessage = '{}{}\n'.format(errorMessage, withoutProgramMessage)
 
 	if len(errorMessage) > 0:
 		print(errorMessage)
 		return
 
-	newDataSetFileName = '{}/ML/Dataset/{}/Programs/{}.csv'.format(os.getcwd(), targetColumn, programToClassify)
-	resultDataSetFileName = '{}/ML/Results/{}/Classification/{}.csv'.format(os.getcwd(), targetColumn, programToClassify)
-	
+	if executeAllPrograms:
+		programsToBeClassified = possiblePrograms.copy()
+	else:
+		programsToBeClassified = [programToClassify]
+
 	if classifier is None:
-		 classifier = 'RF'
+		classifier = 'RF'
 
 	if algorithmParameter is None:
 		if classifier == 'SVM' or classifier == 'LDA' or classifier == 'LR' or classifier == 'GNB':
@@ -813,7 +837,11 @@ def classify_main(arguments):
 		elif classifier == 'RF' and targetColumn == 'EQUIVALENT':
 			algorithmParameter = 5
 
-	classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier, algorithmParameter, programToClassify)
+	for program in programsToBeClassified:
+		newDataSetFileName = '{}/ML/Dataset/{}/Programs/{}.csv'.format(os.getcwd(), targetColumn, program)
+		resultDataSetFileName = '{}/ML/Results/{}/Classification/{}.csv'.format(os.getcwd(), targetColumn, program)
+
+		classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier, algorithmParameter, program)
 
 if __name__ == '__main__':
 	#debug_main(sys.argv)
