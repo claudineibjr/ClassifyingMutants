@@ -106,41 +106,89 @@ def analyzeResults(targetColumn, classifier, metric = 'F1', findTheBest = True, 
 	return indexMax, valuesMetric[indexMax]
 
 def analyzeRuns(possibleTargetColumns, possibleClassifiers, plot = False, writeFile = False):
-	data = []
-	
+	'''
+		Função responsável por analisar todas as 30 execuções dos classificadores
+	'''
+
+	# Column	Classifier	Parameter	Run	Accuracy	Precision	Recall	F1
+	runsResults = pd.DataFrame()
+
 	for targetColumn in possibleTargetColumns:
 		for classifier in possibleClassifiers:
-			statisticsF1 = []
-			stats_accuracy = []
-			stats_precision = []
-			stats_recall = []
+			bestIndex, bestF1s = analyzeResults(targetColumn, classifier, 'F1')
+			_, bestAccuracies = analyzeResults(targetColumn, classifier, 'Accuracy', bestIndex)
+			_, bestPrecisions = analyzeResults(targetColumn, classifier, 'Precision', bestIndex)
+			_, bestRecalls = analyzeResults(targetColumn, classifier, 'Recall', bestIndex)
 			
-			index, bestF1 = analyzeResults(targetColumn, classifier, 'F1')
-			
-			statisticsF1.append((	min(bestF1),	max(bestF1),	mean(bestF1),	median(bestF1)))
+			for iCount in range(len(bestF1s)):
+				data = [ targetColumn, classifier, bestIndex, iCount + 1, bestAccuracies[iCount], bestPrecisions[iCount], bestRecalls[iCount], bestF1s[iCount] ]
+				columns = ['Column', 'Classifier', 'Parameter', 'Run', 'Accuracy', 'Precision', 'Recall', 'F1']
+				newDataFrame = pd.DataFrame(data=[data], columns=columns)
+				runsResults = runsResults.append(newDataFrame)
 
-			_, accuracies = analyzeResults(targetColumn, classifier, 'Accuracy', False, index)
-			stats_accuracy.append((min(accuracies), max(accuracies), mean(accuracies), median(accuracies)))
-
-			_, precisions = analyzeResults(targetColumn, classifier, 'Precision', False, index)
-			stats_precision.append((min(precisions), max(precisions), mean(precisions), median(precisions)))
-
-			_, recalls = analyzeResults(targetColumn, classifier, 'Recall', False, index)
-			stats_recall.append((min(recalls), max(recalls), mean(recalls), median(recalls)))
-
-			subData = [targetColumn, classifier, index]
-			for f1 in statisticsF1:	subData.append(f1)
-			for accuracy in stats_accuracy:	subData.append(accuracy)
-			for precision in stats_precision:	subData.append(precision)
-			for recall in stats_recall:	subData.append(recall)
-
-			data.append(subData)
-	
 	if writeFile:
-		header = ['Column', 'Classifier', 'BestParameter', 'F1_Min', 'F1_Max', 'F1_Mean', 'F1_Median', 'Accuracy_Min', 'Accuracy_Max', 'Accuracy_Mean', 'Accuracy_Median', 'Precision_Min', 'Precision_Max', 'Precision_Mean', 'Precision_Median', 'Recall_Min', 'Recall_Max', 'Recall_Mean', 'Recall_Median']
-		
-		fileName = '{}/ML/Results/Summary/Classifiers_Statistics.csv'.format(os.getcwd())
-		util.writeInCsvFile(fileName, data, header, delimiter=',')
+		pass
+
+	if plot:
+		plotRunsResult(runsResults, possibleClassifiers, possibleTargetColumns)
+
+	return runsResults
+
+def plotRunsResult(runsResults, possibleClassifiers, possibleTargetColumns):
+	'''
+	'''
+
+	dataMinimal = []
+	dataEquivalent = []
+	for iCount in range(len(possibleClassifiers)):
+		dataMinimal.append(0)
+		dataEquivalent.append(0)
+
+	for column in possibleTargetColumns:
+		for classifier in possibleClassifiers:
+			F1Values = runsResults.query('Classifier == \'{}\' and Column == \'{}\' '.format(classifier, column))
+
+			if column == 'MINIMAL':
+				dataMinimal[possibleClassifiers.index(classifier)] = np.mean(F1Values['F1'])
+			elif column == 'EQUIVALENT':
+				dataEquivalent[possibleClassifiers.index(classifier)] = np.mean(F1Values['F1'])
+
+	# Create the figure with axis
+	fig = plt.figure(1, figsize=(9, 6))
+	ax = fig.add_subplot(1, 1, 1)
+
+	# Set the value to be shown as indexes on axis Y
+	ax.set_yticks([value for value in range(0, 50, 10)] + [value for value in range(50, 101, 5)])
+	ax.yaxis.grid(True, linestyle='-', which='major', color='lightgrey', alpha=0.75)
+
+	# Set the chart title and axis title
+	#ax.set_title('axes title', fontsize = 14)
+	ax.set_xlabel('\nClassifiers', fontsize = 14)
+	ax.set_ylabel('F1 Score', fontsize = 14)
+
+	# Set the boxplot positions
+	width = 0.3  # the width of the bars
+	positionsMM = [value - width / 2 for value in range(len(possibleClassifiers))]
+	positionsEM = [value + width / 2 for value in range(len(possibleClassifiers))]
+
+	# Set the bar chart based on a function property defined below
+	bcMM = barChartProperties(ax, dataMinimal, positionsMM, '#5975a4', width)
+	bcEM = barChartProperties(ax, dataEquivalent, positionsEM, '#b55d60', width)
+
+	# Set the label between two boxplot
+	ax.set_xticklabels(possibleClassifiers)
+	ax.set_xticks([value for value in range(len(possibleClassifiers))])
+
+	# Set the chart subtitle/legend
+	ax.legend([bcMM, bcEM], ['Minimal Mutants', 'Equivalent Mutants'], loc='upper right')
+
+	autolabel(bcMM, ax, 2)
+	autolabel(bcEM, ax, 2)
+
+	fig.tight_layout()
+
+	# Display chart
+	plt.show()
 
 def bestParameterFileExists(file):
 	fileFilter = '_bestParameter'
@@ -334,10 +382,15 @@ def barChartProperties(ax, data, positions, color, width):
 	
 	return barChart
 	
-def autolabel(rects, ax):
+def autolabel(rects, ax, decimals = -1):
 	"""Attach a text label above each bar in *rects*, displaying its height."""
 	for rect in rects:
-		height = rect.get_height()
+		
+		if decimals > -1:
+			height = np.round(rect.get_height(), decimals)
+		else:
+			height = rect.get_height()
+				
 		ax.annotate('{}'.format(height),
 					xy=(rect.get_x() + rect.get_width() / 2, height),
 					xytext=(0, 3),  # 3 points vertical offset
@@ -463,13 +516,13 @@ if __name__ == '__main__':
 
 	# ---------------------------------------------------------------------------------------------------
 	# --- Analyze the 30 runs and calc statistics informations, like minimum, maximum, median and average
-	analyzeRuns(possibleTargetColumns, possibleClassifiers, plot = False, writeFile = True)
+	#analyzeRuns(possibleTargetColumns, possibleClassifiers, plot = True, writeFile = True)
 
-	# ----------------------------------
-	# --- Get informations from programs
-	programsInfo = getProgramsInfo()
-	programsInfo = getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, programsInfo, bestParameter=True)
-	
-	programsBestMetrics = analyzeMetricsFromProgram(programsInfo, possibleClassifiers, plot=False)
-
-	analyzeClassifiersProgramAProgram(programsInfo, possibleClassifiers, plot=False)
+	## ----------------------------------
+	## --- Get informations from programs
+	#programsInfo = getProgramsInfo()
+	#programsInfo = getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, programsInfo, bestParameter=True)
+	#
+	#programsBestMetrics = analyzeMetricsFromProgram(programsInfo, possibleClassifiers, plot=False)
+	#
+	#analyzeClassifiersProgramAProgram(programsInfo, possibleClassifiers, plot=False)
