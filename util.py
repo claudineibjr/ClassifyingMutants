@@ -32,8 +32,8 @@ def formatNow():
     now = datetime.now()
     return now.strftime('%d/%m/%Y %H:%M:%S')      
 
-def writeDataFrameInCsvFile(fileName, dataFrame, sep = ','):
-    pd.DataFrame(dataFrame).to_csv(fileName, sep=sep)
+def writeDataFrameInCsvFile(fileName, dataFrame, sep = ',', mode = 'w'):
+    pd.DataFrame(dataFrame).to_csv(fileName, sep=sep, mode=mode)
 
 def writeInCsvFile(fileName, content, header = None, delimiter = ';', mode='w'):
     if header == None:
@@ -102,7 +102,7 @@ def deleteResults(baseFolder, fileToDelete):
                         
                         os.remove(fileNameToDelete)
 
-def getPrograms(folder):
+def getPrograms(folder = '{}/Programs'.format(os.getcwd())):
     folders = []
     
     # Percorre todas as pastas dentro do diretório base
@@ -132,6 +132,12 @@ def getFoldersInFolder(folder):
 
     return folders
 
+def createDataFrameFromCSV(csvFile, hasHeader = False, separator = ','):
+    if hasHeader:
+        return pd.read_csv(csvFile, index_col=0, sep=separator)
+    else:
+        return pd.read_csv(csvFile, sep=separator)
+
 def getFilesInFolder(folder):
     files = []
 
@@ -142,7 +148,7 @@ def getFilesInFolder(folder):
 
     return files
 
-def getFolderName(fullPath):
+def getPathName(fullPath):
     return str(fullPath)[str(fullPath).rindex('/') + 1 : ]
 
 def getPreviousFolder(fullPath):
@@ -209,4 +215,4 @@ def computeData(resultsFileName, header, data, accuracy, precision, recall, f1):
 	util.writeInCsvFile(resultsFileName, newData)
 
 if __name__ == '__main__':
-    print()
+    print(getPathName('/home/claudinei/Repositories/RelationshipBetweenMutationAndGFC/ML/Results/MINIMAL/Classification/Heap.csv'))

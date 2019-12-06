@@ -104,7 +104,7 @@ def getPossibleTargetColumns():
 	return possibleTargetColumns
 
 def getPossiblePrograms():
-	possiblePrograms = [util.getFolderName(program) for program in util.getPrograms('{}/Programs'.format(os.getcwd()))]
+	possiblePrograms = [util.getPathName(program) for program in util.getPrograms('{}/Programs'.format(os.getcwd()))]
 	return possiblePrograms
 
 def importDataSet(fileName, columnNames, showHeadDataSet=False):
@@ -709,7 +709,7 @@ def debug_main(arguments):
 	# Possible parameters
 	possibleTargetColumns = getPossibleTargetColumns()
 	possibleClassifiers = getPossibleClassifiers()
-	possiblePrograms = [util.getFolderName(program) for program in util.getPrograms('{}/Programs'.format(os.getcwd()))]
+	possiblePrograms = [util.getPathName(program) for program in util.getPrograms('{}/Programs'.format(os.getcwd()))]
 
 	# Parameters
 	targetColumn = None
@@ -776,7 +776,7 @@ def classify_main(arguments):
 	# Possible parameters
 	possibleTargetColumns = getPossibleTargetColumns()
 	possibleClassifiers = getPossibleClassifiers()
-	possiblePrograms = [util.getFolderName(program) for program in util.getPrograms('{}/Programs'.format(os.getcwd()))]
+	possiblePrograms = [util.getPathName(program) for program in util.getPrograms('{}/Programs'.format(os.getcwd()))]
 
 	# Parameters
 	targetColumn = None
@@ -784,6 +784,7 @@ def classify_main(arguments):
 	classifier = None
 	algorithmParameter = None
 	executeAllPrograms = False
+	summarizeClassifications = False
 
 	# Trought into all parameters
 	for iCount in range(1, len(arguments), 1):
@@ -845,5 +846,5 @@ def classify_main(arguments):
 
 if __name__ == '__main__':
 	#debug_main(sys.argv)
-	classify_main(sys.argv)
+	#classify_main(sys.argv)
 	sys.exit()

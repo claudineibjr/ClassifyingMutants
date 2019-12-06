@@ -24,7 +24,7 @@ if __name__ == '__main__':
     # Percorre todas as pastas dentro do diretório base
     programsFolder = util.getPrograms(baseExperimentFolder)
     for subFolder in programsFolder:
-        sourceProgram = '{}.c'.format(util.getFolderName(subFolder))
+        sourceProgram = '{}.c'.format(util.getPathName(subFolder))
         print ('### BEGIN ###')
         print ('##########\t   Executing ' + sourceProgram + '\t ' + util.formatNow() + '\t   ##########')
 

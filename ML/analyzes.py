@@ -202,7 +202,7 @@ def bestParameterFileExists(file):
 
 def getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, programsInfo, writeMetrics = False, bestParameter = False):
 	fileFilter = '_bestParameter' if bestParameter else ''
-	programs = [util.getFolderName(program) for program in util.getPrograms('{}/Programs'.format(os.getcwd()))]
+	programs = [util.getPathName(program) for program in util.getPrograms('{}/Programs'.format(os.getcwd()))]
 
 	i_program_Max = 1
 	#i_program_Accuracy = 1
@@ -378,7 +378,10 @@ def plotMetricsFromProgram(programsBestMetrics, possibleClassifiers):
 	plt.show()
 
 def barChartProperties(ax, data, positions, color, width):
-	barChart = ax.bar(positions, data, width=width, color=color)
+	if positions is None:
+		barChart = ax.bar(positions, data, width=width, color=color)
+	else:
+		barChart = ax.bar(positions, data, width=width, color=color)
 	
 	return barChart
 	
@@ -510,16 +513,161 @@ def boxPlotProperties(ax, data, positions, color):
 
 	return boxplot
 
+def summarizeClassifications(targetColumn, possiblePrograms, overwrite = False):
+	baseFolder = '{}/ML/Results/{}/Classification'.format(os.getcwd(), targetColumn)
+	fileName = 'ClassificationSummary'
+	summaryFile = '{}/ML/Results/{}/Classification/{}.csv'.format(os.getcwd(), targetColumn, fileName)
+
+	mutantsData = pd.DataFrame()
+
+	if overwrite or not util.pathExists(summaryFile):
+
+		for file in util.getFilesInFolder(baseFolder):
+			programName = util.getPathName(file)
+			programName = programName[ : programName.find('.')]
+			
+			if programName in possiblePrograms:
+				classificationResult = util.createDataFrameFromCSV(file, hasHeader = True)
+
+				mutantsData = mutantsData.append(classificationResult, ignore_index = True)
+
+		util.writeDataFrameInCsvFile(summaryFile, mutantsData)
+
+		return mutantsData
+	elif util.pathExists(summaryFile):
+		return util.createDataFrameFromCSV(summaryFile, True)
+
+def plotSummarizedClassifications(mutantsData, column):
+	plotSummarizedClassifications_byColumn(mutantsData, column, '_IM_OPERATOR', calculateAboveMedian = True, show = False, plot = True)
+	#plotSummarizedClassifications_byColumn(mutantsData, column, '_IM_TYPE_STATEMENT', show = True)
+
+def plotSummarizedClassifications_byColumn(mutantsData, targetColumn, columnToAnalyze, show = False, calculateAboveMedian = False, plot = False):
+	# --- Analyze for operators
+	columnData = pd.DataFrame(mutantsData).loc[ : , [targetColumn, '_IM_PROGRAM', columnToAnalyze, 'PREDICTED', 'RESULT']]
+
+	columnInfos = pd.DataFrame()
+	
+	distinctInfoColumn = columnData[columnToAnalyze].unique()
+	mutantsNumber = [ columnData.query('{} == \'{}\''.format(columnToAnalyze, operator))['RESULT'].count() for operator in distinctInfoColumn] # Número de mutantes/linhas
+	
+	value_1 = [ columnData.query('{} == \'{}\' and {} == \'1\''.format(columnToAnalyze, operator, targetColumn))['RESULT'].count() for operator in distinctInfoColumn] # Mutantes classificados como 1
+	value_0 = [ columnData.query('{} == \'{}\' and {} == \'0\''.format(columnToAnalyze, operator, targetColumn))['RESULT'].count() for operator in distinctInfoColumn] # Mutantes classificados como 0
+	
+	correctPredictions = [ columnData.query('{} == \'{}\' and RESULT == \'1\''.format(columnToAnalyze, operator))['RESULT'].count() for operator in distinctInfoColumn] # Predições corretas
+	percCorrectPredictions = [ value * 100 / mutantsNumber[iCount] for iCount, value in zip(range(len(correctPredictions)), correctPredictions) ] # % Predições corretas
+	
+	wrongPredictions = [ columnData.query('{} == \'{}\' and RESULT == \'0\''.format(columnToAnalyze, operator))['RESULT'].count() for operator in distinctInfoColumn] # Predições incorretas
+	percWrongPredictions = [ value * 100 / mutantsNumber[iCount] for iCount, value in zip(range(len(wrongPredictions)), wrongPredictions) ] # % Predições incorretas
+	
+	correctPredictionsFor1 = [ columnData.query('{} == \'{}\' and PREDICTED == \'1\' and RESULT == \'1\''.format(columnToAnalyze, operator))['RESULT'].count() for operator in distinctInfoColumn] # Predições corretas para 1
+	percCorrectPredictionsFor1 = [ value * 100 / value_1[iCount] for iCount, value in zip(range(len(correctPredictionsFor1)), correctPredictionsFor1) ] # % Predições corretas para 1
+	
+	correctPredictionsFor0 = [ columnData.query('{} == \'{}\' and PREDICTED == \'0\' and RESULT == \'1\''.format(columnToAnalyze, operator))['RESULT'].count() for operator in distinctInfoColumn] # Predições corretas para 0
+	percCorrectPredictionsFor0 = [ value * 100 / value_0[iCount] for iCount, value in zip(range(len(correctPredictionsFor0)), correctPredictionsFor0) ] # % Predições corretas para 0
+	
+	wrongPredictionsFor1 = [ columnData.query('{} == \'{}\' and PREDICTED == \'1\' and RESULT == \'0\''.format(columnToAnalyze, operator))['RESULT'].count() for operator in distinctInfoColumn] # Predições para 1 sendo que era 0
+	percWrongPredictionsFor1 = [ value * 100 / value_1[iCount] for iCount, value in zip(range(len(wrongPredictionsFor1)), wrongPredictionsFor1) ] # % Predições para 1 sendo que era 0
+	
+	wrongPredictionsFor0 = [ columnData.query('{} == \'{}\' and PREDICTED == \'0\' and RESULT == \'0\''.format(columnToAnalyze, operator))['RESULT'].count() for operator in distinctInfoColumn] # Predições para 0 sendo que era 1
+	percWrongPredictionsFor0 = [ value * 100 / value_0[iCount] for iCount, value in zip(range(len(wrongPredictionsFor0)), wrongPredictionsFor0) ] # % Predições para 1 sendo que era 0
+
+	columns = [columnToAnalyze, 'Number', 'Value_1', 'Value_0', 'Correct', 'Correct_Perc', 'Wrong', 'Wrong_Perc', 'Correct_1', 'Correct_1_Perc', 'Correct_0', 'Correct_0_Perc', 'Wrong_1', 'Wrong_1_Perc', 'Wrong_0', 'Wrong_0_Perc']
+	data = np.array([distinctInfoColumn, mutantsNumber, value_1, value_0, correctPredictions, percCorrectPredictions, wrongPredictions, percWrongPredictions, correctPredictionsFor1, percCorrectPredictionsFor1, correctPredictionsFor0, percCorrectPredictionsFor0, wrongPredictionsFor1, percWrongPredictionsFor1, wrongPredictionsFor0, percWrongPredictionsFor0]).transpose()
+
+	columnInfos = pd.DataFrame(data=data, columns=columns)
+
+	# Get the median to rank only operators that are at least above the median
+	if calculateAboveMedian:
+		median = np.median(columnInfos['Number'])
+	else:
+		median = 0
+
+	# Operadores com melhor classificação geral (apenas com número de mutantes acima do 3º quartil)
+	op_best = columnInfos.query('Number >= {}'.format(median)).sort_values('Correct_Perc', ascending=False)
+	if show: print('Melhores ' + columnToAnalyze + ' na classificação geral\n', op_best.head(n = 10), end='\n\n')
+	
+	# Operadores com pior classificação geral
+	op_poor = columnInfos.query('Number >= {}'.format(median)).sort_values('Correct_Perc', ascending=True)
+	if show: print('Piores ' + columnToAnalyze + ' na classificação geral\n', op_poor.head(n = 10), end='\n\n')
+	
+	# Operadores com melhor apontamento dos minimais/equivalentes
+	op_best_value1 = columnInfos.query('Number >= {}'.format(median)).sort_values('Correct_1_Perc', ascending=False)
+	if show: print('Melhores ' + columnToAnalyze + ' ao apontar os minimais/equivalentes\n', op_best_value1.head(n = 10), end='\n\n')
+	
+	# Operadores com melhor apontamento dos não minimais/equivalentes
+	op_best_value0 = columnInfos.query('Number >= {}'.format(median)).sort_values('Correct_0_Perc', ascending=False)
+	if show: print('Melhores ' + columnToAnalyze + ' ao apontar os não minimais/equivalentes\n', op_best_value0.head(n = 10), end='\n\n')
+	
+	# Operadores com pior apontamento dos minimais/equivalentes
+	op_poor_value1 = columnInfos.query('Number >= {}'.format(median)).sort_values('Correct_1_Perc', ascending=True)
+	if show: print('Piores ' + columnToAnalyze + ' ao apontar os minimais/equivalentes\n', op_poor_value1.head(n = 10), end='\n\n')
+	
+	# Operadores com pior apontamento dos não minimais/equivalentes
+	op_poor_value0 = columnInfos.query('Number >= {}'.format(median)).sort_values('Correct_0_Perc', ascending=True)
+	if show: print('Piores ' + columnToAnalyze + ' ao apontar os não minimais/equivalentes\n', op_poor_value0.head(n = 10), end='\n\n')
+
+	if plot:
+		plotData = op_best.loc[ : , [columnToAnalyze, 'Correct_Perc'] ].head()
+		plotData = plotData.append(op_best.loc[ : , [columnToAnalyze, 'Correct_Perc'] ].tail())
+		
+		# Create the figure with axis
+		fig = plt.figure(1, figsize=(9, 6))
+		ax = fig.add_subplot(1, 1, 1)
+		
+		# Set the value to be shown as indexes on axis Y
+		#ax.set_yticks([value for value in range(0, 101, 10)])
+		ax.yaxis.grid(True, linestyle='-', which='major', color='lightgrey', alpha=0.75)
+		
+		# Set the chart title and axis title
+		#ax.set_title('axes title', fontsize = 14)
+		ax.set_xlabel('\n' + columnToAnalyze, fontsize = 14)
+		ax.set_ylabel('Number of programs that the classifier was the best', fontsize = 14)
+		
+		# Set the boxplot positions
+		width = 0.4  # the width of the bars
+		#positionsMM = [value - width / 2 for value in range(len(possibleClassifiers))]
+		positionsMM = [value for value in range(len(plotData))]
+		
+		# Set the bar chart based on a function property defined below
+		bcMM = barChartProperties(ax, plotData.loc[ : , 'Correct_Perc' ].values, positionsMM, '#5975a4', width)
+		
+		# Set the label between two boxplot
+		ax.set_xticklabels(plotData.loc[ : , columnToAnalyze ].values)
+		ax.set_xticks([value for value in range(len(plotData))])
+		
+		# Set the chart subtitle/legend
+		#ax.legend([bcMM, bcEM], ['Minimal Mutants', 'Equivalent Mutants'], loc='upper left')
+		#ax.legend(loc='upper left')
+		
+		autolabel(bcMM, ax, decimals=2)
+		
+		fig.tight_layout()
+		
+		# Display chart
+		plt.show()
+
+
 if __name__ == '__main__':
+	# ---------
+	# --- Setup
 	possibleTargetColumns = ['MINIMAL', 'EQUIVALENT']
 	possibleClassifiers = getPossibleClassifiers()
-
-	# ---------------------------------------------------------------------------------------------------
-	# --- Analyze the 30 runs and calc statistics informations, like minimum, maximum, median and average
-	#analyzeRuns(possibleTargetColumns, possibleClassifiers, plot = True, writeFile = True)
-
-	## ----------------------------------
-	## --- Get informations from programs
+	possiblePrograms = [ util.getPathName(program) for program in util.getPrograms()]
+	
+	## ---------------------------------------------
+	## --- File analysis with classified mutant data
+	minimalsMutantsData = summarizeClassifications(possibleTargetColumns[0], possiblePrograms)
+	plotSummarizedClassifications(minimalsMutantsData, '_IM_' + possibleTargetColumns[0])
+	#
+	#equivalentsMutantsData = summarizeClassifications(possibleTargetColumns[1], possiblePrograms)
+	#plotSummarizedClassifications(minimalsMutantsData, '_IM_' + possibleTargetColumns[1])
+	#
+	## ---------------------------------------------------------------------------------------------------
+	## --- Analyze the 30 runs and calc statistics informations, like minimum, maximum, median and average
+	#analyzeRuns(possibleTargetColumns, possibleClassifiers, plot = True, writeFile = False)
+	#
+	### ----------------------------------
+	### --- Get informations from programs
 	#programsInfo = getProgramsInfo()
 	#programsInfo = getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, programsInfo, bestParameter=True)
 	#
