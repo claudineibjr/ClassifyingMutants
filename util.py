@@ -53,8 +53,8 @@ def formatNow():
     now = datetime.now()
     return now.strftime('%d/%m/%Y %H:%M:%S')      
 
-def writeDataFrameInCsvFile(fileName, dataFrame, sep = ',', mode = 'w'):
-    pd.DataFrame(dataFrame).to_csv(fileName, sep=sep, mode=mode)
+def writeDataFrameInCsvFile(fileName, dataFrame, sep = ',', mode = 'w', header=True, index=True):
+    pd.DataFrame(dataFrame).to_csv(fileName, sep=sep, mode=mode, header=header, index=index)
 
 def writeInCsvFile(fileName, content, header = None, delimiter = ';', mode='w'):
     with open(fileName, mode=mode) as resultFile:

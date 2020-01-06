@@ -12,6 +12,9 @@ import gfcUtils
 
 import constants
 
+import pandas as pd
+import numpy as np
+
 def getMinimalMutants(baseFolder, sourceFile):
     fileName = "{}/log/minimal.txt".format(baseFolder)
     #fileName = "{}/arc_prim/minimal.txt".format(baseFolder) #Utilizar as informações dos minimais já passadas
@@ -259,9 +262,9 @@ def getMutantsInfo(baseFolder, minimalMutants, sessionName, units):
             lastICount = iCount
 
         # Normaliza os dados de complexidade dos mutantes
-        complexities = util.normalize(complexities)
-        for iCount in range(len(complexities)):
-            arrMutantsInfo[iCount][constants._IM_COMPLEXITY] = complexities[iCount]
+        #complexities = util.normalize(complexities)
+        #for iCount in range(len(complexities)):
+        #    arrMutantsInfo[iCount][constants._IM_COMPLEXITY] = complexities[iCount]
 
     arrHeaderMutants.append("Program Name")
     arrHeaderMutants.append("#")
@@ -296,6 +299,7 @@ def computeEssencialInfo(mutantsInfo, minimal_Equivalent):
     #minimal_Equivalent = 1 - Equivalent
 
     essential = []
+    essentialHeader = []
     for iCount in range(len(mutantsInfo)):
         essentialRow = []
         mutantRow = mutantsInfo[iCount]
@@ -310,6 +314,7 @@ def computeEssencialInfo(mutantsInfo, minimal_Equivalent):
                 mutantRowInfo = mutantRow[jCount]
                 essentialRow.append(mutantRowInfo)
 
+        essentialHeader = [ 'Program', '_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_EQUIVALENT' if minimal_Equivalent == 0 else '_IM_MINIMAL', '_IM_MINIMAL' if minimal_Equivalent == 0 else '_IM_EQUIVALENT' ]
         #_IM_OPERATOR,_IM_SOURCE_PRIMITIVE_ARC,_IM_TARGET_PRIMITIVE_ARC,_IM_DISTANCE_BEGIN_MIN,_IM_DISTANCE_BEGIN_MAX,_IM_DISTANCE_BEGIN_AVG,_IM_DISTANCE_END_MIN,_IM_DISTANCE_END_MAX,_IM_DISTANCE_END_AVG,_IM_COMPLEXITY,_IM_TYPE_STATEMENT,_IM_EQUIVALENT,_IM_MINIMAL
         #_IM_OPERATOR,_IM_SOURCE_PRIMITIVE_ARC,_IM_TARGET_PRIMITIVE_ARC,_IM_DISTANCE_BEGIN_MIN,_IM_DISTANCE_BEGIN_MAX,_IM_DISTANCE_BEGIN_AVG,_IM_DISTANCE_END_MIN,_IM_DISTANCE_END_MAX,_IM_DISTANCE_END_AVG,_IM_COMPLEXITY,_IM_TYPE_STATEMENT,_IM_MINIMAL,_IM_EQUIVALENT
 
@@ -322,7 +327,19 @@ def computeEssencialInfo(mutantsInfo, minimal_Equivalent):
             essentialRow.append(mutantRow[constants._IM_EQUIVALENT])
         essential.append(essentialRow)
 
-    return essential
+    # Create a DataFrame
+    essentialData = pd.DataFrame(data=essential, columns = essentialHeader)
+
+    # --- Normalização dos dados | _IM_DISTANCE_BEGIN_MIN, _IM_DISTANCE_BEGIN_MAX, _IM_DISTANCE_BEGIN_AVG, _IM_DISTANCE_END_MIN, _IM_DISTANCE_END_MAX, _IM_DISTANCE_END_AVG, _IM_COMPLEXITY
+    essentialData['_IM_DISTANCE_BEGIN_MIN'] = util.normalize(essentialData['_IM_DISTANCE_BEGIN_MIN'])
+    essentialData['_IM_DISTANCE_BEGIN_MAX'] = util.normalize(essentialData['_IM_DISTANCE_BEGIN_MAX'])
+    essentialData['_IM_DISTANCE_BEGIN_AVG'] = util.normalize(essentialData['_IM_DISTANCE_BEGIN_AVG'])
+    essentialData['_IM_DISTANCE_END_MIN'] = util.normalize(essentialData['_IM_DISTANCE_END_MIN'])
+    essentialData['_IM_DISTANCE_END_MAX'] = util.normalize(essentialData['_IM_DISTANCE_END_MAX'])
+    essentialData['_IM_DISTANCE_END_AVG'] = util.normalize(essentialData['_IM_DISTANCE_END_AVG'])
+    essentialData['_IM_COMPLEXITY'] = util.normalize(essentialData['_IM_COMPLEXITY'])
+
+    return essentialData
 
 def main(_baseExperimentFolder, _baseFolder, executionMode):
     #executionMode |    1 - Run and analyze
@@ -393,11 +410,11 @@ def main(_baseExperimentFolder, _baseFolder, executionMode):
             
             # Gera apenas um arquivo com todos os mutantes
             essentialFileName = '{}/MINIMAL/mutants.csv'.format(datasetBaseFolder)
-            util.writeInCsvFile(essentialFileName, essentialInfo, mode="a+", delimiter=',')
+            util.writeDataFrameInCsvFile(essentialFileName, essentialInfo, sep=',', mode='a+', header=False, index=False)
 
             # Gera um arquivo para cada programa com todos os seus mutantes
             essentialFileName = '{}/MINIMAL/Programs/{}.csv'.format(datasetBaseFolder, sessionName)
-            util.writeInCsvFile(essentialFileName, essentialInfo, mode="a+", delimiter=',')
+            util.writeDataFrameInCsvFile(essentialFileName, essentialInfo, sep=',', mode='w+', header=False, index=False)
 
             ###########################
             ### --- Equivalents --- ###
@@ -405,11 +422,11 @@ def main(_baseExperimentFolder, _baseFolder, executionMode):
             
             # Gera apenas um arquivo com todos os mutantes
             essentialFileName = '{}/EQUIVALENT/mutants.csv'.format(datasetBaseFolder)
-            util.writeInCsvFile(essentialFileName, essentialInfo, mode="a+", delimiter=',')
+            util.writeDataFrameInCsvFile(essentialFileName, essentialInfo, sep=',', mode='a+', header=False, index=False)
 
             # Gera um arquivo para cada programa com todos os seus mutantes
             essentialFileName = '{}/EQUIVALENT/Programs/{}.csv'.format(datasetBaseFolder, sessionName)
-            util.writeInCsvFile(essentialFileName, essentialInfo, mode="a+", delimiter=',')
+            util.writeDataFrameInCsvFile(essentialFileName, essentialInfo, sep=',', mode='w+', header=False, index=False)
 
 
 if __name__ == '__main__':

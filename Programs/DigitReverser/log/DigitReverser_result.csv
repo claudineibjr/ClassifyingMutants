@@ -1,497 +1,497 @@
 Program Name;#;Result;Status;Operator;Program Graph Node;Minimal?;Primitive Arc?;Source Primitive Arc?;Target Primitive Arc?;Equivalent?;Distance Begin;Distance Begin (min);Distance Begin (max);Distance Begin (avg);Distance End;Distance End (min);Distance End (max);Distance End (avg);Source Node;Target Node;Sources Nodes are primitive?;Targets Nodes are primitive?;Complexity;Type Statement
-DigitReverser;0;Dead Active;Dead Active;u-Cccr;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;1;Dead Active;Dead Active;u-Cccr;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;2;Equivalent Active;Equivalent Active;u-Cccr;2;0;1;1;0;1;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;3;Dead Active;Dead Active;u-Cccr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;4;Dead Active;Dead Active;u-Cccr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;5;Dead Active;Dead Active;u-Cccr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;6;Dead Active;Dead Active;u-Cccr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;7;Dead Active;Dead Active;u-Cccr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;8;Dead Active;Dead Active;u-Cccr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;9;Dead Active;Dead Active;u-Cccr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;10;Dead Active;Dead Active;u-Cccr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;11;Dead Active;Dead Active;u-Cccr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;12;Dead Active;Dead Active;u-Cccr;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;13;Dead Active;Dead Active;u-Cccr;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;14;Equivalent Active;Equivalent Active;u-Cccr;5;0;1;1;0;1;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;15;Dead Active;Dead Active;u-Cccr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;16;Dead Active;Dead Active;u-Cccr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;17;Dead Active;Dead Active;u-Cccr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;18;Dead Active;Dead Active;u-Cccr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;19;Dead Active;Dead Active;u-Cccr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;20;Equivalent Active;Equivalent Active;u-Cccr;6;0;1;0;1;1;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;21;Dead Active;Dead Active;u-Cccr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;22;Dead Active;Dead Active;u-Cccr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;23;Dead Active;Dead Active;u-Cccr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;24;Dead Active;Dead Active;u-Cccr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;25;Dead Active;Dead Active;u-Cccr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;26;Dead Active;Dead Active;u-Cccr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;27;Dead Active;Dead Active;u-Cccr;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Assignment
-DigitReverser;28;Dead Active;Dead Active;u-Cccr;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Assignment
-DigitReverser;29;Equivalent Active;Equivalent Active;u-Cccr;7;0;0;0;0;1;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Assignment
-DigitReverser;30;Equivalent Active;Equivalent Active;u-Cccr;7;0;0;0;0;1;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Assignment
-DigitReverser;31;Dead Active;Dead Active;u-Cccr;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Assignment
-DigitReverser;32;Dead Active;Dead Active;u-Cccr;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Assignment
-DigitReverser;33;Equivalent Active;Equivalent Active;u-CCDL;2;0;1;1;0;1;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;34;Dead Active;Dead Active;u-CCDL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;35;Dead Active;Dead Active;u-CCDL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;36;Dead Active;Dead Active;u-CCDL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;37;Equivalent Active;Equivalent Active;u-CCDL;5;0;1;1;0;1;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;38;Dead Active;Dead Active;u-CCDL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;39;Dead Active;Dead Active;u-CCDL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;40;Dead Active;Dead Active;u-CCDL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;41;Dead Active;Dead Active;u-Ccsr;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;42;Dead Active;Dead Active;u-Ccsr;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;43;Dead Active;Dead Active;u-Ccsr;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;44;Dead Active;Dead Active;u-Ccsr;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;45;Dead Active;Dead Active;u-Ccsr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;46;Dead Active;Dead Active;u-Ccsr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;47;Dead Active;Dead Active;u-Ccsr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;48;Dead Active;Dead Active;u-Ccsr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;49;Dead Active;Dead Active;u-Ccsr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;50;Dead Active;Dead Active;u-Ccsr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;51;Dead Active;Dead Active;u-Ccsr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;52;Dead Active;Dead Active;u-Ccsr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;53;Dead Active;Dead Active;u-Ccsr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;54;Dead Active;Dead Active;u-Ccsr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;55;Dead Active;Dead Active;u-Ccsr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;56;Dead Active;Dead Active;u-Ccsr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;57;Dead Active;Dead Active;u-Ccsr;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Function Call
-DigitReverser;58;Dead Active;Dead Active;u-Ccsr;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Function Call
-DigitReverser;59;Dead Active;Dead Active;u-Ccsr;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Function Call
-DigitReverser;60;Dead Active;Dead Active;u-Ccsr;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Function Call
-DigitReverser;61;Dead Active;Dead Active;u-Ccsr;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;62;Dead Active;Dead Active;u-Ccsr;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;63;Dead Active;Dead Active;u-Ccsr;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;64;Dead Active;Dead Active;u-Ccsr;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;65;Dead Active;Dead Active;u-Ccsr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;66;Dead Active;Dead Active;u-Ccsr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;67;Dead Active;Dead Active;u-Ccsr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;68;Dead Active;Dead Active;u-Ccsr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;69;Dead Active;Dead Active;u-Ccsr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;70;Dead Active;Dead Active;u-Ccsr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;71;Dead Active;Dead Active;u-Ccsr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;72;Dead Active;Dead Active;u-Ccsr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;73;Dead Active;Dead Active;u-Ccsr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;74;Dead Active;Dead Active;u-Ccsr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;75;Dead Active;Dead Active;u-Ccsr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;76;Dead Active;Dead Active;u-Ccsr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;77;Dead Active;Dead Active;u-CRCR;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;78;Dead Active;Dead Active;u-CRCR;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;79;Dead Active;Dead Active;u-CRCR;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;80;Dead Active;Dead Active;u-CRCR;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;81;Dead Active;Dead Active;u-CRCR;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;82;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;83;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;84;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;85;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;86;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;87;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;88;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;89;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;90;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;91;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;92;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;93;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;94;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;95;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;96;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;97;Dead Active;Dead Active;u-CRCR;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Function Call
-DigitReverser;98;Dead Active;Dead Active;u-CRCR;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Function Call
-DigitReverser;99;Dead Active;Dead Active;u-CRCR;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Function Call
-DigitReverser;100;Dead Active;Dead Active;u-CRCR;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Function Call
-DigitReverser;101;Dead Active;Dead Active;u-CRCR;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Function Call
-DigitReverser;102;Dead Active;Dead Active;u-CRCR;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;103;Dead Active;Dead Active;u-CRCR;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;104;Dead Active;Dead Active;u-CRCR;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;105;Dead Active;Dead Active;u-CRCR;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;106;Dead Active;Dead Active;u-CRCR;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;107;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;108;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;109;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;110;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;111;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;112;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;113;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;114;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;115;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;116;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;117;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;118;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;119;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;120;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;121;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;122;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;123;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;124;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;125;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;126;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;127;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;128;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;129;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;130;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;131;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;132;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;133;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;134;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;135;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;136;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;137;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;138;Dead Active;Dead Active;u-OAAN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;139;Dead Active;Dead Active;u-OAAN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;140;Dead Active;Dead Active;u-OAAN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;141;Dead Active;Dead Active;u-OAAN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;142;Dead Active;Dead Active;u-OAAN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;143;Dead Active;Dead Active;u-OAAN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;144;Dead Active;Dead Active;u-OAAN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;145;Dead Active;Dead Active;u-OAAN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;146;Dead Active;Dead Active;u-OAAN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;147;Dead Active;Dead Active;u-OAAN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;148;Dead Active;Dead Active;u-OAAN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;149;Dead Active;Dead Active;u-OAAN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;150;Dead Active;Dead Active;u-OABN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;151;Dead Active;Dead Active;u-OABN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;152;Dead Active;Dead Active;u-OABN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;153;Dead Active;Dead Active;u-OABN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;154;Dead Active;Dead Active;u-OABN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;155;Dead Active;Dead Active;u-OABN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;156;Dead Active;Dead Active;u-OABN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;157;Dead Active;Dead Active;u-OABN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;158;Dead Active;Dead Active;u-OABN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;159;Dead Active;Dead Active;u-OABN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;160;Dead Active;Dead Active;u-OABN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;161;Dead Active;Dead Active;u-OABN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;162;Dead Active;Dead Active;u-OABN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;163;Dead Active;Dead Active;u-OABN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;164;Dead Active;Dead Active;u-OABN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;165;Equivalent Active;Equivalent Active;u-OABN;6;0;1;0;1;1;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;166;Dead Active;Dead Active;u-OABN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;167;Equivalent Active;Equivalent Active;u-OABN;6;0;1;0;1;1;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;168;Dead Active;Dead Active;u-OABN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;169;Dead Active;Dead Active;u-OABN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;170;Dead Active;Dead Active;u-OABN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;171;Dead Active;Dead Active;u-OALN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;172;Dead Active;Dead Active;u-OALN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;173;Dead Active;Dead Active;u-OALN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;174;Dead Active;Dead Active;u-OALN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;175;Dead Active;Dead Active;u-OALN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;176;Dead Active;Dead Active;u-OALN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;177;Dead Active;Dead Active;u-OALN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;178;Dead Active;Dead Active;u-OALN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;179;Dead Active;Dead Active;u-OALN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;180;Dead Active;Dead Active;u-OALN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;181;Dead Active;Dead Active;u-OALN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;182;Dead Active;Dead Active;u-OALN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;183;Dead Active;Dead Active;u-OALN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;184;Dead Active;Dead Active;u-OALN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;185;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;186;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;187;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;188;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;189;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;190;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;191;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;192;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;193;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;194;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;195;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;196;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;197;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;198;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;199;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;200;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;201;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;202;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;203;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;204;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;205;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;206;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;207;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;208;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;209;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;210;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;211;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;212;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;213;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;214;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;215;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;216;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;217;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;218;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;219;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;220;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;221;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;222;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;223;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;224;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;225;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;226;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;227;Dead Active;Dead Active;u-OASN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;228;Dead Active;Dead Active;u-OASN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;229;Dead Active;Dead Active;u-OASN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;230;Dead Active;Dead Active;u-OASN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;231;Dead Active;Dead Active;u-OASN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;232;Dead Active;Dead Active;u-OASN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;233;Dead Active;Dead Active;u-OASN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;234;Dead Active;Dead Active;u-OASN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;235;Dead Active;Dead Active;u-OASN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;236;Dead Active;Dead Active;u-OASN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;237;Dead Active;Dead Active;u-OASN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;238;Dead Active;Dead Active;u-OASN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;239;Dead Active;Dead Active;u-OASN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;240;Dead Active;Dead Active;u-OASN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;241;Dead Active;Dead Active;u-OCNG;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;242;Dead Active;Dead Active;u-OCNG;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;243;Dead Active;Dead Active;u-OEAA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;244;Dead Active;Dead Active;u-OEAA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;245;Dead Active;Dead Active;u-OEAA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;246;Dead Active;Dead Active;u-OEAA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;247;Dead Active;Dead Active;u-OEAA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;248;Dead Active;Dead Active;u-OEAA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;249;Dead Active;Dead Active;u-OEAA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;250;Dead Active;Dead Active;u-OEAA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;251;Dead Active;Dead Active;u-OEAA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;252;Dead Active;Dead Active;u-OEAA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;253;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;254;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;255;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;256;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;257;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;258;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;259;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;260;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;261;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;262;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;263;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;264;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;265;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;266;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;267;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;268;Equivalent Active;Equivalent Active;u-OEAA;7;0;0;0;0;1;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Assignment
-DigitReverser;269;Dead Active;Dead Active;u-OEAA;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Assignment
-DigitReverser;270;Dead Active;Dead Active;u-OEAA;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Assignment
-DigitReverser;271;Dead Active;Dead Active;u-OEAA;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Assignment
-DigitReverser;272;Dead Active;Dead Active;u-OEAA;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Assignment
-DigitReverser;273;Dead Active;Dead Active;u-OEBA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;274;Dead Active;Dead Active;u-OEBA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;275;Dead Active;Dead Active;u-OEBA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;276;Dead Active;Dead Active;u-OEBA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;277;Dead Active;Dead Active;u-OEBA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;278;Dead Active;Dead Active;u-OEBA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;279;Dead Active;Dead Active;u-OEBA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;280;Dead Active;Dead Active;u-OEBA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;281;Dead Active;Dead Active;u-OEBA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;282;Dead Active;Dead Active;u-OEBA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;283;Dead Active;Dead Active;u-OEBA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;284;Dead Active;Dead Active;u-OEBA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;285;Dead Active;Dead Active;u-OEBA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;286;Dead Active;Dead Active;u-OEBA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;287;Dead Active;Dead Active;u-OEBA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;288;Equivalent Active;Equivalent Active;u-OEBA;7;0;0;0;0;1;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Assignment
-DigitReverser;289;Dead Active;Dead Active;u-OEBA;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Assignment
-DigitReverser;290;Dead Active;Dead Active;u-OEBA;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Assignment
-DigitReverser;291;Dead Active;Dead Active;u-OESA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;292;Dead Active;Dead Active;u-OESA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;293;Dead Active;Dead Active;u-OESA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;294;Dead Active;Dead Active;u-OESA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;295;Dead Active;Dead Active;u-OESA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;296;Dead Active;Dead Active;u-OESA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;297;Dead Active;Dead Active;u-OESA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;298;Dead Active;Dead Active;u-OESA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;299;Dead Active;Dead Active;u-OESA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;300;Dead Active;Dead Active;u-OESA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;301;Dead Active;Dead Active;u-OESA;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Assignment
-DigitReverser;302;Dead Active;Dead Active;u-OESA;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Assignment
-DigitReverser;303;Dead Active;Dead Active;u-Oido;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;304;Equivalent Active;Equivalent Active;u-OODL;2;0;1;1;0;1;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;305;Dead Active;Dead Active;u-OODL;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;306;Dead Active;Dead Active;u-OODL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;307;Dead Active;Dead Active;u-OODL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;308;Dead Active;Dead Active;u-OODL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;309;Dead Active;Dead Active;u-OODL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;310;Dead Active;Dead Active;u-OODL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;311;Dead Active;Dead Active;u-OODL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;312;Dead Active;Dead Active;u-OODL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;313;Dead Active;Dead Active;u-OODL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;314;Equivalent Active;Equivalent Active;u-OODL;5;0;1;1;0;1;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;315;Dead Active;Dead Active;u-OODL;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;316;Dead Active;Dead Active;u-OODL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;317;Dead Active;Dead Active;u-OODL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;318;Dead Active;Dead Active;u-OODL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;319;Dead Active;Dead Active;u-OODL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;320;Dead Active;Dead Active;u-OODL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;321;Dead Active;Dead Active;u-OODL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;322;Equivalent Active;Equivalent Active;u-ORAN;2;0;1;1;0;1;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;323;Equivalent Active;Equivalent Active;u-ORAN;2;0;1;1;0;1;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;324;Dead Active;Dead Active;u-ORAN;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;325;Dead Active;Dead Active;u-ORAN;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;326;Dead Active;Dead Active;u-ORAN;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;327;Equivalent Active;Equivalent Active;u-ORAN;5;0;1;1;0;1;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;328;Equivalent Active;Equivalent Active;u-ORAN;5;0;1;1;0;1;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;329;Dead Active;Dead Active;u-ORAN;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;330;Dead Active;Dead Active;u-ORAN;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;331;Dead Active;Dead Active;u-ORAN;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;332;Equivalent Active;Equivalent Active;u-ORBN;2;0;1;1;0;1;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;333;Dead Active;Dead Active;u-ORBN;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;334;Equivalent Active;Equivalent Active;u-ORBN;2;0;1;1;0;1;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;335;Equivalent Active;Equivalent Active;u-ORBN;5;0;1;1;0;1;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;336;Dead Active;Dead Active;u-ORBN;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;337;Equivalent Active;Equivalent Active;u-ORBN;5;0;1;1;0;1;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;338;Equivalent Active;Equivalent Active;u-ORLN;2;0;1;1;0;1;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;339;Dead Active;Dead Active;u-ORLN;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;340;Equivalent Active;Equivalent Active;u-ORLN;5;0;1;1;0;1;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;341;Dead Active;Dead Active;u-ORLN;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;342;Dead Active;Dead Active;u-ORRN;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;343;Equivalent Active;Equivalent Active;u-ORRN;2;0;1;1;0;1;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;344;Dead Active;Dead Active;u-ORRN;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;345;Dead Active;Dead Active;u-ORRN;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;346;Dead Active;Dead Active;u-ORRN;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;347;Dead Active;Dead Active;u-ORRN;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;348;Equivalent Active;Equivalent Active;u-ORRN;5;0;1;1;0;1;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;349;Dead Active;Dead Active;u-ORRN;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;350;Dead Active;Dead Active;u-ORRN;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;351;Dead Active;Dead Active;u-ORRN;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;352;Equivalent Active;Equivalent Active;u-ORSN;2;0;1;1;0;1;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;353;Equivalent Active;Equivalent Active;u-ORSN;2;0;1;1;0;1;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;354;Equivalent Active;Equivalent Active;u-ORSN;5;0;1;1;0;1;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;355;Equivalent Active;Equivalent Active;u-ORSN;5;0;1;1;0;1;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;356;Dead Active;Dead Active;u-SMTC;1;0;0;0;0;0;[0];0;0;0.0;[6, 6, 4];4;6;5.333333333333333;[];[2];[];[1];0.0;Declaration
-DigitReverser;357;Dead Active;Dead Active;u-SMTC;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Declaration
-DigitReverser;358;Dead Active;Dead Active;u-SMTT;1;0;0;0;0;0;[0];0;0;0.0;[6, 6, 4];4;6;5.333333333333333;[];[2];[];[1];0.0;Declaration
-DigitReverser;359;Dead Active;Dead Active;u-SMTT;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Declaration
-DigitReverser;360;Dead Active;Dead Active;u-SMVB;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Declaration
-DigitReverser;361;Dead Active;Dead Active;u-SMVB;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Declaration
-DigitReverser;362;Dead Active;Dead Active;u-SMVB;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Declaration
-DigitReverser;363;Dead Active;Dead Active;u-SMVB;6;1;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Declaration
-DigitReverser;364;Dead Active;Dead Active;u-SRSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;365;Dead Active;Dead Active;u-SRSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;366;Dead Active;Dead Active;u-SRSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Block
-DigitReverser;367;Dead Active;Dead Active;u-SRSR;1;0;0;0;0;0;[0];0;0;0.0;[6, 6, 4];4;6;5.333333333333333;[];[2];[];[1];0.0;Block
-DigitReverser;368;Dead Active;Dead Active;u-SRSR;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Function Call
-DigitReverser;369;Dead Active;Dead Active;u-SRSR;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Assignment
-DigitReverser;370;Dead Active;Dead Active;u-SRSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;371;Dead Active;Dead Active;u-SRSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;372;Dead Active;Dead Active;u-SRSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;373;Dead Active;Dead Active;u-SRSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;374;Dead Active;Dead Active;u-SRSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Block
-DigitReverser;375;Dead Active;Dead Active;u-SRSR;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Block
-DigitReverser;376;Dead Active;Dead Active;u-SRSR;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Assignment
-DigitReverser;377;Dead Active;Dead Active;u-SRSR;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Function Call
-DigitReverser;378;Dead Active;Dead Active;u-SRSR;1;0;0;0;0;0;[0];0;0;0.0;[6, 6, 4];4;6;5.333333333333333;[];[2];[];[1];0.0;Block
-DigitReverser;379;Dead Active;Dead Active;u-SSDL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;380;Dead Active;Dead Active;u-SSDL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;381;Dead Active;Dead Active;u-SSDL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Block
-DigitReverser;382;Dead Active;Dead Active;u-SSDL;1;0;0;0;0;0;[0];0;0;0.0;[6, 6, 4];4;6;5.333333333333333;[];[2];[];[1];0.0;Block
-DigitReverser;383;Dead Active;Dead Active;u-SSDL;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Function Call
-DigitReverser;384;Dead Active;Dead Active;u-SSDL;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Assignment
-DigitReverser;385;Dead Active;Dead Active;u-SSDL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;386;Dead Active;Dead Active;u-SSDL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;387;Dead Active;Dead Active;u-SSDL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;388;Dead Active;Dead Active;u-SSDL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;389;Dead Active;Dead Active;u-SSDL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Block
-DigitReverser;390;Dead Active;Dead Active;u-SSDL;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Block
-DigitReverser;391;Dead Active;Dead Active;u-SSDL;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Assignment
-DigitReverser;392;Dead Active;Dead Active;u-SSDL;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Function Call
-DigitReverser;393;Dead Active;Dead Active;u-SSDL;1;0;0;0;0;0;[0];0;0;0.0;[6, 6, 4];4;6;5.333333333333333;[];[2];[];[1];0.0;Block
-DigitReverser;394;Dead Active;Dead Active;u-STRP;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;395;Dead Active;Dead Active;u-STRP;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;396;Dead Active;Dead Active;u-STRP;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Block
-DigitReverser;397;Dead Active;Dead Active;u-STRP;1;0;0;0;0;0;[0];0;0;0.0;[6, 6, 4];4;6;5.333333333333333;[];[2];[];[1];0.0;Block
-DigitReverser;398;Dead Active;Dead Active;u-STRP;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Function Call
-DigitReverser;399;Dead Active;Dead Active;u-STRP;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Assignment
-DigitReverser;400;Dead Active;Dead Active;u-STRP;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;401;Dead Active;Dead Active;u-STRP;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;402;Dead Active;Dead Active;u-STRP;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;403;Dead Active;Dead Active;u-STRP;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;404;Dead Active;Dead Active;u-STRP;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Block
-DigitReverser;405;Dead Active;Dead Active;u-STRP;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Block
-DigitReverser;406;Dead Active;Dead Active;u-STRP;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Assignment
-DigitReverser;407;Dead Active;Dead Active;u-STRP;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Function Call
-DigitReverser;408;Dead Active;Dead Active;u-STRP;1;0;0;0;0;0;[0];0;0;0.0;[6, 6, 4];4;6;5.333333333333333;[];[2];[];[1];0.0;Block
-DigitReverser;409;Equivalent Active;Equivalent Active;u-SWDD;1;0;0;0;0;1;[0];0;0;0.0;[6, 6, 4];4;6;5.333333333333333;[];[2];[];[1];0.0;While
-DigitReverser;410;Dead Active;Dead Active;u-SWDD;4;1;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;While
-DigitReverser;411;Dead Active;Dead Active;u-VDTR;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;412;Equivalent Active;Equivalent Active;u-VDTR;2;0;1;1;0;1;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;413;Dead Active;Dead Active;u-VDTR;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;414;Dead Active;Dead Active;u-VDTR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;415;Equivalent Active;Equivalent Active;u-VDTR;3;0;1;0;1;1;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;416;Dead Active;Dead Active;u-VDTR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;417;Dead Active;Dead Active;u-VDTR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;418;Equivalent Active;Equivalent Active;u-VDTR;3;0;1;0;1;1;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;419;Equivalent Active;Equivalent Active;u-VDTR;3;0;1;0;1;1;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;420;Dead Active;Dead Active;u-VDTR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;421;Equivalent Active;Equivalent Active;u-VDTR;3;0;1;0;1;1;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;422;Equivalent Active;Equivalent Active;u-VDTR;3;0;1;0;1;1;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;423;Dead Active;Dead Active;u-VDTR;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Function Call
-DigitReverser;424;Equivalent Active;Equivalent Active;u-VDTR;4;0;0;0;0;1;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Function Call
-DigitReverser;425;Dead Active;Dead Active;u-VDTR;4;1;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Function Call
-DigitReverser;426;Dead Active;Dead Active;u-VDTR;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;427;Equivalent Active;Equivalent Active;u-VDTR;5;0;1;1;0;1;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;428;Dead Active;Dead Active;u-VDTR;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;429;Dead Active;Dead Active;u-VDTR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;430;Equivalent Active;Equivalent Active;u-VDTR;6;0;1;0;1;1;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;431;Equivalent Active;Equivalent Active;u-VDTR;6;0;1;0;1;1;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;432;Dead Active;Dead Active;u-VDTR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;433;Equivalent Active;Equivalent Active;u-VDTR;6;0;1;0;1;1;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;434;Dead Active;Dead Active;u-VDTR;6;1;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;435;Dead Active;Dead Active;u-VDTR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;436;Equivalent Active;Equivalent Active;u-VDTR;6;0;1;0;1;1;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;437;Equivalent Active;Equivalent Active;u-VDTR;6;0;1;0;1;1;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;438;Dead Active;Dead Active;u-VLSR;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;439;Dead Active;Dead Active;u-VLSR;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;440;Dead Active;Dead Active;u-VLSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;441;Dead Active;Dead Active;u-VLSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;442;Dead Active;Dead Active;u-VLSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;443;Dead Active;Dead Active;u-VLSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;444;Dead Active;Dead Active;u-VLSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;445;Dead Active;Dead Active;u-VLSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;446;Dead Active;Dead Active;u-VLSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;447;Dead Active;Dead Active;u-VLSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;448;Dead Active;Dead Active;u-VLSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;449;Dead Active;Dead Active;u-VLSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;450;Dead Active;Dead Active;u-VLSR;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Function Call
-DigitReverser;451;Dead Active;Dead Active;u-VLSR;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Function Call
-DigitReverser;452;Dead Active;Dead Active;u-VLSR;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;453;Dead Active;Dead Active;u-VLSR;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;454;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;455;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;456;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;457;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;458;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;459;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;460;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;461;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;462;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;463;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;464;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;465;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;466;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;467;Dead Active;Dead Active;u-VLSR;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Assignment
-DigitReverser;468;Dead Active;Dead Active;u-VLSR;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Assignment
-DigitReverser;469;Dead Active;Dead Active;u-VLSR;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];0.09467455621301775;Assignment
-DigitReverser;470;Dead Active;Dead Active;u-VTWD;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;471;Dead Active;Dead Active;u-VTWD;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;472;Dead Active;Dead Active;u-VTWD;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;473;Dead Active;Dead Active;u-VTWD;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;474;Dead Active;Dead Active;u-VTWD;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;475;Dead Active;Dead Active;u-VTWD;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;476;Dead Active;Dead Active;u-VTWD;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;477;Dead Active;Dead Active;u-VTWD;3;1;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;478;Dead Active;Dead Active;u-VTWD;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Function Call
-DigitReverser;479;Dead Active;Dead Active;u-VTWD;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];0.11242603550295859;Function Call
-DigitReverser;480;Dead Active;Dead Active;u-VTWD;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;481;Dead Active;Dead Active;u-VTWD;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;482;Dead Active;Dead Active;u-VTWD;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;483;Dead Active;Dead Active;u-VTWD;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;484;Dead Active;Dead Active;u-VTWD;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;485;Dead Active;Dead Active;u-VTWD;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;486;Dead Active;Dead Active;u-VTWD;6;1;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;487;Dead Active;Dead Active;u-VTWD;6;1;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;488;Dead Active;Dead Active;u-VVDL;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];0.1834319526627219;While
-DigitReverser;489;Dead Active;Dead Active;u-VVDL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;490;Dead Active;Dead Active;u-VVDL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;491;Dead Active;Dead Active;u-VVDL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];0.9763313609467456;Assignment
-DigitReverser;492;Dead Active;Dead Active;u-VVDL;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];0.1893491124260355;While
-DigitReverser;493;Dead Active;Dead Active;u-VVDL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;494;Dead Active;Dead Active;u-VVDL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
-DigitReverser;495;Dead Active;Dead Active;u-VVDL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];1.0;Assignment
+DigitReverser;0;Dead Active;Dead Active;u-Cccr;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;1;Dead Active;Dead Active;u-Cccr;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;2;Equivalent Active;Equivalent Active;u-Cccr;2;0;1;1;0;1;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;3;Dead Active;Dead Active;u-Cccr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;4;Dead Active;Dead Active;u-Cccr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;5;Dead Active;Dead Active;u-Cccr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;6;Dead Active;Dead Active;u-Cccr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;7;Dead Active;Dead Active;u-Cccr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;8;Dead Active;Dead Active;u-Cccr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;9;Dead Active;Dead Active;u-Cccr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;10;Dead Active;Dead Active;u-Cccr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;11;Dead Active;Dead Active;u-Cccr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;12;Dead Active;Dead Active;u-Cccr;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;13;Dead Active;Dead Active;u-Cccr;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;14;Equivalent Active;Equivalent Active;u-Cccr;5;0;1;1;0;1;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;15;Dead Active;Dead Active;u-Cccr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;16;Dead Active;Dead Active;u-Cccr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;17;Dead Active;Dead Active;u-Cccr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;18;Dead Active;Dead Active;u-Cccr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;19;Dead Active;Dead Active;u-Cccr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;20;Equivalent Active;Equivalent Active;u-Cccr;6;0;1;0;1;1;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;21;Dead Active;Dead Active;u-Cccr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;22;Dead Active;Dead Active;u-Cccr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;23;Dead Active;Dead Active;u-Cccr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;24;Dead Active;Dead Active;u-Cccr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;25;Dead Active;Dead Active;u-Cccr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;26;Dead Active;Dead Active;u-Cccr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;27;Dead Active;Dead Active;u-Cccr;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Assignment
+DigitReverser;28;Dead Active;Dead Active;u-Cccr;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Assignment
+DigitReverser;29;Equivalent Active;Equivalent Active;u-Cccr;7;0;0;0;0;1;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Assignment
+DigitReverser;30;Equivalent Active;Equivalent Active;u-Cccr;7;0;0;0;0;1;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Assignment
+DigitReverser;31;Dead Active;Dead Active;u-Cccr;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Assignment
+DigitReverser;32;Dead Active;Dead Active;u-Cccr;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Assignment
+DigitReverser;33;Equivalent Active;Equivalent Active;u-CCDL;2;0;1;1;0;1;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;34;Dead Active;Dead Active;u-CCDL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;35;Dead Active;Dead Active;u-CCDL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;36;Dead Active;Dead Active;u-CCDL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;37;Equivalent Active;Equivalent Active;u-CCDL;5;0;1;1;0;1;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;38;Dead Active;Dead Active;u-CCDL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;39;Dead Active;Dead Active;u-CCDL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;40;Dead Active;Dead Active;u-CCDL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;41;Dead Active;Dead Active;u-Ccsr;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;42;Dead Active;Dead Active;u-Ccsr;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;43;Dead Active;Dead Active;u-Ccsr;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;44;Dead Active;Dead Active;u-Ccsr;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;45;Dead Active;Dead Active;u-Ccsr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;46;Dead Active;Dead Active;u-Ccsr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;47;Dead Active;Dead Active;u-Ccsr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;48;Dead Active;Dead Active;u-Ccsr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;49;Dead Active;Dead Active;u-Ccsr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;50;Dead Active;Dead Active;u-Ccsr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;51;Dead Active;Dead Active;u-Ccsr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;52;Dead Active;Dead Active;u-Ccsr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;53;Dead Active;Dead Active;u-Ccsr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;54;Dead Active;Dead Active;u-Ccsr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;55;Dead Active;Dead Active;u-Ccsr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;56;Dead Active;Dead Active;u-Ccsr;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;57;Dead Active;Dead Active;u-Ccsr;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Function Call
+DigitReverser;58;Dead Active;Dead Active;u-Ccsr;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Function Call
+DigitReverser;59;Dead Active;Dead Active;u-Ccsr;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Function Call
+DigitReverser;60;Dead Active;Dead Active;u-Ccsr;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Function Call
+DigitReverser;61;Dead Active;Dead Active;u-Ccsr;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;62;Dead Active;Dead Active;u-Ccsr;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;63;Dead Active;Dead Active;u-Ccsr;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;64;Dead Active;Dead Active;u-Ccsr;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;65;Dead Active;Dead Active;u-Ccsr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;66;Dead Active;Dead Active;u-Ccsr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;67;Dead Active;Dead Active;u-Ccsr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;68;Dead Active;Dead Active;u-Ccsr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;69;Dead Active;Dead Active;u-Ccsr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;70;Dead Active;Dead Active;u-Ccsr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;71;Dead Active;Dead Active;u-Ccsr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;72;Dead Active;Dead Active;u-Ccsr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;73;Dead Active;Dead Active;u-Ccsr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;74;Dead Active;Dead Active;u-Ccsr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;75;Dead Active;Dead Active;u-Ccsr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;76;Dead Active;Dead Active;u-Ccsr;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;77;Dead Active;Dead Active;u-CRCR;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;78;Dead Active;Dead Active;u-CRCR;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;79;Dead Active;Dead Active;u-CRCR;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;80;Dead Active;Dead Active;u-CRCR;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;81;Dead Active;Dead Active;u-CRCR;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;82;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;83;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;84;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;85;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;86;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;87;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;88;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;89;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;90;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;91;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;92;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;93;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;94;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;95;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;96;Dead Active;Dead Active;u-CRCR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;97;Dead Active;Dead Active;u-CRCR;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Function Call
+DigitReverser;98;Dead Active;Dead Active;u-CRCR;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Function Call
+DigitReverser;99;Dead Active;Dead Active;u-CRCR;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Function Call
+DigitReverser;100;Dead Active;Dead Active;u-CRCR;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Function Call
+DigitReverser;101;Dead Active;Dead Active;u-CRCR;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Function Call
+DigitReverser;102;Dead Active;Dead Active;u-CRCR;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;103;Dead Active;Dead Active;u-CRCR;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;104;Dead Active;Dead Active;u-CRCR;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;105;Dead Active;Dead Active;u-CRCR;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;106;Dead Active;Dead Active;u-CRCR;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;107;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;108;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;109;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;110;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;111;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;112;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;113;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;114;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;115;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;116;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;117;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;118;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;119;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;120;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;121;Dead Active;Dead Active;u-CRCR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;122;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;123;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;124;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;125;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;126;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;127;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;128;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;129;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;130;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;131;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;132;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;133;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;134;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;135;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;136;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;137;Dead Active;Dead Active;u-OAAN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;138;Dead Active;Dead Active;u-OAAN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;139;Dead Active;Dead Active;u-OAAN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;140;Dead Active;Dead Active;u-OAAN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;141;Dead Active;Dead Active;u-OAAN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;142;Dead Active;Dead Active;u-OAAN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;143;Dead Active;Dead Active;u-OAAN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;144;Dead Active;Dead Active;u-OAAN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;145;Dead Active;Dead Active;u-OAAN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;146;Dead Active;Dead Active;u-OAAN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;147;Dead Active;Dead Active;u-OAAN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;148;Dead Active;Dead Active;u-OAAN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;149;Dead Active;Dead Active;u-OAAN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;150;Dead Active;Dead Active;u-OABN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;151;Dead Active;Dead Active;u-OABN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;152;Dead Active;Dead Active;u-OABN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;153;Dead Active;Dead Active;u-OABN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;154;Dead Active;Dead Active;u-OABN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;155;Dead Active;Dead Active;u-OABN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;156;Dead Active;Dead Active;u-OABN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;157;Dead Active;Dead Active;u-OABN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;158;Dead Active;Dead Active;u-OABN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;159;Dead Active;Dead Active;u-OABN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;160;Dead Active;Dead Active;u-OABN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;161;Dead Active;Dead Active;u-OABN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;162;Dead Active;Dead Active;u-OABN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;163;Dead Active;Dead Active;u-OABN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;164;Dead Active;Dead Active;u-OABN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;165;Equivalent Active;Equivalent Active;u-OABN;6;0;1;0;1;1;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;166;Dead Active;Dead Active;u-OABN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;167;Equivalent Active;Equivalent Active;u-OABN;6;0;1;0;1;1;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;168;Dead Active;Dead Active;u-OABN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;169;Dead Active;Dead Active;u-OABN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;170;Dead Active;Dead Active;u-OABN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;171;Dead Active;Dead Active;u-OALN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;172;Dead Active;Dead Active;u-OALN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;173;Dead Active;Dead Active;u-OALN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;174;Dead Active;Dead Active;u-OALN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;175;Dead Active;Dead Active;u-OALN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;176;Dead Active;Dead Active;u-OALN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;177;Dead Active;Dead Active;u-OALN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;178;Dead Active;Dead Active;u-OALN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;179;Dead Active;Dead Active;u-OALN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;180;Dead Active;Dead Active;u-OALN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;181;Dead Active;Dead Active;u-OALN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;182;Dead Active;Dead Active;u-OALN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;183;Dead Active;Dead Active;u-OALN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;184;Dead Active;Dead Active;u-OALN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;185;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;186;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;187;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;188;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;189;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;190;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;191;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;192;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;193;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;194;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;195;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;196;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;197;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;198;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;199;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;200;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;201;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;202;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;203;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;204;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;205;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;206;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;207;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;208;Dead Active;Dead Active;u-OARN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;209;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;210;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;211;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;212;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;213;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;214;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;215;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;216;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;217;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;218;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;219;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;220;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;221;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;222;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;223;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;224;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;225;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;226;Dead Active;Dead Active;u-OARN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;227;Dead Active;Dead Active;u-OASN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;228;Dead Active;Dead Active;u-OASN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;229;Dead Active;Dead Active;u-OASN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;230;Dead Active;Dead Active;u-OASN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;231;Dead Active;Dead Active;u-OASN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;232;Dead Active;Dead Active;u-OASN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;233;Dead Active;Dead Active;u-OASN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;234;Dead Active;Dead Active;u-OASN;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;235;Dead Active;Dead Active;u-OASN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;236;Dead Active;Dead Active;u-OASN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;237;Dead Active;Dead Active;u-OASN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;238;Dead Active;Dead Active;u-OASN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;239;Dead Active;Dead Active;u-OASN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;240;Dead Active;Dead Active;u-OASN;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;241;Dead Active;Dead Active;u-OCNG;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;242;Dead Active;Dead Active;u-OCNG;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;243;Dead Active;Dead Active;u-OEAA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;244;Dead Active;Dead Active;u-OEAA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;245;Dead Active;Dead Active;u-OEAA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;246;Dead Active;Dead Active;u-OEAA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;247;Dead Active;Dead Active;u-OEAA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;248;Dead Active;Dead Active;u-OEAA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;249;Dead Active;Dead Active;u-OEAA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;250;Dead Active;Dead Active;u-OEAA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;251;Dead Active;Dead Active;u-OEAA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;252;Dead Active;Dead Active;u-OEAA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;253;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;254;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;255;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;256;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;257;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;258;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;259;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;260;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;261;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;262;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;263;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;264;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;265;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;266;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;267;Dead Active;Dead Active;u-OEAA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;268;Equivalent Active;Equivalent Active;u-OEAA;7;0;0;0;0;1;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Assignment
+DigitReverser;269;Dead Active;Dead Active;u-OEAA;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Assignment
+DigitReverser;270;Dead Active;Dead Active;u-OEAA;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Assignment
+DigitReverser;271;Dead Active;Dead Active;u-OEAA;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Assignment
+DigitReverser;272;Dead Active;Dead Active;u-OEAA;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Assignment
+DigitReverser;273;Dead Active;Dead Active;u-OEBA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;274;Dead Active;Dead Active;u-OEBA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;275;Dead Active;Dead Active;u-OEBA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;276;Dead Active;Dead Active;u-OEBA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;277;Dead Active;Dead Active;u-OEBA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;278;Dead Active;Dead Active;u-OEBA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;279;Dead Active;Dead Active;u-OEBA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;280;Dead Active;Dead Active;u-OEBA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;281;Dead Active;Dead Active;u-OEBA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;282;Dead Active;Dead Active;u-OEBA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;283;Dead Active;Dead Active;u-OEBA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;284;Dead Active;Dead Active;u-OEBA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;285;Dead Active;Dead Active;u-OEBA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;286;Dead Active;Dead Active;u-OEBA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;287;Dead Active;Dead Active;u-OEBA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;288;Equivalent Active;Equivalent Active;u-OEBA;7;0;0;0;0;1;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Assignment
+DigitReverser;289;Dead Active;Dead Active;u-OEBA;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Assignment
+DigitReverser;290;Dead Active;Dead Active;u-OEBA;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Assignment
+DigitReverser;291;Dead Active;Dead Active;u-OESA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;292;Dead Active;Dead Active;u-OESA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;293;Dead Active;Dead Active;u-OESA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;294;Dead Active;Dead Active;u-OESA;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;295;Dead Active;Dead Active;u-OESA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;296;Dead Active;Dead Active;u-OESA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;297;Dead Active;Dead Active;u-OESA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;298;Dead Active;Dead Active;u-OESA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;299;Dead Active;Dead Active;u-OESA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;300;Dead Active;Dead Active;u-OESA;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;301;Dead Active;Dead Active;u-OESA;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Assignment
+DigitReverser;302;Dead Active;Dead Active;u-OESA;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Assignment
+DigitReverser;303;Dead Active;Dead Active;u-Oido;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;304;Equivalent Active;Equivalent Active;u-OODL;2;0;1;1;0;1;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;305;Dead Active;Dead Active;u-OODL;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;306;Dead Active;Dead Active;u-OODL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;307;Dead Active;Dead Active;u-OODL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;308;Dead Active;Dead Active;u-OODL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;309;Dead Active;Dead Active;u-OODL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;310;Dead Active;Dead Active;u-OODL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;311;Dead Active;Dead Active;u-OODL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;312;Dead Active;Dead Active;u-OODL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;313;Dead Active;Dead Active;u-OODL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;314;Equivalent Active;Equivalent Active;u-OODL;5;0;1;1;0;1;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;315;Dead Active;Dead Active;u-OODL;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;316;Dead Active;Dead Active;u-OODL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;317;Dead Active;Dead Active;u-OODL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;318;Dead Active;Dead Active;u-OODL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;319;Dead Active;Dead Active;u-OODL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;320;Dead Active;Dead Active;u-OODL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;321;Dead Active;Dead Active;u-OODL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;322;Equivalent Active;Equivalent Active;u-ORAN;2;0;1;1;0;1;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;323;Equivalent Active;Equivalent Active;u-ORAN;2;0;1;1;0;1;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;324;Dead Active;Dead Active;u-ORAN;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;325;Dead Active;Dead Active;u-ORAN;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;326;Dead Active;Dead Active;u-ORAN;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;327;Equivalent Active;Equivalent Active;u-ORAN;5;0;1;1;0;1;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;328;Equivalent Active;Equivalent Active;u-ORAN;5;0;1;1;0;1;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;329;Dead Active;Dead Active;u-ORAN;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;330;Dead Active;Dead Active;u-ORAN;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;331;Dead Active;Dead Active;u-ORAN;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;332;Equivalent Active;Equivalent Active;u-ORBN;2;0;1;1;0;1;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;333;Dead Active;Dead Active;u-ORBN;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;334;Equivalent Active;Equivalent Active;u-ORBN;2;0;1;1;0;1;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;335;Equivalent Active;Equivalent Active;u-ORBN;5;0;1;1;0;1;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;336;Dead Active;Dead Active;u-ORBN;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;337;Equivalent Active;Equivalent Active;u-ORBN;5;0;1;1;0;1;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;338;Equivalent Active;Equivalent Active;u-ORLN;2;0;1;1;0;1;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;339;Dead Active;Dead Active;u-ORLN;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;340;Equivalent Active;Equivalent Active;u-ORLN;5;0;1;1;0;1;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;341;Dead Active;Dead Active;u-ORLN;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;342;Dead Active;Dead Active;u-ORRN;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;343;Equivalent Active;Equivalent Active;u-ORRN;2;0;1;1;0;1;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;344;Dead Active;Dead Active;u-ORRN;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;345;Dead Active;Dead Active;u-ORRN;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;346;Dead Active;Dead Active;u-ORRN;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;347;Dead Active;Dead Active;u-ORRN;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;348;Equivalent Active;Equivalent Active;u-ORRN;5;0;1;1;0;1;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;349;Dead Active;Dead Active;u-ORRN;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;350;Dead Active;Dead Active;u-ORRN;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;351;Dead Active;Dead Active;u-ORRN;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;352;Equivalent Active;Equivalent Active;u-ORSN;2;0;1;1;0;1;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;353;Equivalent Active;Equivalent Active;u-ORSN;2;0;1;1;0;1;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;354;Equivalent Active;Equivalent Active;u-ORSN;5;0;1;1;0;1;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;355;Equivalent Active;Equivalent Active;u-ORSN;5;0;1;1;0;1;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;356;Dead Active;Dead Active;u-SMTC;1;0;0;0;0;0;[0];0;0;0.0;[6, 6, 4];4;6;5.333333333333333;[];[2];[];[1];9;Declaration
+DigitReverser;357;Dead Active;Dead Active;u-SMTC;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Declaration
+DigitReverser;358;Dead Active;Dead Active;u-SMTT;1;0;0;0;0;0;[0];0;0;0.0;[6, 6, 4];4;6;5.333333333333333;[];[2];[];[1];9;Declaration
+DigitReverser;359;Dead Active;Dead Active;u-SMTT;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Declaration
+DigitReverser;360;Dead Active;Dead Active;u-SMVB;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Declaration
+DigitReverser;361;Dead Active;Dead Active;u-SMVB;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Declaration
+DigitReverser;362;Dead Active;Dead Active;u-SMVB;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Declaration
+DigitReverser;363;Dead Active;Dead Active;u-SMVB;6;1;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Declaration
+DigitReverser;364;Dead Active;Dead Active;u-SRSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;365;Dead Active;Dead Active;u-SRSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;366;Dead Active;Dead Active;u-SRSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Block
+DigitReverser;367;Dead Active;Dead Active;u-SRSR;1;0;0;0;0;0;[0];0;0;0.0;[6, 6, 4];4;6;5.333333333333333;[];[2];[];[1];9;Block
+DigitReverser;368;Dead Active;Dead Active;u-SRSR;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Function Call
+DigitReverser;369;Dead Active;Dead Active;u-SRSR;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Assignment
+DigitReverser;370;Dead Active;Dead Active;u-SRSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;371;Dead Active;Dead Active;u-SRSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;372;Dead Active;Dead Active;u-SRSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;373;Dead Active;Dead Active;u-SRSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;374;Dead Active;Dead Active;u-SRSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Block
+DigitReverser;375;Dead Active;Dead Active;u-SRSR;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Block
+DigitReverser;376;Dead Active;Dead Active;u-SRSR;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Assignment
+DigitReverser;377;Dead Active;Dead Active;u-SRSR;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Function Call
+DigitReverser;378;Dead Active;Dead Active;u-SRSR;1;0;0;0;0;0;[0];0;0;0.0;[6, 6, 4];4;6;5.333333333333333;[];[2];[];[1];9;Block
+DigitReverser;379;Dead Active;Dead Active;u-SSDL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;380;Dead Active;Dead Active;u-SSDL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;381;Dead Active;Dead Active;u-SSDL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Block
+DigitReverser;382;Dead Active;Dead Active;u-SSDL;1;0;0;0;0;0;[0];0;0;0.0;[6, 6, 4];4;6;5.333333333333333;[];[2];[];[1];9;Block
+DigitReverser;383;Dead Active;Dead Active;u-SSDL;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Function Call
+DigitReverser;384;Dead Active;Dead Active;u-SSDL;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Assignment
+DigitReverser;385;Dead Active;Dead Active;u-SSDL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;386;Dead Active;Dead Active;u-SSDL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;387;Dead Active;Dead Active;u-SSDL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;388;Dead Active;Dead Active;u-SSDL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;389;Dead Active;Dead Active;u-SSDL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Block
+DigitReverser;390;Dead Active;Dead Active;u-SSDL;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Block
+DigitReverser;391;Dead Active;Dead Active;u-SSDL;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Assignment
+DigitReverser;392;Dead Active;Dead Active;u-SSDL;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Function Call
+DigitReverser;393;Dead Active;Dead Active;u-SSDL;1;0;0;0;0;0;[0];0;0;0.0;[6, 6, 4];4;6;5.333333333333333;[];[2];[];[1];9;Block
+DigitReverser;394;Dead Active;Dead Active;u-STRP;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;395;Dead Active;Dead Active;u-STRP;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;396;Dead Active;Dead Active;u-STRP;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Block
+DigitReverser;397;Dead Active;Dead Active;u-STRP;1;0;0;0;0;0;[0];0;0;0.0;[6, 6, 4];4;6;5.333333333333333;[];[2];[];[1];9;Block
+DigitReverser;398;Dead Active;Dead Active;u-STRP;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Function Call
+DigitReverser;399;Dead Active;Dead Active;u-STRP;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Assignment
+DigitReverser;400;Dead Active;Dead Active;u-STRP;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;401;Dead Active;Dead Active;u-STRP;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;402;Dead Active;Dead Active;u-STRP;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;403;Dead Active;Dead Active;u-STRP;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;404;Dead Active;Dead Active;u-STRP;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Block
+DigitReverser;405;Dead Active;Dead Active;u-STRP;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Block
+DigitReverser;406;Dead Active;Dead Active;u-STRP;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Assignment
+DigitReverser;407;Dead Active;Dead Active;u-STRP;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Function Call
+DigitReverser;408;Dead Active;Dead Active;u-STRP;1;0;0;0;0;0;[0];0;0;0.0;[6, 6, 4];4;6;5.333333333333333;[];[2];[];[1];9;Block
+DigitReverser;409;Equivalent Active;Equivalent Active;u-SWDD;1;0;0;0;0;1;[0];0;0;0.0;[6, 6, 4];4;6;5.333333333333333;[];[2];[];[1];9;While
+DigitReverser;410;Dead Active;Dead Active;u-SWDD;4;1;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;While
+DigitReverser;411;Dead Active;Dead Active;u-VDTR;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;412;Equivalent Active;Equivalent Active;u-VDTR;2;0;1;1;0;1;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;413;Dead Active;Dead Active;u-VDTR;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;414;Dead Active;Dead Active;u-VDTR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;415;Equivalent Active;Equivalent Active;u-VDTR;3;0;1;0;1;1;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;416;Dead Active;Dead Active;u-VDTR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;417;Dead Active;Dead Active;u-VDTR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;418;Equivalent Active;Equivalent Active;u-VDTR;3;0;1;0;1;1;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;419;Equivalent Active;Equivalent Active;u-VDTR;3;0;1;0;1;1;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;420;Dead Active;Dead Active;u-VDTR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;421;Equivalent Active;Equivalent Active;u-VDTR;3;0;1;0;1;1;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;422;Equivalent Active;Equivalent Active;u-VDTR;3;0;1;0;1;1;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;423;Dead Active;Dead Active;u-VDTR;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Function Call
+DigitReverser;424;Equivalent Active;Equivalent Active;u-VDTR;4;0;0;0;0;1;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Function Call
+DigitReverser;425;Dead Active;Dead Active;u-VDTR;4;1;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Function Call
+DigitReverser;426;Dead Active;Dead Active;u-VDTR;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;427;Equivalent Active;Equivalent Active;u-VDTR;5;0;1;1;0;1;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;428;Dead Active;Dead Active;u-VDTR;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;429;Dead Active;Dead Active;u-VDTR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;430;Equivalent Active;Equivalent Active;u-VDTR;6;0;1;0;1;1;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;431;Equivalent Active;Equivalent Active;u-VDTR;6;0;1;0;1;1;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;432;Dead Active;Dead Active;u-VDTR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;433;Equivalent Active;Equivalent Active;u-VDTR;6;0;1;0;1;1;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;434;Dead Active;Dead Active;u-VDTR;6;1;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;435;Dead Active;Dead Active;u-VDTR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;436;Equivalent Active;Equivalent Active;u-VDTR;6;0;1;0;1;1;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;437;Equivalent Active;Equivalent Active;u-VDTR;6;0;1;0;1;1;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;438;Dead Active;Dead Active;u-VLSR;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;439;Dead Active;Dead Active;u-VLSR;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;440;Dead Active;Dead Active;u-VLSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;441;Dead Active;Dead Active;u-VLSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;442;Dead Active;Dead Active;u-VLSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;443;Dead Active;Dead Active;u-VLSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;444;Dead Active;Dead Active;u-VLSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;445;Dead Active;Dead Active;u-VLSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;446;Dead Active;Dead Active;u-VLSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;447;Dead Active;Dead Active;u-VLSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;448;Dead Active;Dead Active;u-VLSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;449;Dead Active;Dead Active;u-VLSR;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;450;Dead Active;Dead Active;u-VLSR;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Function Call
+DigitReverser;451;Dead Active;Dead Active;u-VLSR;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Function Call
+DigitReverser;452;Dead Active;Dead Active;u-VLSR;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;453;Dead Active;Dead Active;u-VLSR;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;454;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;455;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;456;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;457;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;458;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;459;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;460;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;461;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;462;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;463;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;464;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;465;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;466;Dead Active;Dead Active;u-VLSR;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;467;Dead Active;Dead Active;u-VLSR;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Assignment
+DigitReverser;468;Dead Active;Dead Active;u-VLSR;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Assignment
+DigitReverser;469;Dead Active;Dead Active;u-VLSR;7;0;0;0;0;0;[4, 6, 6];4;6;5.333333333333333;[0];0;0;0.0;[5];[];[1];[];25;Assignment
+DigitReverser;470;Dead Active;Dead Active;u-VTWD;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;471;Dead Active;Dead Active;u-VTWD;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;472;Dead Active;Dead Active;u-VTWD;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;473;Dead Active;Dead Active;u-VTWD;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;474;Dead Active;Dead Active;u-VTWD;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;475;Dead Active;Dead Active;u-VTWD;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;476;Dead Active;Dead Active;u-VTWD;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;477;Dead Active;Dead Active;u-VTWD;3;1;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;478;Dead Active;Dead Active;u-VTWD;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Function Call
+DigitReverser;479;Dead Active;Dead Active;u-VTWD;4;0;0;0;0;0;[2, 4];2;4;3.0;[4, 2];2;4;3.0;[2];[5];[1];[1];28;Function Call
+DigitReverser;480;Dead Active;Dead Active;u-VTWD;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;481;Dead Active;Dead Active;u-VTWD;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;482;Dead Active;Dead Active;u-VTWD;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;483;Dead Active;Dead Active;u-VTWD;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;484;Dead Active;Dead Active;u-VTWD;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;485;Dead Active;Dead Active;u-VTWD;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;486;Dead Active;Dead Active;u-VTWD;6;1;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;487;Dead Active;Dead Active;u-VTWD;6;1;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;488;Dead Active;Dead Active;u-VVDL;2;0;1;1;0;0;[1, 3];1;3;2.0;[5, 5, 3];3;5;4.333333333333333;[1, 3];[3, 4];[0, 1];[1, 0];40;While
+DigitReverser;489;Dead Active;Dead Active;u-VVDL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;490;Dead Active;Dead Active;u-VVDL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;491;Dead Active;Dead Active;u-VVDL;3;0;1;0;1;0;[2, 4];2;4;3.0;[4];4;4;4.0;[2];[2];[1];[1];174;Assignment
+DigitReverser;492;Dead Active;Dead Active;u-VVDL;5;0;1;1;0;0;[3, 5, 5];3;5;4.333333333333333;[3, 1];1;3;2.0;[4, 6];[6, 7];[0, 1];[1, 0];41;While
+DigitReverser;493;Dead Active;Dead Active;u-VVDL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;494;Dead Active;Dead Active;u-VVDL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
+DigitReverser;495;Dead Active;Dead Active;u-VVDL;6;0;1;0;1;0;[4, 6, 6];4;6;5.333333333333333;[2];2;2;2.0;[5];[5];[1];[1];178;Assignment
