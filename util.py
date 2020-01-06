@@ -15,6 +15,27 @@ import pandas as pd
 from statistics import mean
 from statistics import median
 
+def getPossibleClassifiers():
+	possibleClassifiers = ['KNN', 'DT', 'RF', 'SVM', 'LDA', 'LR', 'GNB']
+	return possibleClassifiers
+
+def getFullNamePossibleClassifiers():
+	fullNameClassifiers = {
+		'KNN': 'K Nearest Neighbors',
+		'DT': 'Decision Tree',
+		'RF': 'Random Forest',
+		'SVM': 'Support Vector Machine',
+		'LDA': 'Linear Discriminant Analysis',
+		'LR': 'Logistic Regression',
+		'GNB': 'Gaussian Naive Bayes'
+	}
+
+	return fullNameClassifiers
+
+def getPossibleTargetColumns():
+	possibleTargetColumns = ['MINIMAL', 'EQUIVALENT']
+	return possibleTargetColumns
+
 def pathExists(fileName):
     return os.path.exists(fileName)
 

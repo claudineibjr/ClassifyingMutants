@@ -59,6 +59,11 @@ from sklearn.naive_bayes import GaussianNB
 from statistics import mean
 from statistics import median
 
+# ------------
+# --- Analyzes
+#from analyzes import getBestClassifierForPrograms
+import analyzes
+
 # Ignoring FutureWarning
 import warnings
 #warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -73,22 +78,7 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 import util
 
-def getPossibleClassifiers():
-	possibleClassifiers = ['KNN', 'DT', 'RF', 'SVM', 'LDA', 'LR', 'GNB']
-	return possibleClassifiers
-
-def getFullNamePossibleClassifiers():
-	fullNameClassifiers = {
-		'KNN': 'K Nearest Neighbors',
-		'DT': 'Decision Tree',
-		'RF': 'Random Forest',
-		'SVM': 'Support Vector Machine',
-		'LDA': 'Linear Discriminant Analysis',
-		'LR': 'Logistic Regression',
-		'GNB': 'Gaussian Naive Bayes'
-	}
-
-	return fullNameClassifiers
+from util import getPossibleClassifiers, getFullNamePossibleClassifiers, getPossibleTargetColumns
 
 def getColumnNames():
 	return ['_IM_PROGRAM', '_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT']
@@ -98,10 +88,6 @@ def getColumnNames_lastMinimal():
 
 def getColumnNames_lastEquivalent():
 	return ['_IM_PROGRAM', '_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT']
-
-def getPossibleTargetColumns():
-	possibleTargetColumns = ['MINIMAL', 'EQUIVALENT']
-	return possibleTargetColumns
 
 def getPossiblePrograms():
 	possiblePrograms = [util.getPathName(program) for program in util.getPrograms('{}/Programs'.format(os.getcwd()))]
@@ -242,17 +228,20 @@ def trainingAndPredictions(strClassifier, parameter, X_train, y_train, X_test):
 
 	return y_pred
 
-def evaluatingAlgorithm(y_test, y_pred):
+def evaluatingClassification(y_test, y_pred):
 	##################################
 	# --- Evaluating the Algorithm ---
 	##################################
 	#   For evaluating an algorithm, confusion matrix, precision, recall and f1 score are the most commonly used metrics. The confusion_matrix and classification_report methods of the sklearn.metrics can be used to calculate these metrics. Take a look at the following script:
 	confusionMatrix = confusion_matrix(y_test, y_pred)
-	TP = confusionMatrix[0][0]  # True Positives
-	FN = confusionMatrix[0][1]  # False Negatives
+	TP = confusionMatrix[1][1]  # True Positives
+	FN = confusionMatrix[1][0]  # False Negatives
 	
-	FP = confusionMatrix[1][0]  # False Positives
-	TN = confusionMatrix[1][1]  # True Negatives
+	FP = confusionMatrix[0][1]  # False Positives
+	TN = confusionMatrix[0][0]  # True Negatives
+
+	#print(confusionMatrix)
+	#print('TP: {} | FN: {} | FP: {} | TN: {}'.format(TP, FN, FP, TN))
 
 	##############
 	# --- Metrics
@@ -330,7 +319,7 @@ def classifierMain(classifier, maxIterations, resultsFileName, X_train, X_test, 
 		return None
 
 	for y_pred, iteration in arr_y_pred_iter:
-		accuracy, precision, recall, f1, TPR, FPR, TP, FN, FP, TN = evaluatingAlgorithm(y_test, y_pred)
+		accuracy, precision, recall, f1, TPR, FPR, TP, FN, FP, TN = evaluatingClassification(y_test, y_pred)
 		accuracy *= 100
 		precision *= 100
 		recall *= 100
@@ -780,35 +769,49 @@ def classify_main(arguments):
 
 	# Parameters
 	targetColumn = None
+	allTargetColumns = False
 	programToClassify = None
 	classifier = None
 	algorithmParameter = None
 	executeAllPrograms = False
-	summarizeClassifications = False
+	executeBestClassifierForProgram = False
+	programsBestClassifiers = None
+	executeAllClassifiers = False
 
 	# Trought into all parameters
 	for iCount in range(1, len(arguments), 1):
 		arg = arguments[iCount]
 		if arg == '--column':
 			targetColumn = arguments[iCount + 1]
+		elif arg == '--allColumns':
+			allTargetColumns = True
 		elif arg == '--program':
 			programToClassify = arguments[iCount + 1]
-		elif arg == '--classifier':
-			classifier = arguments[iCount + 1]
-		elif arg == '--parameter':
-			algorithmParameter = int(arguments[iCount + 1])
 		elif arg == '--allPrograms':
 			executeAllPrograms = True
+		elif arg == '--classifier':
+			classifier = arguments[iCount + 1]
+		elif arg == '--bestClassifier':
+			executeBestClassifierForProgram = True
+			programsBestClassifiers = analyzes.getBestClassifierForPrograms()
+		elif arg == '--allClassifiers':
+			executeAllClassifiers = True
+		elif arg == '--parameter':
+			algorithmParameter = int(arguments[iCount + 1])
 
 	withoutProgramMessage = 'Please specify the program correctly. The {program} could be ' + str(possiblePrograms)
 	withoutColumnMessage = 'Please specify the target column throught --column {targetColumn}. The {targetColumn} could be ' + str(possibleTargetColumns)
+	withoutClassiferMessage = 'Please specify the classifier to be used throught --classifier {classifier}. The {classifier} could be ' + str(possibleClassifiers)
 	errorMessage = ''
 
-	if targetColumn is None or not targetColumn in possibleTargetColumns:
+	if (targetColumn is None or not targetColumn in possibleTargetColumns) and allTargetColumns == False:
 		errorMessage = '{}{}\n'.format(errorMessage, withoutColumnMessage)
 
 	if programToClassify is None and executeAllPrograms == False:
 		errorMessage = '{}{}\n'.format(errorMessage, withoutProgramMessage)
+
+	if classifier is None and executeBestClassifierForProgram == False and executeAllClassifiers == False:
+		errorMessage = '{}{}\n'.format(errorMessage, withoutClassiferMessage)
 
 	if len(errorMessage) > 0:
 		print(errorMessage)
@@ -819,32 +822,45 @@ def classify_main(arguments):
 	else:
 		programsToBeClassified = [programToClassify]
 
-	if classifier is None:
-		classifier = 'RF'
+	if allTargetColumns:
+		targetColumns = possibleTargetColumns.copy()
+	else:
+		targetColumns = [targetColumn]
 
-	if algorithmParameter is None:
-		if classifier == 'SVM' or classifier == 'LDA' or classifier == 'LR' or classifier == 'GNB':
-			algorithmParameter = None
-		elif classifier == 'KNN' and targetColumn == 'MINIMAL':
-			algorithmParameter = 5
-		elif classifier == 'KNN' and targetColumn == 'EQUIVALENT':
-			algorithmParameter = 3
-		elif classifier == 'DT' and targetColumn == 'MINIMAL':
-			algorithmParameter = 15
-		elif classifier == 'DT' and targetColumn == 'EQUIVALENT':
-			algorithmParameter = 15
-		elif classifier == 'RF' and targetColumn == 'MINIMAL':
-			algorithmParameter = 5
-		elif classifier == 'RF' and targetColumn == 'EQUIVALENT':
-			algorithmParameter = 5
+	for column in targetColumns:
+		for program in programsToBeClassified:
+			if executeBestClassifierForProgram:
+				classifier, _ = programsBestClassifiers['{}_{}'.format(program, column)]
+			
+			if executeAllClassifiers:
+				classifiers = possibleClassifiers
+			else:
+				classifiers = [classifier]
 
-	for program in programsToBeClassified:
-		newDataSetFileName = '{}/ML/Dataset/{}/Programs/{}.csv'.format(os.getcwd(), targetColumn, program)
-		resultDataSetFileName = '{}/ML/Results/{}/Classification/{}.csv'.format(os.getcwd(), targetColumn, program)
+			for _classifier in classifiers:
+				if _classifier == 'SVM' or _classifier == 'LDA' or _classifier == 'LR' or _classifier == 'GNB':
+					algorithmParameter = None
+				elif _classifier == 'KNN' and column == 'MINIMAL':
+					algorithmParameter = 5
+				elif _classifier == 'KNN' and column == 'EQUIVALENT':
+					algorithmParameter = 3
+				elif _classifier == 'DT' and column == 'MINIMAL':
+					algorithmParameter = 15
+				elif _classifier == 'DT' and column == 'EQUIVALENT':
+					algorithmParameter = 15
+				elif _classifier == 'RF' and column == 'MINIMAL':
+					algorithmParameter = 5
+				elif _classifier == 'RF' and column == 'EQUIVALENT':
+					algorithmParameter = 5
 
-		classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier, algorithmParameter, program)
+				complementClassifierName = '_{}'.format(_classifier) if executeAllClassifiers else ''
+				newDataSetFileName = '{}/ML/Dataset/{}/Programs/{}.csv'.format(os.getcwd(), column, program)
+				resultDataSetFileName = '{}/ML/Results/{}/Classification/{}{}.csv'.format(os.getcwd(), column, program, complementClassifierName)
+
+				print('Program: {} | Column: {} | Classifier: {} | Parameter: {}'.format(program, column, _classifier, algorithmParameter))
+				classify(newDataSetFileName, resultDataSetFileName, column, _classifier, algorithmParameter, program)
 
 if __name__ == '__main__':
 	#debug_main(sys.argv)
-	#classify_main(sys.argv)
+	classify_main(sys.argv)
 	sys.exit()
