@@ -314,7 +314,7 @@ def computeEssencialInfo(mutantsInfo, minimal_Equivalent):
                 mutantRowInfo = mutantRow[jCount]
                 essentialRow.append(mutantRowInfo)
 
-        essentialHeader = [ 'Program', '_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_EQUIVALENT' if minimal_Equivalent == 0 else '_IM_MINIMAL', '_IM_MINIMAL' if minimal_Equivalent == 0 else '_IM_EQUIVALENT' ]
+        essentialHeader = util.getColumnNames_lastMinimal() if minimal_Equivalent == 0 else util.getColumnNames_lastEquivalent()
         #_IM_OPERATOR,_IM_SOURCE_PRIMITIVE_ARC,_IM_TARGET_PRIMITIVE_ARC,_IM_DISTANCE_BEGIN_MIN,_IM_DISTANCE_BEGIN_MAX,_IM_DISTANCE_BEGIN_AVG,_IM_DISTANCE_END_MIN,_IM_DISTANCE_END_MAX,_IM_DISTANCE_END_AVG,_IM_COMPLEXITY,_IM_TYPE_STATEMENT,_IM_EQUIVALENT,_IM_MINIMAL
         #_IM_OPERATOR,_IM_SOURCE_PRIMITIVE_ARC,_IM_TARGET_PRIMITIVE_ARC,_IM_DISTANCE_BEGIN_MIN,_IM_DISTANCE_BEGIN_MAX,_IM_DISTANCE_BEGIN_AVG,_IM_DISTANCE_END_MIN,_IM_DISTANCE_END_MAX,_IM_DISTANCE_END_AVG,_IM_COMPLEXITY,_IM_TYPE_STATEMENT,_IM_MINIMAL,_IM_EQUIVALENT
 
@@ -410,7 +410,7 @@ def main(_baseExperimentFolder, _baseFolder, executionMode):
             
             # Gera apenas um arquivo com todos os mutantes
             essentialFileName = '{}/MINIMAL/mutants.csv'.format(datasetBaseFolder)
-            util.writeDataFrameInCsvFile(essentialFileName, essentialInfo, sep=',', mode='a+', header=True, index=False)
+            util.writeDataFrameInCsvFile(essentialFileName, essentialInfo, sep=',', mode='a+', header=True if util.pathExists(essentialFileName) == False else False, index=False)
 
             # Gera um arquivo para cada programa com todos os seus mutantes
             essentialFileName = '{}/MINIMAL/Programs/{}.csv'.format(datasetBaseFolder, sessionName)
@@ -422,7 +422,7 @@ def main(_baseExperimentFolder, _baseFolder, executionMode):
             
             # Gera apenas um arquivo com todos os mutantes
             essentialFileName = '{}/EQUIVALENT/mutants.csv'.format(datasetBaseFolder)
-            util.writeDataFrameInCsvFile(essentialFileName, essentialInfo, sep=',', mode='a+', header=True, index=False)
+            util.writeDataFrameInCsvFile(essentialFileName, essentialInfo, sep=',', mode='a+', header=True if util.pathExists(essentialFileName) == False else False, index=False)
 
             # Gera um arquivo para cada programa com todos os seus mutantes
             essentialFileName = '{}/EQUIVALENT/Programs/{}.csv'.format(datasetBaseFolder, sessionName)
