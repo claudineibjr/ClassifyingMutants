@@ -93,13 +93,13 @@ def getPossiblePrograms():
 	possiblePrograms = [util.getPathName(program) for program in util.getPrograms('{}/Programs'.format(os.getcwd()))]
 	return possiblePrograms
 
-def importDataSet(fileName, columnNames, showHeadDataSet=False):
+def importDataSet(fileName, showHeadDataSet=False):
 	############################
 	# --- Importing the dataSet
 	url = fileName
 
 	# --- Read dataSet to pandas dataframe
-	dataSet = pd.read_csv(url, names=columnNames, header=0)
+	dataSet = pd.read_csv(url)
 
 	if showHeadDataSet:
 		# --- To see what the dataSet actually looks like, execute the following command
@@ -570,7 +570,7 @@ def crossValidation(targetColumn, classifier, specifiedProgram = None, columnsTo
 
 	###################
 	# --- PreProcessing
-	dataSet = importDataSet(dataSetFileName, columnNames)
+	dataSet = importDataSet(dataSetFileName)
 
 	##############################
 	# --- Setting results filename
@@ -619,9 +619,9 @@ def classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier
 	# --- PreProcessing
 
 	# --- Import
-	trainDataSet = importDataSet(trainDataSetFileName, columnNames)
+	trainDataSet = importDataSet(trainDataSetFileName)
 	trainDataSet = trainDataSet.query('_IM_PROGRAM != \'{}\''.format(programToClassify))
-	newDataSetFrame = importDataSet(newDataSetFileName, columnNames)
+	newDataSetFrame = importDataSet(newDataSetFileName)
 
 	# --- PreProccess
 	operatorsToTrain = list(set(trainDataSet['_IM_OPERATOR'].values))
@@ -862,5 +862,5 @@ def classify_main(arguments):
 
 if __name__ == '__main__':
 	#debug_main(sys.argv)
-	classify_main(sys.argv)
+	#classify_main(sys.argv)
 	sys.exit()

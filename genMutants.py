@@ -410,11 +410,11 @@ def main(_baseExperimentFolder, _baseFolder, executionMode):
             
             # Gera apenas um arquivo com todos os mutantes
             essentialFileName = '{}/MINIMAL/mutants.csv'.format(datasetBaseFolder)
-            util.writeDataFrameInCsvFile(essentialFileName, essentialInfo, sep=',', mode='a+', header=False, index=False)
+            util.writeDataFrameInCsvFile(essentialFileName, essentialInfo, sep=',', mode='a+', header=True, index=False)
 
             # Gera um arquivo para cada programa com todos os seus mutantes
             essentialFileName = '{}/MINIMAL/Programs/{}.csv'.format(datasetBaseFolder, sessionName)
-            util.writeDataFrameInCsvFile(essentialFileName, essentialInfo, sep=',', mode='w+', header=False, index=False)
+            util.writeDataFrameInCsvFile(essentialFileName, essentialInfo, sep=',', mode='w+', header=True, index=False)
 
             ###########################
             ### --- Equivalents --- ###
@@ -422,11 +422,11 @@ def main(_baseExperimentFolder, _baseFolder, executionMode):
             
             # Gera apenas um arquivo com todos os mutantes
             essentialFileName = '{}/EQUIVALENT/mutants.csv'.format(datasetBaseFolder)
-            util.writeDataFrameInCsvFile(essentialFileName, essentialInfo, sep=',', mode='a+', header=False, index=False)
+            util.writeDataFrameInCsvFile(essentialFileName, essentialInfo, sep=',', mode='a+', header=True, index=False)
 
             # Gera um arquivo para cada programa com todos os seus mutantes
             essentialFileName = '{}/EQUIVALENT/Programs/{}.csv'.format(datasetBaseFolder, sessionName)
-            util.writeDataFrameInCsvFile(essentialFileName, essentialInfo, sep=',', mode='w+', header=False, index=False)
+            util.writeDataFrameInCsvFile(essentialFileName, essentialInfo, sep=',', mode='w+', header=True, index=False)
 
 
 if __name__ == '__main__':
