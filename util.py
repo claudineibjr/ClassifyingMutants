@@ -57,17 +57,13 @@ def writeDataFrameInCsvFile(fileName, dataFrame, sep = ',', mode = 'w'):
     pd.DataFrame(dataFrame).to_csv(fileName, sep=sep, mode=mode)
 
 def writeInCsvFile(fileName, content, header = None, delimiter = ';', mode='w'):
-    if header == None:
-        with open(fileName, mode=mode) as resultFile:
-            resultWriter = csv.writer(resultFile, delimiter = delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
-    
-            resultWriter.writerows(content)
-    else:
-        with open(fileName, mode=mode) as resultFile:
-            resultWriter = csv.writer(resultFile, delimiter = delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
-    
+    with open(fileName, mode=mode) as resultFile:
+        resultWriter = csv.writer(resultFile, delimiter = delimiter, quotechar='"', quoting=csv.QUOTE_MINIMAL)
+
+        if header is not None:
             resultWriter.writerow(header)
-            resultWriter.writerows(content)
+        
+        resultWriter.writerows(content)
 
 def write(fileName, content, mode='w'):
     file = open(fileName, mode)

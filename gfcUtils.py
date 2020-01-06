@@ -439,6 +439,7 @@ def gfcMain(gfcFile, arcPrimFile, showOutput = False):
 
 '''
     Função responsável por transformar um GFC (com nós, arestas, etc) e transformar num arquivo .dot
+    How to install dot on Linux: sudo apt-get install graphviz
 '''
 def gfcToDot(gfc, outputDotFile):
     contentDotFile = "Digraph G {\n"
