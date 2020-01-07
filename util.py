@@ -155,11 +155,9 @@ def getFoldersInFolder(folder):
 
     return folders
 
-def createDataFrameFromCSV(csvFile, hasHeader = False, separator = ','):
-    if hasHeader:
-        return pd.read_csv(csvFile, index_col=0, sep=separator)
-    else:
-        return pd.read_csv(csvFile, sep=separator)
+def createDataFrameFromCSV(csvFile, hasHeader = False, separator = ',', initialLine = None, columnIndex = None):
+    # Verificar as atuais chamadas onde hasHeader pois mudou o comportamento do hasHeader, incluindo o columnindex
+    return pd.read_csv(csvFile, header = 0 if hasHeader else 'infer', index_col = columnIndex, sep=separator, skiprows = initialLine)
 
 def getFilesInFolder(folder):
     files = []

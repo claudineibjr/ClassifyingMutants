@@ -56,88 +56,92 @@ def getProgramsHeader():
 	
 	return columns[0]
 
-def analyzeResults(targetColumn, classifier, metric = 'F1', findTheBest = True, bestIndex = 0):
+def analyzeResults(possibleTargetColumns, possibleClassifiers, overwriteFullFile = False, plot = False):
 	'''
 		Analyze each of 30 run for each classifier with each target column and calculate the best (calculating the mean) metric for each ones (classifier and target column).
-		Returns the index of the best metric value in the due target column and classifier and the mean value of the best metric in the 30 runs
 	'''
+
+	# Dataframe com todos os resultados das execuções
+	experimentResults = pd.DataFrame()
+
+	# Dataframe com a indicação do melhor parâmetro para cada classificador
+	classifiersBestParameter = pd.DataFrame()
+	
+	# Base folder
 	baseResultsFolderName = '{}/ML/Results'.format(os.getcwd())
-
-	initialCSVLineNumber = 6
-	if metric == 'F1':
-		columnMetrics = 4
-	elif metric == 'Accuracy':
-		columnMetrics = 1
-	elif metric == 'Precision':
-		columnMetrics = 2
-	elif metric == 'Recall':
-		columnMetrics = 3
-	else:
-		return
-
-	# Dictionary containing the key as the index and the value a list with all metric score
-	valuesMetric = dict()
-
-	# Walks into all 30 runs
-	for iCount in range(1, 30 + 1, 1):
-		fileName = '{}/{}_{}/{}.csv'.format(baseResultsFolderName, targetColumn, iCount, classifier)
-		
-		lines = util.getContentFromFile(fileName).splitlines()
-		for line in lines[initialCSVLineNumber : ]:
-			columns = line.split(';')
-			index = columns[0]
-			valueMetric = float(columns[columnMetrics])
-			
-			# Append the Max metric score
-			if index in valuesMetric.keys():
-				valuesMetric[index].append(valueMetric)
-			else:
-				valuesMetric[index] = [valueMetric]
 	
-	# Verify the best mean Max metric score
-	if findTheBest:
-		indexMax, maxMetric = 0, 0
-		for index, listValues in valuesMetric.items():
-			if mean(listValues) > maxMetric:
-				indexMax = index
-				maxMetric = mean(listValues)
+	# FullFile
+	fullFileName = '{}/Summary/Summary_All30Runs.csv'.format(baseResultsFolderName)
+
+	# SummaryFile
+	summaryFileName = '{}/Summary/Summary_Classifiers.csv'.format(baseResultsFolderName)
+
+	if overwriteFullFile or not util.pathExists(fullFileName):
+		# Caso for sobrescrever o arquivo já existente ou caso ele não exista, faz toda a leitura e escreve um novo arquivo
+
+		# Percorre todas as colunas (Minimal e equivalent)
+		for targetColumn in possibleTargetColumns:
+			# Percorre todos os classificadores
+			for classifier in possibleClassifiers:
+				# Dataframe contendo o resultado das 30 execuções de cada um dos programas
+				classifierResults = pd.DataFrame()
+				
+				# Percorre todas as execuções (de 1 a 30)
+				for iCount in range(1, 31, 1):
+					# Busca os resultados da execução
+					classifierRunResultFileName = '{}/{}_{}/{}.csv'.format(baseResultsFolderName, targetColumn, iCount, classifier)
+					classifierRunResult = util.createDataFrameFromCSV(classifierRunResultFileName, hasHeader=True, separator=';', initialLine=5)
+					
+					# Concatena o resultado dessa execução às outras execuções que no final serão 30
+					classifierResults = classifierResults.append(classifierRunResult)
+
+					# Insere as informações referentes àquela execução
+					pd.DataFrame(classifierRunResult).insert(0, 'TargetColumn', targetColumn, True)
+					pd.DataFrame(classifierRunResult).insert(1, 'Classifier', classifier, True)
+					pd.DataFrame(classifierRunResult).insert(2, 'Run', iCount, True)
+
+					# Concatena essa execução a todas as outras
+					experimentResults = experimentResults.append(classifierRunResult)
+
+				# Calcula o melhor parâmetro para aquele classificador
+				parameters = classifierResults['SampleSplit'].unique()
+				parameterMetrics = pd.DataFrame()
+				for parameter in parameters:
+					# Busca apenas os resultados daquele parâmetro
+					resultsFromThisParameter = classifierResults.query('SampleSplit == \'{}\''.format(parameter))
+					
+					# Coleta a média das métricas das 30 execuções
+					meanAccuracy = resultsFromThisParameter['Accuracy'].sum() / 30
+					meanPrecision = resultsFromThisParameter['Precision'].sum() / 30
+					meanRecall = resultsFromThisParameter['Recall'].sum() / 30
+					meanF1 = resultsFromThisParameter['F1'].sum() / 30
+
+					parameterMetrics = parameterMetrics.append(pd.DataFrame(data=[[targetColumn, classifier, parameter, meanAccuracy, meanPrecision, meanRecall, meanF1]], columns=['TargetColumn', 'Classifier', 'Parameter', 'Accuracy', 'Precision', 'Recall', 'F1']))
+					#print('Parameter: {}\t\tAccuracy: {} | Precision: {} | Recall: {} | F1: {}'.format(parameter, meanAccuracy, meanPrecision, meanRecall, meanF1))
+				
+				bestParameter = parameterMetrics.sort_values(by=['F1'], ascending=False).head(n=1)
+				#print('\n--- {} - {}'.format(classifier, targetColumn))
+				#print(bestParameter.head())
+				
+				classifiersBestParameter = classifiersBestParameter.append(bestParameter)
+
+		#print(classifiersBestParameter.head(n=50))
+
+		# Escreve um arquivo só com todos os resultados
+		util.writeDataFrameInCsvFile(fullFileName, experimentResults, index=False)
+
+		# Escreve um arquivo só com os melhores parâmetros para cada classificador
+		util.writeDataFrameInCsvFile(summaryFileName, classifiersBestParameter, index=False)
+
 	else:
-		indexMax = bestIndex
+		# Busca os arquivos já existentes
+		experimentResults = util.createDataFrameFromCSV(fullFileName, True, ',')
+		classifiersBestParameter = util.createDataFrameFromCSV(summaryFileName, True, ',')
 
-	# Return the best index and the due mean
-	return indexMax, valuesMetric[indexMax]
-
-def analyzeRuns(possibleTargetColumns, possibleClassifiers, plot = False, writeFile = False, calculateAndShowMean = False):
-	'''
-		Functions responsible to analyze all 30 runs of each classifier
-	'''
-
-	# Column	Classifier	Parameter	Run	Accuracy	Precision	Recall	F1
-	runsResults = pd.DataFrame()
-
-	for targetColumn in possibleTargetColumns:
-		for classifier in possibleClassifiers:
-			bestIndex, bestF1s = analyzeResults(targetColumn, classifier, 'F1')
-			_, bestAccuracies = analyzeResults(targetColumn, classifier, 'Accuracy', bestIndex)
-			_, bestPrecisions = analyzeResults(targetColumn, classifier, 'Precision', bestIndex)
-			_, bestRecalls = analyzeResults(targetColumn, classifier, 'Recall', bestIndex)
-			
-			for iCount in range(len(bestF1s)):
-				data = [ targetColumn, classifier, bestIndex, iCount + 1, bestAccuracies[iCount], bestPrecisions[iCount], bestRecalls[iCount], bestF1s[iCount] ]
-				columns = ['Column', 'Classifier', 'Parameter', 'Run', 'Accuracy', 'Precision', 'Recall', 'F1']
-				newDataFrame = pd.DataFrame(data=[data], columns=columns)
-				runsResults = runsResults.append(newDataFrame)
-
-	if writeFile:
-		pass
-
-	if calculateAndShowMean:
-		pass
-	
 	if plot:
-		plotRunsResult(runsResults, possibleClassifiers, possibleTargetColumns)
+		plotRunsResult(experimentResults, possibleClassifiers, possibleTargetColumns)
 
-	return runsResults
+	return experimentResults, classifiersBestParameter
 
 def plotRunsResult(runsResults, possibleClassifiers, possibleTargetColumns, plotSeparated = False):
 	'''
@@ -145,15 +149,15 @@ def plotRunsResult(runsResults, possibleClassifiers, possibleTargetColumns, plot
 	'''
 
 	if plotSeparated:
-		targetColumnsOption = {'MINIMAL': ('#5975a4'), 'EQUIVALENT': ('#b55d60')}
+		targetColumnsOption = {'MINIMAL': ('#607D8B'), 'EQUIVALENT': ('#B0BEC5')}
 		
 		for targetColumn, (color) in targetColumnsOption.items():
 			targetColumnData = []
-			for iCount in range(len(possibleClassifiers)):
+			for _ in range(len(possibleClassifiers)):
 				targetColumnData.append(0)
 
 			for classifier in possibleClassifiers:
-				Values_Classifier_Column = runsResults.query('Classifier == \'{}\' and Column == \'{}\' '.format(classifier, targetColumn))
+				Values_Classifier_Column = runsResults.query('Classifier == \'{}\' and TargetColumn == \'{}\' '.format(classifier, targetColumn))
 
 				targetColumnData[possibleClassifiers.index(classifier)] = np.mean(Values_Classifier_Column['F1'])
 
@@ -200,7 +204,7 @@ def plotRunsResult(runsResults, possibleClassifiers, possibleTargetColumns, plot
 
 		for column in possibleTargetColumns:
 			for classifier in possibleClassifiers:
-				Values_Classifier_Column = runsResults.query('Classifier == \'{}\' and Column == \'{}\' '.format(classifier, column))
+				Values_Classifier_Column = runsResults.query('Classifier == \'{}\' and TargetColumn == \'{}\' '.format(classifier, column))
 
 				meanAccuracy = np.mean(Values_Classifier_Column['Accuracy'])
 				meanPrecision = np.mean(Values_Classifier_Column['Precision'])
@@ -233,8 +237,8 @@ def plotRunsResult(runsResults, possibleClassifiers, possibleTargetColumns, plot
 		positionsEM = [value + width / 2 for value in range(len(possibleClassifiers))]
 
 		# Set the bar chart based on a function property defined below
-		barChart = barChartProperties(ax, dataMinimal, positionsMM, '#5975a4', width)
-		bcEM = barChartProperties(ax, dataEquivalent, positionsEM, '#b55d60', width)
+		barChart = barChartProperties(ax, dataMinimal, positionsMM, '#607D8B', width)
+		bcEM = barChartProperties(ax, dataEquivalent, positionsEM, '#B0BEC5', width)
 
 		# Set the label between two boxplot
 		ax.set_xticklabels(possibleClassifiers)
@@ -914,18 +918,18 @@ if __name__ == '__main__':
 
 	# ---------------------------------------------------------------------------------------------------
 	# --- Analyze the 30 runs and calc statistics informations, like minimum, maximum, median and average
-	#analyzeRuns(possibleTargetColumns, possibleClassifiers, plot = True, writeFile = False)
+	analyzeResults(possibleTargetColumns, possibleClassifiers, plot = True)
 	
 	# ----------------------------------
 	# --- Get informations from programs
-	programsInfo = getProgramsInfo()
-	programsInfo = getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, programsInfo, bestParameter=True)
+	#programsInfo = getProgramsInfo()
+	#programsInfo = getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, programsInfo, bestParameter=True)
 	
 	#programsBestMetrics = analyzeMetricsFromProgram(programsInfo, possibleClassifiers, plot=False)
 	
 	#metricsFromClassifier = analyzeClassifiersProgramAProgram(programsInfo, possibleClassifiers, plot=True)
 	
-	df_Programs_BestClassifiers = getBestClassifierForPrograms()
+	#df_Programs_BestClassifiers = getBestClassifierForPrograms()
 	#plotMetricsFromBestClassifiersOfEachProgram(df_Programs_BestClassifiers)
 
 	# ---------------------------------------------
@@ -935,8 +939,8 @@ if __name__ == '__main__':
 
 	# --------------------------------------------------------
 	# --- File analysis with summarized classified mutant data
-	minimalsMutantsData = summarizeClassifications(possibleTargetColumns[0], possiblePrograms, df_Programs_BestClassifiers, True)
+	#minimalsMutantsData = summarizeClassifications(possibleTargetColumns[0], possiblePrograms, df_Programs_BestClassifiers, True)
 	#plotSummarizedClassifications(minimalsMutantsData, '_IM_' + possibleTargetColumns[0])
 	
-	equivalentsMutantsData = summarizeClassifications(possibleTargetColumns[1], possiblePrograms, df_Programs_BestClassifiers, True)
+	#equivalentsMutantsData = summarizeClassifications(possibleTargetColumns[1], possiblePrograms, df_Programs_BestClassifiers, True)
 	#plotSummarizedClassifications(equivalentsMutantsData, '_IM_' + possibleTargetColumns[1])
