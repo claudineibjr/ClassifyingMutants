@@ -13,6 +13,8 @@ def experiment():
 	
 	arguments = ['', '--all']
 	for iCount in range(30):
+		print('Execução: {}'.format(iCount + 1))
+		
 		# Create base results folder
 		util.createFolder(baseResultsFolder.replace('\'COLUMN\'', 'MINIMAL'))
 		util.createFolder(baseResultsFolder.replace('\'COLUMN\'', 'EQUIVALENT'))
@@ -29,4 +31,5 @@ def experiment():
 	util.renameFolder(baseResultsFolder.replace('\'COLUMN\'', 'EQUIVALENT_old'), baseResultsFolder.replace('\'COLUMN\'', 'EQUIVALENT'))
 
 if __name__ == '__main__':
+	# 
 	experiment()
