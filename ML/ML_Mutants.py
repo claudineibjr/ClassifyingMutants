@@ -668,23 +668,25 @@ def executeAll(targetColumns, classifiers, specifiedProgram = None, executeWithB
 	'''
 	for column in targetColumns:
 		for classifier in getPossibleClassifiers():
+			print('Classifier: {} | Column: {}'.format(classifier, column))
 			parameter = bestParameter(column, classifier) if executeWithBestParameter else None
 			crossValidation(column, classifier, specifiedProgram, parameter=parameter)
 
 def executeAllEachProgram(targetColumns, classifiers, programs, executeWithBestParameter = False):
 	for program in programs:
+		print('Program: {}'.format(program))
 		executeAll(targetColumns, classifiers, program, executeWithBestParameter)
 
 def bestParameter(targetColumn, classifier):
 	key = '{}_{}'.format(targetColumn, classifier) #Column_Classifier
 	
 	parameters = dict()
-	parameters['MINIMAL_KNN'] = 5
+	parameters['MINIMAL_KNN'] = 1
 	parameters['MINIMAL_DT'] = 15
 	parameters['MINIMAL_RF'] = 5
-	parameters['EQUIVALENT_KNN'] = 3
-	parameters['EQUIVALENT_DT'] = 15
-	parameters['EQUIVALENT_RF'] = 5
+	parameters['EQUIVALENT_KNN'] = 11
+	parameters['EQUIVALENT_DT'] = 35
+	parameters['EQUIVALENT_RF'] = 15
 
 	if key in parameters.keys():
 		return parameters[key]
@@ -841,17 +843,17 @@ def classify_main(arguments):
 				if _classifier == 'SVM' or _classifier == 'LDA' or _classifier == 'LR' or _classifier == 'GNB':
 					algorithmParameter = None
 				elif _classifier == 'KNN' and column == 'MINIMAL':
-					algorithmParameter = 5
+					algorithmParameter = 1
 				elif _classifier == 'KNN' and column == 'EQUIVALENT':
-					algorithmParameter = 3
+					algorithmParameter = 11
 				elif _classifier == 'DT' and column == 'MINIMAL':
 					algorithmParameter = 15
 				elif _classifier == 'DT' and column == 'EQUIVALENT':
-					algorithmParameter = 15
+					algorithmParameter = 35
 				elif _classifier == 'RF' and column == 'MINIMAL':
 					algorithmParameter = 5
 				elif _classifier == 'RF' and column == 'EQUIVALENT':
-					algorithmParameter = 5
+					algorithmParameter = 15
 
 				complementClassifierName = '_{}'.format(_classifier) if executeAllClassifiers else ''
 				newDataSetFileName = '{}/ML/Dataset/{}/Programs/{}.csv'.format(os.getcwd(), column, program)
@@ -861,6 +863,6 @@ def classify_main(arguments):
 				classify(newDataSetFileName, resultDataSetFileName, column, _classifier, algorithmParameter, program)
 
 if __name__ == '__main__':
-	#debug_main(sys.argv)
+	debug_main(sys.argv)
 	#classify_main(sys.argv)
 	sys.exit()
