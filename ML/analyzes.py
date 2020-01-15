@@ -31,30 +31,20 @@ from util import getPossibleClassifiers, getFullNamePossibleClassifiers
 
 import itertools
 
-# --------------
-# --- ML_Mutants
-#from ML_Mutants import evaluatingClassification
-import ML_Mutants
+# ------------
+# --- Analyzes
+sys.path.insert(0, current_dir + '/Analyzes')
+from Analyzes.analyzesUtil import autolabel, barChartProperties, getProgramsHeader, bestParameterFileExists, evaluatingClassification
+from Analyzes.analyze30Runs import plotRunsResult
+from Analyzes.analyzeMetricsFromProgram import plotMetricsFromProgram
+from Analyzes.analyzeClassifiersProgramAProgram import plotClassifiersProgramAProgram
 
-def getProgramsInfo():
-	programsInfoFileName = '{}/Programs/ProgramsInfo.csv'.format(os.getcwd())
-	programsInfo = util.getContentFromFile(programsInfoFileName)
+def setUp():
+	possibleTargetColumns = ['MINIMAL', 'EQUIVALENT']
+	possibleClassifiers = getPossibleClassifiers()
+	possiblePrograms = [ util.getPathName(program) for program in util.getPrograms()]
 
-	programsInfo_dict = dict()
-
-	columns = [line.split(',') for line in programsInfo.splitlines() if len(line.split(',')[0]) > 0 and line.split(',')[0] != 'Program']
-	for program in columns:
-		programsInfo_dict[program[0]] = program[1:]
-
-	return programsInfo_dict
-
-def getProgramsHeader():
-	programsInfoFileName = '{}/Programs/ProgramsInfo.csv'.format(os.getcwd())
-	programsInfo = util.getContentFromFile(programsInfoFileName)
-
-	columns = [line.split(',') for line in programsInfo.splitlines()][ : 1]
-	
-	return columns[0]
+	return possibleTargetColumns, possibleClassifiers, possiblePrograms
 
 def analyzeResults(possibleTargetColumns, possibleClassifiers, overwriteFullFile = False, plot = False):
 	'''
@@ -143,127 +133,17 @@ def analyzeResults(possibleTargetColumns, possibleClassifiers, overwriteFullFile
 
 	return experimentResults, classifiersBestParameter
 
-def plotRunsResult(runsResults, possibleClassifiers, possibleTargetColumns, plotSeparated = False):
-	'''
-		Is calculated the average of each classifier/target column
-	'''
+def getProgramsInfo():
+	programsInfoFileName = '{}/Programs/ProgramsInfo.csv'.format(os.getcwd())
+	programsInfo = util.getContentFromFile(programsInfoFileName)
 
-	if plotSeparated:
-		targetColumnsOption = {'MINIMAL': ('#607D8B'), 'EQUIVALENT': ('#B0BEC5')}
-		
-		for targetColumn, (color) in targetColumnsOption.items():
-			targetColumnData = []
-			for _ in range(len(possibleClassifiers)):
-				targetColumnData.append(0)
+	programsInfo_dict = dict()
 
-			for classifier in possibleClassifiers:
-				Values_Classifier_Column = runsResults.query('Classifier == \'{}\' and TargetColumn == \'{}\' '.format(classifier, targetColumn))
+	columns = [line.split(',') for line in programsInfo.splitlines() if len(line.split(',')[0]) > 0 and line.split(',')[0] != 'Program']
+	for program in columns:
+		programsInfo_dict[program[0]] = program[1:]
 
-				targetColumnData[possibleClassifiers.index(classifier)] = np.mean(Values_Classifier_Column['F1'])
-
-			# Create the figure with axis
-			fig = plt.figure(1, figsize=(9, 6))
-			ax = fig.add_subplot(1, 1, 1)
-
-			# Set the value to be shown as indexes on axis Y
-			ax.set_yticks([value for value in range(0, 50, 10)] + [value for value in range(50, 101, 5)])
-			ax.yaxis.grid(True, linestyle='-', which='major', color='lightgrey', alpha=0.75)
-
-			# Set the chart title and axis title
-			ax.set_title('Mean F1 Score for Classifiers', fontsize = 14)
-			ax.set_xlabel('\nClassifiers', fontsize = 14)
-			ax.set_ylabel('F1 Score', fontsize = 14)
-
-			# Set the boxplot positions
-			width = 0.6  # the width of the bars
-			positions = [value for value in range(len(possibleClassifiers))]
-
-			# Set the bar chart based on a function property defined below
-			barChart = barChartProperties(ax, targetColumnData, positions, color, None)
-
-			# Set the label between two boxplot
-			ax.set_xticklabels(possibleClassifiers)
-			ax.set_xticks([value for value in range(len(possibleClassifiers))])
-
-			# Set the chart subtitle/legend
-			#ax.legend([barChart, bcEM], ['Minimal Mutants', 'Equivalent Mutants'], loc='upper right')
-
-			autolabel(barChart, ax, 2)
-
-			fig.tight_layout()
-
-			# Display chart
-			plt.show()
-
-	else:
-		dataMinimal = []
-		dataEquivalent = []
-		for iCount in range(len(possibleClassifiers)):
-			dataMinimal.append(0)
-			dataEquivalent.append(0)
-
-		for column in possibleTargetColumns:
-			for classifier in possibleClassifiers:
-				Values_Classifier_Column = runsResults.query('Classifier == \'{}\' and TargetColumn == \'{}\' '.format(classifier, column))
-
-				meanAccuracy = np.mean(Values_Classifier_Column['Accuracy'])
-				meanPrecision = np.mean(Values_Classifier_Column['Precision'])
-				meanRecall = np.mean(Values_Classifier_Column['Recall'])
-				meanF1 = np.mean(Values_Classifier_Column['F1'])
-
-				#print('Classifier: {}\tColumn: {}\t\tAccuracy: {:.2f}\tPrecision: {:.2f}\tRecall: {:.2f}\tF1: {:.2f}'.format(classifier, column, meanAccuracy, meanPrecision, meanRecall, meanF1))
-
-				if column == 'MINIMAL':
-					dataMinimal[possibleClassifiers.index(classifier)] = meanF1
-				elif column == 'EQUIVALENT':
-					dataEquivalent[possibleClassifiers.index(classifier)] = meanF1
-
-		# Create the figure with axis
-		fig = plt.figure(1, figsize=(9, 6))
-		ax = fig.add_subplot(1, 1, 1)
-
-		# Set the value to be shown as indexes on axis Y
-		ax.set_yticks([value for value in range(0, 50, 10)] + [value for value in range(50, 101, 5)])
-		ax.yaxis.grid(True, linestyle='-', which='major', color='lightgrey', alpha=0.75)
-
-		# Set the chart title and axis title
-		ax.set_title('Mean F1 Score for Classifiers', fontsize = 14)
-		ax.set_xlabel('\nClassifiers', fontsize = 14)
-		ax.set_ylabel('F1 Score', fontsize = 14)
-
-		# Set the boxplot positions
-		width = 0.3  # the width of the bars
-		positionsMM = [value - width / 2 for value in range(len(possibleClassifiers))]
-		positionsEM = [value + width / 2 for value in range(len(possibleClassifiers))]
-
-		# Set the bar chart based on a function property defined below
-		barChart = barChartProperties(ax, dataMinimal, positionsMM, '#607D8B', width)
-		bcEM = barChartProperties(ax, dataEquivalent, positionsEM, '#B0BEC5', width)
-
-		# Set the label between two boxplot
-		ax.set_xticklabels(possibleClassifiers)
-		ax.set_xticks([value for value in range(len(possibleClassifiers))])
-
-		# Set the chart subtitle/legend
-		ax.legend([barChart, bcEM], ['Minimal Mutants', 'Equivalent Mutants'], loc='upper right')
-
-		autolabel(barChart, ax, 2)
-		autolabel(bcEM, ax, 2)
-
-		fig.tight_layout()
-
-		# Display chart
-		plt.show()
-
-def bestParameterFileExists(file):
-	fileFilter = '_bestParameter'
-	if file.__contains__(fileFilter):
-		if util.pathExists(file):
-			return file
-		else:
-			return file.replace(fileFilter, '')
-	else:
-		return file
+	return programsInfo_dict
 
 def getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, programsInfo, writeMetrics = False, bestParameter = False):
 	fileFilter = '_bestParameter' if bestParameter else ''
@@ -390,85 +270,6 @@ def analyzeMetricsFromProgram(metricsFromProgram, possibleClassifiers, plot = Fa
 
 	return df_programsBestMetrics
 
-def plotMetricsFromProgram(programsBestMetrics, possibleClassifiers):
-	'''
-		Function that graphs the number of programs in which each classifier was considered the best
-	'''
-
-	# Set lists with data. For each array, there are several internal arrays containing the F1 values for each program
-	dataMinimal = []
-	dataEquivalent = []
-	for iCount in range(len(possibleClassifiers)):
-		dataMinimal.append(0)
-		dataEquivalent.append(0)
-	
-	for row in programsBestMetrics.itertuples():
-		MM_classifier = getattr(row, 'MM_Classifier')
-		dataMinimal[possibleClassifiers.index(MM_classifier)] = dataMinimal[possibleClassifiers.index(MM_classifier)] + 1
-
-		EM_classifier = getattr(row, 'EM_Classifier')
-		dataEquivalent[possibleClassifiers.index(EM_classifier)] = dataEquivalent[possibleClassifiers.index(EM_classifier)] + 1
-
-	# Create the figure with axis
-	fig = plt.figure(1, figsize=(9, 6))
-	ax = fig.add_subplot(1, 1, 1)
-
-	# Set the value to be shown as indexes on axis Y
-	#ax.set_yticks([value for value in range(0, 101, 10)])
-	ax.yaxis.grid(True, linestyle='-', which='major', color='lightgrey', alpha=0.75)
-
-	# Set the chart title and axis title
-	#ax.set_title('axes title', fontsize = 14)
-	ax.set_xlabel('\nClassifiers', fontsize = 14)
-	ax.set_ylabel('Number of programs that the classifier was the best', fontsize = 14)
-
-	# Set the boxplot positions
-	width = 0.4  # the width of the bars
-	positionsMM = [value - width / 2 for value in range(len(possibleClassifiers))]
-	positionsEM = [value + width / 2 for value in range(len(possibleClassifiers))]
-
-	# Set the bar chart based on a function property defined below
-	bcMM = barChartProperties(ax, dataMinimal, positionsMM, '#5975a4', width)
-	bcEM = barChartProperties(ax, dataEquivalent, positionsEM, '#b55d60', width)
-
-	# Set the label between two boxplot
-	ax.set_xticklabels(possibleClassifiers)
-	ax.set_xticks([value for value in range(len(possibleClassifiers))])
-
-	# Set the chart subtitle/legend
-	ax.legend([bcMM, bcEM], ['Minimal Mutants', 'Equivalent Mutants'], loc='upper left')
-
-	autolabel(bcMM, ax)
-	autolabel(bcEM, ax)
-
-	fig.tight_layout()
-
-	# Display chart
-	plt.show()
-
-def barChartProperties(ax, data, positions, color, width):
-	if width is None:
-		barChart = ax.bar(positions, data, color=color)
-	else:
-		barChart = ax.bar(positions, data, width=width, color=color)
-	
-	return barChart
-	
-def autolabel(rects, ax, decimals = -1):
-	"""Attach a text label above each bar in *rects*, displaying its height."""
-	for iCount, rect in zip(range(len(rects)), rects):
-		
-		if decimals > -1:
-			height = np.round(rect.get_height(), decimals)
-		else:
-			height = rect.get_height()
-				
-		ax.annotate('{}'.format(height),
-					xy=(rect.get_x() + rect.get_width() / 2, height),
-					xytext=(0, 3),  # 3 points vertical offset
-					textcoords="offset points",
-					ha='center', va='bottom')
-
 def analyzeClassifiersProgramAProgram(metricsFromProgram, possibleClassifiers, plot=False):
 	'''
 		Function responsible to verify the classifiers and indicate the results program by program
@@ -500,95 +301,145 @@ def analyzeClassifiersProgramAProgram(metricsFromProgram, possibleClassifiers, p
 
 	return metricsFromClassifier
 
-def plotClassifiersProgramAProgram(metricsFromClassifier, possibleClassifiers, mean_median = 0):
+def getBestClassifierForPrograms(program = None, targetColumn = None, write = True, overwrite = False):
 	'''
-		Function that generates a box plot graph with the F1 score of the classifiers for each program.
+		Function responsible to analyze the results from all programs with all classifiers
+		If the parameter 'writeFile' is True, this function writes a file with the result
+		Returns a dataframe with the best classifier for each program and this metrics
 	'''
-
-	# Set lists with data. For each array, there are several internal arrays containing the F1 values for each program
-	dataMinimal = []
-	dataEquivalent = []
-	for classifier in possibleClassifiers:
-		dataMinimal.append([])
-		dataEquivalent.append([])
 	
-	for row in metricsFromClassifier.itertuples():
-		classifier = getattr(row, 'Classifier')
-		column = getattr(row, 'Column')
-		
-		if column == 'MINIMAL':
-			dataMinimal[possibleClassifiers.index(classifier)].append(getattr(row, 'F1'))
-		elif column == 'EQUIVALENT':
-			dataEquivalent[possibleClassifiers.index(classifier)].append(getattr(row, 'F1'))
-	
-	# Create the figure with axis
-	fig = plt.figure(1, figsize=(9, 6))
-	ax = fig.add_subplot(1, 1, 1)
+	# SetUp
+	possibleTargetColumns, possibleClassifiers, possiblePrograms = setUp()
 
-	# Set the value to be shown as indexes on axis Y
-	ax.set_yticks([value for value in range(0, 101, 10)])
-	ax.yaxis.grid(True, linestyle='-', which='major', color='lightgrey', alpha=0.75)
+	# Indicate the best classifier for each classifier - ProgramName, Column, Classifier, Accuracy, Precision, Recall, F1
+	df_Programs_BestClassifiers = pd.DataFrame()
 
-	# Set the chart title and axis title
-	#ax.set_title('axes title', fontsize = 14)
-	ax.set_xlabel('\nClassifiers', fontsize = 22)
-	ax.set_ylabel('F1 Score', fontsize = 22)
-
-	#Box width
-	boxWidth = 0.7
-
-	# Set the boxplot positions
-	positionsMM = [value for value in range(len(possibleClassifiers) * 2) if value % 2 == 0 ]
-	positionsEM = [value + boxWidth for value in range(len(possibleClassifiers) * 2) if value % 2 == 0 ]
-
-	# Set the boxplots based on a function property defined below
-	bpMM = boxPlotProperties(ax, dataMinimal, positionsMM, '#607D8B', boxWidth)
-	bpEM = boxPlotProperties(ax, dataEquivalent, positionsEM, '#B0BEC5', boxWidth)
-
-	# 0 - Mean | 1 - Median
-	# Calculate the means / medians
-	if mean_median == 0:
-		minimalMean_Medians = [ np.round(np.mean(value), 2) for value in dataMinimal]
-		equivalentMean_Medians = [np.round(np.mean(value), 2) for value in dataEquivalent]
+	# Set possible none parameters
+	if program is not None:
+		programs = [program]
 	else:
-		minimalMean_Medians = [ np.round(np.median(value), 2) for value in dataMinimal]
-		equivalentMean_Medians = [np.round(np.median(value), 2) for value in dataEquivalent]
+		programs = possiblePrograms
 
-	# Display values in boxplot
-	for tick in range(len(positionsMM)):
-		# Display a median on boxplot top
-		ax.text(positionsMM[tick], 101, minimalMean_Medians[tick], horizontalalignment='center', size=16, color='black')
-		ax.text(positionsEM[tick], 101, equivalentMean_Medians[tick], horizontalalignment='center', size=16, color='black')
+	# Set possible none parameters
+	if targetColumn is not None:
+		columns = [targetColumn]
+	else:
+		columns = possibleTargetColumns
 
-        # Display a median on boxplot
-		#ax.text(positionsMM[tick], minimalMeans[tick] + 0.5, minimalMeans[tick], horizontalalignment='center', size='small', color='black', weight='semibold')
-		#ax.text(positionsEM[tick], equivalentMeans[tick] + 0.5, equivalentMeans[tick], horizontalalignment='center', size='small', color='black', weight='semibold')
+	mustWrite = write and program is None and targetColumn is None
 
-	# Set the label between two boxplot
-	#ax.set_xticklabels(list(getFullNamePossibleClassifiers().values())) # Caso for exibir o nome completo do classificador
-	ax.set_xticklabels(possibleClassifiers)
-	for tick in ax.xaxis.get_major_ticks(): tick.label.set_fontsize(18)
-	for tick in ax.yaxis.get_major_ticks(): tick.label.set_fontsize(16)
-	ax.set_xticks([value + (boxWidth / 2) for value in ax.get_xticks() if value % 2 == 0])
+	if mustWrite:
+		for _column in columns:
+			baseFolder = '{}/ML/Results/{}/Classification'.format(os.getcwd(), _column)
 
-	# Set the chart subtitle/legend
-	ax.legend([bpMM["boxes"][0], bpEM["boxes"][0]], ['Minimal Mutants', 'Equivalent Mutants'], loc='lower right', fontsize='xx-large')
+			# Dataframe containing programs, the best classifier for each one and the metrics achieved
+			df_Program_Metrics_BestClassifier = pd.DataFrame()
 
-	fig.tight_layout()
+			# Dataframe containing programs and all classifiers for each one and the metrics achieved
+			df_Program_Metrics_AllClassifiers = pd.DataFrame()
 
-	# Display chart
-	plt.show()
+			for programName in programs:
+				df_Program_Classifiers_Metrics = pd.DataFrame()
+				
+				for classifier in possibleClassifiers:
+					fileName = '{}/{}_{}.csv'.format(baseFolder, programName, classifier)
 
-def boxPlotProperties(ax, data, positions, color, boxWidth):
-	boxprops = dict(facecolor=color, linewidth = 1)
-	medianprops = dict(color='#000000', linewidth = 1)
-	meanprops = dict(color='#000000', linewidth = 1)
+					if util.pathExists(fileName):
+						classificationResult = util.createDataFrameFromCSV(fileName, hasHeader = True)
 
-	boxplot = ax.boxplot(data, sym='+', positions=positions, patch_artist=True, meanline=True,
-		showmeans=True, labels=possibleClassifiers, boxprops=boxprops, 
-		medianprops=medianprops, meanprops=meanprops, widths=boxWidth)
+						y_correct = classificationResult.loc[ : , '_IM_{}'.format(_column)].values
+						y_predicted = classificationResult.loc[ : , 'PREDICTED'].values
 
-	return boxplot
+						#accuracy, precision, recall, f1, TPR, FPR, TP, FN, FP, TN = evaluatingClassification(y_correct, y_predicted)		
+						accuracy, precision, recall, f1, _, _, _, _, _, _ = evaluatingClassification(y_correct, y_predicted)
+
+						#print('Program: {} | Column: {} | Classifier: {} | Accuracy: {} | Precision: {} | Recall: {} | F1: {}'.format(programName, _column, classifier, accuracy, precision, recall, f1))
+						newDataFrame = pd.DataFrame(data=[[programName, _column, classifier, accuracy * 100, precision * 100, recall * 100, f1 * 100]], columns=['ProgramName', 'Column', 'Classifier', 'Accuracy', 'Precision', 'Recall', 'F1'])
+						df_Program_Classifiers_Metrics = df_Program_Classifiers_Metrics.append(newDataFrame)
+
+				df_Program_Metrics_AllClassifiers = df_Program_Metrics_AllClassifiers.append(df_Program_Classifiers_Metrics.sort_values('F1', ascending=False))
+				
+				# Classify here the best classifier for these program
+				df_Program_Classifiers_Metrics = df_Program_Classifiers_Metrics.sort_values('F1', ascending=False).head(n=1)
+				df_Program_Metrics_BestClassifier = df_Program_Metrics_BestClassifier.append(df_Program_Classifiers_Metrics)
+				df_Programs_BestClassifiers = df_Programs_BestClassifiers.append(df_Program_Classifiers_Metrics)
+
+			# Save the dataframe into file if is specified to read all program files
+			if mustWrite:
+				fileName = '{}/Metrics.csv'.format(baseFolder)
+				fileNameAllClassifiers = '{}/Metrics_AllClassifiers.csv'.format(baseFolder)
+				if not util.pathExists(fileName) or overwrite:
+					util.writeDataFrameInCsvFile(fileName, df_Program_Metrics_BestClassifier)
+					util.writeDataFrameInCsvFile(fileNameAllClassifiers, df_Program_Metrics_AllClassifiers)
+	else:
+		for _column in columns:
+			baseFolder = '{}/ML/Results/{}/Classification'.format(os.getcwd(), _column)
+			fileName = '{}/Metrics.csv'.format(baseFolder)
+
+			df_Programs_BestClassifiers = df_Programs_BestClassifiers.append(util.createDataFrameFromCSV(fileName, True))
+
+	return df_Programs_BestClassifiers
+
+def plotMetricsFromBestClassifiersOfEachProgram(df_Programs_BestClassifiers):
+	targetColumnsOption = {'MINIMAL': ('#607D8B', '#B0BEC5', 'Minimal Mutants'), 'EQUIVALENT': ('#607D8B', '#B0BEC5', 'Equivalent Mutants')}
+
+	for targetColumn, (colorF1, colorAccuracy, columnName) in targetColumnsOption.items():
+		targetColumnsF1 = []
+		targetColumnsAccuracy = []
+
+		# Filter by column
+		df_Programs_BestClassifiers_Column = df_Programs_BestClassifiers.query('Column == \'{}\''.format(targetColumn))
+
+		# Rename the ProgramName column to upper case, sort the df ordering by ProgramName, insert the ProgramID in the DF and resort the df by F1 Value
+		df_Programs_BestClassifiers_Column = df_Programs_BestClassifiers_Column.replace(to_replace=df_Programs_BestClassifiers_Column['ProgramName'].unique(), value=[program.upper() for program in df_Programs_BestClassifiers_Column['ProgramName'].unique()]).sort_values('ProgramName')
+		df_Programs_BestClassifiers_Column.insert(0, 'ProgramID', ['#{}'.format(value + 1) for value in range(len(df_Programs_BestClassifiers_Column['ProgramName'].unique()))])
+		df_Programs_BestClassifiers_Column = df_Programs_BestClassifiers_Column.sort_values('F1', ascending=False)
+		
+		programsName = df_Programs_BestClassifiers_Column['ProgramName'].unique()
+		programsID = df_Programs_BestClassifiers_Column['ProgramID'].unique()
+
+		for programName in programsName:
+			F1Value = df_Programs_BestClassifiers_Column.query('ProgramName == \'{}\''.format(programName))['F1'].values[0]
+			AccuracyValue = df_Programs_BestClassifiers_Column.query('ProgramName == \'{}\''.format(programName))['Accuracy'].values[0]
+
+			targetColumnsF1.append(F1Value)
+			targetColumnsAccuracy.append(AccuracyValue)
+
+		# Create the figure with axis
+		fig = plt.figure(1, figsize=(9, 6))
+		ax = fig.add_subplot(1, 1, 1)
+
+		# Set the value to be shown as indexes on axis Y
+		ax.set_yticks([value for value in range(0, 50, 10)] + [value for value in range(50, 101, 5)])
+		ax.yaxis.grid(True, linestyle='-', which='major', color='lightgrey', alpha=0.75)
+
+		# Set the chart title and axis title
+		#ax.set_title('Metrics for each program with the best classifier - {}'.format(columnName), fontsize = 22)
+		ax.set_xlabel('Programs', fontsize = 16)
+		ax.set_ylabel('F1 Score and Accuracy', fontsize = 16)
+
+		# Set the boxplot positions
+		#width = 0.2  # the width of the bars
+		positions = [value for value in range(len(programsName))]
+
+		# Set the bar chart based on a function property defined below
+		barChartAccuracy = barChartProperties(ax, targetColumnsAccuracy, positions, colorAccuracy, None)
+		barChartF1 = barChartProperties(ax, targetColumnsF1, positions, colorF1, None)
+
+		# Set the label between two boxplot
+		ax.set_xticklabels([programID for programID in programsID])
+		ax.set_xticks([value for value in range(len(programsName))])
+
+		# Set the chart subtitle/legend
+		ax.legend([barChartF1, barChartAccuracy], ['F1 Score', 'Accuracy'], loc='upper center', fontsize='xx-large')
+
+		autolabel(barChartAccuracy, ax, 2)
+		autolabel(barChartF1, ax, 2)
+
+		fig.tight_layout()
+
+		# Display chart
+		plt.show()
 
 def analyzeClassificationsFromEachProgram(targetColumn, possiblePrograms, overwrite = False):
 	'''
@@ -612,7 +463,7 @@ def analyzeClassificationsFromEachProgram(targetColumn, possiblePrograms, overwr
 				y_correct = classificationResult.loc[ : , '_IM_{}'.format(targetColumn)].values
 				y_predicted = classificationResult.loc[ : , 'RESULT'].values
 
-				accuracy, precision, recall, f1, TPR, FPR, TP, FN, FP, TN = ML_Mutants.evaluatingClassification(y_correct, y_predicted)
+				accuracy, precision, recall, f1, TPR, FPR, TP, FN, FP, TN = evaluatingClassification(y_correct, y_predicted)
 
 				newMutantsMetrics = pd.DataFrame(data=[[programName, accuracy, precision, recall, f1]], columns=['ProgramName', 'Accuracy', 'Precision', 'Recall', 'F1'])
 				mutantsMetrics = mutantsMetrics.append(newMutantsMetrics)
@@ -763,184 +614,36 @@ def plotSummarizedClassifications_byColumn(mutantsData, targetColumn, columnToAn
 		# Display chart
 		plt.show()
 
-def getBestClassifierForPrograms(program = None, targetColumn = None, write = True, overwrite = False):
-	'''
-		Function responsible to analyze the results from all programs with all classifiers
-		If the parameter 'writeFile' is True, this function writes a file with the result
-		Returns a dataframe with the best classifier for each program and this metrics
-	'''
-	
-	# SetUp
-	possibleTargetColumns, possibleClassifiers, possiblePrograms = setUp()
-
-	# Indicate the best classifier for each classifier - ProgramName, Column, Classifier, Accuracy, Precision, Recall, F1
-	df_Programs_BestClassifiers = pd.DataFrame()
-
-	# Set possible none parameters
-	if program is not None:
-		programs = [program]
-	else:
-		programs = possiblePrograms
-
-	# Set possible none parameters
-	if targetColumn is not None:
-		columns = [targetColumn]
-	else:
-		columns = possibleTargetColumns
-
-	mustWrite = write and program is None and targetColumn is None
-
-	if mustWrite:
-		for _column in columns:
-			baseFolder = '{}/ML/Results/{}/Classification'.format(os.getcwd(), _column)
-
-			# Dataframe containing programs, the best classifier for each one and the metrics achieved
-			df_Program_Metrics_BestClassifier = pd.DataFrame()
-
-			# Dataframe containing programs and all classifiers for each one and the metrics achieved
-			df_Program_Metrics_AllClassifiers = pd.DataFrame()
-
-			for programName in programs:
-				df_Program_Classifiers_Metrics = pd.DataFrame()
-				
-				for classifier in possibleClassifiers:
-					fileName = '{}/{}_{}.csv'.format(baseFolder, programName, classifier)
-
-					if util.pathExists(fileName):
-						classificationResult = util.createDataFrameFromCSV(fileName, hasHeader = True)
-
-						y_correct = classificationResult.loc[ : , '_IM_{}'.format(_column)].values
-						y_predicted = classificationResult.loc[ : , 'PREDICTED'].values
-
-						#accuracy, precision, recall, f1, TPR, FPR, TP, FN, FP, TN = ML_Mutants.evaluatingClassification(y_correct, y_predicted)		
-						accuracy, precision, recall, f1, _, _, _, _, _, _ = ML_Mutants.evaluatingClassification(y_correct, y_predicted)
-
-						#print('Program: {} | Column: {} | Classifier: {} | Accuracy: {} | Precision: {} | Recall: {} | F1: {}'.format(programName, _column, classifier, accuracy, precision, recall, f1))
-						newDataFrame = pd.DataFrame(data=[[programName, _column, classifier, accuracy * 100, precision * 100, recall * 100, f1 * 100]], columns=['ProgramName', 'Column', 'Classifier', 'Accuracy', 'Precision', 'Recall', 'F1'])
-						df_Program_Classifiers_Metrics = df_Program_Classifiers_Metrics.append(newDataFrame)
-
-				df_Program_Metrics_AllClassifiers = df_Program_Metrics_AllClassifiers.append(df_Program_Classifiers_Metrics.sort_values('F1', ascending=False))
-				
-				# Classify here the best classifier for these program
-				df_Program_Classifiers_Metrics = df_Program_Classifiers_Metrics.sort_values('F1', ascending=False).head(n=1)
-				df_Program_Metrics_BestClassifier = df_Program_Metrics_BestClassifier.append(df_Program_Classifiers_Metrics)
-				df_Programs_BestClassifiers = df_Programs_BestClassifiers.append(df_Program_Classifiers_Metrics)
-
-			# Save the dataframe into file if is specified to read all program files
-			if mustWrite:
-				fileName = '{}/Metrics.csv'.format(baseFolder)
-				fileNameAllClassifiers = '{}/Metrics_AllClassifiers.csv'.format(baseFolder)
-				if not util.pathExists(fileName) or overwrite:
-					util.writeDataFrameInCsvFile(fileName, df_Program_Metrics_BestClassifier)
-					util.writeDataFrameInCsvFile(fileNameAllClassifiers, df_Program_Metrics_AllClassifiers)
-	else:
-		for _column in columns:
-			baseFolder = '{}/ML/Results/{}/Classification'.format(os.getcwd(), _column)
-			fileName = '{}/Metrics.csv'.format(baseFolder)
-
-			df_Programs_BestClassifiers = df_Programs_BestClassifiers.append(util.createDataFrameFromCSV(fileName, True))
-
-	return df_Programs_BestClassifiers
-
-def plotMetricsFromBestClassifiersOfEachProgram(df_Programs_BestClassifiers):
-	targetColumnsOption = {'MINIMAL': ('#607D8B', '#B0BEC5', 'Minimal Mutants'), 'EQUIVALENT': ('#607D8B', '#B0BEC5', 'Equivalent Mutants')}
-
-	for targetColumn, (colorF1, colorAccuracy, columnName) in targetColumnsOption.items():
-		targetColumnsF1 = []
-		targetColumnsAccuracy = []
-
-		# Filter by column
-		df_Programs_BestClassifiers_Column = df_Programs_BestClassifiers.query('Column == \'{}\''.format(targetColumn))
-
-		# Rename the ProgramName column to upper case, sort the df ordering by ProgramName, insert the ProgramID in the DF and resort the df by F1 Value
-		df_Programs_BestClassifiers_Column = df_Programs_BestClassifiers_Column.replace(to_replace=df_Programs_BestClassifiers_Column['ProgramName'].unique(), value=[program.upper() for program in df_Programs_BestClassifiers_Column['ProgramName'].unique()]).sort_values('ProgramName')
-		df_Programs_BestClassifiers_Column.insert(0, 'ProgramID', ['#{}'.format(value + 1) for value in range(len(df_Programs_BestClassifiers_Column['ProgramName'].unique()))])
-		df_Programs_BestClassifiers_Column = df_Programs_BestClassifiers_Column.sort_values('F1', ascending=False)
-		
-		programsName = df_Programs_BestClassifiers_Column['ProgramName'].unique()
-		programsID = df_Programs_BestClassifiers_Column['ProgramID'].unique()
-
-		for programName in programsName:
-			F1Value = df_Programs_BestClassifiers_Column.query('ProgramName == \'{}\''.format(programName))['F1'].values[0]
-			AccuracyValue = df_Programs_BestClassifiers_Column.query('ProgramName == \'{}\''.format(programName))['Accuracy'].values[0]
-
-			targetColumnsF1.append(F1Value)
-			targetColumnsAccuracy.append(AccuracyValue)
-
-		# Create the figure with axis
-		fig = plt.figure(1, figsize=(9, 6))
-		ax = fig.add_subplot(1, 1, 1)
-
-		# Set the value to be shown as indexes on axis Y
-		ax.set_yticks([value for value in range(0, 50, 10)] + [value for value in range(50, 101, 5)])
-		ax.yaxis.grid(True, linestyle='-', which='major', color='lightgrey', alpha=0.75)
-
-		# Set the chart title and axis title
-		#ax.set_title('Metrics for each program with the best classifier - {}'.format(columnName), fontsize = 22)
-		ax.set_xlabel('Programs', fontsize = 16)
-		ax.set_ylabel('F1 Score and Accuracy', fontsize = 16)
-
-		# Set the boxplot positions
-		#width = 0.2  # the width of the bars
-		positions = [value for value in range(len(programsName))]
-
-		# Set the bar chart based on a function property defined below
-		barChartAccuracy = barChartProperties(ax, targetColumnsAccuracy, positions, colorAccuracy, None)
-		barChartF1 = barChartProperties(ax, targetColumnsF1, positions, colorF1, None)
-
-		# Set the label between two boxplot
-		ax.set_xticklabels([programID for programID in programsID])
-		ax.set_xticks([value for value in range(len(programsName))])
-
-		# Set the chart subtitle/legend
-		ax.legend([barChartF1, barChartAccuracy], ['F1 Score', 'Accuracy'], loc='upper center', fontsize='xx-large')
-
-		autolabel(barChartAccuracy, ax, 2)
-		autolabel(barChartF1, ax, 2)
-
-		fig.tight_layout()
-
-		# Display chart
-		plt.show()
-
-
-def setUp():
-	possibleTargetColumns = ['MINIMAL', 'EQUIVALENT']
-	possibleClassifiers = getPossibleClassifiers()
-	possiblePrograms = [ util.getPathName(program) for program in util.getPrograms()]
-
-	return possibleTargetColumns, possibleClassifiers, possiblePrograms
-
 if __name__ == '__main__':
 	# ---------
 	# --- Setup
 	possibleTargetColumns, possibleClassifiers, possiblePrograms = setUp()
-
+	
 	# ---------------------------------------------------------------------------------------------------
 	# --- Analyze the 30 runs and calc statistics informations, like minimum, maximum, median and average
 	analyzeResults(possibleTargetColumns, possibleClassifiers, plot = True)
 	
 	# ----------------------------------
 	# --- Get informations from programs
-	#programsInfo = getProgramsInfo()
-	#programsInfo = getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, programsInfo, bestParameter=True)
+	programsInfo = getProgramsInfo()
+	programsInfo = getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, programsInfo, bestParameter=True)
 	
-	#programsBestMetrics = analyzeMetricsFromProgram(programsInfo, possibleClassifiers, plot=False)
+	programsBestMetrics = analyzeMetricsFromProgram(programsInfo, possibleClassifiers, plot=False)
 	
-	#metricsFromClassifier = analyzeClassifiersProgramAProgram(programsInfo, possibleClassifiers, plot=True)
+	metricsFromClassifier = analyzeClassifiersProgramAProgram(programsInfo, possibleClassifiers, plot=True)
 	
-	#df_Programs_BestClassifiers = getBestClassifierForPrograms()
-	#plotMetricsFromBestClassifiersOfEachProgram(df_Programs_BestClassifiers)
+	df_Programs_BestClassifiers = getBestClassifierForPrograms()
+	plotMetricsFromBestClassifiersOfEachProgram(df_Programs_BestClassifiers)
 
 	# ---------------------------------------------
 	# --- File analysis with classified mutant data
-	#minimalMutantsMetrics = analyzeClassificationsFromEachProgram(possibleTargetColumns[0], possiblePrograms, True)
-	#equivalentMutantsMetrics = analyzeClassificationsFromEachProgram(possibleTargetColumns[1], possiblePrograms, True)
+	minimalMutantsMetrics = analyzeClassificationsFromEachProgram(possibleTargetColumns[0], possiblePrograms, True)
+	equivalentMutantsMetrics = analyzeClassificationsFromEachProgram(possibleTargetColumns[1], possiblePrograms, True)
 
 	# --------------------------------------------------------
 	# --- File analysis with summarized classified mutant data
-	#minimalsMutantsData = summarizeClassifications(possibleTargetColumns[0], possiblePrograms, df_Programs_BestClassifiers, True)
-	#plotSummarizedClassifications(minimalsMutantsData, '_IM_' + possibleTargetColumns[0])
+	minimalsMutantsData = summarizeClassifications(possibleTargetColumns[0], possiblePrograms, df_Programs_BestClassifiers, True)
+	plotSummarizedClassifications(minimalsMutantsData, '_IM_' + possibleTargetColumns[0])
 	
-	#equivalentsMutantsData = summarizeClassifications(possibleTargetColumns[1], possiblePrograms, df_Programs_BestClassifiers, True)
-	#plotSummarizedClassifications(equivalentsMutantsData, '_IM_' + possibleTargetColumns[1])
+	equivalentsMutantsData = summarizeClassifications(possibleTargetColumns[1], possiblePrograms, df_Programs_BestClassifiers, True)
+	plotSummarizedClassifications(equivalentsMutantsData, '_IM_' + possibleTargetColumns[1])

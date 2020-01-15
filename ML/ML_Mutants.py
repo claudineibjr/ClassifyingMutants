@@ -70,6 +70,10 @@ import warnings
 #import warnings
 warnings.filterwarnings("ignore")
 
+# ----------------
+# --- AnalyzesUtil
+from ML.Analyzes.analyzesUtil import evaluatingClassification
+
 # --------
 # --- Util
 import os,sys,inspect
@@ -228,56 +232,7 @@ def trainingAndPredictions(strClassifier, parameter, X_train, y_train, X_test):
 
 	return y_pred
 
-def evaluatingClassification(y_test, y_pred):
-	##################################
-	# --- Evaluating the Algorithm ---
-	##################################
-	#   For evaluating an algorithm, confusion matrix, precision, recall and f1 score are the most commonly used metrics. The confusion_matrix and classification_report methods of the sklearn.metrics can be used to calculate these metrics. Take a look at the following script:
-	confusionMatrix = confusion_matrix(y_test, y_pred)
-	TP = confusionMatrix[1][1]  # True Positives
-	FN = confusionMatrix[1][0]  # False Negatives
-	
-	FP = confusionMatrix[0][1]  # False Positives
-	TN = confusionMatrix[0][0]  # True Negatives
 
-	#print(confusionMatrix)
-	#print('TP: {} | FN: {} | FP: {} | TN: {}'.format(TP, FN, FP, TN))
-
-	##############
-	# --- Metrics
-	#   https://medium.com/as-m%C3%A1quinas-que-pensam/m%C3%A9tricas-comuns-em-machine-learning-como-analisar-a-qualidade-de-chat-bots-inteligentes-m%C3%A9tricas-1ba580d7cc96
-
-	error = (FP + FN) / (FP + FN + TP + TN)
-	
-	###############
-	# --- Accuracy
-	#   Provide general information about how many samples are misclassified.
-	#    Accuracy is calculated as the sum of correct predictions divided by the total number of predictions
-	accuracy = (TP + TN) / (FP + FN + TP + TN)
-	
-	#########################
-	# --- False Positive Rate
-	# --- True Positive Rate
-	#   The true positive rate (TPR) and false positive rate (FPR) are performance metrics
-	#    that are especially useful for imbalanced class problems
-	FPR = (FP) / (FP + TN)
-	TPR = (TP) / (FN + TP)
-
-	###############
-	# --- Precision
-	# --- Recall
-	#   Precision (PRE) and recall (REC) are performance metrics that are related to those
-	#    true positive and true negative rates, and in fact, recall is synonymous to the true
-	#    positive rate.
-	precision = (TP) / (TP + FP)
-	recall = (TP) / (FN + TP)
-	
-	########
-	# --- F1
-	#   In practice, often a combination of precision and recall is used, the so-called F1-score.
-	f1 = 2 * ((precision * recall) / (precision + recall))
-
-	return accuracy, precision, recall, f1, TPR, FPR, TP, FN, FP, TN
 
 def classifierMain(classifier, maxIterations, resultsFileName, X_train, X_test, y_train, y_test, showResults = False, parameter = None):
 	# Arrays containing all collected metrics on applying Machine Learning algorithm
