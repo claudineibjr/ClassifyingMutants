@@ -30,7 +30,7 @@ if __name__ == '__main__':
             program = arguments[iCount + 1]
 
     if executionMode is None:
-        print ('Please specify the execution mode. 1 For run and analyze | 2 For run | 3 For analyze')
+        print ('Please specify the execution mode trought --mode parameter. 1 For run and analyze | 2 For run | 3 For analyze')
         print ('##### Exit #####')
         sys.exit()
 

@@ -619,31 +619,31 @@ if __name__ == '__main__':
 	# --- Setup
 	possibleTargetColumns, possibleClassifiers, possiblePrograms = setUp()
 	
-	# ---------------------------------------------------------------------------------------------------
-	# --- Analyze the 30 runs and calc statistics informations, like minimum, maximum, median and average
-	analyzeResults(possibleTargetColumns, possibleClassifiers, plot = True)
-	
+	## ---------------------------------------------------------------------------------------------------
+	## --- Analyze the 30 runs and calc statistics informations, like minimum, maximum, median and average
+	#analyzeResults(possibleTargetColumns, possibleClassifiers, plot = True)
+	#
 	# ----------------------------------
 	# --- Get informations from programs
-	programsInfo = getProgramsInfo()
-	programsInfo = getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, programsInfo, bestParameter=True)
-	
-	programsBestMetrics = analyzeMetricsFromProgram(programsInfo, possibleClassifiers, plot=False)
-	
-	metricsFromClassifier = analyzeClassifiersProgramAProgram(programsInfo, possibleClassifiers, plot=True)
-	
-	df_Programs_BestClassifiers = getBestClassifierForPrograms()
-	plotMetricsFromBestClassifiersOfEachProgram(df_Programs_BestClassifiers)
-
-	# ---------------------------------------------
-	# --- File analysis with classified mutant data
-	minimalMutantsMetrics = analyzeClassificationsFromEachProgram(possibleTargetColumns[0], possiblePrograms, True)
-	equivalentMutantsMetrics = analyzeClassificationsFromEachProgram(possibleTargetColumns[1], possiblePrograms, True)
-
-	# --------------------------------------------------------
-	# --- File analysis with summarized classified mutant data
-	minimalsMutantsData = summarizeClassifications(possibleTargetColumns[0], possiblePrograms, df_Programs_BestClassifiers, True)
-	plotSummarizedClassifications(minimalsMutantsData, '_IM_' + possibleTargetColumns[0])
-	
-	equivalentsMutantsData = summarizeClassifications(possibleTargetColumns[1], possiblePrograms, df_Programs_BestClassifiers, True)
-	plotSummarizedClassifications(equivalentsMutantsData, '_IM_' + possibleTargetColumns[1])
+	#programsInfo = getProgramsInfo()
+	#programsInfo = getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, programsInfo, bestParameter=True, writeMetrics=True)
+	#
+	#programsBestMetrics = analyzeMetricsFromProgram(programsInfo, possibleClassifiers, plot=False)
+	#
+	#metricsFromClassifier = analyzeClassifiersProgramAProgram(programsInfo, possibleClassifiers, plot=True)
+	#
+	#df_Programs_BestClassifiers = getBestClassifierForPrograms()
+	#plotMetricsFromBestClassifiersOfEachProgram(df_Programs_BestClassifiers)
+	#
+	## ---------------------------------------------
+	## --- File analysis with classified mutant data
+	#minimalMutantsMetrics = analyzeClassificationsFromEachProgram(possibleTargetColumns[0], possiblePrograms, True)
+	#equivalentMutantsMetrics = analyzeClassificationsFromEachProgram(possibleTargetColumns[1], possiblePrograms, True)
+	#
+	## --------------------------------------------------------
+	## --- File analysis with summarized classified mutant data
+	#minimalsMutantsData = summarizeClassifications(possibleTargetColumns[0], possiblePrograms, df_Programs_BestClassifiers, True)
+	#plotSummarizedClassifications(minimalsMutantsData, '_IM_' + possibleTargetColumns[0])
+	#
+	#equivalentsMutantsData = summarizeClassifications(possibleTargetColumns[1], possiblePrograms, df_Programs_BestClassifiers, True)
+	#plotSummarizedClassifications(equivalentsMutantsData, '_IM_' + possibleTargetColumns[1])
