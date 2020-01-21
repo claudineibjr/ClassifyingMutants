@@ -39,7 +39,7 @@ def plotRunsResult(runsResults, possibleClassifiers, possibleTargetColumns, plot
 			for classifier in possibleClassifiers:
 				Values_Classifier_Column = runsResults.query('Classifier == \'{}\' and TargetColumn == \'{}\' '.format(classifier, targetColumn))
 
-				targetColumnData[possibleClassifiers.index(classifier)] = np.mean(Values_Classifier_Column['F1'])
+				targetColumnData[possibleClassifiers.index(classifier)] = Values_Classifier_Column['F1'].values[0]
 
 			# Create the figure with axis
 			fig = plt.figure(1, figsize=(9, 6))
@@ -86,17 +86,12 @@ def plotRunsResult(runsResults, possibleClassifiers, possibleTargetColumns, plot
 			for classifier in possibleClassifiers:
 				Values_Classifier_Column = runsResults.query('Classifier == \'{}\' and TargetColumn == \'{}\' '.format(classifier, column))
 
-				meanAccuracy = np.mean(Values_Classifier_Column['Accuracy'])
-				meanPrecision = np.mean(Values_Classifier_Column['Precision'])
-				meanRecall = np.mean(Values_Classifier_Column['Recall'])
-				meanF1 = np.mean(Values_Classifier_Column['F1'])
-
 				#print('Classifier: {}\tColumn: {}\t\tAccuracy: {:.2f}\tPrecision: {:.2f}\tRecall: {:.2f}\tF1: {:.2f}'.format(classifier, column, meanAccuracy, meanPrecision, meanRecall, meanF1))
 
 				if column == 'MINIMAL':
-					dataMinimal[possibleClassifiers.index(classifier)] = meanF1
+					dataMinimal[possibleClassifiers.index(classifier)] = Values_Classifier_Column['F1'].values[0]
 				elif column == 'EQUIVALENT':
-					dataEquivalent[possibleClassifiers.index(classifier)] = meanF1
+					dataEquivalent[possibleClassifiers.index(classifier)] = Values_Classifier_Column['F1'].values[0]
 
 		# Create the figure with axis
 		fig = plt.figure(1, figsize=(9, 6))

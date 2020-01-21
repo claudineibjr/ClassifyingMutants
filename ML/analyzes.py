@@ -129,7 +129,7 @@ def analyzeResults(possibleTargetColumns, possibleClassifiers, overwriteFullFile
 		classifiersBestParameter = util.createDataFrameFromCSV(summaryFileName, True, ',')
 
 	if plot:
-		plotRunsResult(experimentResults, possibleClassifiers, possibleTargetColumns)
+		plotRunsResult(classifiersBestParameter, possibleClassifiers, possibleTargetColumns)
 
 	return experimentResults, classifiersBestParameter
 
@@ -619,10 +619,10 @@ if __name__ == '__main__':
 	# --- Setup
 	possibleTargetColumns, possibleClassifiers, possiblePrograms = setUp()
 	
-	## ---------------------------------------------------------------------------------------------------
-	## --- Analyze the 30 runs and calc statistics informations, like minimum, maximum, median and average
-	#analyzeResults(possibleTargetColumns, possibleClassifiers, plot = True)
-	#
+	# ---------------------------------------------------------------------------------------------------
+	# --- Analyze the 30 runs and calc statistics informations, like minimum, maximum, median and average
+	analyzeResults(possibleTargetColumns, possibleClassifiers, plot = True)
+	
 	# ----------------------------------
 	# --- Get informations from programs
 	#programsInfo = getProgramsInfo()
