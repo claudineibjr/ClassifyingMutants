@@ -7,6 +7,10 @@ from statistics import median
 # --- OS
 import os
 
+# -------
+# --- sys
+import sys
+
 # ----------
 # --- Pandas
 import pandas as pd
@@ -129,3 +133,75 @@ def plotRunsResult(runsResults, possibleClassifiers, possibleTargetColumns, plot
 
 		# Display chart
 		plt.show()
+
+def plotRunsDetailed(runsResults, possibleClassifiers, possibleTargetColumns, mean_median = 0):
+	# Set lists with data. For each array, there are several internal arrays containing the F1 values for each program
+	dataMinimal = []
+	dataEquivalent = []
+	for classifier in possibleClassifiers:
+		dataMinimal.append([])
+		dataEquivalent.append([])
+	
+	for column in possibleTargetColumns:
+		for classifier in possibleClassifiers:
+			Values_Classifier_Column = runsResults.query('Classifier == \'{}\' and TargetColumn == \'{}\' '.format(classifier, column))
+
+			#print('Classifier: {}\tColumn: {}\t\tAccuracy: {:.2f}\tPrecision: {:.2f}\tRecall: {:.2f}\tF1: {:.2f}'.format(classifier, column, meanAccuracy, meanPrecision, meanRecall, meanF1))
+
+			if column == 'MINIMAL':
+				dataMinimal[possibleClassifiers.index(classifier)] = Values_Classifier_Column['F1'].values
+			elif column == 'EQUIVALENT':
+				dataEquivalent[possibleClassifiers.index(classifier)] = Values_Classifier_Column['F1'].values
+	
+	# Create the figure with axis
+	fig = plt.figure(1, figsize=(9, 6))
+	ax = fig.add_subplot(1, 1, 1)
+
+	# Set the value to be shown as indexes on axis Y
+	#ax.set_yticks([value for value in range(0, 101, 10)])
+	ax.set_yticks([value for value in range(0, 60, 10)] + [value for value in range(60, 101, 5)])
+	ax.yaxis.grid(True, linestyle='-', which='major', color='lightgrey', alpha=0.75)
+
+	# Set the chart title and axis title
+	#ax.set_title('Resultados do F1-Score das 30 execuções para cada classificador\n\n', fontsize = 26) #Portuguese
+	#ax.set_xlabel('\nClassifiers', fontsize = 22) #English
+	ax.set_xlabel('\nClassificadores', fontsize = 22) #Portuguese
+	ax.set_ylabel('F1 Score', fontsize = 22)
+
+	#Box width
+	boxWidth = 0.7
+
+	# Set the boxplot positions
+	positionsMM = [value for value in range(len(possibleClassifiers) * 2) if value % 2 == 0 ]
+	positionsEM = [value + boxWidth for value in range(len(possibleClassifiers) * 2) if value % 2 == 0 ]
+
+	# Set the boxplots based on a function property defined below
+	bpMM = boxPlotProperties(ax, dataMinimal, positionsMM, '#607D8B', boxWidth, possibleClassifiers)
+	bpEM = boxPlotProperties(ax, dataEquivalent, positionsEM, '#B0BEC5', boxWidth, possibleClassifiers)
+
+	# Calculate the standard deviation
+	minimalMean_Medians = [ np.round(np.std(value), 2) for value in dataMinimal]
+	equivalentMean_Medians = [np.round(np.std(value), 2) for value in dataEquivalent]
+
+	# Display values in boxplot
+	for tick in range(len(positionsMM)):
+		# Display a info on boxplot top
+		_, topBoxplot = ax.get_ylim()
+		ax.text(positionsMM[tick], topBoxplot + 1, minimalMean_Medians[tick], horizontalalignment='center', size=16, color='black')
+		ax.text(positionsEM[tick], topBoxplot + 1, equivalentMean_Medians[tick], horizontalalignment='center', size=16, color='black')
+
+	# Set the label between two boxplot
+	#ax.set_xticklabels(list(getFullNamePossibleClassifiers().values())) # Caso for exibir o nome completo do classificador
+	ax.set_xticklabels(possibleClassifiers)
+	for tick in ax.xaxis.get_major_ticks(): tick.label.set_fontsize(18)
+	for tick in ax.yaxis.get_major_ticks(): tick.label.set_fontsize(16)
+	ax.set_xticks([value + (boxWidth / 2) for value in ax.get_xticks() if value % 2 == 0])
+
+	# Set the chart subtitle/legend
+	#ax.legend([bpMM["boxes"][0], bpEM["boxes"][0]], ['Minimal Mutants', 'Equivalent Mutants'], loc='lower right', fontsize='xx-large') #English
+	ax.legend([bpMM["boxes"][0], bpEM["boxes"][0]], ['Mutantes Minimais', 'Mutantes Equivalentes'], loc='lower right', fontsize='xx-large') #Portuguese
+
+	fig.tight_layout()
+
+	# Display chart
+	plt.show()

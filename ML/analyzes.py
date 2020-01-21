@@ -35,7 +35,7 @@ import itertools
 # --- Analyzes
 sys.path.insert(0, current_dir + '/Analyzes')
 from Analyzes.analyzesUtil import autolabel, barChartProperties, getProgramsHeader, bestParameterFileExists, evaluatingClassification
-from Analyzes.analyze30Runs import plotRunsResult
+from Analyzes.analyze30Runs import plotRunsResult, plotRunsDetailed
 from Analyzes.analyzeMetricsFromProgram import plotMetricsFromProgram
 from Analyzes.analyzeClassifiersProgramAProgram import plotClassifiersProgramAProgram
 
@@ -46,7 +46,7 @@ def setUp():
 
 	return possibleTargetColumns, possibleClassifiers, possiblePrograms
 
-def analyzeResults(possibleTargetColumns, possibleClassifiers, overwriteFullFile = False, plot = False):
+def analyzeResults(possibleTargetColumns, possibleClassifiers, overwriteFullFile = False, plotSummary = False, plot30Runs = False):
 	'''
 		Analyze each of 30 run for each classifier with each target column and calculate the best (calculating the mean) metric for each ones (classifier and target column).
 	'''
@@ -128,8 +128,20 @@ def analyzeResults(possibleTargetColumns, possibleClassifiers, overwriteFullFile
 		experimentResults = util.createDataFrameFromCSV(fullFileName, True, ',')
 		classifiersBestParameter = util.createDataFrameFromCSV(summaryFileName, True, ',')
 
-	if plot:
+	if plotSummary:
 		plotRunsResult(classifiersBestParameter, possibleClassifiers, possibleTargetColumns)
+
+	if plot30Runs:
+		# Exclude the non best executions
+		for parametrizedClassifier in ['KNN', 'DT', 'RF']:
+			for targetColumn in possibleTargetColumns:
+				bestParameter = classifiersBestParameter.query('TargetColumn == \'{}\' and Classifier == \'{}\''.format(targetColumn, parametrizedClassifier))['Parameter'].values[0]
+				toBeDeleted = experimentResults.query('TargetColumn == \'{}\' and Classifier == \'{}\' and SampleSplit != \'{}\''.format(targetColumn, parametrizedClassifier, bestParameter))
+				indexesToBeDeleted = toBeDeleted.index.values
+
+				experimentResults = experimentResults.drop(labels = indexesToBeDeleted, axis = 0)
+
+		plotRunsDetailed(experimentResults, possibleClassifiers, possibleTargetColumns)
 
 	return experimentResults, classifiersBestParameter
 
@@ -621,29 +633,28 @@ if __name__ == '__main__':
 	
 	# ---------------------------------------------------------------------------------------------------
 	# --- Analyze the 30 runs and calc statistics informations, like minimum, maximum, median and average
-	analyzeResults(possibleTargetColumns, possibleClassifiers, plot = True)
+	#analyzeResults(possibleTargetColumns, possibleClassifiers, plotSummary = False, plot30Runs = True)
 	
 	# ----------------------------------
 	# --- Get informations from programs
-	#programsInfo = getProgramsInfo()
-	#programsInfo = getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, programsInfo, bestParameter=True, writeMetrics=True)
-	#
+	#programsInfo = getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, getProgramsInfo(), writeMetrics=False, bestParameter=True)
+	
 	#programsBestMetrics = analyzeMetricsFromProgram(programsInfo, possibleClassifiers, plot=False)
-	#
+	
 	#metricsFromClassifier = analyzeClassifiersProgramAProgram(programsInfo, possibleClassifiers, plot=True)
-	#
+	
 	#df_Programs_BestClassifiers = getBestClassifierForPrograms()
 	#plotMetricsFromBestClassifiersOfEachProgram(df_Programs_BestClassifiers)
-	#
-	## ---------------------------------------------
-	## --- File analysis with classified mutant data
+	
+	# ---------------------------------------------
+	# --- File analysis with classified mutant data
 	#minimalMutantsMetrics = analyzeClassificationsFromEachProgram(possibleTargetColumns[0], possiblePrograms, True)
 	#equivalentMutantsMetrics = analyzeClassificationsFromEachProgram(possibleTargetColumns[1], possiblePrograms, True)
-	#
-	## --------------------------------------------------------
-	## --- File analysis with summarized classified mutant data
+	
+	# --------------------------------------------------------
+	# --- File analysis with summarized classified mutant data
 	#minimalsMutantsData = summarizeClassifications(possibleTargetColumns[0], possiblePrograms, df_Programs_BestClassifiers, True)
 	#plotSummarizedClassifications(minimalsMutantsData, '_IM_' + possibleTargetColumns[0])
-	#
+	
 	#equivalentsMutantsData = summarizeClassifications(possibleTargetColumns[1], possiblePrograms, df_Programs_BestClassifiers, True)
 	#plotSummarizedClassifications(equivalentsMutantsData, '_IM_' + possibleTargetColumns[1])
