@@ -27,6 +27,51 @@ import matplotlib.pyplot as plt
 # --- Analyzes
 from analyzesUtil import barChartProperties, autolabel, boxPlotProperties
 
+def getRunsOnlyFromBestParameter(experimentResults, classifiersBestParameter, possibleTargetColumns):
+	for parametrizedClassifier in ['KNN', 'DT', 'RF']:
+		for targetColumn in possibleTargetColumns:
+			bestParameter = classifiersBestParameter.query('TargetColumn == \'{}\' and Classifier == \'{}\''.format(targetColumn, parametrizedClassifier))['Parameter'].values[0]
+			toBeDeleted = experimentResults.query('TargetColumn == \'{}\' and Classifier == \'{}\' and SampleSplit != \'{}\''.format(targetColumn, parametrizedClassifier, bestParameter))
+			indexesToBeDeleted = toBeDeleted.index.values
+
+			experimentResults = experimentResults.drop(labels = indexesToBeDeleted, axis = 0)
+
+	return experimentResults
+
+def summarizeRunsFromCustomParameter(experimentResults):
+	"""
+	Função que faz a análise de todas as execuções de toda
+	"""
+	possibleClassifiers = experimentResults['Classifier'].unique()
+	possibleTargetColumn = experimentResults['TargetColumn'].unique()
+
+	customParameterSummaryResults = pd.DataFrame()
+
+	for classifier in possibleClassifiers:
+		for targetColumn in possibleTargetColumn:
+			classifierColumnResults = experimentResults.query('TargetColumn == \'{}\' and Classifier == \'{}\''.format(targetColumn, classifier))
+
+			for sampleSplit in classifierColumnResults['SampleSplit'].unique():
+				value = classifierColumnResults.query('SampleSplit == \'{}\''.format(sampleSplit))
+
+				accuracy = np.mean(value['Accuracy'])
+				precision = np.mean(value['Precision'])
+				recall = np.mean(value['Recall'])
+				f1 = np.mean(value['F1'])
+
+				#parameterMetrics = parameterMetrics.append(pd.DataFrame(data=[[targetColumn, classifier, parameter, meanAccuracy, meanPrecision, meanRecall, meanF1]], columns=['TargetColumn', 'Classifier', 'Parameter', 'Accuracy', 'Precision', 'Recall', 'F1']))
+				customParameterSummaryResults = customParameterSummaryResults.append(pd.DataFrame(data=[[targetColumn, classifier, sampleSplit, accuracy, precision, recall, f1]], columns=['TargetColumn', 'Classifier', 'SampleSplit', 'Accuracy', 'Precision', 'Recall', 'F1']))
+
+	return customParameterSummaryResults
+
+
+def getRunsFromCustomParameters(experimentResults):
+	toBeDeleted = experimentResults.query('SampleSplit == 0')
+	indexesToBeDeleted = toBeDeleted.index.values
+	experimentResults = experimentResults.drop(labels = indexesToBeDeleted, axis = 0)
+
+	return experimentResults
+
 def plotRunsResult(runsResults, possibleClassifiers, possibleTargetColumns, plotSeparated = False):
 	'''
 		Is calculated the average of each classifier/target column
@@ -198,8 +243,8 @@ def plotRunsDetailed(runsResults, possibleClassifiers, possibleTargetColumns, me
 	ax.set_xticks([value + (boxWidth / 2) for value in ax.get_xticks() if value % 2 == 0])
 
 	# Set the chart subtitle/legend
-	#ax.legend([bpMM["boxes"][0], bpEM["boxes"][0]], ['Minimal Mutants', 'Equivalent Mutants'], loc='lower right', fontsize='xx-large') #English
-	ax.legend([bpMM["boxes"][0], bpEM["boxes"][0]], ['Mutantes Minimais', 'Mutantes Equivalentes'], loc='lower right', fontsize='xx-large') #Portuguese
+	#ax.legend([bpMM["boxes"][0], bpEM["boxes"][0]], ['Minimal Mutants', 'Equivalent Mutants'], loc='lower left', fontsize='xx-large') #English
+	ax.legend([bpMM["boxes"][0], bpEM["boxes"][0]], ['Mutantes Minimais', 'Mutantes Equivalentes'], loc='lower left', fontsize='xx-large') #Portuguese
 
 	fig.tight_layout()
 

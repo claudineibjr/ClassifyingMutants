@@ -35,7 +35,7 @@ import itertools
 # --- Analyzes
 sys.path.insert(0, current_dir + '/Analyzes')
 from Analyzes.analyzesUtil import autolabel, barChartProperties, getProgramsHeader, bestParameterFileExists, evaluatingClassification
-from Analyzes.analyze30Runs import plotRunsResult, plotRunsDetailed
+from Analyzes.analyze30Runs import plotRunsResult, plotRunsDetailed, getRunsOnlyFromBestParameter, getRunsFromCustomParameters, summarizeRunsFromCustomParameter
 from Analyzes.analyzeMetricsFromProgram import plotMetricsFromProgram
 from Analyzes.analyzeClassifiersProgramAProgram import plotClassifiersProgramAProgram
 
@@ -46,16 +46,33 @@ def setUp():
 
 	return possibleTargetColumns, possibleClassifiers, possiblePrograms
 
-def analyzeResults(possibleTargetColumns, possibleClassifiers, overwriteFullFile = False, plotSummary = False, plot30Runs = False):
-	'''
-		Analyze each of 30 run for each classifier with each target column and calculate the best (calculating the mean) metric for each ones (classifier and target column).
-	'''
+def analyzeResults(possibleTargetColumns, possibleClassifiers, overwriteFullFile = False):
+	"""
+	Analyze each of 30 run for each classifier with each target column and calculate the best (calculating the mean) metric for each ones (classifier and target column).
+	
+    Parameters
+    ----------
+	possibleTargetColumns (list)
+		Array containing all possible columns that can be sorted (MINIMAL and EQUIVALENT)
+	possibleClassifiers (list)
+		Array containing all possible classifiers that can be used (KNN, DT, RF, SVM, LDA, LR and GNB)
+	overwriteFullFile (bool)
+		Boolean indicating whether the file 'Summary_All30Runs' should be overwritten.
 
-	# Dataframe com todos os resultados das execuções
+
+	Returns
+	-------
+	(DataFrame, DataFrame, DataFrame)
+		experimentResults - Dataframe containing all values of all predictive models and 30 executions. Corresponds to the file 'Summary_All30Runs.csv'
+		bestParameterResults - Dataframe containing all values of the predictive models that was the best and 30 executions. Corresponds to the file 'Summary_All30Runs.csv'.
+		classifiersBestParameter - Dataframe containing the average values of the classifiers with the best results. Corresponds to the 'Summary_Classifiers.csv' file
+	"""
+
+	# Dataframe with all execution results# Dataframe with all execution results
 	experimentResults = pd.DataFrame()
 
-	# Dataframe com a indicação do melhor parâmetro para cada classificador
-	classifiersBestParameter = pd.DataFrame()
+	# Dataframe with the indication of the best parameter for each classifier
+	summaryClassifiersBestParameter = pd.DataFrame()
 	
 	# Base folder
 	baseResultsFolderName = '{}/ML/Results'.format(os.getcwd())
@@ -66,45 +83,48 @@ def analyzeResults(possibleTargetColumns, possibleClassifiers, overwriteFullFile
 	# SummaryFile
 	summaryFileName = '{}/Summary/Summary_Classifiers.csv'.format(baseResultsFolderName)
 
-	if overwriteFullFile or not util.pathExists(fullFileName):
-		# Caso for sobrescrever o arquivo já existente ou caso ele não exista, faz toda a leitura e escreve um novo arquivo
+	# CustomParameterResults
+	summaryCustomParametersFileName = '{}/Summary/Summary_CustomParameters.csv'.format(baseResultsFolderName)
 
-		# Percorre todas as colunas (Minimal e equivalent)
+	if overwriteFullFile or not util.pathExists(fullFileName):
+		# If you are going to overwrite the existing file or if it does not exist, do all the reading and write a new file
+
+		# Cycles through all columns (Minimal and equivalent)
 		for targetColumn in possibleTargetColumns:
-			# Percorre todos os classificadores
+			# Cycle through all classifiers
 			for classifier in possibleClassifiers:
-				# Dataframe contendo o resultado das 30 execuções de cada um dos programas
+				# Dataframe containing the result of the 30 executions of each program
 				classifierResults = pd.DataFrame()
 				
-				# Percorre todas as execuções (de 1 a 30)
+				# Cycles through all executions (from 1 to 30)
 				for iCount in range(1, 31, 1):
-					# Busca os resultados da execução
+					# Fetch execution results
 					classifierRunResultFileName = '{}/{}_{}/{}.csv'.format(baseResultsFolderName, targetColumn, iCount, classifier)
 					classifierRunResult = util.createDataFrameFromCSV(classifierRunResultFileName, hasHeader=True, separator=';', initialLine=5)
 					
-					# Concatena o resultado dessa execução às outras execuções que no final serão 30
+					# Concatenates the result of this execution to the other executions that in the end will be 30
 					classifierResults = classifierResults.append(classifierRunResult)
 
-					# Insere as informações referentes àquela execução
+					# Insert information related to that execution
 					pd.DataFrame(classifierRunResult).insert(0, 'TargetColumn', targetColumn, True)
 					pd.DataFrame(classifierRunResult).insert(1, 'Classifier', classifier, True)
 					pd.DataFrame(classifierRunResult).insert(2, 'Run', iCount, True)
 
-					# Concatena essa execução a todas as outras
+					# Concatenates this execution to all others
 					experimentResults = experimentResults.append(classifierRunResult)
 
-				# Calcula o melhor parâmetro para aquele classificador
+				# Calculates the best parameter for that classifier
 				parameters = classifierResults['SampleSplit'].unique()
 				parameterMetrics = pd.DataFrame()
 				for parameter in parameters:
-					# Busca apenas os resultados daquele parâmetro
+					# Search only the results of that parameter
 					resultsFromThisParameter = classifierResults.query('SampleSplit == \'{}\''.format(parameter))
 					
-					# Coleta a média das métricas das 30 execuções
-					meanAccuracy = resultsFromThisParameter['Accuracy'].sum() / 30
-					meanPrecision = resultsFromThisParameter['Precision'].sum() / 30
-					meanRecall = resultsFromThisParameter['Recall'].sum() / 30
-					meanF1 = resultsFromThisParameter['F1'].sum() / 30
+					# Collect the average of the metrics of the 30 executions
+					meanAccuracy = np.mean(resultsFromThisParameter['Accuracy'])
+					meanPrecision = np.mean(resultsFromThisParameter['Precision'])
+					meanRecall = np.mean(resultsFromThisParameter['Recall'])
+					meanF1 = np.mean(resultsFromThisParameter['F1'])
 
 					parameterMetrics = parameterMetrics.append(pd.DataFrame(data=[[targetColumn, classifier, parameter, meanAccuracy, meanPrecision, meanRecall, meanF1]], columns=['TargetColumn', 'Classifier', 'Parameter', 'Accuracy', 'Precision', 'Recall', 'F1']))
 					#print('Parameter: {}\t\tAccuracy: {} | Precision: {} | Recall: {} | F1: {}'.format(parameter, meanAccuracy, meanPrecision, meanRecall, meanF1))
@@ -113,37 +133,29 @@ def analyzeResults(possibleTargetColumns, possibleClassifiers, overwriteFullFile
 				#print('\n--- {} - {}'.format(classifier, targetColumn))
 				#print(bestParameter.head())
 				
-				classifiersBestParameter = classifiersBestParameter.append(bestParameter)
+				summaryClassifiersBestParameter = summaryClassifiersBestParameter.append(bestParameter)
 
 		#print(classifiersBestParameter.head(n=50))
 
-		# Escreve um arquivo só com todos os resultados
+		# Write a file with all the results
 		util.writeDataFrameInCsvFile(fullFileName, experimentResults, index=False)
 
-		# Escreve um arquivo só com os melhores parâmetros para cada classificador
-		util.writeDataFrameInCsvFile(summaryFileName, classifiersBestParameter, index=False)
+		# Write a file with only the best parameters for each classifier
+		util.writeDataFrameInCsvFile(summaryFileName, summaryClassifiersBestParameter, index=False)
 
 	else:
-		# Busca os arquivos já existentes
+		# Search for existing files
 		experimentResults = util.createDataFrameFromCSV(fullFileName, True, ',')
-		classifiersBestParameter = util.createDataFrameFromCSV(summaryFileName, True, ',')
+		summaryClassifiersBestParameter = util.createDataFrameFromCSV(summaryFileName, True, ',')
 
-	if plotSummary:
-		plotRunsResult(classifiersBestParameter, possibleClassifiers, possibleTargetColumns)
+	# Exclude the non best executions
+	bestParameterResults = getRunsOnlyFromBestParameter(experimentResults, summaryClassifiersBestParameter, possibleTargetColumns)
 
-	if plot30Runs:
-		# Exclude the non best executions
-		for parametrizedClassifier in ['KNN', 'DT', 'RF']:
-			for targetColumn in possibleTargetColumns:
-				bestParameter = classifiersBestParameter.query('TargetColumn == \'{}\' and Classifier == \'{}\''.format(targetColumn, parametrizedClassifier))['Parameter'].values[0]
-				toBeDeleted = experimentResults.query('TargetColumn == \'{}\' and Classifier == \'{}\' and SampleSplit != \'{}\''.format(targetColumn, parametrizedClassifier, bestParameter))
-				indexesToBeDeleted = toBeDeleted.index.values
+	# Get the results from custom parameters
+	customParameterResults = summarizeRunsFromCustomParameter(getRunsFromCustomParameters(experimentResults))
+	util.writeDataFrameInCsvFile(summaryCustomParametersFileName, customParameterResults, index=False)
 
-				experimentResults = experimentResults.drop(labels = indexesToBeDeleted, axis = 0)
-
-		plotRunsDetailed(experimentResults, possibleClassifiers, possibleTargetColumns)
-
-	return experimentResults, classifiersBestParameter
+	return experimentResults, bestParameterResults, summaryClassifiersBestParameter
 
 def getProgramsInfo():
 	programsInfoFileName = '{}/Programs/ProgramsInfo.csv'.format(os.getcwd())
@@ -633,7 +645,9 @@ if __name__ == '__main__':
 	
 	# ---------------------------------------------------------------------------------------------------
 	# --- Analyze the 30 runs and calc statistics informations, like minimum, maximum, median and average
-	#analyzeResults(possibleTargetColumns, possibleClassifiers, plotSummary = False, plot30Runs = True)
+	experimentResults, bestParameterResults, summaryClassifiersBestParameter = analyzeResults(possibleTargetColumns, possibleClassifiers)
+	plotRunsResult(summaryClassifiersBestParameter, possibleClassifiers, possibleTargetColumns)
+	#plotRunsDetailed(bestParameterResults, possibleClassifiers, possibleTargetColumns)
 	
 	# ----------------------------------
 	# --- Get informations from programs
