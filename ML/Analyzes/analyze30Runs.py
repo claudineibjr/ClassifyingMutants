@@ -147,13 +147,15 @@ def plotRunsResult(runsResults, possibleClassifiers, possibleTargetColumns, plot
 		ax = fig.add_subplot(1, 1, 1)
 
 		# Set the value to be shown as indexes on axis Y
+		ax.set_ylim(0, 100)
 		ax.set_yticks([value for value in range(0, 50, 10)] + [value for value in range(50, 101, 5)])
 		ax.yaxis.grid(True, linestyle='-', which='major', color='lightgrey', alpha=0.75)
 
 		# Set the chart title and axis title
-		ax.set_title('Mean F1 Score for Classifiers', fontsize = 14)
-		ax.set_xlabel('\nClassifiers', fontsize = 14)
-		ax.set_ylabel('F1 Score', fontsize = 14)
+		#ax.set_title('Mean F1 Score for Classifiers', fontsize = 22)
+		#ax.set_xlabel('\nClassifiers', fontsize = 22) # English
+		ax.set_xlabel('\nClassificadores', fontsize = 22) # Portuguese
+		ax.set_ylabel('F1 Score', fontsize = 22)
 
 		# Set the boxplot positions
 		width = 0.3  # the width of the bars
@@ -161,18 +163,27 @@ def plotRunsResult(runsResults, possibleClassifiers, possibleTargetColumns, plot
 		positionsEM = [value + width / 2 for value in range(len(possibleClassifiers))]
 
 		# Set the bar chart based on a function property defined below
-		barChart = barChartProperties(ax, dataMinimal, positionsMM, '#607D8B', width)
+		bcMM = barChartProperties(ax, dataMinimal, positionsMM, '#607D8B', width)
 		bcEM = barChartProperties(ax, dataEquivalent, positionsEM, '#B0BEC5', width)
+
+		# Display values in boxplot
+		for tick in range(len(positionsMM)):
+			# Display a info on boxplot top
+			ax.text(positionsMM[tick], bcMM[tick].get_height() + 1, np.round(dataMinimal[tick], 1), horizontalalignment='center', size=16, color='black')
+			ax.text(positionsEM[tick], bcEM[tick].get_height() + 1, np.round(dataEquivalent[tick], 1), horizontalalignment='center', size=16, color='black')
 
 		# Set the label between two boxplot
 		ax.set_xticklabels(possibleClassifiers)
+		for tick in ax.xaxis.get_major_ticks(): tick.label.set_fontsize(18)
+		for tick in ax.yaxis.get_major_ticks(): tick.label.set_fontsize(16)
 		ax.set_xticks([value for value in range(len(possibleClassifiers))])
 
 		# Set the chart subtitle/legend
-		ax.legend([barChart, bcEM], ['Minimal Mutants', 'Equivalent Mutants'], loc='upper right')
+		#ax.legend([bcMM, bcEM], ['Minimal Mutants', 'Equivalent Mutants'], loc='upper right',  fontsize='xx-large') # English
+		ax.legend([bcMM, bcEM], ['Mutantes Minimais', 'Mutantes Equivalentes'], loc='upper right',  fontsize='xx-large') # Portuguese
 
-		autolabel(barChart, ax, 2)
-		autolabel(bcEM, ax, 2)
+		#autolabel(bcMM, ax, 2)
+		#autolabel(bcEM, ax, 2)
 
 		fig.tight_layout()
 
@@ -204,6 +215,7 @@ def plotRunsDetailed(runsResults, possibleClassifiers, possibleTargetColumns, me
 
 	# Set the value to be shown as indexes on axis Y
 	#ax.set_yticks([value for value in range(0, 101, 10)])
+	ax.set_ylim(0, 100)
 	ax.set_yticks([value for value in range(0, 60, 10)] + [value for value in range(60, 101, 5)])
 	ax.yaxis.grid(True, linestyle='-', which='major', color='lightgrey', alpha=0.75)
 

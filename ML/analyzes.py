@@ -645,8 +645,8 @@ if __name__ == '__main__':
 	
 	# ---------------------------------------------------------------------------------------------------
 	# --- Analyze the 30 runs and calc statistics informations, like minimum, maximum, median and average
-	experimentResults, bestParameterResults, summaryClassifiersBestParameter = analyzeResults(possibleTargetColumns, possibleClassifiers)
-	plotRunsResult(summaryClassifiersBestParameter, possibleClassifiers, possibleTargetColumns)
+	#experimentResults, bestParameterResults, summaryClassifiersBestParameter = analyzeResults(possibleTargetColumns, possibleClassifiers)
+	#plotRunsResult(summaryClassifiersBestParameter, possibleClassifiers, possibleTargetColumns)
 	#plotRunsDetailed(bestParameterResults, possibleClassifiers, possibleTargetColumns)
 	
 	# ----------------------------------
