@@ -64,7 +64,7 @@ def analyzeResults(possibleTargetColumns, possibleClassifiers, overwriteFullFile
 	-------
 	(DataFrame, DataFrame, DataFrame)
 		experimentResults - Dataframe containing all values of all predictive models and 30 executions. Corresponds to the file 'Summary_All30Runs.csv'
-		bestParameterResults - Dataframe containing all values of the predictive models that was the best and 30 executions. Corresponds to the file 'Summary_All30Runs.csv'.
+		bestParameterResults - Dataframe containing all values of the predictive models that was the best and 30 executions. Corresponds to the file 'Summary_BestClassifiers_All30Runs.csv'
 		classifiersBestParameter - Dataframe containing the average values of the classifiers with the best results. Corresponds to the 'Summary_Classifiers.csv' file
 	"""
 
@@ -79,6 +79,9 @@ def analyzeResults(possibleTargetColumns, possibleClassifiers, overwriteFullFile
 	
 	# FullFile
 	fullFileName = '{}/Summary/Summary_All30Runs.csv'.format(baseResultsFolderName)
+
+	# FullFile for the best classifiers
+	fullBestClassifiersFileName = '{}/Summary/Summary_BestClassifiers_All30Runs.csv'.format(baseResultsFolderName)
 
 	# SummaryFile
 	summaryFileName = '{}/Summary/Summary_Classifiers.csv'.format(baseResultsFolderName)
@@ -143,13 +146,16 @@ def analyzeResults(possibleTargetColumns, possibleClassifiers, overwriteFullFile
 		# Write a file with only the best parameters for each classifier
 		util.writeDataFrameInCsvFile(summaryFileName, summaryClassifiersBestParameter, index=False)
 
+		# Write a file with all the results but only for the best parameters
+		# Exclude the non best executions
+		bestParameterResults = getRunsOnlyFromBestParameter(experimentResults, summaryClassifiersBestParameter, possibleTargetColumns)
+		util.writeDataFrameInCsvFile(fullBestClassifiersFileName, bestParameterResults, index=False)
+
 	else:
 		# Search for existing files
 		experimentResults = util.createDataFrameFromCSV(fullFileName, True, ',')
 		summaryClassifiersBestParameter = util.createDataFrameFromCSV(summaryFileName, True, ',')
-
-	# Exclude the non best executions
-	bestParameterResults = getRunsOnlyFromBestParameter(experimentResults, summaryClassifiersBestParameter, possibleTargetColumns)
+		bestParameterResults = util.createDataFrameFromCSV(fullBestClassifiersFileName, True, ',')
 
 	# Get the results from custom parameters
 	customParameterResults = summarizeRunsFromCustomParameter(getRunsFromCustomParameters(experimentResults))
@@ -645,7 +651,7 @@ if __name__ == '__main__':
 	
 	# ---------------------------------------------------------------------------------------------------
 	# --- Analyze the 30 runs and calc statistics informations, like minimum, maximum, median and average
-	#experimentResults, bestParameterResults, summaryClassifiersBestParameter = analyzeResults(possibleTargetColumns, possibleClassifiers)
+	experimentResults, bestParameterResults, summaryClassifiersBestParameter = analyzeResults(possibleTargetColumns, possibleClassifiers, overwriteFullFile=True)
 	#plotRunsResult(summaryClassifiersBestParameter, possibleClassifiers, possibleTargetColumns)
 	#plotRunsDetailed(bestParameterResults, possibleClassifiers, possibleTargetColumns)
 	

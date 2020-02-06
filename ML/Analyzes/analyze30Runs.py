@@ -28,15 +28,31 @@ import matplotlib.pyplot as plt
 from analyzesUtil import barChartProperties, autolabel, boxPlotProperties
 
 def getRunsOnlyFromBestParameter(experimentResults, classifiersBestParameter, possibleTargetColumns):
-	for parametrizedClassifier in ['KNN', 'DT', 'RF']:
+	'''
+		Essa função deve retornar todas as execuções, porém, apenas dos algoritmos com parâmetros customizados e apenas os melhores parâmetros
+	'''
+	experimentResultsFromBestParameters = experimentResults.copy()
+
+	#Reindex the dataframe
+	size, _ = experimentResultsFromBestParameters.shape
+	experimentResultsFromBestParameters['rowID'] = [value for value in range(0, size, 1)]
+	experimentResultsFromBestParameters = experimentResultsFromBestParameters.set_index('rowID')
+
+	classifiersWithCustomParameter = experimentResultsFromBestParameters.query('SampleSplit != 0')['Classifier'].unique()
+	for parametrizedClassifier in classifiersWithCustomParameter:
 		for targetColumn in possibleTargetColumns:
+			# Get the best parameter
 			bestParameter = classifiersBestParameter.query('TargetColumn == \'{}\' and Classifier == \'{}\''.format(targetColumn, parametrizedClassifier))['Parameter'].values[0]
-			toBeDeleted = experimentResults.query('TargetColumn == \'{}\' and Classifier == \'{}\' and SampleSplit != \'{}\''.format(targetColumn, parametrizedClassifier, bestParameter))
+
+			# Get the indexes that must be deleted (because are'nt the best)
+			toBeDeleted = experimentResultsFromBestParameters.query('TargetColumn == \'{}\' and Classifier == \'{}\' and SampleSplit != \'{}\''.format(targetColumn, parametrizedClassifier, bestParameter))
+			#print('Column: {} | Classifier: {} | Parameter: {} | To be deleted: {}'.format(targetColumn, parametrizedClassifier, bestParameter, toBeDeleted.shape))
+			
+			# Delete the indexes
 			indexesToBeDeleted = toBeDeleted.index.values
+			experimentResultsFromBestParameters = experimentResultsFromBestParameters.drop(labels = indexesToBeDeleted, axis = 0)
 
-			experimentResults = experimentResults.drop(labels = indexesToBeDeleted, axis = 0)
-
-	return experimentResults
+	return experimentResultsFromBestParameters
 
 def summarizeRunsFromCustomParameter(experimentResults):
 	"""
@@ -68,7 +84,8 @@ def summarizeRunsFromCustomParameter(experimentResults):
 def getRunsFromCustomParameters(experimentResults):
 	toBeDeleted = experimentResults.query('SampleSplit == 0')
 	indexesToBeDeleted = toBeDeleted.index.values
-	experimentResults = experimentResults.drop(labels = indexesToBeDeleted, axis = 0)
+
+	experimentResults.drop(labels = indexesToBeDeleted, axis = 0, inplace=True)
 
 	return experimentResults
 
@@ -236,9 +253,9 @@ def plotRunsDetailed(runsResults, possibleClassifiers, possibleTargetColumns, me
 	bpMM = boxPlotProperties(ax, dataMinimal, positionsMM, '#607D8B', boxWidth, possibleClassifiers)
 	bpEM = boxPlotProperties(ax, dataEquivalent, positionsEM, '#B0BEC5', boxWidth, possibleClassifiers)
 
-	# Calculate the standard deviation
-	minimalMean_Medians = [ np.round(np.std(value), 2) for value in dataMinimal]
-	equivalentMean_Medians = [np.round(np.std(value), 2) for value in dataEquivalent]
+	# Calculate the mean
+	minimalMean_Medians = [ np.round(np.mean(value), 2) for value in dataMinimal]
+	equivalentMean_Medians = [np.round(np.mean(value), 2) for value in dataEquivalent]
 
 	# Display values in boxplot
 	for tick in range(len(positionsMM)):
