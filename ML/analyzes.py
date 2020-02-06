@@ -128,8 +128,9 @@ def analyzeResults(possibleTargetColumns, possibleClassifiers, overwriteFullFile
 					meanPrecision = np.mean(resultsFromThisParameter['Precision'])
 					meanRecall = np.mean(resultsFromThisParameter['Recall'])
 					meanF1 = np.mean(resultsFromThisParameter['F1'])
+					stdF1 = np.std(resultsFromThisParameter['F1'])
 
-					parameterMetrics = parameterMetrics.append(pd.DataFrame(data=[[targetColumn, classifier, parameter, meanAccuracy, meanPrecision, meanRecall, meanF1]], columns=['TargetColumn', 'Classifier', 'Parameter', 'Accuracy', 'Precision', 'Recall', 'F1']))
+					parameterMetrics = parameterMetrics.append(pd.DataFrame(data=[[targetColumn, classifier, parameter, meanAccuracy, meanPrecision, meanRecall, meanF1, stdF1]], columns=['TargetColumn', 'Classifier', 'Parameter', 'Accuracy', 'Precision', 'Recall', 'F1', 'StdDevF1']))
 					#print('Parameter: {}\t\tAccuracy: {} | Precision: {} | Recall: {} | F1: {}'.format(parameter, meanAccuracy, meanPrecision, meanRecall, meanF1))
 				
 				bestParameter = parameterMetrics.sort_values(by=['F1'], ascending=False).head(n=1)
