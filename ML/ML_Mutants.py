@@ -375,6 +375,9 @@ def crossValidation_main(dataSetFrame, targetColumn, classifier, maxIterations, 
 			for kNeighbors in range(1, maxIterations + 1, 1):
 				arr_estimators_iter.append((KNeighborsClassifier(n_neighbors = kNeighbors), kNeighbors))
 		else:
+			if len(columnValues) / 2 <= 10:
+				parameter = int(len(columnValues) / 2)
+
 			arr_estimators_iter.append((KNeighborsClassifier(n_neighbors = parameter), parameter))
 	elif classifier == 'DT':
 		if parameter is None:
@@ -629,11 +632,15 @@ def executeAll(targetColumns, classifiers, specifiedProgram = None, executeWithB
 
 def executeAllEachProgram(targetColumns, classifiers, programs, executeWithBestParameter = False):
 	for program in programs:
-		print('Program: {}'.format(program))
+		print('\nProgram: {}'.format(program))
 		executeAll(targetColumns, classifiers, program, executeWithBestParameter)
 
 def bestParameter(targetColumn, classifier):
+	# Dados obtidos a partir do arquivo 'Summary_Classifiers.csv'
 	key = '{}_{}'.format(targetColumn, classifier) #Column_Classifier
+
+	# Key = TargetColumn_Classifier
+	# Value = Array with the 5 best parameters
 	
 	parameters = dict()
 	parameters['MINIMAL_KNN'] = 1

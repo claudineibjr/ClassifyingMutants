@@ -652,14 +652,13 @@ if __name__ == '__main__':
 	
 	# ---------------------------------------------------------------------------------------------------
 	# --- Analyze the 30 runs and calc statistics informations, like minimum, maximum, median and average
-	experimentResults, bestParameterResults, summaryClassifiersBestParameter = analyzeResults(possibleTargetColumns, possibleClassifiers, overwriteFullFile=True)
+	#experimentResults, bestParameterResults, summaryClassifiersBestParameter = analyzeResults(possibleTargetColumns, possibleClassifiers, overwriteFullFile=True)
 	#plotRunsResult(summaryClassifiersBestParameter, possibleClassifiers, possibleTargetColumns)
 	#plotRunsDetailed(bestParameterResults, possibleClassifiers, possibleTargetColumns)
 	
 	# ----------------------------------
 	# --- Get informations from programs
-	#programsInfo = getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, getProgramsInfo(), writeMetrics=False, bestParameter=True)
-	
+	#programsInfo = getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, getProgramsInfo(), writeMetrics=True, bestParameter=True)
 	#programsBestMetrics = analyzeMetricsFromProgram(programsInfo, possibleClassifiers, plot=False)
 	
 	#metricsFromClassifier = analyzeClassifiersProgramAProgram(programsInfo, possibleClassifiers, plot=True)
