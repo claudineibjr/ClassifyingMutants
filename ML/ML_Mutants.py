@@ -825,6 +825,6 @@ def classify_main(arguments):
 				classify(newDataSetFileName, resultDataSetFileName, column, _classifier, algorithmParameter, program)
 
 if __name__ == '__main__':
-	debug_main(sys.argv)
-	#classify_main(sys.argv)
+	#debug_main(sys.argv)
+	classify_main(sys.argv)
 	sys.exit()
