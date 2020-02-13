@@ -180,11 +180,13 @@ def getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, programsI
 	fileFilter = '_bestParameter' if bestParameter else ''
 	programs = [util.getPathName(program) for program in util.getPrograms('{}/Programs'.format(os.getcwd()))]
 
-	i_program_Max = 1
+	i_program_Max = 1 # Index of max score row on ML/Results/[COLUMN]/Programs/[ProgramName]_[Classifier].csv
+	i_program_First = 6 # Index of the first occurence row on ML/Results/[COLUMN]/Programs/[ProgramName]_[Classifier].csv (useful when it is using _bestParameterFile)
+	i_program_SampleSplit = 0 # Index of sample split column on ML/Results/[COLUMN]/Programs/[ProgramName]_[Classifier].csv
 	#i_program_Accuracy = 1
 	#i_program_Precision = 2
 	#i_program_Recall = 3
-	i_program_F1 = 4
+	i_program_F1 = 4 # Index of F1 Score column on ML/Results/[COLUMN]/Programs/[ProgramName]_[Classifier].csv
 
 	programsHeader = getProgramsHeader()
 	
@@ -194,15 +196,21 @@ def getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, programsI
 
 	# Column label on CSV programs info
 	# MM_RF_F1
+	# MM_RF_SampleSplit
 	# MM_DT_F1
+	# MM_DT_SampleSplit
 	# MM_KNN_F1
+	# MM_KNN_SampleSplit
 	# MM_SVM_F1
 	# MM_LDA_F1
 	# MM_LR_F1
 	# MM_GNB_F1
 	# EM_RF_F1
+	# EM_RF_SampleSplit
 	# EM_DT_F1
+	# EM_DT_SampleSplit
 	# EM_KNN_F1
+	# EM_KNN_SampleSplit
 	# EM_SVM_F1
 	# EM_LDA_F1
 	# EM_LR_F1
@@ -214,7 +222,7 @@ def getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, programsI
 		fileName = '{}/ML/Results/MINIMAL/Programs/{}_[CLASSIFIER]{}.csv'.format(os.getcwd(), program, fileFilter)
 		file_Minimal_RF = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'RF') ), ';')
 		file_Minimal_DT = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'DT') ), ';')
-		file_Minimal_kNN = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'KNN')), ';')
+		file_Minimal_KNN = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'KNN')), ';')
 		file_Minimal_SVM = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'SVM')), ';')
 		file_Minimal_LDA = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'LDA')), ';')
 		file_Minimal_LR = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'LR') ), ';')
@@ -223,7 +231,7 @@ def getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, programsI
 		fileName = '{}/ML/Results/EQUIVALENT/Programs/{}_[CLASSIFIER]{}.csv'.format(os.getcwd(), program, fileFilter)
 		file_Equivalent_RF = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'RF') ), ';')
 		file_Equivalent_DT = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'DT') ), ';')
-		file_Equivalent_kNN = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'KNN')), ';')
+		file_Equivalent_KNN = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'KNN')), ';')
 		file_Equivalent_SVM = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'SVM')), ';')
 		file_Equivalent_LDA = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'LDA')), ';')
 		file_Equivalent_LR = util.splitFileInColumns(	bestParameterFileExists(fileName.replace('[CLASSIFIER]', 'LR') ), ';')
@@ -231,16 +239,22 @@ def getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, programsI
 
 		# Update the metrics of programs info
 		df_programsInfo.loc[program]['MM_RF_F1'] = file_Minimal_RF[i_program_Max][i_program_F1]
+		df_programsInfo.loc[program]['MM_RF_SampleSplit'] = file_Minimal_RF[i_program_First][i_program_SampleSplit]
 		df_programsInfo.loc[program]['MM_DT_F1'] = file_Minimal_DT[i_program_Max][i_program_F1]
-		df_programsInfo.loc[program]['MM_KNN_F1'] = file_Minimal_kNN[i_program_Max][i_program_F1]
+		df_programsInfo.loc[program]['MM_DT_SampleSplit'] = file_Minimal_DT[i_program_First][i_program_SampleSplit]
+		df_programsInfo.loc[program]['MM_KNN_F1'] = file_Minimal_KNN[i_program_Max][i_program_F1]
+		df_programsInfo.loc[program]['MM_KNN_SampleSplit'] = file_Minimal_KNN[i_program_First][i_program_SampleSplit]
 		df_programsInfo.loc[program]['MM_SVM_F1'] = file_Minimal_SVM[i_program_Max][i_program_F1]
 		df_programsInfo.loc[program]['MM_LDA_F1'] = file_Minimal_LDA[i_program_Max][i_program_F1]
 		df_programsInfo.loc[program]['MM_LR_F1'] = file_Minimal_LR[i_program_Max][i_program_F1]
 		df_programsInfo.loc[program]['MM_GNB_F1'] = file_Minimal_GNB[i_program_Max][i_program_F1]
 
 		df_programsInfo.loc[program]['EM_RF_F1'] = file_Equivalent_RF[i_program_Max][i_program_F1]
+		df_programsInfo.loc[program]['EM_RF_SampleSplit'] = file_Equivalent_RF[i_program_First][i_program_SampleSplit]
 		df_programsInfo.loc[program]['EM_DT_F1'] = file_Equivalent_DT[i_program_Max][i_program_F1]
-		df_programsInfo.loc[program]['EM_KNN_F1'] = file_Equivalent_kNN[i_program_Max][i_program_F1]
+		df_programsInfo.loc[program]['EM_DT_SampleSplit'] = file_Equivalent_DT[i_program_First][i_program_SampleSplit]
+		df_programsInfo.loc[program]['EM_KNN_F1'] = file_Equivalent_KNN[i_program_Max][i_program_F1]
+		df_programsInfo.loc[program]['EM_KNN_SampleSplit'] = file_Equivalent_KNN[i_program_First][i_program_SampleSplit]
 		df_programsInfo.loc[program]['EM_SVM_F1'] = file_Equivalent_SVM[i_program_Max][i_program_F1]
 		df_programsInfo.loc[program]['EM_LDA_F1'] = file_Equivalent_LDA[i_program_Max][i_program_F1]
 		df_programsInfo.loc[program]['EM_LR_F1'] = file_Equivalent_LR[i_program_Max][i_program_F1]
@@ -446,8 +460,10 @@ def plotMetricsFromBestClassifiersOfEachProgram(df_Programs_BestClassifiers):
 
 		# Set the chart title and axis title
 		#ax.set_title('Metrics for each program with the best classifier - {}'.format(columnName), fontsize = 22)
-		ax.set_xlabel('Programs', fontsize = 16)
-		ax.set_ylabel('F1 Score and Accuracy', fontsize = 16)
+		#ax.set_xlabel('Programs', fontsize = 16)
+		ax.set_xlabel('Programas', fontsize = 16)
+		#ax.set_ylabel('F1 Score and Accuracy', fontsize = 16)
+		ax.set_ylabel('F1 Score e Acurácia', fontsize = 16)
 
 		# Set the boxplot positions
 		#width = 0.2  # the width of the bars
@@ -462,7 +478,8 @@ def plotMetricsFromBestClassifiersOfEachProgram(df_Programs_BestClassifiers):
 		ax.set_xticks([value for value in range(len(programsName))])
 
 		# Set the chart subtitle/legend
-		ax.legend([barChartF1, barChartAccuracy], ['F1 Score', 'Accuracy'], loc='upper center', fontsize='xx-large')
+		#ax.legend([barChartF1, barChartAccuracy], ['F1 Score', 'Accuracy'], loc='upper center', fontsize='xx-large')
+		ax.legend([barChartF1, barChartAccuracy], ['F1 Score', 'Acurácia'], loc='upper center', fontsize='xx-large')
 
 		autolabel(barChartAccuracy, ax, 2)
 		autolabel(barChartF1, ax, 2)
