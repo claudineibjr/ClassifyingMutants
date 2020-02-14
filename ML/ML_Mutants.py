@@ -82,7 +82,7 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 import util
 
-from util import getPossibleClassifiers, getFullNamePossibleClassifiers, getPossibleTargetColumns
+from util import getPossibleClassifiers, getFullNamePossibleClassifiers, getPossibleTargetColumns, getPossibleParameters
 
 def getColumnNames():
 	return ['_IM_PROGRAM', '_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT']
@@ -741,6 +741,7 @@ def classify_main(arguments):
 	executeBestClassifierForProgram = False
 	programsBestClassifiers = None
 	executeAllClassifiers = False
+	executeAllParameters = False
 
 	# Trought into all parameters
 	for iCount in range(1, len(arguments), 1):
@@ -762,10 +763,12 @@ def classify_main(arguments):
 			executeAllClassifiers = True
 		elif arg == '--parameter':
 			algorithmParameter = int(arguments[iCount + 1])
+		elif arg == '--allParameters':
+			executeAllParameters = True
 
 	withoutProgramMessage = 'Please specify the program correctly. The {program} could be ' + str(possiblePrograms)
 	withoutColumnMessage = 'Please specify the target column throught --column {targetColumn}. The {targetColumn} could be ' + str(possibleTargetColumns)
-	withoutClassiferMessage = 'Please specify the classifier to be used throught --classifier {classifier}. The {classifier} could be ' + str(possibleClassifiers)
+	withoutClassifierMessage = 'Please specify the classifier to be used throught --classifier {classifier}. The {classifier} could be ' + str(possibleClassifiers)
 	errorMessage = ''
 
 	if (targetColumn is None or not targetColumn in possibleTargetColumns) and allTargetColumns == False:
@@ -775,7 +778,7 @@ def classify_main(arguments):
 		errorMessage = '{}{}\n'.format(errorMessage, withoutProgramMessage)
 
 	if classifier is None and executeBestClassifierForProgram == False and executeAllClassifiers == False:
-		errorMessage = '{}{}\n'.format(errorMessage, withoutClassiferMessage)
+		errorMessage = '{}{}\n'.format(errorMessage, withoutClassifierMessage)
 
 	if len(errorMessage) > 0:
 		print(errorMessage)
@@ -802,29 +805,36 @@ def classify_main(arguments):
 				classifiers = [classifier]
 
 			for _classifier in classifiers:
-				if _classifier == 'SVM' or _classifier == 'LDA' or _classifier == 'LR' or _classifier == 'GNB':
-					algorithmParameter = None
-				elif _classifier == 'KNN' and column == 'MINIMAL':
-					algorithmParameter = 1
-				elif _classifier == 'KNN' and column == 'EQUIVALENT':
-					algorithmParameter = 11
-				elif _classifier == 'DT' and column == 'MINIMAL':
-					algorithmParameter = 15
-				elif _classifier == 'DT' and column == 'EQUIVALENT':
-					algorithmParameter = 35
-				elif _classifier == 'RF' and column == 'MINIMAL':
-					algorithmParameter = 5
-				elif _classifier == 'RF' and column == 'EQUIVALENT':
-					algorithmParameter = 15
 
-				complementClassifierName = '_{}'.format(_classifier) if executeAllClassifiers else ''
-				newDataSetFileName = '{}/ML/Dataset/{}/Programs/{}.csv'.format(os.getcwd(), column, program)
-				resultDataSetFileName = '{}/ML/Results/{}/Classification/{}{}.csv'.format(os.getcwd(), column, program, complementClassifierName)
+				if executeAllParameters:
+					parameters = getPossibleParameters(_classifier)
+				else:
+					if _classifier == 'SVM' or _classifier == 'LDA' or _classifier == 'LR' or _classifier == 'GNB':
+						parameters = ['']
+					elif _classifier == 'KNN' and column == 'MINIMAL':
+						parameters = [1]
+					elif _classifier == 'KNN' and column == 'EQUIVALENT':
+						parameters = [11]
+					elif _classifier == 'DT' and column == 'MINIMAL':
+						parameters = [15]
+					elif _classifier == 'DT' and column == 'EQUIVALENT':
+						parameters = [35]
+					elif _classifier == 'RF' and column == 'MINIMAL':
+						parameters = [5]
+					elif _classifier == 'RF' and column == 'EQUIVALENT':
+						parameters = [15]
 
-				print('Program: {} | Column: {} | Classifier: {} | Parameter: {}'.format(program, column, _classifier, algorithmParameter))
-				classify(newDataSetFileName, resultDataSetFileName, column, _classifier, algorithmParameter, program)
+				
+				for parameter in parameters:
+					complementClassifierName = '_{}'.format(_classifier) if executeAllClassifiers else ''
+					complementClassifierName = '{baseName}{parameter}'.format(baseName = complementClassifierName, parameter = '_{}'.format(parameter) if executeAllParameters else '')
+					dataSetFileName = '{}/ML/Dataset/{}/Programs/{}.csv'.format(os.getcwd(), column, program)
+					resultDataSetFileName = '{baseFolder}/ML/Results/{targetColumn}/Classification/{programName}{complement}.csv'.format(baseFolder = os.getcwd(), targetColumn = column, programName = program, complement = complementClassifierName)
+
+					print('\n\nProgram: {} | Column: {} | Classifier: {} | Parameter: {}'.format(program, column, _classifier, parameter))
+					classify(dataSetFileName, resultDataSetFileName, column, _classifier, parameter, program)
 
 if __name__ == '__main__':
 	#debug_main(sys.argv)
-	classify_main(sys.argv)
+	#classify_main(sys.argv)
 	sys.exit()

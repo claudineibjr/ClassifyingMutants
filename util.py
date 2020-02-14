@@ -42,6 +42,16 @@ def getColumnNames_lastMinimal():
 def getColumnNames_lastEquivalent():
 	return ['_IM_PROGRAM', '_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT']
 
+def getPossibleParameters(classifier):
+    if classifier == 'KNN':
+        return [value for value in range(1, 41, 1)]
+    elif classifier == 'RF':
+        return [value for value in range(5, 96, 10)]
+    elif classifier == 'DT':
+        return [value for value in range(5, 96, 10)]
+    else:
+        return ['']
+
 def pathExists(fileName):
     return os.path.exists(fileName)
 
