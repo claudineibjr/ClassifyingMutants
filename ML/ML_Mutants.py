@@ -824,17 +824,17 @@ def classify_main(arguments):
 					elif _classifier == 'RF' and column == 'EQUIVALENT':
 						parameters = [15]
 
-				
 				for parameter in parameters:
 					complementClassifierName = '_{}'.format(_classifier) if executeAllClassifiers else ''
 					complementClassifierName = '{baseName}{parameter}'.format(baseName = complementClassifierName, parameter = '_{}'.format(parameter) if executeAllParameters else '')
 					dataSetFileName = '{}/ML/Dataset/{}/Programs/{}.csv'.format(os.getcwd(), column, program)
 					resultDataSetFileName = '{baseFolder}/ML/Results/{targetColumn}/Classification/{programName}{complement}.csv'.format(baseFolder = os.getcwd(), targetColumn = column, programName = program, complement = complementClassifierName)
 
-					print('\n\nProgram: {} | Column: {} | Classifier: {} | Parameter: {}'.format(program, column, _classifier, parameter))
-					classify(dataSetFileName, resultDataSetFileName, column, _classifier, parameter, program)
+					print('\nProgram: {} | Column: {} | Classifier: {} | Parameter: {}'.format(program, column, _classifier, parameter))
+					if parameter != '':
+						classify(dataSetFileName, resultDataSetFileName, column, _classifier, parameter, program)
 
-if __name__ == '__main__':
+if __name__ == '__main__':	
 	#debug_main(sys.argv)
-	#classify_main(sys.argv)
+	classify_main(sys.argv)
 	sys.exit()

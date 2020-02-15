@@ -38,6 +38,7 @@ from Analyzes.analyzesUtil import autolabel, barChartProperties, getProgramsHead
 from Analyzes.analyze30Runs import plotRunsResult, plotRunsDetailed, getRunsOnlyFromBestParameter, getRunsFromCustomParameters, summarizeRunsFromCustomParameter
 from Analyzes.analyzeMetricsFromProgram import plotMetricsFromProgram
 from Analyzes.analyzeClassifiersProgramAProgram import plotClassifiersProgramAProgram
+from Analyzes.analyzeClassificationsFromEachProgram import getBestParameterForEachClassificationOfPrograms, getMLMetricsFromClassificationFile, getBestClassifierForEachProgram
 
 def setUp():
 	possibleTargetColumns = ['MINIMAL', 'EQUIVALENT']
@@ -395,11 +396,11 @@ def getBestClassifierForPrograms(program = None, targetColumn = None, write = Tr
 						y_correct = classificationResult.loc[ : , '_IM_{}'.format(_column)].values
 						y_predicted = classificationResult.loc[ : , 'PREDICTED'].values
 
-						#accuracy, precision, recall, f1, TPR, FPR, TP, FN, FP, TN = evaluatingClassification(y_correct, y_predicted)		
+						#accuracy, precision, recall, f1, TPR, FPR, TP, FN, FP, TN = evaluatingClassification(y_correct, y_predicted)
 						accuracy, precision, recall, f1, _, _, _, _, _, _ = evaluatingClassification(y_correct, y_predicted)
 
 						#print('Program: {} | Column: {} | Classifier: {} | Accuracy: {} | Precision: {} | Recall: {} | F1: {}'.format(programName, _column, classifier, accuracy, precision, recall, f1))
-						newDataFrame = pd.DataFrame(data=[[programName, _column, classifier, accuracy * 100, precision * 100, recall * 100, f1 * 100]], columns=['ProgramName', 'Column', 'Classifier', 'Accuracy', 'Precision', 'Recall', 'F1'])
+						newDataFrame = pd.DataFrame(data=[[programName, _column, classifier, accuracy * 100, precision * 100, recall * 100, f1 * 100]], columns=['ProgramName', 'Column', 'Classifier', 'Parameter', 'Accuracy', 'Precision', 'Recall', 'F1'])
 						df_Program_Classifiers_Metrics = df_Program_Classifiers_Metrics.append(newDataFrame)
 
 				df_Program_Metrics_AllClassifiers = df_Program_Metrics_AllClassifiers.append(df_Program_Classifiers_Metrics.sort_values('F1', ascending=False))
@@ -411,7 +412,7 @@ def getBestClassifierForPrograms(program = None, targetColumn = None, write = Tr
 
 			# Save the dataframe into file if is specified to read all program files
 			if mustWrite:
-				fileName = '{}/Metrics.csv'.format(baseFolder)
+				fileName = '{}/ML_Metrics.csv'.format(baseFolder)
 				fileNameAllClassifiers = '{}/Metrics_AllClassifiers.csv'.format(baseFolder)
 				if not util.pathExists(fileName) or overwrite:
 					util.writeDataFrameInCsvFile(fileName, df_Program_Metrics_BestClassifier)
@@ -419,7 +420,7 @@ def getBestClassifierForPrograms(program = None, targetColumn = None, write = Tr
 	else:
 		for _column in columns:
 			baseFolder = '{}/ML/Results/{}/Classification'.format(os.getcwd(), _column)
-			fileName = '{}/Metrics.csv'.format(baseFolder)
+			fileName = '{}/ML_Metrics.csv'.format(baseFolder)
 
 			df_Programs_BestClassifiers = df_Programs_BestClassifiers.append(util.createDataFrameFromCSV(fileName, True))
 
@@ -489,7 +490,7 @@ def plotMetricsFromBestClassifiersOfEachProgram(df_Programs_BestClassifiers):
 		# Display chart
 		plt.show()
 
-def analyzeClassificationsFromEachProgram(targetColumn, possiblePrograms, overwrite = False):
+def analyzeClassificationsFromEachProgram(targetColumn, possiblePrograms, bestProgram_Classifier, overwrite = False):
 	'''
 		Função responsável por fazer a análise dos resultados das classificações dos mutantes dos programas e obter as métricas para cada programa
 	'''	
@@ -506,23 +507,21 @@ def analyzeClassificationsFromEachProgram(targetColumn, possiblePrograms, overwr
 			programName = programName[ : programName.find('.')]
 			
 			if programName in possiblePrograms:
-				classificationResult = util.createDataFrameFromCSV(file, hasHeader = True)
-				
-				y_correct = classificationResult.loc[ : , '_IM_{}'.format(targetColumn)].values
-				y_predicted = classificationResult.loc[ : , 'RESULT'].values
+				programInfo_ClassifierParameter = bestProgram_Classifier.query('Column == \'{}\' and Program == \'{}\''.format(targetColumn, programName))
+				classifier = programInfo_ClassifierParameter['Classifier'].values[0]
+				parameter = programInfo_ClassifierParameter['Parameter'].values[0]
 
-				accuracy, precision, recall, f1, TPR, FPR, TP, FN, FP, TN = evaluatingClassification(y_correct, y_predicted)
-
-				newMutantsMetrics = pd.DataFrame(data=[[programName, accuracy, precision, recall, f1]], columns=['ProgramName', 'Accuracy', 'Precision', 'Recall', 'F1'])
+				accuracy, precision, recall, f1 = getMLMetricsFromClassificationFile(file, targetColumn, programName)
+				newMutantsMetrics = pd.DataFrame(data=[[programName, targetColumn, classifier, parameter, accuracy * 100, precision * 100, recall * 100, f1 * 100]], columns=['ProgramName', 'Column', 'Classifier', 'Parameter', 'Accuracy', 'Precision', 'Recall', 'F1'])	
 				mutantsMetrics = mutantsMetrics.append(newMutantsMetrics)
 
-				#print('Program: {}\t\tAccuracy: {} | Precision: {} | Recall: {} | F1: {}'.format(programName, accuracy, precision, recall, f1))
+				#print('Program: {}\tClassifier: {} | Parameter: {}\t\tAccuracy: {} | Precision: {} | Recall: {} | F1: {}'.format(programName, classifier, parameter, accuracy, precision, recall, f1))
 
 		util.writeDataFrameInCsvFile(metricsFile, mutantsMetrics)
 
 		return mutantsMetrics
 	elif util.pathExists(metricsFile):
-		return util.createDataFrameFromCSV(metricsFile, True)	
+		return util.createDataFrameFromCSV(metricsFile, True)
 
 def summarizeClassifications(targetColumn, possiblePrograms, df_Programs_BestClassifiers, overwrite = False):
 	'''
@@ -683,11 +682,13 @@ if __name__ == '__main__':
 	#df_Programs_BestClassifiers = getBestClassifierForPrograms(overwrite=True)
 	#plotMetricsFromBestClassifiersOfEachProgram(df_Programs_BestClassifiers)
 	
-	# ---------------------------------------------
 	# --- File analysis with classified mutant data
-	#minimalMutantsMetrics = analyzeClassificationsFromEachProgram(possibleTargetColumns[0], possiblePrograms, True)
-	#equivalentMutantsMetrics = analyzeClassificationsFromEachProgram(possibleTargetColumns[1], possiblePrograms, True)
-	
+	#bestProgram_Classifier_Parameters = getBestParameterForEachClassificationOfPrograms(possibleTargetColumns, possiblePrograms, possibleClassifiers)
+	#bestProgram_Classifier = getBestClassifierForEachProgram(possibleTargetColumns, possiblePrograms, possibleClassifiers, bestProgram_Classifier_Parameters)
+
+	#minimalMutantsMetrics = analyzeClassificationsFromEachProgram(possibleTargetColumns[0], possiblePrograms, bestProgram_Classifier, True)
+	#equivalentMutantsMetrics = analyzeClassificationsFromEachProgram(possibleTargetColumns[1], possiblePrograms, bestProgram_Classifier, True)
+
 	# --------------------------------------------------------
 	# --- File analysis with summarized classified mutant data
 	#minimalsMutantsData = summarizeClassifications(possibleTargetColumns[0], possiblePrograms, df_Programs_BestClassifiers, True)

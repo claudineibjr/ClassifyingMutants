@@ -90,10 +90,14 @@ def evaluatingClassification(y_test, y_pred):
 	##################################
 	#   For evaluating an algorithm, confusion matrix, precision, recall and f1 score are the most commonly used metrics. The confusion_matrix and classification_report methods of the sklearn.metrics can be used to calculate these metrics. Take a look at the following script:
 	confusionMatrix = confusion_matrix(y_test, y_pred)
-	TP = confusionMatrix[1][1]  # True Positives	=COUNTIFS(P2:P50000, 1, O2:O50000, 1)
-	FN = confusionMatrix[1][0]  # False Negatives	=COUNTIFS(P2:P50000, 0, O2:O50000, 1)
-	FP = confusionMatrix[0][1]  # False Positives	=COUNTIFS(P2:P50000, 1, O2:O50000, 0)
-	TN = confusionMatrix[0][0]  # True Negatives	=COUNTIFS(P2:P50000, 0, O2:O50000, 0)
+	# =COUNTIFS(P2:P50000, 1, O2:O50000, 1)
+	TP = confusionMatrix[1][1]  # True Positives	
+	# =COUNTIFS(P2:P50000, 0, O2:O50000, 1)
+	FN = confusionMatrix[1][0]  # False Negatives	
+	# =COUNTIFS(P2:P50000, 1, O2:O50000, 0)
+	FP = confusionMatrix[0][1]  # False Positives	
+	# =COUNTIFS(P2:P50000, 0, O2:O50000, 0)
+	TN = confusionMatrix[0][0]  # True Negatives
 
 	#print(confusionMatrix)
 	#print('TP: {} | FN: {} | FP: {} | TN: {}'.format(TP, FN, FP, TN))
@@ -108,7 +112,8 @@ def evaluatingClassification(y_test, y_pred):
 	# --- Accuracy
 	#   Provide general information about how many samples are misclassified.
 	#    Accuracy is calculated as the sum of correct predictions divided by the total number of predictions
-	accuracy = (TP + TN) / (FP + FN + TP + TN)	# =((S2 + V2) / (U2 + T2 + S2 + V2)) * 100
+	# =((S2 + V2) / (U2 + T2 + S2 + V2)) * 100
+	accuracy = (TP + TN) / (FP + FN + TP + TN)
 	
 	#########################
 	# --- False Positive Rate
@@ -124,12 +129,15 @@ def evaluatingClassification(y_test, y_pred):
 	#   Precision (PRE) and recall (REC) are performance metrics that are related to those
 	#    true positive and true negative rates, and in fact, recall is synonymous to the true
 	#    positive rate.
-	precision = (TP) / (TP + FP)	# =((S2) / (S2 + U2)) * 100
-	recall = (TP) / (FN + TP)	# =((S2) / (T2 + S2)) * 100
+	# =((S2) / (S2 + U2)) * 100
+	precision = (TP) / (TP + FP)
+	# =((S2) / (T2 + S2)) * 100
+	recall = (TP) / (FN + TP)
 	
 	########
 	# --- F1
 	#   In practice, often a combination of precision and recall is used, the so-called F1-score.
-	f1 = 2 * ((precision * recall) / (precision + recall))	# =2 * ((X2 * Y2) / (X2 + Y2))
+	# =2 * ((X2 * Y2) / (X2 + Y2))
+	f1 = 2 * ((precision * recall) / (precision + recall))
 
 	return accuracy, precision, recall, f1, TPR, FPR, TP, FN, FP, TN
