@@ -496,6 +496,7 @@ def analyzeClassificationsFromEachProgram(targetColumn, possiblePrograms, bestPr
 	'''	
 	baseFolder = '{}/ML/Results/{}/Classification'.format(os.getcwd(), targetColumn)
 	fileName = 'ML_Metrics'
+	# Falta criar o arquivo '{}/Metrics_AllClassifiers.csv'.format(baseFolder) neste arquivo
 	metricsFile = '{}/ML/Results/{}/Classification/{}.csv'.format(os.getcwd(), targetColumn, fileName)
 
 	mutantsMetrics = pd.DataFrame()
@@ -517,11 +518,19 @@ def analyzeClassificationsFromEachProgram(targetColumn, possiblePrograms, bestPr
 
 				#print('Program: {}\tClassifier: {} | Parameter: {}\t\tAccuracy: {} | Precision: {} | Recall: {} | F1: {}'.format(programName, classifier, parameter, accuracy, precision, recall, f1))
 
+		mutantsMetrics['ProgramName.UPPER'] = mutantsMetrics["ProgramName"].str.upper()
+		mutantsMetrics = mutantsMetrics.sort_values(by=['Column', 'ProgramName.UPPER'])
+		del mutantsMetrics['ProgramName.UPPER']
+		
 		util.writeDataFrameInCsvFile(metricsFile, mutantsMetrics)
-
-		return mutantsMetrics
 	elif util.pathExists(metricsFile):
-		return util.createDataFrameFromCSV(metricsFile, True)
+		mutantsMetrics = util.createDataFrameFromCSV(metricsFile, True)
+		
+		mutantsMetrics['ProgramName.UPPER'] = mutantsMetrics["ProgramName"].str.upper()
+		mutantsMetrics = mutantsMetrics.sort_values(by=['Column', 'ProgramName.UPPER'])
+		del mutantsMetrics['ProgramName.UPPER']
+
+	return mutantsMetrics
 
 def summarizeClassifications(targetColumn, possiblePrograms, df_Programs_BestClassifiers, overwrite = False):
 	'''

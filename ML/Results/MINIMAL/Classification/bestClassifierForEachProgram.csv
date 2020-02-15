@@ -1,4 +1,5 @@
 ,Column,Program,Classifier,Parameter
+<<<<<<< HEAD
 0,MINIMAL,lastZero,DT,25
 0,MINIMAL,countPositive,KNN,12
 0,MINIMAL,Calculation,DT,85
@@ -26,3 +27,32 @@
 0,MINIMAL,tcas,RF,95
 0,MINIMAL,date-plus,DT,35
 0,MINIMAL,oddOrPos,RF,15
+=======
+0,MINIMAL,cal,RF,25
+0,MINIMAL,Calculation,DT,85
+0,MINIMAL,checkIt,DT,15
+0,MINIMAL,CheckPalindrome,RF,5
+0,MINIMAL,countPositive,KNN,12
+0,MINIMAL,date-plus,DT,35
+0,MINIMAL,DigitReverser,KNN,9
+0,MINIMAL,findLast,KNN,4
+0,MINIMAL,findVal,RF,25
+0,MINIMAL,Heap,RF,65
+0,MINIMAL,InversePermutation,DT,15
+0,MINIMAL,jday-jdate,RF,5
+0,MINIMAL,lastZero,DT,25
+0,MINIMAL,LRS,SVM,
+0,MINIMAL,MergeSort,DT,75
+0,MINIMAL,numZero,GNB,
+0,MINIMAL,oddOrPos,RF,15
+0,MINIMAL,power,KNN,14
+0,MINIMAL,printPrimes,DT,75
+0,MINIMAL,quicksort,RF,85
+0,MINIMAL,RecursiveSelectionSort,DT,15
+0,MINIMAL,sum,LR,
+0,MINIMAL,tcas,RF,95
+0,MINIMAL,testPad,SVM,
+0,MINIMAL,trashAndTakeOut,KNN,40
+0,MINIMAL,twoPred,RF,95
+0,MINIMAL,UnixCal,LDA,
+>>>>>>> Implementation to search for the best parameter among the classifier parameters and also the best classifier among the program classifiers

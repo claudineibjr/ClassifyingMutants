@@ -89,11 +89,25 @@ def getBestClassifierForEachProgram(possibleTargetColumns, possiblePrograms, pos
 					copyfile(bestFile, newFile)
 			
 			# Escreve o arquivo
+<<<<<<< HEAD
+=======
+			bestProgram_Classifier['Program.UPPER'] = bestProgram_Classifier["Program"].str.upper()
+			bestProgram_Classifier = bestProgram_Classifier.sort_values(by=['Column', 'Program.UPPER'])
+			del bestProgram_Classifier['Program.UPPER']
+
+>>>>>>> Implementation to search for the best parameter among the classifier parameters and also the best classifier among the program classifiers
 			util.writeDataFrameInCsvFile(fileName, bestProgram_Classifier.query('Column == \'{}\''.format(targetColumn)))
 		else:
 			newBestProgram_Classifier = util.createDataFrameFromCSV(fileName, hasHeader=True, columnIndex=0)
 			bestProgram_Classifier = pd.concat([bestProgram_Classifier, newBestProgram_Classifier])
 
+<<<<<<< HEAD
+=======
+			bestProgram_Classifier['Program.UPPER'] = bestProgram_Classifier["Program"].str.upper()
+			bestProgram_Classifier = bestProgram_Classifier.sort_values(by=['Column', 'Program.UPPER'])
+			del bestProgram_Classifier['Program.UPPER']
+
+>>>>>>> Implementation to search for the best parameter among the classifier parameters and also the best classifier among the program classifiers
 	return bestProgram_Classifier
 
 
@@ -138,9 +152,23 @@ def getBestParameterForEachClassificationOfPrograms(possibleTargetColumn, possib
 						copyfile(bestFile, newFile)
 			
 			# Escreve o arquivo
+<<<<<<< HEAD
+=======
+			bestProgram_Classifier_Parameters['Program.UPPER'] = bestProgram_Classifier_Parameters["Program"].str.upper()
+			bestProgram_Classifier_Parameters = bestProgram_Classifier_Parameters.sort_values(by=['Column', 'Program.UPPER'])
+			del bestProgram_Classifier_Parameters['Program.UPPER']
+
+>>>>>>> Implementation to search for the best parameter among the classifier parameters and also the best classifier among the program classifiers
 			util.writeDataFrameInCsvFile(fileName, bestProgram_Classifier_Parameters.query('Column == \'{}\''.format(targetColumn)))
 		else:
 			newBestProgram_Classifier_Parameters = util.createDataFrameFromCSV(fileName, hasHeader=True, columnIndex=0)
 			bestProgram_Classifier_Parameters = pd.concat([bestProgram_Classifier_Parameters, newBestProgram_Classifier_Parameters])
+<<<<<<< HEAD
+=======
+			
+			bestProgram_Classifier_Parameters['Program.UPPER'] = bestProgram_Classifier_Parameters["Program"].str.upper()
+			bestProgram_Classifier_Parameters = bestProgram_Classifier_Parameters.sort_values(by=['Column', 'Program.UPPER'])
+			del bestProgram_Classifier_Parameters['Program.UPPER']
+>>>>>>> Implementation to search for the best parameter among the classifier parameters and also the best classifier among the program classifiers
 
 	return bestProgram_Classifier_Parameters
