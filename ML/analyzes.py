@@ -280,11 +280,11 @@ def analyzeMetricsFromProgram(metricsFromProgram, possibleClassifiers, plot = Fa
 	'''
 
 	# Remove useless columns
-	metricsFromProgram = metricsFromProgram.drop(['', 'Functions', 'Line of Code', 'Mutants', 'Minimals', '%', 'Equivalents', 'Test Cases'], axis=1)
+	metricsFromProgram = metricsFromProgram.drop(['', 'Functions', 'Line of Code', 'Mutants', 'Minimals', '%', 'Equivalents', 'Test Cases', 'MM_RF_SampleSplit', 'MM_DT_SampleSplit', 'MM_KNN_SampleSplit', 'EM_RF_SampleSplit', 'EM_DT_SampleSplit', 'EM_KNN_SampleSplit'], axis=1)
 
 
-	minimalMetrics = metricsFromProgram.drop(['EM_RF_F1', 'EM_RF_SampleSplit', 'EM_DT_F1', 'EM_DT_SampleSplit', 'EM_KNN_F1', 'EM_KNN_SampleSplit', 'EM_SVM_F1', 'EM_LDA_F1', 'EM_LR_F1', 'EM_GNB_F1'], axis = 1)
-	equivalentMetrics = metricsFromProgram.drop(['MM_RF_F1', 'MM_RF_SampleSplit', 'MM_DT_F1', 'MM_DT_SampleSplit', 'MM_KNN_F1', 'MM_KNN_SampleSplit', 'MM_SVM_F1', 'MM_LDA_F1', 'MM_LR_F1', 'MM_GNB_F1'], axis = 1)
+	minimalMetrics = metricsFromProgram.drop(['EM_RF_F1', 'EM_DT_F1', 'EM_KNN_F1', 'EM_SVM_F1', 'EM_LDA_F1', 'EM_LR_F1', 'EM_GNB_F1'], axis = 1)
+	equivalentMetrics = metricsFromProgram.drop(['MM_RF_F1', 'MM_DT_F1', 'MM_KNN_F1', 'MM_SVM_F1', 'MM_LDA_F1', 'MM_LR_F1', 'MM_GNB_F1'], axis = 1)
 
 	# Iter trough Dataframes and add the max value for each program in the dictionary
 	programsBestMetrics = dict()
@@ -686,19 +686,19 @@ if __name__ == '__main__':
 	# --- Get informations from programs
 	#basicProgramsInfo = getProgramsInfo()
 	#programsInfo = getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, basicProgramsInfo, writeMetrics=True, bestParameter=True)
-	#programsBestMetrics = analyzeMetricsFromProgram(programsInfo, possibleClassifiers, plot=False)
+	#programsBestMetrics = analyzeMetricsFromProgram(programsInfo, possibleClassifiers)
 	
 	#metricsFromClassifier = analyzeClassifiersProgramAProgram(programsInfo, possibleClassifiers, plot=True)
-	
-	#df_Programs_BestClassifiers = getBestClassifierForPrograms(overwrite=True)
-	#plotMetricsFromBestClassifiersOfEachProgram(df_Programs_BestClassifiers)
-	
+
 	# --- File analysis with classified mutant data
 	#bestProgram_Classifier_Parameters = getBestParameterForEachClassificationOfPrograms(possibleTargetColumns, possiblePrograms, possibleClassifiers)
 	#bestProgram_Classifier = getBestClassifierForEachProgram(possibleTargetColumns, possiblePrograms, possibleClassifiers, bestProgram_Classifier_Parameters)
 
 	#minimalMutantsMetrics = analyzeClassificationsFromEachProgram(possibleTargetColumns[0], possiblePrograms, bestProgram_Classifier)
 	#equivalentMutantsMetrics = analyzeClassificationsFromEachProgram(possibleTargetColumns[1], possiblePrograms, bestProgram_Classifier)
+
+	#df_Programs_BestClassifiers = pd.concat([minimalMutantsMetrics, equivalentMutantsMetrics])
+	#plotMetricsFromBestClassifiersOfEachProgram(df_Programs_BestClassifiers)
 
 	# --------------------------------------------------------
 	# --- File analysis with summarized classified mutant data
