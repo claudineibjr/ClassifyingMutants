@@ -479,8 +479,8 @@ def plotMetricsFromBestClassifiersOfEachProgram(df_Programs_BestClassifiers):
 		ax.set_xticks([value for value in range(len(programsName))])
 
 		# Set the chart subtitle/legend
-		#ax.legend([barChartF1, barChartAccuracy], ['F1 Score', 'Accuracy'], loc='upper center', fontsize='xx-large')
-		ax.legend([barChartF1, barChartAccuracy], ['F1 Score', 'Acurácia'], loc='upper center', fontsize='xx-large')
+		#ax.legend([barChartF1, barChartAccuracy], ['F1 Score', 'Accuracy'], loc='best', fontsize='xx-large')
+		ax.legend([barChartF1, barChartAccuracy], ['F1 Score', 'Acurácia'], loc='best', fontsize='xx-large')
 
 		autolabel(barChartAccuracy, ax, 2)
 		autolabel(barChartF1, ax, 2)
@@ -695,8 +695,8 @@ if __name__ == '__main__':
 	#bestProgram_Classifier_Parameters = getBestParameterForEachClassificationOfPrograms(possibleTargetColumns, possiblePrograms, possibleClassifiers)
 	#bestProgram_Classifier = getBestClassifierForEachProgram(possibleTargetColumns, possiblePrograms, possibleClassifiers, bestProgram_Classifier_Parameters)
 
-	#minimalMutantsMetrics = analyzeClassificationsFromEachProgram(possibleTargetColumns[0], possiblePrograms, bestProgram_Classifier, True)
-	#equivalentMutantsMetrics = analyzeClassificationsFromEachProgram(possibleTargetColumns[1], possiblePrograms, bestProgram_Classifier, True)
+	#minimalMutantsMetrics = analyzeClassificationsFromEachProgram(possibleTargetColumns[0], possiblePrograms, bestProgram_Classifier)
+	#equivalentMutantsMetrics = analyzeClassificationsFromEachProgram(possibleTargetColumns[1], possiblePrograms, bestProgram_Classifier)
 
 	# --------------------------------------------------------
 	# --- File analysis with summarized classified mutant data
