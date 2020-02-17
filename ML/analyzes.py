@@ -283,8 +283,8 @@ def analyzeMetricsFromProgram(metricsFromProgram, possibleClassifiers, plot = Fa
 	metricsFromProgram = metricsFromProgram.drop(['', 'Functions', 'Line of Code', 'Mutants', 'Minimals', '%', 'Equivalents', 'Test Cases'], axis=1)
 
 
-	minimalMetrics = metricsFromProgram.drop(['EM_RF_F1', 'EM_DT_F1', 'EM_KNN_F1', 'EM_SVM_F1', 'EM_LDA_F1', 'EM_LR_F1', 'EM_GNB_F1'], axis = 1)
-	equivalentMetrics = metricsFromProgram.drop(['MM_RF_F1', 'MM_DT_F1', 'MM_KNN_F1', 'MM_SVM_F1', 'MM_LDA_F1', 'MM_LR_F1', 'MM_GNB_F1'], axis = 1)
+	minimalMetrics = metricsFromProgram.drop(['EM_RF_F1', 'EM_RF_SampleSplit', 'EM_DT_F1', 'EM_DT_SampleSplit', 'EM_KNN_F1', 'EM_KNN_SampleSplit', 'EM_SVM_F1', 'EM_LDA_F1', 'EM_LR_F1', 'EM_GNB_F1'], axis = 1)
+	equivalentMetrics = metricsFromProgram.drop(['MM_RF_F1', 'MM_RF_SampleSplit', 'MM_DT_F1', 'MM_DT_SampleSplit', 'MM_KNN_F1', 'MM_KNN_SampleSplit', 'MM_SVM_F1', 'MM_LDA_F1', 'MM_LR_F1', 'MM_GNB_F1'], axis = 1)
 
 	# Iter trough Dataframes and add the max value for each program in the dictionary
 	programsBestMetrics = dict()
@@ -335,12 +335,13 @@ def analyzeClassifiersProgramAProgram(metricsFromProgram, possibleClassifiers, p
 		programDataFrame = pd.DataFrame() #Dataframe containing all the classifiers for the program and due F1 for this classifiers
 		for key, value in values.iteritems():
 			classifier = key[key.index('_') + 1 : ]
-			column = 'EQUIVALENT' if key[ : key.index('_')] == 'EM' else 'MINIMAL'
-			f1 = float(value)
-			
-			newDataFrame = pd.DataFrame(data=[[ classifier, column, program, f1 ]], columns=['Classifier', 'Column', 'Program', 'F1'])
-			programDataFrame = programDataFrame.append(newDataFrame)
-			metricsFromClassifier = metricsFromClassifier.append(newDataFrame)
+			if not classifier.__contains__('SampleSplit'):
+				column = 'EQUIVALENT' if key[ : key.index('_')] == 'EM' else 'MINIMAL'
+				f1 = float(value)
+				
+				newDataFrame = pd.DataFrame(data=[[ classifier, column, program, f1 ]], columns=['Classifier', 'Column', 'Program', 'F1'])
+				programDataFrame = programDataFrame.append(newDataFrame)
+				metricsFromClassifier = metricsFromClassifier.append(newDataFrame)
 
 	if plot:
 		plotClassifiersProgramAProgram(metricsFromClassifier, possibleClassifiers)
@@ -683,7 +684,8 @@ if __name__ == '__main__':
 	
 	# ----------------------------------
 	# --- Get informations from programs
-	#programsInfo = getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, getProgramsInfo(), writeMetrics=True, bestParameter=True)
+	#basicProgramsInfo = getProgramsInfo()
+	#programsInfo = getMetricsFromPrograms(possibleTargetColumns, possibleClassifiers, basicProgramsInfo, writeMetrics=True, bestParameter=True)
 	#programsBestMetrics = analyzeMetricsFromProgram(programsInfo, possibleClassifiers, plot=False)
 	
 	#metricsFromClassifier = analyzeClassifiersProgramAProgram(programsInfo, possibleClassifiers, plot=True)
