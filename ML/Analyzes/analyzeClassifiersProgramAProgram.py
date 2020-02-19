@@ -63,7 +63,8 @@ def plotClassifiersProgramAProgram(metricsFromClassifier, possibleClassifiers, m
 
 	# Set the chart title and axis title
 	#ax.set_title('axes title', fontsize = 14)
-	ax.set_xlabel('\nClassifiers', fontsize = 22)
+	#ax.set_xlabel('\nClassifiers', fontsize = 22)
+	ax.set_xlabel('\nClassificadores', fontsize = 22)
 	ax.set_ylabel('F1 Score', fontsize = 22)
 
 	#Box width
@@ -104,7 +105,8 @@ def plotClassifiersProgramAProgram(metricsFromClassifier, possibleClassifiers, m
 	ax.set_xticks([value + (boxWidth / 2) for value in ax.get_xticks() if value % 2 == 0])
 
 	# Set the chart subtitle/legend
-	ax.legend([bpMM["boxes"][0], bpEM["boxes"][0]], ['Minimal Mutants', 'Equivalent Mutants'], loc='lower right', fontsize='xx-large')
+	#ax.legend([bpMM["boxes"][0], bpEM["boxes"][0]], ['Minimal Mutants', 'Equivalent Mutants'], loc='best', fontsize='xx-large')
+	ax.legend([bpMM["boxes"][0], bpEM["boxes"][0]], ['Mutantes Minimais', 'Mutantes Equivalentes'], loc='best', fontsize='xx-large')
 
 	fig.tight_layout()
 
