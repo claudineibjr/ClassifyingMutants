@@ -76,477 +76,636 @@ from ML.Analyzes.analyzesUtil import evaluatingClassification
 
 # --------
 # --- Util
-import os,sys,inspect
-current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+import os, sys, inspect
+current_dir = os.path.dirname(
+    os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 import util
 
 from util import getPossibleClassifiers, getFullNamePossibleClassifiers, getPossibleTargetColumns, getPossibleParameters
 
+
 def getColumnNames():
-	return ['_IM_PROGRAM', '_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT']
+    return [
+        '_IM_PROGRAM', '_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC',
+        '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN',
+        '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG',
+        '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG',
+        '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT'
+    ]
+
 
 def getColumnNames_lastMinimal():
-	return ['_IM_PROGRAM', '_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_EQUIVALENT', '_IM_MINIMAL']
+    return [
+        '_IM_PROGRAM', '_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC',
+        '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN',
+        '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG',
+        '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG',
+        '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_EQUIVALENT', '_IM_MINIMAL'
+    ]
+
 
 def getColumnNames_lastEquivalent():
-	return ['_IM_PROGRAM', '_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC', '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN', '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG', '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG', '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT']
+    return [
+        '_IM_PROGRAM', '_IM_OPERATOR', '_IM_SOURCE_PRIMITIVE_ARC',
+        '_IM_TARGET_PRIMITIVE_ARC', '_IM_DISTANCE_BEGIN_MIN',
+        '_IM_DISTANCE_BEGIN_MAX', '_IM_DISTANCE_BEGIN_AVG',
+        '_IM_DISTANCE_END_MIN', '_IM_DISTANCE_END_MAX', '_IM_DISTANCE_END_AVG',
+        '_IM_COMPLEXITY', '_IM_TYPE_STATEMENT', '_IM_MINIMAL', '_IM_EQUIVALENT'
+    ]
+
 
 def getPossiblePrograms():
-	possiblePrograms = [util.getPathName(program) for program in util.getPrograms('{}/Programs'.format(os.getcwd()))]
-	return possiblePrograms
+    possiblePrograms = [
+        util.getPathName(program)
+        for program in util.getPrograms('{}/Programs'.format(os.getcwd()))
+    ]
+    return possiblePrograms
+
 
 def importDataSet(fileName, showHeadDataSet=False):
-	############################
-	# --- Importing the dataSet
-	url = fileName
+    ############################
+    # --- Importing the dataSet
+    url = fileName
 
-	# --- Read dataSet to pandas dataframe
-	dataSet = pd.read_csv(url)
+    # --- Read dataSet to pandas dataframe
+    dataSet = pd.read_csv(url)
 
-	if showHeadDataSet:
-		# --- To see what the dataSet actually looks like, execute the following command
-		print(dataSet.head())
+    if showHeadDataSet:
+        # --- To see what the dataSet actually looks like, execute the following command
+        print(dataSet.head())
 
-	return dataSet
+    return dataSet
 
-def preProcessing(dataSetFrame, targetColumn, columnNames, columnsToDrop, columnsToAdd, allOperators = None, allTypeStatement = None, groupByTargetColumn = True):
-	####################
-	# --- Preprocessing
 
-	# Add or remove due columns
-	if len(columnsToDrop) > 0:
-		dataSetFrame = dataSetFrame.drop(columnsToDrop, axis = 1)
-	elif len(columnsToAdd) > 0:
-		for column in columnNames:
-			if column not in columnsToAdd and len(column) > 1 and column != '_IM_MINIMAL' and column != '_IM_EQUIVALENT':
-				dataSetFrame = dataSetFrame.drop(column, axis = 1)
+def preProcessing(dataSetFrame,
+                  targetColumn,
+                  columnNames,
+                  columnsToDrop,
+                  columnsToAdd,
+                  allOperators=None,
+                  allTypeStatement=None,
+                  groupByTargetColumn=True):
+    ####################
+    # --- Preprocessing
 
-	numProperties = len(dataSetFrame.columns) - 1
+    # Add or remove due columns
+    if len(columnsToDrop) > 0:
+        dataSetFrame = dataSetFrame.drop(columnsToDrop, axis=1)
+    elif len(columnsToAdd) > 0:
+        for column in columnNames:
+            if column not in columnsToAdd and len(
+                    column
+            ) > 1 and column != '_IM_MINIMAL' and column != '_IM_EQUIVALENT':
+                dataSetFrame = dataSetFrame.drop(column, axis=1)
 
-	#Preprocessing columns that will be 
+    numProperties = len(dataSetFrame.columns) - 1
 
-	# Grouping data frame by target column
-	if groupByTargetColumn:
-		dataGrouped = dataSetFrame.groupby(targetColumn)
-		dataSetFrame = pd.DataFrame(dataGrouped.apply(lambda x: x.sample(dataGrouped.size().min()).reset_index(drop = True)))
+    #Preprocessing columns that will be
 
-	groupedDataSetFrame = dataSetFrame.copy()
+    # Grouping data frame by target column
+    if groupByTargetColumn:
+        dataGrouped = dataSetFrame.groupby(targetColumn)
+        dataSetFrame = pd.DataFrame(
+            dataGrouped.apply(lambda x: x.sample(dataGrouped.size().min()).
+                              reset_index(drop=True)))
 
-	# Remove the program name
-	if dataSetFrame.columns.__contains__('_IM_PROGRAM'):
-		dataSetFrame = dataSetFrame.drop('_IM_PROGRAM', axis = 1)
-		numProperties -= 1
+    groupedDataSetFrame = dataSetFrame.copy()
 
-	# Columns number to be deleted
-	numColumnsToDelete = 0
+    # Remove the program name
+    if dataSetFrame.columns.__contains__('_IM_PROGRAM'):
+        dataSetFrame = dataSetFrame.drop('_IM_PROGRAM', axis=1)
+        numProperties -= 1
 
-	# Encode _IM_OPERATOR column
-	if dataSetFrame.columns.__contains__('_IM_OPERATOR'):
-		allPossibleOperators = dataSetFrame['_IM_OPERATOR'].values
-		one_hot_Operator = pd.get_dummies(dataSetFrame['_IM_OPERATOR'])
+    # Columns number to be deleted
+    numColumnsToDelete = 0
 
-		if allOperators is not None:
-			operatorsNotInDataSet = list(set(allOperators) - set(allPossibleOperators))
-			for operator in operatorsNotInDataSet:
-				one_hot_Operator.insert(len(one_hot_Operator.columns) - 1, operator, 0)
-			
-		dataSetFrame = dataSetFrame.drop('_IM_OPERATOR', axis = 1)
-		dataSetFrame = dataSetFrame.join(one_hot_Operator)
+    # Encode _IM_OPERATOR column
+    if dataSetFrame.columns.__contains__('_IM_OPERATOR'):
+        allPossibleOperators = dataSetFrame['_IM_OPERATOR'].values
+        one_hot_Operator = pd.get_dummies(dataSetFrame['_IM_OPERATOR'])
 
-		numColumnsToDelete = numColumnsToDelete - 1 + len(one_hot_Operator.columns)
+        if allOperators is not None:
+            operatorsNotInDataSet = list(
+                set(allOperators) - set(allPossibleOperators))
+            for operator in operatorsNotInDataSet:
+                one_hot_Operator.insert(
+                    len(one_hot_Operator.columns) - 1, operator, 0)
 
-	# Encode _IM_TYPE_STATEMENT column
-	if dataSetFrame.columns.__contains__('_IM_TYPE_STATEMENT'):
-		allPossibleTypeStatement = dataSetFrame['_IM_TYPE_STATEMENT'].values
-		one_hot_TypeStatement = pd.get_dummies(dataSetFrame['_IM_TYPE_STATEMENT'])
+        dataSetFrame = dataSetFrame.drop('_IM_OPERATOR', axis=1)
+        dataSetFrame = dataSetFrame.join(one_hot_Operator)
 
-		if allTypeStatement is not None:
-			typeStatementNotInDataSet = list(set(allTypeStatement) - set(allPossibleTypeStatement))
-			for typeStatement in typeStatementNotInDataSet:
-				one_hot_TypeStatement.insert(len(one_hot_TypeStatement.columns) - 1, typeStatement, 0)
+        numColumnsToDelete = numColumnsToDelete - 1 + len(
+            one_hot_Operator.columns)
 
-		dataSetFrame = dataSetFrame.drop('_IM_TYPE_STATEMENT', axis = 1)
-		dataSetFrame = dataSetFrame.join(one_hot_TypeStatement)
+    # Encode _IM_TYPE_STATEMENT column
+    if dataSetFrame.columns.__contains__('_IM_TYPE_STATEMENT'):
+        allPossibleTypeStatement = dataSetFrame['_IM_TYPE_STATEMENT'].values
+        one_hot_TypeStatement = pd.get_dummies(
+            dataSetFrame['_IM_TYPE_STATEMENT'])
 
-		numColumnsToDelete = numColumnsToDelete - 1 + len(one_hot_TypeStatement.columns)
+        if allTypeStatement is not None:
+            typeStatementNotInDataSet = list(
+                set(allTypeStatement) - set(allPossibleTypeStatement))
+            for typeStatement in typeStatementNotInDataSet:
+                one_hot_TypeStatement.insert(
+                    len(one_hot_TypeStatement.columns) - 1, typeStatement, 0)
 
-	# Remove the target column and reinsert it at final
-	targetColumnValues = dataSetFrame[targetColumn]
-	dataSetFrame = dataSetFrame.drop(targetColumn, axis = 1)
-	dataSetFrame = dataSetFrame.join(targetColumnValues)
+        dataSetFrame = dataSetFrame.drop('_IM_TYPE_STATEMENT', axis=1)
+        dataSetFrame = dataSetFrame.join(one_hot_TypeStatement)
 
-	return dataSetFrame, numProperties, numColumnsToDelete, allPossibleOperators, allPossibleTypeStatement, groupedDataSetFrame
+        numColumnsToDelete = numColumnsToDelete - 1 + len(
+            one_hot_TypeStatement.columns)
 
-def dataSplittingIntoTrainAndTest(dataSetFrame, numProperties, numColumnsToDelete, testSetSize):
-	# --- Train Test Split ---
-	#   To avoid over-fitting, we will divide our dataSet into training and test splits, which gives us a better idea as to how our algorithm performed during the testing phase. This way our algorithm is tested on un-seen data, as it would be in a production application.
-	#   To create training and test splits, execute the following script:
-	X = dataSetFrame.iloc[:, :-1].values
-	y = dataSetFrame.iloc[:, numProperties + numColumnsToDelete].values
-	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = testSetSize)
+    # Remove the target column and reinsert it at final
+    targetColumnValues = dataSetFrame[targetColumn]
+    dataSetFrame = dataSetFrame.drop(targetColumn, axis=1)
+    dataSetFrame = dataSetFrame.join(targetColumnValues)
 
-	# --- Feature Scaling ---
-	#   Before making any actual predictions, it is always a good practice to scale the features so that all of them can be uniformly evaluated.
-	#   The gradient descent algorithm (which is used in neural network training and other machine learning algorithms) also converges faster with normalized features.
-	#   The following script performs feature scaling:
-	scaler = StandardScaler()
-	scaler.fit(X_train)
-	
-	X_train = scaler.transform(X_train)
-	X_test = scaler.transform(X_test)
+    return dataSetFrame, numProperties, numColumnsToDelete, allPossibleOperators, allPossibleTypeStatement, groupedDataSetFrame
 
-	return X_train, X_test, y_train, y_test
+
+def dataSplittingIntoTrainAndTest(dataSetFrame, numProperties,
+                                  numColumnsToDelete, testSetSize):
+    # --- Train Test Split ---
+    #   To avoid over-fitting, we will divide our dataSet into training and test splits, which gives us a better idea as to how our algorithm performed during the testing phase. This way our algorithm is tested on un-seen data, as it would be in a production application.
+    #   To create training and test splits, execute the following script:
+    X = dataSetFrame.iloc[:, :-1].values
+    y = dataSetFrame.iloc[:, numProperties + numColumnsToDelete].values
+    X_train, X_test, y_train, y_test = train_test_split(X,
+                                                        y,
+                                                        test_size=testSetSize)
+
+    # --- Feature Scaling ---
+    #   Before making any actual predictions, it is always a good practice to scale the features so that all of them can be uniformly evaluated.
+    #   The gradient descent algorithm (which is used in neural network training and other machine learning algorithms) also converges faster with normalized features.
+    #   The following script performs feature scaling:
+    scaler = StandardScaler()
+    scaler.fit(X_train)
+
+    X_train = scaler.transform(X_train)
+    X_test = scaler.transform(X_test)
+
+    return X_train, X_test, y_train, y_test
+
 
 '''
 	Parameter could be the numNeighbors for kNN and minSampleSplit for DecisionTree and RandomForest
 '''
+
+
 def trainingAndPredictions(strClassifier, parameter, X_train, y_train, X_test):
-	##################################
-	# --- Training and Predictions ---
-	##################################
-	
-	#   It is extremely straight forward to train the KNN algorithm and make predictions with it, especially when using Scikit-Learn.
-	if strClassifier.upper() == 'KNN':
-		classifier = KNeighborsClassifier(n_neighbors = parameter)
-	elif strClassifier.upper() == 'DT':
-		classifier = DecisionTreeClassifier(min_samples_split = parameter)
-	elif strClassifier.upper() == 'RF':
-		classifier = RandomForestClassifier(min_samples_split = parameter)
-	elif strClassifier.upper() == 'SVM':
-		classifier = SVC()
-	elif strClassifier.upper() == 'LDA':
-		classifier = LinearDiscriminantAnalysis()
-	elif strClassifier.upper() == 'LR':
-		classifier = LogisticRegression()
-	elif strClassifier.upper() == 'GNB':
-		classifier = GaussianNB()
-	else:
-		return None
+    ##################################
+    # --- Training and Predictions ---
+    ##################################
 
-	classifier.fit(X_train, y_train)
-	
-	#   The final step is to make predictions on our test data. To do so, execute the following script:
-	y_pred = classifier.predict(X_test)
+    #   It is extremely straight forward to train the KNN algorithm and make predictions with it, especially when using Scikit-Learn.
+    if strClassifier.upper() == 'KNN':
+        classifier = KNeighborsClassifier(n_neighbors=parameter)
+    elif strClassifier.upper() == 'DT':
+        classifier = DecisionTreeClassifier(min_samples_split=parameter)
+    elif strClassifier.upper() == 'RF':
+        classifier = RandomForestClassifier(min_samples_split=parameter)
+    elif strClassifier.upper() == 'SVM':
+        classifier = SVC()
+    elif strClassifier.upper() == 'LDA':
+        classifier = LinearDiscriminantAnalysis()
+    elif strClassifier.upper() == 'LR':
+        classifier = LogisticRegression()
+    elif strClassifier.upper() == 'GNB':
+        classifier = GaussianNB()
+    else:
+        return None
 
-	return y_pred
+    classifier.fit(X_train, y_train)
+
+    #   The final step is to make predictions on our test data. To do so, execute the following script:
+    y_pred = classifier.predict(X_test)
+
+    return y_pred
 
 
+def classifierMain(classifier,
+                   maxIterations,
+                   resultsFileName,
+                   X_train,
+                   X_test,
+                   y_train,
+                   y_test,
+                   showResults=False,
+                   parameter=None):
+    # Arrays containing all collected metrics on applying Machine Learning algorithm
+    data = []
+    arrAccuracy = []
+    arrPrecision = []
+    arrRecall = []
+    arrF1 = []
+    arrTPR = []
+    arrFPR = []
 
-def classifierMain(classifier, maxIterations, resultsFileName, X_train, X_test, y_train, y_test, showResults = False, parameter = None):
-	# Arrays containing all collected metrics on applying Machine Learning algorithm
-	data = []
-	arrAccuracy = []
-	arrPrecision = []
-	arrRecall = []
-	arrF1 = []
-	arrTPR = []
-	arrFPR = []
+    arr_y_pred_iter = []
 
-	arr_y_pred_iter = []
+    if classifier == 'KNN':
+        if parameter is None:
+            for kNeighbors in range(1, maxIterations + 1, 1):
+                arr_y_pred_iter.append(
+                    (trainingAndPredictions('KNN', kNeighbors, X_train,
+                                            y_train, X_test), kNeighbors))
+        else:
+            arr_y_pred_iter.append(
+                (trainingAndPredictions('KNN', kNeighbors, X_train, y_train,
+                                        X_test), parameter))
+    elif classifier == 'DT':
+        if parameter is None:
+            for minSamplesSplit in range(5, maxIterations + 1, 10):
+                arr_y_pred_iter.append(
+                    (trainingAndPredictions('DT', minSamplesSplit, X_train,
+                                            y_train, X_test), minSamplesSplit))
+        else:
+            arr_y_pred_iter.append(
+                (trainingAndPredictions('DT', minSamplesSplit, X_train,
+                                        y_train, X_test), parameter))
+    elif classifier == 'RF':
+        if parameter is None:
+            for minSamplesSplit in range(5, maxIterations + 1, 10):
+                arr_y_pred_iter.append(
+                    (trainingAndPredictions('RF', minSamplesSplit, X_train,
+                                            y_train, X_test), minSamplesSplit))
+        else:
+            arr_y_pred_iter.append(
+                (trainingAndPredictions('RF', minSamplesSplit, X_train,
+                                        y_train, X_test), parameter))
+    elif classifier == 'SVM':  #TODO
+        if parameter is None:
+            for minSamplesSplit in range(5, maxIterations + 1, 10):
+                arr_y_pred_iter.append(
+                    (trainingAndPredictions('SVM', minSamplesSplit, X_train,
+                                            y_train, X_test), minSamplesSplit))
+        else:
+            arr_y_pred_iter.append(
+                (trainingAndPredictions('SVM', minSamplesSplit, X_train,
+                                        y_train, X_test), parameter))
+    else:
+        return None
 
-	if classifier == 'KNN':
-		if parameter is None:
-			for kNeighbors in range(1, maxIterations + 1, 1):
-				arr_y_pred_iter.append((trainingAndPredictions('KNN', kNeighbors, X_train, y_train, X_test), kNeighbors))
-		else:
-			arr_y_pred_iter.append((trainingAndPredictions('KNN', kNeighbors, X_train, y_train, X_test), parameter))
-	elif classifier == 'DT':
-		if parameter is None:
-			for minSamplesSplit in range(5, maxIterations + 1, 10):
-				arr_y_pred_iter.append((trainingAndPredictions('DT', minSamplesSplit, X_train, y_train, X_test), minSamplesSplit))
-		else:
-			arr_y_pred_iter.append((trainingAndPredictions('DT', minSamplesSplit, X_train, y_train, X_test), parameter))
-	elif classifier == 'RF':
-		if parameter is None:
-			for minSamplesSplit in range(5, maxIterations + 1, 10):
-				arr_y_pred_iter.append((trainingAndPredictions('RF', minSamplesSplit, X_train, y_train, X_test), minSamplesSplit))
-		else:
-			arr_y_pred_iter.append((trainingAndPredictions('RF', minSamplesSplit, X_train, y_train, X_test), parameter))
-	elif classifier == 'SVM': #TODO
-		if parameter is None:
-			for minSamplesSplit in range(5, maxIterations + 1, 10):
-				arr_y_pred_iter.append((trainingAndPredictions('SVM', minSamplesSplit, X_train, y_train, X_test), minSamplesSplit))
-		else:
-			arr_y_pred_iter.append((trainingAndPredictions('SVM', minSamplesSplit, X_train, y_train, X_test), parameter))			
-	else:
-		return None
+    for y_pred, iteration in arr_y_pred_iter:
+        accuracy, precision, recall, f1, TPR, FPR, TP, FN, FP, TN = evaluatingClassification(
+            y_test, y_pred)
+        accuracy *= 100
+        precision *= 100
+        recall *= 100
+        f1 *= 100
+        TPR *= 100
+        FPR *= 100
 
-	for y_pred, iteration in arr_y_pred_iter:
-		accuracy, precision, recall, f1, TPR, FPR, TP, FN, FP, TN = evaluatingClassification(y_test, y_pred)
-		accuracy *= 100
-		precision *= 100
-		recall *= 100
-		f1 *= 100
-		TPR *= 100
-		FPR *= 100
+        if showResults:
+            print(
+                "{:2d} Amostras | Acurácia {:.6f}%\tPrecisão: {:.6f}%\tRecall: {:.6f}%\tF1: {:.6f}%"
+                .format(iteration, accuracy, precision, recall, f1))
 
-		if showResults:
-			print("{:2d} Amostras | Acurácia {:.6f}%\tPrecisão: {:.6f}%\tRecall: {:.6f}%\tF1: {:.6f}%".format(
-				iteration, accuracy, precision, recall, f1))
+        arrAccuracy.append(accuracy)
+        arrPrecision.append(precision)
+        arrRecall.append(recall)
+        arrF1.append(f1)
+        arrTPR.append(TPR)
+        arrFPR.append(FPR)
 
-		arrAccuracy.append(accuracy)
-		arrPrecision.append(precision)
-		arrRecall.append(recall)
-		arrF1.append(f1)
-		arrTPR.append(TPR)
-		arrFPR.append(FPR)
+        subData = []
+        subData.append(iteration)
+        subData.append(accuracy)
+        subData.append(precision)
+        subData.append(recall)
+        subData.append(f1)
+        subData.append(TPR)
+        subData.append(FPR)
+        subData.append(TP)
+        subData.append(FN)
+        subData.append(FP)
+        subData.append(TN)
 
-		subData = []
-		subData.append(iteration)
-		subData.append(accuracy)
-		subData.append(precision)
-		subData.append(recall)
-		subData.append(f1)
-		subData.append(TPR)
-		subData.append(FPR)
-		subData.append(TP)
-		subData.append(FN)
-		subData.append(FP)
-		subData.append(TN)
+        data.append(subData)
 
-		data.append(subData)
+    header = []
+    header.append('SampleSplit')
+    header.append('Accuracy')
+    header.append('Precision')
+    header.append('Recall')
+    header.append('F1')
+    header.append('TPR')
+    header.append('FPR')
+    header.append('TP')
+    header.append('FN')
+    header.append('FP')
+    header.append('TN')
+    computeData(resultsFileName, header, data, arrAccuracy, arrPrecision,
+                arrRecall, arrF1)
 
-	header = []
-	header.append('SampleSplit')
-	header.append('Accuracy')
-	header.append('Precision')
-	header.append('Recall')
-	header.append('F1')
-	header.append('TPR')
-	header.append('FPR')
-	header.append('TP')
-	header.append('FN')
-	header.append('FP')
-	header.append('TN')
-	computeData(resultsFileName, header, data, arrAccuracy, arrPrecision, arrRecall, arrF1)
 
-def crossValidation_main(dataSetFrame, targetColumn, classifier, maxIterations, resultsFileName, columnNames, columnsToDrop, columnsToAdd, showResults = False, parameter = None):
+def crossValidation_main(dataSetFrame,
+                         targetColumn,
+                         classifier,
+                         maxIterations,
+                         resultsFileName,
+                         columnNames,
+                         columnsToDrop,
+                         columnsToAdd,
+                         showResults=False,
+                         parameter=None):
 
-	# Add or remove due columns
-	if len(columnsToDrop) > 0:
-		dataSetFrame.drop(columnsToDrop, axis = 1)
-	elif len(columnsToAdd) > 0:
-		for column in columnNames:
-			if column not in columnsToAdd and len(column) > 1 and column != '_IM_MINIMAL' and column != '_IM_EQUIVALENT':
-				dataSetFrame = dataSetFrame.drop(column, axis = 1)
+    # Add or remove due columns
+    if len(columnsToDrop) > 0:
+        dataSetFrame.drop(columnsToDrop, axis=1)
+    elif len(columnsToAdd) > 0:
+        for column in columnNames:
+            if column not in columnsToAdd and len(
+                    column
+            ) > 1 and column != '_IM_MINIMAL' and column != '_IM_EQUIVALENT':
+                dataSetFrame = dataSetFrame.drop(column, axis=1)
 
-	# Grouping data frame by target column
-	dataGrouped = dataSetFrame.groupby(targetColumn)
-	dataSetFrame = pd.DataFrame(dataGrouped.apply(lambda x: x.sample(dataGrouped.size().min()).reset_index(drop = True)))
+    # Grouping data frame by target column
+    dataGrouped = dataSetFrame.groupby(targetColumn)
+    dataSetFrame = pd.DataFrame(
+        dataGrouped.apply(lambda x: x.sample(dataGrouped.size().min()).
+                          reset_index(drop=True)))
 
-	# Remove the program name
-	if dataSetFrame.columns.__contains__('_IM_PROGRAM'):
-		dataSetFrame = dataSetFrame.drop('_IM_PROGRAM', axis = 1)
+    # Remove the program name
+    if dataSetFrame.columns.__contains__('_IM_PROGRAM'):
+        dataSetFrame = dataSetFrame.drop('_IM_PROGRAM', axis=1)
 
-	# Get ColumnValues and drop minimal and equivalent columns
-	columnValues = dataSetFrame[targetColumn].values
-	dataSetFrame = dataSetFrame.drop(['_IM_MINIMAL', '_IM_EQUIVALENT'], axis = 1)
+    # Get ColumnValues and drop minimal and equivalent columns
+    columnValues = dataSetFrame[targetColumn].values
+    dataSetFrame = dataSetFrame.drop(['_IM_MINIMAL', '_IM_EQUIVALENT'], axis=1)
 
-	# Encode _IM_OPERATOR column
-	if dataSetFrame.columns.__contains__('_IM_OPERATOR'):
-		one_hot_Operator = pd.get_dummies(dataSetFrame['_IM_OPERATOR'])
-		dataSetFrame = dataSetFrame.drop('_IM_OPERATOR', axis = 1)
-		dataSetFrame = dataSetFrame.join(one_hot_Operator)
+    # Encode _IM_OPERATOR column
+    if dataSetFrame.columns.__contains__('_IM_OPERATOR'):
+        one_hot_Operator = pd.get_dummies(dataSetFrame['_IM_OPERATOR'])
+        dataSetFrame = dataSetFrame.drop('_IM_OPERATOR', axis=1)
+        dataSetFrame = dataSetFrame.join(one_hot_Operator)
 
-	# Encode _IM_TYPE_STATEMENT column
-	if dataSetFrame.columns.__contains__('_IM_TYPE_STATEMENT'):
-		one_hot_TypeStatement = pd.get_dummies(dataSetFrame['_IM_TYPE_STATEMENT'])
-		dataSetFrame = dataSetFrame.drop('_IM_TYPE_STATEMENT', axis = 1)
-		dataSetFrame = dataSetFrame.join(one_hot_TypeStatement)
+    # Encode _IM_TYPE_STATEMENT column
+    if dataSetFrame.columns.__contains__('_IM_TYPE_STATEMENT'):
+        one_hot_TypeStatement = pd.get_dummies(
+            dataSetFrame['_IM_TYPE_STATEMENT'])
+        dataSetFrame = dataSetFrame.drop('_IM_TYPE_STATEMENT', axis=1)
+        dataSetFrame = dataSetFrame.join(one_hot_TypeStatement)
 
-	# Get DataFrameValues
-	dataFrameValues = dataSetFrame.values
+    # Get DataFrameValues
+    dataFrameValues = dataSetFrame.values
 
-	# Arrays containing all collected metrics on applying Machine Learning algorithm
-	data = []
-	arrAccuracy = []
-	arrPrecision = []
-	arrRecall = []
-	arrF1 = []
+    # Arrays containing all collected metrics on applying Machine Learning algorithm
+    data = []
+    arrAccuracy = []
+    arrPrecision = []
+    arrRecall = []
+    arrF1 = []
 
-	arr_estimators_iter = []
+    arr_estimators_iter = []
 
-	if classifier == 'KNN':
-		if parameter is None:
-			# If the row number are lower the iterations number, it is necessary to iterate just 75% the row number
-			maxIterations = maxIterations if len(columnValues) > maxIterations else int(len(columnValues) * 0.75)
-			for kNeighbors in range(1, maxIterations + 1, 1):
-				arr_estimators_iter.append((KNeighborsClassifier(n_neighbors = kNeighbors), kNeighbors))
-		else:
-			if len(columnValues) / 2 <= 10:
-				parameter = int(len(columnValues) / 2)
+    if classifier == 'KNN':
+        if parameter is None:
+            # If the row number are lower the iterations number, it is necessary to iterate just 75% the row number
+            maxIterations = maxIterations if len(
+                columnValues) > maxIterations else int(
+                    len(columnValues) * 0.75)
+            for kNeighbors in range(1, maxIterations + 1, 1):
+                arr_estimators_iter.append(
+                    (KNeighborsClassifier(n_neighbors=kNeighbors), kNeighbors))
+        else:
+            if len(columnValues) / 2 <= 10:
+                parameter = int(len(columnValues) / 2)
 
-			arr_estimators_iter.append((KNeighborsClassifier(n_neighbors = parameter), parameter))
-	elif classifier == 'DT':
-		if parameter is None:
-			for minSamplesSplit in range(5, maxIterations + 1, 10):
-				arr_estimators_iter.append((DecisionTreeClassifier(min_samples_split = minSamplesSplit), minSamplesSplit))
-		else:
-			arr_estimators_iter.append((DecisionTreeClassifier(min_samples_split = parameter), parameter))
-	elif classifier == 'RF':
-		if parameter is None:
-			for minSamplesSplit in range(5, maxIterations + 1, 10):
-				arr_estimators_iter.append((RandomForestClassifier(min_samples_split = minSamplesSplit), minSamplesSplit))
-		else:
-			arr_estimators_iter.append((RandomForestClassifier(min_samples_split = parameter), parameter))
-	elif classifier == 'SVM':
-		arr_estimators_iter.append((SVC(), 0))
-	elif classifier == 'LDA':
-		arr_estimators_iter.append((LinearDiscriminantAnalysis(), 0))
-	elif classifier == 'LR':
-		arr_estimators_iter.append((LogisticRegression(), 0))
-	elif classifier == 'GNB':
-		arr_estimators_iter.append((GaussianNB(), 0))
-	else:
-		return None
+            arr_estimators_iter.append(
+                (KNeighborsClassifier(n_neighbors=parameter), parameter))
+    elif classifier == 'DT':
+        if parameter is None:
+            for minSamplesSplit in range(5, maxIterations + 1, 10):
+                arr_estimators_iter.append(
+                    (DecisionTreeClassifier(min_samples_split=minSamplesSplit),
+                     minSamplesSplit))
+        else:
+            arr_estimators_iter.append(
+                (DecisionTreeClassifier(min_samples_split=parameter),
+                 parameter))
+    elif classifier == 'RF':
+        if parameter is None:
+            for minSamplesSplit in range(5, maxIterations + 1, 10):
+                arr_estimators_iter.append(
+                    (RandomForestClassifier(min_samples_split=minSamplesSplit),
+                     minSamplesSplit))
+        else:
+            arr_estimators_iter.append(
+                (RandomForestClassifier(min_samples_split=parameter),
+                 parameter))
+    elif classifier == 'SVM':
+        arr_estimators_iter.append((SVC(), 0))
+    elif classifier == 'LDA':
+        arr_estimators_iter.append((LinearDiscriminantAnalysis(), 0))
+    elif classifier == 'LR':
+        arr_estimators_iter.append((LogisticRegression(), 0))
+    elif classifier == 'GNB':
+        arr_estimators_iter.append((GaussianNB(), 0))
+    else:
+        return None
 
-	for classifier, iteration in arr_estimators_iter:
-		# If the row number of each class are lower than 10, it is necessary set this value to KFold
-		n_splits = 10 if len(columnValues) / 2 > 10 else int(len(columnValues) / 2) # Number of folds in a `(Stratified)KFold - :term:` CV splitter
+    for classifier, iteration in arr_estimators_iter:
+        # If the row number of each class are lower than 10, it is necessary set this value to KFold
+        n_splits = 10 if len(columnValues) / 2 > 10 else int(
+            len(columnValues) /
+            2)  # Number of folds in a `(Stratified)KFold - :term:` CV splitter
 
-		scores = cross_val_score(classifier, dataFrameValues, columnValues, scoring='accuracy', cv = n_splits)
-		arrAccuracy.append(np.mean(scores) * 100)
-		
-		scores = cross_val_score(classifier, dataFrameValues, columnValues, scoring='precision', cv = n_splits)
-		arrPrecision.append(np.mean(scores) * 100)
-		
-		scores = cross_val_score(classifier, dataFrameValues, columnValues, scoring='recall', cv = n_splits)
-		arrRecall.append(np.mean(scores) * 100)
-		
-		scores = cross_val_score(classifier, dataFrameValues, columnValues, scoring='f1', cv = n_splits)
-		arrF1.append(np.mean(scores) * 100)
-		
-		if showResults:
-			print("{:2d} Amostras | Acurácia {:.6f}%\tPrecisão: {:.6f}%\tRecall: {:.6f}%\tF1: {:.6f}%".format(
-				iteration, arrAccuracy[len(arrAccuracy) - 1], arrPrecision[len(arrPrecision) - 1], arrRecall[len(arrRecall) - 1], arrF1[len(arrF1) - 1]))
+        scores = cross_val_score(classifier,
+                                 dataFrameValues,
+                                 columnValues,
+                                 scoring='accuracy',
+                                 cv=n_splits)
+        arrAccuracy.append(np.mean(scores) * 100)
 
-		subData = []
-		subData.append(iteration)
-		subData.append(arrAccuracy[len(arrAccuracy) - 1])
-		subData.append(arrPrecision[len(arrPrecision) - 1])
-		subData.append(arrRecall[len(arrRecall) - 1])
-		subData.append(arrF1[len(arrF1) - 1])
+        scores = cross_val_score(classifier,
+                                 dataFrameValues,
+                                 columnValues,
+                                 scoring='precision',
+                                 cv=n_splits)
+        arrPrecision.append(np.mean(scores) * 100)
 
-		data.append(subData)
+        scores = cross_val_score(classifier,
+                                 dataFrameValues,
+                                 columnValues,
+                                 scoring='recall',
+                                 cv=n_splits)
+        arrRecall.append(np.mean(scores) * 100)
 
-	header = []
-	header.append('SampleSplit')
-	header.append('Accuracy')
-	header.append('Precision')
-	header.append('Recall')
-	header.append('F1')
-	computeData(resultsFileName, header, data, arrAccuracy, arrPrecision, arrRecall, arrF1)
+        scores = cross_val_score(classifier,
+                                 dataFrameValues,
+                                 columnValues,
+                                 scoring='f1',
+                                 cv=n_splits)
+        arrF1.append(np.mean(scores) * 100)
 
-def computeData(resultsFileName, header, data, accuracy, precision, recall, f1):
-	newData = []
-	
-	# Minimum
-	subData = []
-	subData.append('Min')
-	subData.append(min(accuracy))   # Accuracy
-	subData.append(min(precision))  # Precision
-	subData.append(min(recall))     # Recall
-	subData.append(min(f1))         # F1
-	newData.append(subData)
+        if showResults:
+            print(
+                "{:2d} Amostras | Acurácia {:.6f}%\tPrecisão: {:.6f}%\tRecall: {:.6f}%\tF1: {:.6f}%"
+                .format(iteration, arrAccuracy[len(arrAccuracy) - 1],
+                        arrPrecision[len(arrPrecision) - 1],
+                        arrRecall[len(arrRecall) - 1], arrF1[len(arrF1) - 1]))
 
-	# Maximum
-	subData = []
-	subData.append('Max')
-	subData.append(max(accuracy))   # Accuracy
-	subData.append(max(precision))  # Precision
-	subData.append(max(recall))     # Recall
-	subData.append(max(f1))         # F1
-	newData.append(subData)
+        subData = []
+        subData.append(iteration)
+        subData.append(arrAccuracy[len(arrAccuracy) - 1])
+        subData.append(arrPrecision[len(arrPrecision) - 1])
+        subData.append(arrRecall[len(arrRecall) - 1])
+        subData.append(arrF1[len(arrF1) - 1])
 
-	# Average
-	subData = []
-	subData.append('Mean')
-	subData.append(mean(accuracy))   # Accuracy
-	subData.append(mean(precision))  # Precision
-	subData.append(mean(recall))     # Recall
-	subData.append(mean(f1))         # F1
-	newData.append(subData)
+        data.append(subData)
 
-	# Median
-	subData = []
-	subData.append('Median')
-	subData.append(median(accuracy))   # Accuracy
-	subData.append(median(precision))  # Precision
-	subData.append(median(recall))     # Recall
-	subData.append(median(f1))         # F1
-	newData.append(subData)
+    header = []
+    header.append('SampleSplit')
+    header.append('Accuracy')
+    header.append('Precision')
+    header.append('Recall')
+    header.append('F1')
+    computeData(resultsFileName, header, data, arrAccuracy, arrPrecision,
+                arrRecall, arrF1)
 
-	# Include each data in the file
-	newData.append('')
-	newData.append(header)
-	for _data in data:
-		newData.append(_data)
 
-	# Print
-	util.writeInCsvFile(resultsFileName, newData)
+def computeData(resultsFileName, header, data, accuracy, precision, recall,
+                f1):
+    newData = []
 
-def crossValidation(targetColumn, classifier, specifiedProgram = None, columnsToDrop = [], columnsToAdd = [], printResults = False, parameter = None):
-	if not classifier in getPossibleClassifiers() or not targetColumn in getPossibleTargetColumns():
-		return None
-	
-	####################################
-	# --- Setting independent properties
-	maxNeighbors = 40
-	maxSamplesSplit = 100
-	maxIterations = maxNeighbors if classifier == 'KNN' else maxSamplesSplit
+    # Minimum
+    subData = []
+    subData.append('Min')
+    subData.append(min(accuracy))  # Accuracy
+    subData.append(min(precision))  # Precision
+    subData.append(min(recall))  # Recall
+    subData.append(min(f1))  # F1
+    newData.append(subData)
 
-	######################
-	# --- Setting datasets
-	targetColumnName = targetColumn
-	targetColumn = '_IM_{}'.format(targetColumn)
-	
-	# Verify if it setted a specified program to be classified
-	if not specifiedProgram is None:
-		dataSetFileName = 'ML/Dataset/{}/Programs/{}.csv'.format(targetColumnName, specifiedProgram)
-	else:
-		dataSetFileName = 'ML/Dataset/{}/mutants.csv'.format(targetColumnName)
+    # Maximum
+    subData = []
+    subData.append('Max')
+    subData.append(max(accuracy))  # Accuracy
+    subData.append(max(precision))  # Precision
+    subData.append(max(recall))  # Recall
+    subData.append(max(f1))  # F1
+    newData.append(subData)
 
-	if targetColumn == '_IM_MINIMAL':
-		#####################
-		# --- Setting columns
-		columnNames = getColumnNames_lastMinimal()
+    # Average
+    subData = []
+    subData.append('Mean')
+    subData.append(mean(accuracy))  # Accuracy
+    subData.append(mean(precision))  # Precision
+    subData.append(mean(recall))  # Recall
+    subData.append(mean(f1))  # F1
+    newData.append(subData)
 
-		print('####################################################')
-		print(' ----- Calculando para identificar mutantes minimais')
-	
-	elif targetColumn == '_IM_EQUIVALENT':
-		#####################
-		# --- Setting columns
-		columnNames = getColumnNames_lastEquivalent()
+    # Median
+    subData = []
+    subData.append('Median')
+    subData.append(median(accuracy))  # Accuracy
+    subData.append(median(precision))  # Precision
+    subData.append(median(recall))  # Recall
+    subData.append(median(f1))  # F1
+    newData.append(subData)
 
-		print('########################################################')
-		print(' ----- Calculando para identificar mutantes equivalentes')
-	else:
-		return
+    # Include each data in the file
+    newData.append('')
+    newData.append(header)
+    for _data in data:
+        newData.append(_data)
 
-	###################
-	# --- PreProcessing
-	dataSet = importDataSet(dataSetFileName)
+    # Print
+    util.writeInCsvFile(resultsFileName, newData)
 
-	##############################
-	# --- Setting results filename
-	bestParameter = '_bestParameter' if not parameter is None else ''
-	gbs = ' - gbs_{columns}' if len(columnsToDrop) > 0 else ''
-	gfs = ' - gfs_{columns}' if len(columnsToAdd) > 0 else ''
-	if specifiedProgram is None:
-		resultsFileName = 'ML/Results/{targetColumnName}/{classifier}{bestParameter}{gbs}{gfs}.csv'.format(targetColumnName = targetColumnName, classifier = classifier, gbs = gbs, gfs = gfs, bestParameter = bestParameter)
-	else:
-		resultsFileName = 'ML/Results/{targetColumnName}/Programs/{specifiedProgram}_{classifier}{bestParameter}.csv'.format(targetColumnName = targetColumnName, specifiedProgram = specifiedProgram, classifier = classifier, bestParameter = bestParameter)
 
-	##########################################
-	# --- Executing classifier | KNN, DT ou RF
-	print(' ----- {}'.format(classifier))
-	crossValidation_main(dataSet, targetColumn, classifier, maxIterations, resultsFileName, columnNames, columnsToDrop, columnsToAdd, parameter=parameter)
+def crossValidation(targetColumn,
+                    classifier,
+                    specifiedProgram=None,
+                    columnsToDrop=[],
+                    columnsToAdd=[],
+                    printResults=False,
+                    parameter=None):
+    if not classifier in getPossibleClassifiers(
+    ) or not targetColumn in getPossibleTargetColumns():
+        return None
 
-def classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier, algorithmParameter, programToClassify):
-	""" Function responsable to classify a new data set as equivalent or minimal from predictive models are existing
+    ####################################
+    # --- Setting independent properties
+    maxNeighbors = 40
+    maxSamplesSplit = 100
+    maxIterations = maxNeighbors if classifier == 'KNN' else maxSamplesSplit
+
+    ######################
+    # --- Setting datasets
+    targetColumnName = targetColumn
+    targetColumn = '_IM_{}'.format(targetColumn)
+
+    # Verify if it setted a specified program to be classified
+    if not specifiedProgram is None:
+        dataSetFileName = 'ML/Dataset/{}/Programs/{}.csv'.format(
+            targetColumnName, specifiedProgram)
+    else:
+        dataSetFileName = 'ML/Dataset/{}/mutants.csv'.format(targetColumnName)
+
+    if targetColumn == '_IM_MINIMAL':
+        #####################
+        # --- Setting columns
+        columnNames = getColumnNames_lastMinimal()
+
+        print('####################################################')
+        print(' ----- Calculando para identificar mutantes minimais')
+
+    elif targetColumn == '_IM_EQUIVALENT':
+        #####################
+        # --- Setting columns
+        columnNames = getColumnNames_lastEquivalent()
+
+        print('########################################################')
+        print(' ----- Calculando para identificar mutantes equivalentes')
+    else:
+        return
+
+    ###################
+    # --- PreProcessing
+    dataSet = importDataSet(dataSetFileName)
+
+    ##############################
+    # --- Setting results filename
+    bestParameter = '_bestParameter' if not parameter is None else ''
+    gbs = ' - gbs_{columns}'.format(
+        columns=columnsToDrop) if len(columnsToDrop) > 0 else ''
+    gfs = ' - gfs_{columns}' if len(columnsToAdd) > 0 else ''
+    if specifiedProgram is None:
+        resultsFileName = 'ML/Results/{targetColumnName}/{classifier}{bestParameter}{gbs}{gfs}.csv'.format(
+            targetColumnName=targetColumnName,
+            classifier=classifier,
+            gbs=gbs,
+            gfs=gfs,
+            bestParameter=bestParameter)
+    else:
+        resultsFileName = 'ML/Results/{targetColumnName}/Programs/{specifiedProgram}_{classifier}{bestParameter}.csv'.format(
+            targetColumnName=targetColumnName,
+            specifiedProgram=specifiedProgram,
+            classifier=classifier,
+            bestParameter=bestParameter)
+
+    ##########################################
+    # --- Executing classifier | KNN, DT ou RF
+    print(' ----- {}'.format(classifier))
+    crossValidation_main(dataSet,
+                         targetColumn,
+                         classifier,
+                         maxIterations,
+                         resultsFileName,
+                         columnNames,
+                         columnsToDrop,
+                         columnsToAdd,
+                         parameter=parameter)
+
+
+def classify(newDataSetFileName, resultDataSetFileName, targetColumn,
+             classifier, algorithmParameter, programToClassify):
+    """ Function responsable to classify a new data set as equivalent or minimal from predictive models are existing
 
 		Args:
 			newDataSetFileName (str): File name containing new mutants to be classified
@@ -557,284 +716,358 @@ def classify(newDataSetFileName, resultDataSetFileName, targetColumn, classifier
 			programToClassify(str): ---
 	"""
 
-	######################
-	# --- Setting datasets
-	targetColumnName = targetColumn
-	targetColumn = '_IM_{}'.format(targetColumn)
-	trainDataSetFileName = 'ML/Dataset/{}/mutants.csv'.format(targetColumnName)
+    ######################
+    # --- Setting datasets
+    targetColumnName = targetColumn
+    targetColumn = '_IM_{}'.format(targetColumn)
+    trainDataSetFileName = 'ML/Dataset/{}/mutants.csv'.format(targetColumnName)
 
-	if targetColumn == '_IM_MINIMAL':
-		#####################
-		# --- Setting columns
-		columnNames = getColumnNames_lastMinimal()
-	
-	elif targetColumn == '_IM_EQUIVALENT':
-		#####################
-		# --- Setting columns
-		 columnNames = getColumnNames_lastEquivalent()
+    if targetColumn == '_IM_MINIMAL':
+        #####################
+        # --- Setting columns
+        columnNames = getColumnNames_lastMinimal()
 
-	###################
-	# --- PreProcessing
+    elif targetColumn == '_IM_EQUIVALENT':
+        #####################
+        # --- Setting columns
+        columnNames = getColumnNames_lastEquivalent()
 
-	# --- Import
-	trainDataSet = importDataSet(trainDataSetFileName)
-	trainDataSet = trainDataSet.query('_IM_PROGRAM != \'{}\''.format(programToClassify))
-	newDataSetFrame = importDataSet(newDataSetFileName)
+    ###################
+    # --- PreProcessing
 
-	# --- PreProccess
-	operatorsToTrain = list(set(trainDataSet['_IM_OPERATOR'].values))
-	typeStatementsToTrain = list(set(trainDataSet['_IM_TYPE_STATEMENT'].values))
-	operatorsToTest = list(set(newDataSetFrame['_IM_OPERATOR'].values))
-	typeStatementsToTest = list(set(newDataSetFrame['_IM_TYPE_STATEMENT'].values))
+    # --- Import
+    trainDataSet = importDataSet(trainDataSetFileName)
+    trainDataSet = trainDataSet.query(
+        '_IM_PROGRAM != \'{}\''.format(programToClassify))
+    newDataSetFrame = importDataSet(newDataSetFileName)
 
-	allOperators = list(set(operatorsToTrain + operatorsToTest))
-	allTypeStatement = list(set(typeStatementsToTrain + typeStatementsToTest))
+    # --- PreProccess
+    operatorsToTrain = list(set(trainDataSet['_IM_OPERATOR'].values))
+    typeStatementsToTrain = list(set(
+        trainDataSet['_IM_TYPE_STATEMENT'].values))
+    operatorsToTest = list(set(newDataSetFrame['_IM_OPERATOR'].values))
+    typeStatementsToTest = list(
+        set(newDataSetFrame['_IM_TYPE_STATEMENT'].values))
 
-	trainDataSetFrame, numProperties, numColumnsToDelete_train, _, _, groupedDataSetFrame = preProcessing(trainDataSet, targetColumn, columnNames, [], [], allOperators, allTypeStatement)
-	newDataSetFrame, numProperties, numColumnsToDelete_test, _, _, groupedDataSetFrame = preProcessing(newDataSetFrame, targetColumn, columnNames, [], [], allOperators, allTypeStatement, False)
+    allOperators = list(set(operatorsToTrain + operatorsToTest))
+    allTypeStatement = list(set(typeStatementsToTrain + typeStatementsToTest))
 
-	# Separate the data into X (values) and y (target value)
-	X_train = trainDataSetFrame.iloc[:, :-1].values
-	X_test = newDataSetFrame.iloc[:, :-1].values
-	y_train = trainDataSetFrame.iloc[:, numProperties + numColumnsToDelete_train].values
+    trainDataSetFrame, numProperties, numColumnsToDelete_train, _, _, groupedDataSetFrame = preProcessing(
+        trainDataSet, targetColumn, columnNames, [], [], allOperators,
+        allTypeStatement)
+    newDataSetFrame, numProperties, numColumnsToDelete_test, _, _, groupedDataSetFrame = preProcessing(
+        newDataSetFrame, targetColumn, columnNames, [], [], allOperators,
+        allTypeStatement, False)
 
-	##############################################################################
-	# --- Classify and write new CSV with informations about the prediction result
-	y_test = trainingAndPredictions(classifier, algorithmParameter, X_train, y_train, X_test)
-	
-	# Create an array with the results of prediction | 1 for correct, 0 for incorrect
-	result = [1 if predicted == groupedDataSetFrame[targetColumn][iCount] else 0 for iCount, predicted in zip(range(len(y_test)), y_test)]
-	
-	##############################
-	# --- Metrics about prediction
-	#total = len(result)
-	#correct = result.count(1)
-	#perc = correct * 100 / total
-	#print('Total: {} | Correto: {} | Perc: {}'.format(total, correct, perc))
+    # Separate the data into X (values) and y (target value)
+    X_train = trainDataSetFrame.iloc[:, :-1].values
+    X_test = newDataSetFrame.iloc[:, :-1].values
+    y_train = trainDataSetFrame.iloc[:, numProperties +
+                                     numColumnsToDelete_train].values
 
-	predictedDF = pd.DataFrame(groupedDataSetFrame)
-	predictedDF['PREDICTED'] = y_test
-	predictedDF['RESULT'] = result
+    ##############################################################################
+    # --- Classify and write new CSV with informations about the prediction result
+    y_test = trainingAndPredictions(classifier, algorithmParameter, X_train,
+                                    y_train, X_test)
 
-	onlyResultDataSetFileName = str(resultDataSetFileName).replace('.csv', '_result.csv')
-	util.writeInCsvFile(onlyResultDataSetFileName, [str(value) for value in y_test])
-	util.writeDataFrameInCsvFile(resultDataSetFileName, predictedDF)
+    # Create an array with the results of prediction | 1 for correct, 0 for incorrect
+    result = [
+        1 if predicted == groupedDataSetFrame[targetColumn][iCount] else 0
+        for iCount, predicted in zip(range(len(y_test)), y_test)
+    ]
 
-def executeAll(targetColumns, classifiers, specifiedProgram = None, executeWithBestParameter = False):
-	'''
+    ##############################
+    # --- Metrics about prediction
+    #total = len(result)
+    #correct = result.count(1)
+    #perc = correct * 100 / total
+    #print('Total: {} | Correto: {} | Perc: {}'.format(total, correct, perc))
+
+    predictedDF = pd.DataFrame(groupedDataSetFrame)
+    predictedDF['PREDICTED'] = y_test
+    predictedDF['RESULT'] = result
+
+    onlyResultDataSetFileName = str(resultDataSetFileName).replace(
+        '.csv', '_result.csv')
+    util.writeInCsvFile(onlyResultDataSetFileName,
+                        [str(value) for value in y_test])
+    util.writeDataFrameInCsvFile(resultDataSetFileName, predictedDF)
+
+
+def executeAll(targetColumns,
+               classifiers,
+               specifiedProgram=None,
+               executeWithBestParameter=False):
+    '''
 		Function used to execute all classifiers in all columns to be sorted
 	'''
-	for column in targetColumns:
-		for classifier in getPossibleClassifiers():
-			print('Classifier: {} | Column: {}'.format(classifier, column))
-			parameter = bestParameter(column, classifier) if executeWithBestParameter else None
-			crossValidation(column, classifier, specifiedProgram, parameter=parameter)
+    for column in targetColumns:
+        for classifier in getPossibleClassifiers():
+            print('Classifier: {} | Column: {}'.format(classifier, column))
+            parameter = bestParameter(
+                column, classifier) if executeWithBestParameter else None
+            crossValidation(column,
+                            classifier,
+                            specifiedProgram,
+                            parameter=parameter)
 
-def executeAllEachProgram(targetColumns, classifiers, programs, executeWithBestParameter = False):
-	for program in programs:
-		print('\nProgram: {}'.format(program))
-		executeAll(targetColumns, classifiers, program, executeWithBestParameter)
+
+def executeAllEachProgram(targetColumns,
+                          classifiers,
+                          programs,
+                          executeWithBestParameter=False):
+    for program in programs:
+        print('\nProgram: {}'.format(program))
+        executeAll(targetColumns, classifiers, program,
+                   executeWithBestParameter)
+
 
 def bestParameter(targetColumn, classifier):
-	# Dados obtidos a partir do arquivo 'Summary_Classifiers.csv'
-	key = '{}_{}'.format(targetColumn, classifier) #Column_Classifier
+    # Dados obtidos a partir do arquivo 'Summary_Classifiers.csv'
+    key = '{}_{}'.format(targetColumn, classifier)  #Column_Classifier
 
-	# Key = TargetColumn_Classifier
-	# Value = Array with the 5 best parameters
-	
-	parameters = dict()
-	parameters['MINIMAL_KNN'] = 1
-	parameters['MINIMAL_DT'] = 15
-	parameters['MINIMAL_RF'] = 5
-	parameters['EQUIVALENT_KNN'] = 11
-	parameters['EQUIVALENT_DT'] = 35
-	parameters['EQUIVALENT_RF'] = 15
+    # Key = TargetColumn_Classifier
+    # Value = Array with the 5 best parameters
 
-	if key in parameters.keys():
-		return parameters[key]
-	else:
-		return None
+    parameters = dict()
+    parameters['MINIMAL_KNN'] = 1
+    parameters['MINIMAL_DT'] = 15
+    parameters['MINIMAL_RF'] = 5
+    parameters['EQUIVALENT_KNN'] = 11
+    parameters['EQUIVALENT_DT'] = 35
+    parameters['EQUIVALENT_RF'] = 15
+
+    if key in parameters.keys():
+        return parameters[key]
+    else:
+        return None
+
 
 def debug_main(arguments):
-	'''
+    '''
 		Main function performed at the time of running the experiment
 	'''
-	# Possible parameters
-	possibleTargetColumns = getPossibleTargetColumns()
-	possibleClassifiers = getPossibleClassifiers()
-	possiblePrograms = [util.getPathName(program) for program in util.getPrograms('{}/Programs'.format(os.getcwd()))]
+    # Possible parameters
+    possibleTargetColumns = getPossibleTargetColumns()
+    possibleClassifiers = getPossibleClassifiers()
+    possiblePrograms = [
+        util.getPathName(program)
+        for program in util.getPrograms('{}/Programs'.format(os.getcwd()))
+    ]
 
-	# Parameters
-	targetColumn = None
-	classifier = None
-	columnsToDrop = []
-	columnsToAdd = []
-	program = None
-	programByProgram = False
-	executeWithBestParameter = False
+    # Parameters
+    targetColumn = None
+    classifier = None
+    columnsToDrop = []
+    columnsToAdd = []
+    program = None
+    programByProgram = False
+    executeWithBestParameter = False
 
-	# Trought into all parameters
-	for iCount in range(1, len(arguments), 1):
-		arg = arguments[iCount]
-		if arg == '--column':
-			targetColumn = arguments[iCount + 1]
-		elif arg == '--classifier':
-			classifier = arguments[iCount + 1]
-		elif arg == '--program':
-			program = arguments[iCount + 1]
-		elif arg == '--pbp':
-			programByProgram = True
-		elif arg == '--best':
-			executeWithBestParameter = True
+    # Trought into all parameters
+    for iCount in range(1, len(arguments), 1):
+        arg = arguments[iCount]
+        if arg == '--column':
+            targetColumn = arguments[iCount + 1]
+        elif arg == '--classifier':
+            classifier = arguments[iCount + 1]
+        elif arg == '--program':
+            program = arguments[iCount + 1]
+        elif arg == '--pbp':
+            programByProgram = True
+        elif arg == '--best':
+            executeWithBestParameter = True
 
-	# Set the best parameter if it is necessary
-	parameter = bestParameter(targetColumn, classifier) if executeWithBestParameter else None
+    # Set the best parameter if it is necessary
+    parameter = bestParameter(targetColumn,
+                              classifier) if executeWithBestParameter else None
 
-	if len(arguments) > 1:
-		if arguments[1] == '--all': # Verify if it is for execute all classifiers with all classifications
-			executeAll(possibleTargetColumns, possibleClassifiers, parameter, executeWithBestParameter=executeWithBestParameter)
-			return
-		elif arguments[1] == '--allPbP': #Verify if it is for execute all, but program a program
-			executeAllEachProgram(possibleTargetColumns, possibleClassifiers, possiblePrograms, executeWithBestParameter)
-			return
+    if len(arguments) > 1:
+        if arguments[
+                1] == '--all':  # Verify if it is for execute all classifiers with all classifications
+            executeAll(possibleTargetColumns,
+                       possibleClassifiers,
+                       parameter,
+                       executeWithBestParameter=executeWithBestParameter)
+            return
+        elif arguments[
+                1] == '--allPbP':  #Verify if it is for execute all, but program a program
+            executeAllEachProgram(possibleTargetColumns, possibleClassifiers,
+                                  possiblePrograms, executeWithBestParameter)
+            return
 
-	withoutColumnMessage = 'Please specify the target column throught --column {targetColumn}. The {targetColumn} could be ' + str(possibleTargetColumns)
-	withoutClassifierMessage = 'Please specify the classifier throught --classifier {classifier}. The {classifier} could be ' + str(possibleClassifiers)
-	withoutProgramMessage = 'Please specify the program correctly. The {program} could be ' + str(possiblePrograms)
-	errorMessage = ''
-	if targetColumn is None or not targetColumn in possibleTargetColumns:
-		errorMessage = '{}{}\n'.format(errorMessage, withoutColumnMessage)
+    withoutColumnMessage = 'Please specify the target column throught --column {targetColumn}. The {targetColumn} could be ' + str(
+        possibleTargetColumns)
+    withoutClassifierMessage = 'Please specify the classifier throught --classifier {classifier}. The {classifier} could be ' + str(
+        possibleClassifiers)
+    withoutProgramMessage = 'Please specify the program correctly. The {program} could be ' + str(
+        possiblePrograms)
+    errorMessage = ''
+    if targetColumn is None or not targetColumn in possibleTargetColumns:
+        errorMessage = '{}{}\n'.format(errorMessage, withoutColumnMessage)
 
-	if classifier is None:
-		errorMessage = '{}{}\n'.format(errorMessage, withoutClassifierMessage)
-	
-	if not program is None and not program in possiblePrograms:
-		errorMessage = '{}{}\n'.format(errorMessage, withoutProgramMessage)
+    if classifier is None:
+        errorMessage = '{}{}\n'.format(errorMessage, withoutClassifierMessage)
 
-	if len(errorMessage) > 0:
-		print(errorMessage)
-		return
+    if not program is None and not program in possiblePrograms:
+        errorMessage = '{}{}\n'.format(errorMessage, withoutProgramMessage)
 
-	# Execute cross validation
-	if not programByProgram:
-		crossValidation(targetColumn, classifier, program, columnsToDrop, columnsToAdd, parameter=parameter)
-	else:
-		for specifiedProgram in possiblePrograms:
-			crossValidation(targetColumn, classifier, specifiedProgram, columnsToDrop, columnsToAdd, parameter=parameter)
+    if len(errorMessage) > 0:
+        print(errorMessage)
+        return
+
+    # Execute cross validation
+    if not programByProgram:
+        crossValidation(targetColumn,
+                        classifier,
+                        program,
+                        columnsToDrop,
+                        columnsToAdd,
+                        parameter=parameter)
+    else:
+        for specifiedProgram in possiblePrograms:
+            crossValidation(targetColumn,
+                            classifier,
+                            specifiedProgram,
+                            columnsToDrop,
+                            columnsToAdd,
+                            parameter=parameter)
+
 
 def classify_main(arguments):
-	'''
+    '''
 		Function responsible for receiving a mutant dataset and classifying those mutants as minimal, equivalent or traditional.
 	'''
-	# Possible parameters
-	possibleTargetColumns = getPossibleTargetColumns()
-	possibleClassifiers = getPossibleClassifiers()
-	possiblePrograms = [util.getPathName(program) for program in util.getPrograms('{}/Programs'.format(os.getcwd()))]
+    # Possible parameters
+    possibleTargetColumns = getPossibleTargetColumns()
+    possibleClassifiers = getPossibleClassifiers()
+    possiblePrograms = [
+        util.getPathName(program)
+        for program in util.getPrograms('{}/Programs'.format(os.getcwd()))
+    ]
 
-	# Parameters
-	targetColumn = None
-	allTargetColumns = False
-	programToClassify = None
-	classifier = None
-	algorithmParameter = None
-	executeAllPrograms = False
-	executeBestClassifierForProgram = False
-	programsBestClassifiers = None
-	executeAllClassifiers = False
-	executeAllParameters = False
+    # Parameters
+    targetColumn = None
+    allTargetColumns = False
+    programToClassify = None
+    classifier = None
+    algorithmParameter = None
+    executeAllPrograms = False
+    executeBestClassifierForProgram = False
+    programsBestClassifiers = None
+    executeAllClassifiers = False
+    executeAllParameters = False
 
-	# Trought into all parameters
-	for iCount in range(1, len(arguments), 1):
-		arg = arguments[iCount]
-		if arg == '--column':
-			targetColumn = arguments[iCount + 1]
-		elif arg == '--allColumns':
-			allTargetColumns = True
-		elif arg == '--program':
-			programToClassify = arguments[iCount + 1]
-		elif arg == '--allPrograms':
-			executeAllPrograms = True
-		elif arg == '--classifier':
-			classifier = arguments[iCount + 1]
-		elif arg == '--bestClassifier':
-			executeBestClassifierForProgram = True
-			programsBestClassifiers = analyzes.getBestClassifierForPrograms()
-		elif arg == '--allClassifiers':
-			executeAllClassifiers = True
-		elif arg == '--parameter':
-			algorithmParameter = int(arguments[iCount + 1])
-		elif arg == '--allParameters':
-			executeAllParameters = True
+    # Trought into all parameters
+    for iCount in range(1, len(arguments), 1):
+        arg = arguments[iCount]
+        if arg == '--column':
+            targetColumn = arguments[iCount + 1]
+        elif arg == '--allColumns':
+            allTargetColumns = True
+        elif arg == '--program':
+            programToClassify = arguments[iCount + 1]
+        elif arg == '--allPrograms':
+            executeAllPrograms = True
+        elif arg == '--classifier':
+            classifier = arguments[iCount + 1]
+        elif arg == '--bestClassifier':
+            executeBestClassifierForProgram = True
+            programsBestClassifiers = analyzes.getBestClassifierForPrograms()
+        elif arg == '--allClassifiers':
+            executeAllClassifiers = True
+        elif arg == '--parameter':
+            algorithmParameter = int(arguments[iCount + 1])
+        elif arg == '--allParameters':
+            executeAllParameters = True
 
-	withoutProgramMessage = 'Please specify the program correctly. The {program} could be ' + str(possiblePrograms)
-	withoutColumnMessage = 'Please specify the target column throught --column {targetColumn}. The {targetColumn} could be ' + str(possibleTargetColumns)
-	withoutClassifierMessage = 'Please specify the classifier to be used throught --classifier {classifier}. The {classifier} could be ' + str(possibleClassifiers)
-	errorMessage = ''
+    withoutProgramMessage = 'Please specify the program correctly. The {program} could be ' + str(
+        possiblePrograms)
+    withoutColumnMessage = 'Please specify the target column throught --column {targetColumn}. The {targetColumn} could be ' + str(
+        possibleTargetColumns)
+    withoutClassifierMessage = 'Please specify the classifier to be used throught --classifier {classifier}. The {classifier} could be ' + str(
+        possibleClassifiers)
+    errorMessage = ''
 
-	if (targetColumn is None or not targetColumn in possibleTargetColumns) and allTargetColumns == False:
-		errorMessage = '{}{}\n'.format(errorMessage, withoutColumnMessage)
+    if (targetColumn is None or not targetColumn
+            in possibleTargetColumns) and allTargetColumns == False:
+        errorMessage = '{}{}\n'.format(errorMessage, withoutColumnMessage)
 
-	if programToClassify is None and executeAllPrograms == False:
-		errorMessage = '{}{}\n'.format(errorMessage, withoutProgramMessage)
+    if programToClassify is None and executeAllPrograms == False:
+        errorMessage = '{}{}\n'.format(errorMessage, withoutProgramMessage)
 
-	if classifier is None and executeBestClassifierForProgram == False and executeAllClassifiers == False:
-		errorMessage = '{}{}\n'.format(errorMessage, withoutClassifierMessage)
+    if classifier is None and executeBestClassifierForProgram == False and executeAllClassifiers == False:
+        errorMessage = '{}{}\n'.format(errorMessage, withoutClassifierMessage)
 
-	if len(errorMessage) > 0:
-		print(errorMessage)
-		return
+    if len(errorMessage) > 0:
+        print(errorMessage)
+        return
 
-	if executeAllPrograms:
-		programsToBeClassified = possiblePrograms.copy()
-	else:
-		programsToBeClassified = [programToClassify]
+    if executeAllPrograms:
+        programsToBeClassified = possiblePrograms.copy()
+    else:
+        programsToBeClassified = [programToClassify]
 
-	if allTargetColumns:
-		targetColumns = possibleTargetColumns.copy()
-	else:
-		targetColumns = [targetColumn]
+    if allTargetColumns:
+        targetColumns = possibleTargetColumns.copy()
+    else:
+        targetColumns = [targetColumn]
 
-	for column in targetColumns:
-		for program in programsToBeClassified:
-			if executeBestClassifierForProgram:
-				classifier, _ = programsBestClassifiers['{}_{}'.format(program, column)]
-			
-			if executeAllClassifiers:
-				classifiers = possibleClassifiers
-			else:
-				classifiers = [classifier]
+    for column in targetColumns:
+        for program in programsToBeClassified:
+            if executeBestClassifierForProgram:
+                classifier, _ = programsBestClassifiers['{}_{}'.format(
+                    program, column)]
 
-			for _classifier in classifiers:
+            if executeAllClassifiers:
+                classifiers = possibleClassifiers
+            else:
+                classifiers = [classifier]
 
-				if executeAllParameters:
-					parameters = getPossibleParameters(_classifier)
-				else:
-					if _classifier == 'SVM' or _classifier == 'LDA' or _classifier == 'LR' or _classifier == 'GNB':
-						parameters = ['']
-					elif _classifier == 'KNN' and column == 'MINIMAL':
-						parameters = [1]
-					elif _classifier == 'KNN' and column == 'EQUIVALENT':
-						parameters = [11]
-					elif _classifier == 'DT' and column == 'MINIMAL':
-						parameters = [15]
-					elif _classifier == 'DT' and column == 'EQUIVALENT':
-						parameters = [35]
-					elif _classifier == 'RF' and column == 'MINIMAL':
-						parameters = [5]
-					elif _classifier == 'RF' and column == 'EQUIVALENT':
-						parameters = [15]
+            for _classifier in classifiers:
 
-				for parameter in parameters:
-					complementClassifierName = '_{}'.format(_classifier) if executeAllClassifiers else ''
-					complementClassifierName = '{baseName}{parameter}'.format(baseName = complementClassifierName, parameter = '_{}'.format(parameter) if executeAllParameters else '')
-					dataSetFileName = '{}/ML/Dataset/{}/Programs/{}.csv'.format(os.getcwd(), column, program)
-					resultDataSetFileName = '{baseFolder}/ML/Results/{targetColumn}/Classification/{programName}{complement}.csv'.format(baseFolder = os.getcwd(), targetColumn = column, programName = program, complement = complementClassifierName)
+                if executeAllParameters:
+                    parameters = getPossibleParameters(_classifier)
+                else:
+                    if _classifier == 'SVM' or _classifier == 'LDA' or _classifier == 'LR' or _classifier == 'GNB':
+                        parameters = ['']
+                    elif _classifier == 'KNN' and column == 'MINIMAL':
+                        parameters = [1]
+                    elif _classifier == 'KNN' and column == 'EQUIVALENT':
+                        parameters = [11]
+                    elif _classifier == 'DT' and column == 'MINIMAL':
+                        parameters = [15]
+                    elif _classifier == 'DT' and column == 'EQUIVALENT':
+                        parameters = [35]
+                    elif _classifier == 'RF' and column == 'MINIMAL':
+                        parameters = [5]
+                    elif _classifier == 'RF' and column == 'EQUIVALENT':
+                        parameters = [15]
 
-					print('\nProgram: {} | Column: {} | Classifier: {} | Parameter: {}'.format(program, column, _classifier, parameter))
-					if parameter != '':
-						classify(dataSetFileName, resultDataSetFileName, column, _classifier, parameter, program)
+                for parameter in parameters:
+                    complementClassifierName = '_{}'.format(
+                        _classifier) if executeAllClassifiers else ''
+                    complementClassifierName = '{baseName}{parameter}'.format(
+                        baseName=complementClassifierName,
+                        parameter='_{}'.format(parameter)
+                        if executeAllParameters else '')
+                    dataSetFileName = '{}/ML/Dataset/{}/Programs/{}.csv'.format(
+                        os.getcwd(), column, program)
+                    resultDataSetFileName = '{baseFolder}/ML/Results/{targetColumn}/Classification/{programName}{complement}.csv'.format(
+                        baseFolder=os.getcwd(),
+                        targetColumn=column,
+                        programName=program,
+                        complement=complementClassifierName)
 
-if __name__ == '__main__':	
-	#debug_main(sys.argv)
-	classify_main(sys.argv)
-	sys.exit()
+                    print(
+                        '\nProgram: {} | Column: {} | Classifier: {} | Parameter: {}'
+                        .format(program, column, _classifier, parameter))
+                    if parameter != '':
+                        classify(dataSetFileName, resultDataSetFileName,
+                                 column, _classifier, parameter, program)
+
+
+if __name__ == '__main__':
+    debug_main(sys.argv)
+    #classify_main(sys.argv)
+    sys.exit()
