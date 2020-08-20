@@ -7,13 +7,14 @@ from ML_Mutants import debug_main
 import util
 from util import getPossibleClassifiers, getPossibleTargetColumns
 
-def experiment():
-    arguments = ['']
 
+def experiment():
     for classifier in getPossibleClassifiers():
         for targetColumn in getPossibleTargetColumns():
             print('\n\n', classifier, targetColumn)
-            debug_main(['', '--column', targetColumn, '--classifier', classifier])
+            debug_main(
+                ['', '--column', targetColumn, '--classifier', classifier])
+
 
 if __name__ == '__main__':
-	experiment()
+    experiment()
