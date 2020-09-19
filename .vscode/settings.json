@@ -11,5 +11,7 @@
         "std.h": "c",
         "chisq.h": "c",
         "gamma.h": "c"
-    }
+    },
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": false
 }
