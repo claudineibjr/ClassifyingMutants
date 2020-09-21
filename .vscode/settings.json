@@ -13,6 +13,5 @@
         "gamma.h": "c"
     },
     "python.linting.pylintEnabled": true,
-    "python.linting.enabled": true,
-    "python.formatting.provider": "yapf"
+    "python.linting.enabled": false
 }
